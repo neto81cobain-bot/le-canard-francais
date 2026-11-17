@@ -1,0 +1,67 @@
+import React, { useState } from 'react';
+import { View, Text, Pressable } from 'react-native';
+import { router, useLocalSearchParams } from 'expo-router';
+import { useStore } from '../../store';
+import { useTheme, fonts, radius, unitColors } from '../../theme';
+import { Screen, T, Button, Card } from '../../components/ui';
+import Icon from '../../components/Icon';
+import { TeachCard } from '../../components/Rich';
+import { getUnit, lessonState, unitProgress, LEVEL_INFO } from '../../content';
+
+export default function UnitGuide() {
+  const { id } = useLocalSearchParams();
+  const { state } = useStore();
+  const t = useTheme();
+  const unit = getUnit(id);
+  const [open, setOpen] = useState(null);
+  if (!unit) return null;
+  const color = unitColors[(unit.number - 1) % unitColors.length];
+  const prog = unitProgress(state, unit);
+
+  return (
+    <Screen title={`Unidade ${unit.number}`}>
+      <View style={{ backgroundColor: color.main, borderRadius: radius.xl, padding: 20, gap: 4 }}>
+        <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 12, letterSpacing: 1, color: 'rgba(255,255,255,0.8)' }}>{LEVEL_INFO[unit.level].name.toUpperCase()}</Text>
+        <Text style={{ fontFamily: fonts.display, fontSize: 28, color: '#fff' }}>{unit.emoji} {unit.title}</Text>
+        <Text style={{ fontFamily: fonts.bodySemi, fontSize: 15, color: 'rgba(255,255,255,0.92)' }}>{unit.desc}</Text>
+        <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 13, color: '#fff', marginTop: 8 }}>{prog.done}/{prog.total} lições · {prog.tested ? `teste: ${state.unitTests[unit.id]}% 🏆` : 'teste pendente'}</Text>
+      </View>
+
+      <T v="h3" style={{ marginTop: 24, marginBottom: 12 }}>Lições</T>
+      <View style={{ gap: 10 }}>
+        {unit.lessons.map((l) => {
+          const st = lessonState(state, unit, l);
+          return (
+            <Card key={l.id} onPress={() => st !== 'locked' && router.push({ pathname: '/lesson/[id]', params: { id: l.id } })} style={{ flexDirection: 'row', alignItems: 'center', gap: 12, opacity: st === 'locked' ? 0.55 : 1 }}>
+              <View style={{ width: 46, height: 46, borderRadius: 23, backgroundColor: st === 'done' ? t.goldSoft : color.soft, alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 22 }}>{l.emoji}</Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <T v="bodyBold">{l.title}</T>
+                <T v="small">{l.goal}</T>
+              </View>
+              {st === 'done' ? <Text>{'⭐'.repeat(state.lessons[l.id]?.stars || 1)}</Text> : st === 'locked' ? <Icon name="lock" size={18} color={t.text3} /> : <Icon name="play" size={18} color={color.main} fill={color.main} />}
+            </Card>
+          );
+        })}
+      </View>
+
+      <T v="h3" style={{ marginTop: 28, marginBottom: 6 }}>Resumo da gramática</T>
+      <T v="small" style={{ marginBottom: 12 }}>Consulte as explicações a qualquer momento — toque para abrir.</T>
+      <View style={{ gap: 10 }}>
+        {unit.lessons.filter((l) => !l.story).flatMap((l) => l.teach.map((c, ci) => ({ c, key: l.id + ci, lesson: l }))).map(({ c, key, lesson }) => (
+          <View key={key} style={{ backgroundColor: t.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: open === key ? color.main : t.border, overflow: 'hidden' }}>
+            <Pressable onPress={() => setOpen(open === key ? null : key)} style={{ flexDirection: 'row', alignItems: 'center', padding: 14, gap: 10 }}>
+              <Text style={{ fontSize: 18 }}>{lesson.emoji}</Text>
+              <T v="bodyBold" style={{ flex: 1 }}>{c.title || lesson.title}</T>
+              <Icon name={open === key ? 'down' : 'chevron'} size={18} color={t.text3} />
+            </Pressable>
+            {open === key ? <View style={{ padding: 14, paddingTop: 0 }}><TeachCard card={{ ...c, title: null }} color={color} /></View> : null}
+          </View>
+        ))}
+      </View>
+
+      <Button title={prog.tested ? 'Refazer o teste da unidade' : 'Fazer o teste da unidade'} icon="target" color={color.main} style={{ marginTop: 28 }} onPress={() => router.push({ pathname: '/practice/[mode]', params: { mode: 'test', unit: unit.id } })} />
+    </Screen>
+  );
+}

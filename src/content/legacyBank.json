@@ -1,0 +1,10646 @@
+{
+ "avoir": [
+  {
+   "q": "Vous ___ raison.",
+   "a": "Avez",
+   "o": [
+    "Avez",
+    "As",
+    "Sommes",
+    "Avons"
+   ],
+   "h": "Vocês têm razão.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ de la chance.",
+   "a": "Ont",
+   "o": [
+    "Sont",
+    "A",
+    "As",
+    "Ont"
+   ],
+   "h": "Eles têm sorte.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Elle ___ un appartement.",
+   "a": "A",
+   "o": [
+    "Êtes",
+    "As",
+    "A",
+    "Avez"
+   ],
+   "h": "Ela tem um apartamento.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'J'ai trente ans' significa:",
+   "a": "Eu tenho trinta anos",
+   "o": [
+    "Eu tenho trinta anos",
+    "Eu tenho três anos",
+    "Tenho muita fome",
+    "Eu tenho trezentos euros"
+   ],
+   "h": "idade usa avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "J'___ envie d'un café.",
+   "a": "Ai",
+   "o": [
+    "A",
+    "Ai",
+    "As",
+    "Sont"
+   ],
+   "h": "Estou com vontade de um café.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Conjuga 'avoir' para 'vous'?",
+   "a": "Avez",
+   "o": [
+    "Ont",
+    "Avez",
+    "Suis",
+    "A"
+   ],
+   "h": "vous avoir = avez",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Elle ___ soif après le sport.",
+   "a": "A",
+   "o": [
+    "Ont",
+    "A",
+    "Avez",
+    "Est"
+   ],
+   "h": "Ela está com sede após o esporte.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ bonne mine!",
+   "a": "As",
+   "o": [
+    "Ont",
+    "Avez",
+    "Sommes",
+    "As"
+   ],
+   "h": "Você está com boa aparência!",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Qual pronome usa 'ai' com avoir?",
+   "a": "Je",
+   "o": [
+    "Avons",
+    "Je",
+    "Avez",
+    "Suis"
+   ],
+   "h": "je ai",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ une maison.",
+   "a": "Avons",
+   "o": [
+    "Avons",
+    "Sont",
+    "A",
+    "As"
+   ],
+   "h": "Nós temos uma casa.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Forma de 'avoir' para 'il/elle'?",
+   "a": "A",
+   "o": [
+    "A",
+    "As",
+    "Ai",
+    "Sommes"
+   ],
+   "h": "il/elle: a",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Tu as honte' significa:",
+   "a": "Você tem vergonha",
+   "o": [
+    "Você tem coragem",
+    "Você está com raiva",
+    "Você tem razão",
+    "Você tem vergonha"
+   ],
+   "h": "avoir honte",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ tort cette fois.",
+   "a": "As",
+   "o": [
+    "As",
+    "Sont",
+    "Avez",
+    "Ont"
+   ],
+   "h": "Você está errado desta vez.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz 'Ela tem calor'?",
+   "a": "Elle a chaud.",
+   "o": [
+    "Avons",
+    "Est",
+    "Elle a chaud.",
+    "As"
+   ],
+   "h": "sensações: avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Qual pronome usa 'a' com avoir?",
+   "a": "Il/elle",
+   "o": [
+    "Avons",
+    "Suis",
+    "Il/elle",
+    "Ai"
+   ],
+   "h": "il/elle a",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ l'habitude?",
+   "a": "As",
+   "o": [
+    "As",
+    "Sont",
+    "A",
+    "Avez"
+   ],
+   "h": "Você tem o hábito?",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ les yeux bleus.",
+   "a": "As",
+   "o": [
+    "Êtes",
+    "Avez",
+    "A",
+    "As"
+   ],
+   "h": "Você tem olhos azuis.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Avoir raison' significa?",
+   "a": "Ter razão",
+   "o": [
+    "Sont",
+    "Avez",
+    "Ter razão",
+    "A"
+   ],
+   "h": "avoir raison",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Avoir chaud' significa?",
+   "a": "Ter calor",
+   "o": [
+    "As",
+    "Est",
+    "Ter calor",
+    "Avez"
+   ],
+   "h": "avoir chaud",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Conjuga 'avoir' para 'il/elle'?",
+   "a": "A",
+   "o": [
+    "Avons",
+    "Es",
+    "A",
+    "Avez"
+   ],
+   "h": "il/elle avoir = a",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'J'ai envie de dormir' significa:",
+   "a": "Estou com vontade de dormir",
+   "o": [
+    "Estou com vontade de dormir",
+    "Tenho vontade de sair",
+    "Quero trabalhar",
+    "Estou com vontade de comer"
+   ],
+   "h": "avoir envie = ter vontade",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Elle a mal à la tête' significa:",
+   "a": "Ela está com dor de cabeça",
+   "o": [
+    "Ela está com febre",
+    "Ela está com dor de cabeça",
+    "Ela está cansada",
+    "Ela tem sede"
+   ],
+   "h": "avoir mal à",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tradução de 'vous avez'?",
+   "a": "Vocês têm",
+   "o": [
+    "A",
+    "Sont",
+    "Avons",
+    "Vocês têm"
+   ],
+   "h": "avez = vocês têm",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Vous avez tort' significa:",
+   "a": "Vocês estão s",
+   "o": [
+    "Vocês estão s",
+    "Avons",
+    "As",
+    "Sont"
+   ],
+   "h": "avoir tort",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Avoir peur' significa?",
+   "a": "Ter medo",
+   "o": [
+    "Ont",
+    "Ter medo",
+    "Es",
+    "Ai"
+   ],
+   "h": "avoir peur",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ le droit de refuser.",
+   "a": "Ont",
+   "o": [
+    "Avons",
+    "As",
+    "Sommes",
+    "Ont"
+   ],
+   "h": "Eles têm o direito de recusar.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'avoir le trac' significa?",
+   "a": "Ter frio na barriga",
+   "o": [
+    "Ter muito trabalho",
+    "Ter sorte",
+    "Ter frio na barriga",
+    "Ter medo"
+   ],
+   "h": "nervosismo antes de apresentação",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Tu as l'air fatigué' significa:",
+   "a": "Você parece cansado",
+   "o": [
+    "Você parece cansado",
+    "Você parece feliz",
+    "Você parece estressado",
+    "Você está bem"
+   ],
+   "h": "avoir l'air = parecer",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ froid?",
+   "a": "As",
+   "o": [
+    "A",
+    "Ont",
+    "Suis",
+    "As"
+   ],
+   "h": "Você está com frio?",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'avoir le cœur sur la main' significa?",
+   "a": "Ser generoso",
+   "o": [
+    "Ser generoso",
+    "Sont",
+    "Avez",
+    "Avons"
+   ],
+   "h": "ser de coração aberto",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'avoir du pain sur la planche' significa?",
+   "a": "Ter muito trabalho",
+   "o": [
+    "Ter muito trabalho",
+    "Ter pouco dinheiro",
+    "Ter saudade",
+    "Ter fome"
+   ],
+   "h": "expressão idiomática",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ deux voitures.",
+   "a": "Avons",
+   "o": [
+    "A",
+    "Avons",
+    "Ont",
+    "Es"
+   ],
+   "h": "Temos dois carros.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Elle ___ trois enfants.",
+   "a": "A",
+   "o": [
+    "A",
+    "Êtes",
+    "Avons",
+    "Ont"
+   ],
+   "h": "Ela tem três filhos.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Avoir envie' significa?",
+   "a": "Ter vontade",
+   "o": [
+    "Suis",
+    "As",
+    "Ter vontade",
+    "Ont"
+   ],
+   "h": "avoir envie",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "J'___ vingt ans.",
+   "a": "Ai",
+   "o": [
+    "Avez",
+    "Ont",
+    "Suis",
+    "Ai"
+   ],
+   "h": "Tenho vinte anos.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Avoir chance' significa?",
+   "a": "Ter sorte",
+   "o": [
+    "Ter sorte",
+    "A",
+    "Ai",
+    "Es"
+   ],
+   "h": "avoir chance",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ mal à la tête?",
+   "a": "As",
+   "o": [
+    "A",
+    "As",
+    "Ai",
+    "Suis"
+   ],
+   "h": "Você está com dor de cabeça?",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ peur du noir?",
+   "a": "As",
+   "o": [
+    "Avez",
+    "Avons",
+    "Suis",
+    "As"
+   ],
+   "h": "Você tem medo do escuro?",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "J'___ besoin d'aide.",
+   "a": "Ai",
+   "o": [
+    "A",
+    "Avez",
+    "Suis",
+    "Ai"
+   ],
+   "h": "Preciso de ajuda.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Forma de 'avoir' para 'je'?",
+   "a": "Ai",
+   "o": [
+    "Êtes",
+    "As",
+    "Ai",
+    "A"
+   ],
+   "h": "je: ai",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ la grippe?",
+   "a": "Avez",
+   "o": [
+    "Êtes",
+    "Avons",
+    "A",
+    "Avez"
+   ],
+   "h": "Vocês estão com gripe?",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Forma de 'avoir' para 'ils/elles'?",
+   "a": "Ont",
+   "o": [
+    "A",
+    "Ont",
+    "Est",
+    "Ai"
+   ],
+   "h": "ils/elles: ont",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tradução de 'ils/elles ont'?",
+   "a": "Eles/elas têm",
+   "o": [
+    "Suis",
+    "Avons",
+    "A",
+    "Eles/elas têm"
+   ],
+   "h": "ont = eles/elas têm",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tradução de 'il/elle a'?",
+   "a": "Ele/ela tem",
+   "o": [
+    "Ele/ela tem",
+    "Ont",
+    "Suis",
+    "Ai"
+   ],
+   "h": "a = ele/ela tem",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ tort encore.",
+   "a": "Avez",
+   "o": [
+    "Avons",
+    "Ai",
+    "Sommes",
+    "Avez"
+   ],
+   "h": "Vocês estão errados de novo.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ confiance en toi.",
+   "a": "Avons",
+   "o": [
+    "Avez",
+    "Sont",
+    "Avons",
+    "A"
+   ],
+   "h": "Temos confiança em você.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ de la chance!",
+   "a": "As",
+   "o": [
+    "A",
+    "Avez",
+    "Êtes",
+    "As"
+   ],
+   "h": "Você tem sorte!",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Avoir besoin' significa?",
+   "a": "Precisar",
+   "o": [
+    "Sont",
+    "Ai",
+    "Precisar",
+    "Ont"
+   ],
+   "h": "avoir besoin",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Elle a peur de l'avion' significa:",
+   "a": "Ela tem medo de avião",
+   "o": [
+    "Ela tem medo de avião",
+    "Ela tem fobia",
+    "Ela tem medo d'água",
+    "Ela tem medo de altura"
+   ],
+   "h": "avoir peur",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "J'___ un livre.",
+   "a": "Ai",
+   "o": [
+    "Suis",
+    "Ai",
+    "Ont",
+    "As"
+   ],
+   "h": "Eu tenho um livro.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tradução de 'tu as'?",
+   "a": "Você tem",
+   "o": [
+    "Você tem",
+    "Es",
+    "A",
+    "Avons"
+   ],
+   "h": "as = você tem",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "J'___ un frère.",
+   "a": "Ai",
+   "o": [
+    "As",
+    "Ai",
+    "Avons",
+    "Suis"
+   ],
+   "h": "Eu tenho um irmão.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'avoir le vent en poupe' significa?",
+   "a": "Estar indo bem",
+   "o": [
+    "Avons",
+    "Estar indo bem",
+    "Sont",
+    "Ont"
+   ],
+   "h": "estar com o vento a favor",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ faim aussi?",
+   "a": "Avez",
+   "o": [
+    "Avez",
+    "Ont",
+    "As",
+    "Sont"
+   ],
+   "h": "Vocês também têm fome?",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Qual pronome usa 'ont' com avoir?",
+   "a": "Ils/elles",
+   "o": [
+    "A",
+    "As",
+    "Ils/elles",
+    "Sont"
+   ],
+   "h": "ils/elles ont",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "J'___ la chance de voyager.",
+   "a": "Ai",
+   "o": [
+    "As",
+    "Sommes",
+    "Ai",
+    "A"
+   ],
+   "h": "Tenho a sorte de viajar.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'avoir beau' significa?",
+   "a": "Por mais que...",
+   "o": [
+    "Ont",
+    "Avez",
+    "Por mais que...",
+    "Suis"
+   ],
+   "h": "J'ai beau essayer = Por mais que eu tente",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ hâte d'arriver.",
+   "a": "Avons",
+   "o": [
+    "As",
+    "Avez",
+    "Est",
+    "Avons"
+   ],
+   "h": "Estamos ansiosos para chegar.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Qual é o ERRO: 'Je suis faim'?",
+   "a": "Deve ser 'J'ai faim'",
+   "o": [
+    "Deve ser 'Je suis faim'",
+    "Deve ser 'J'ai soif'",
+    "Deve ser 'J'ai froid'",
+    "Deve ser 'J'ai faim'"
+   ],
+   "h": "fome SEMPRE com avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Qual pronome usa 'avez' com avoir?",
+   "a": "Vous",
+   "o": [
+    "Es",
+    "Ai",
+    "Vous",
+    "Ont"
+   ],
+   "h": "vous avez",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ l'air fatigués.",
+   "a": "Avez",
+   "o": [
+    "Suis",
+    "A",
+    "Avez",
+    "Avons"
+   ],
+   "h": "Vocês parecem cansados.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Qual pronome usa 'avons' com avoir?",
+   "a": "Nous",
+   "o": [
+    "Nous",
+    "Ai",
+    "Est",
+    "Avez"
+   ],
+   "h": "nous avons",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'avoir du recul' significa?",
+   "a": "Ter perspectiva",
+   "o": [
+    "A",
+    "Ter perspectiva",
+    "Avez",
+    "Suis"
+   ],
+   "h": "ver de longe/objetivamente",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ honte de son erreur.",
+   "a": "A",
+   "o": [
+    "Es",
+    "A",
+    "As",
+    "Ont"
+   ],
+   "h": "Ele tem vergonha do seu erro.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "J'___ du mal à comprendre.",
+   "a": "Ai",
+   "o": [
+    "Avons",
+    "Suis",
+    "Avez",
+    "Ai"
+   ],
+   "h": "Tenho dificuldade para entender.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "J'___ honte.",
+   "a": "Ai",
+   "o": [
+    "As",
+    "Avons",
+    "Ai",
+    "Sommes"
+   ],
+   "h": "Tenho vergonha.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ un rendez-vous.",
+   "a": "A",
+   "o": [
+    "Avons",
+    "A",
+    "Avez",
+    "Êtes"
+   ],
+   "h": "Ele tem um compromisso.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Avoir froid' significa?",
+   "a": "Ter frio",
+   "o": [
+    "Ter frio",
+    "As",
+    "Sont",
+    "Avez"
+   ],
+   "h": "avoir froid",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Elles ___ peur.",
+   "a": "Ont",
+   "o": [
+    "Avons",
+    "Avez",
+    "Sommes",
+    "Ont"
+   ],
+   "h": "Elas têm medo.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ besoin de repos.",
+   "a": "Avons",
+   "o": [
+    "As",
+    "Avons",
+    "Ai",
+    "Sont"
+   ],
+   "h": "Precisamos de descanso.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'avoir le cafard' significa?",
+   "a": "Estar melancólico",
+   "o": [
+    "Estar entediado",
+    "Estar animado",
+    "Estar deprimido",
+    "Estar melancólico"
+   ],
+   "h": "avoir le cafard = estar deprimido",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Avoir tort' significa?",
+   "a": "Estar",
+   "o": [
+    "Avez",
+    "Es",
+    "Estar",
+    "A"
+   ],
+   "h": "avoir tort",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ du talent.",
+   "a": "A",
+   "o": [
+    "A",
+    "Ai",
+    "As",
+    "Est"
+   ],
+   "h": "Ele tem talento.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ sommeil après dîner.",
+   "a": "Ont",
+   "o": [
+    "Avez",
+    "As",
+    "Êtes",
+    "Ont"
+   ],
+   "h": "Eles têm sono após o jantar.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Il a la grippe' significa:",
+   "a": "Ele está com gripe",
+   "o": [
+    "Ele está com febre",
+    "Ele está resfriado",
+    "Ele está com tosse",
+    "Ele está com gripe"
+   ],
+   "h": "doenças: avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'avoir l'air' significa?",
+   "a": "Parecer",
+   "o": [
+    "Avons",
+    "Est",
+    "Parecer",
+    "As"
+   ],
+   "h": "avoir l'air fatigué = parecer cansado",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ du temps.",
+   "a": "Avons",
+   "o": [
+    "Avez",
+    "Êtes",
+    "Ai",
+    "Avons"
+   ],
+   "h": "Temos tempo.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Forma de 'avoir' para 'tu'?",
+   "a": "As",
+   "o": [
+    "Sommes",
+    "Avez",
+    "Ont",
+    "As"
+   ],
+   "h": "tu: as",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tradução de 'nous avons'?",
+   "a": "Nós temos",
+   "o": [
+    "Sont",
+    "Ont",
+    "Ai",
+    "Nós temos"
+   ],
+   "h": "avons = nós temos",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'en avoir assez' significa?",
+   "a": "Estar farto",
+   "o": [
+    "Estar farto",
+    "As",
+    "Ont",
+    "Êtes"
+   ],
+   "h": "J'en ai assez! = Estou farto!",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ peur de l'avion.",
+   "a": "Avons",
+   "o": [
+    "As",
+    "A",
+    "Avons",
+    "Sont"
+   ],
+   "h": "Temos medo de avião.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ beaucoup d'argent.",
+   "a": "Ont",
+   "o": [
+    "Avez",
+    "Ont",
+    "Es",
+    "As"
+   ],
+   "h": "Eles têm muito dinheiro.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Avoir faim' significa?",
+   "a": "Ter fome",
+   "o": [
+    "Ter fome",
+    "A",
+    "Ont",
+    "Êtes"
+   ],
+   "h": "sensações: avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ tendance à exagérer.",
+   "a": "Ont",
+   "o": [
+    "Ont",
+    "Sont",
+    "Avons",
+    "Ai"
+   ],
+   "h": "Eles têm tendência a exagerar.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Avoir chaud' descreve:",
+   "a": "Sensação de calor",
+   "o": [
+    "Sensação de fome",
+    "Sensação de calor",
+    "Sensação de frio",
+    "Sensação de cansaço"
+   ],
+   "h": "não é a temperatura do ar",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Conjuga 'avoir' para 'nous'?",
+   "a": "Avons",
+   "o": [
+    "A",
+    "Avons",
+    "Avez",
+    "Suis"
+   ],
+   "h": "nous avoir = avons",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'avoir l'intention' significa?",
+   "a": "Ter intenção",
+   "o": [
+    "Ter intenção",
+    "A",
+    "Ont",
+    "Suis"
+   ],
+   "h": "avoir l'intention de = pretender",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tradução de 'je ai'?",
+   "a": "Eu tenho",
+   "o": [
+    "As",
+    "Avons",
+    "Eu tenho",
+    "Êtes"
+   ],
+   "h": "ai = eu tenho",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Forma de 'avoir' para 'vous'?",
+   "a": "Avez",
+   "o": [
+    "Avez",
+    "Es",
+    "A",
+    "Avons"
+   ],
+   "h": "vous: avez",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Qual é o ERRO: 'Nous sommes soif'?",
+   "a": "Deve ser 'Nous avons soif'",
+   "o": [
+    "Deve ser 'Nous avons froid'",
+    "Deve ser 'Nous avons soif'",
+    "Deve ser 'Nous sommes soif'",
+    "Deve ser 'Nous avons peur'"
+   ],
+   "h": "sede: avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'avoir du mal' significa?",
+   "a": "Ter dificuldade",
+   "o": [
+    "Êtes",
+    "Ter dificuldade",
+    "A",
+    "As"
+   ],
+   "h": "avoir du mal à = ter dificuldade em",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'avoir les mains liées' significa?",
+   "a": "Ter as mãos atadas",
+   "o": [
+    "Ter as mãos atadas",
+    "Ter os pés frios",
+    "Ter a língua presa",
+    "Ter a cabeça pesada"
+   ],
+   "h": "não poder agir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Avoir confiance' significa?",
+   "a": "Ter confiança",
+   "o": [
+    "Es",
+    "Ont",
+    "Ter confiança",
+    "Avons"
+   ],
+   "h": "avoir confiance",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Conjuga 'avoir' para 'ils/elles'?",
+   "a": "Ont",
+   "o": [
+    "A",
+    "As",
+    "Suis",
+    "Ont"
+   ],
+   "h": "ils/elles avoir = ont",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ un jardin?",
+   "a": "Avez",
+   "o": [
+    "Sommes",
+    "A",
+    "Ont",
+    "Avez"
+   ],
+   "h": "Vocês têm um jardim?",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'avoir de la peine' significa?",
+   "a": "Ter dificuldade/tristeza",
+   "o": [
+    "Ter alegria/prazer",
+    "Ter pressa/urgência",
+    "Ter cuidado/atenção",
+    "Ter dificuldade/tristeza"
+   ],
+   "h": "avoir de la peine à = custar a",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Forma de 'avoir' para 'nous'?",
+   "a": "Avons",
+   "o": [
+    "Sont",
+    "Avons",
+    "As",
+    "Avez"
+   ],
+   "h": "nous: avons",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Il est vingt ans' está errado porque:",
+   "a": "Idade usa avoir, não être",
+   "o": [
+    "Profissão usa avoir, não être",
+    "Localização usa avoir, não être",
+    "Tempo usa avoir, não être",
+    "Idade usa avoir, não être"
+   ],
+   "h": "Il a vingt ans = correto",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ un passeport?",
+   "a": "Avez",
+   "o": [
+    "Avons",
+    "Ai",
+    "Êtes",
+    "Avez"
+   ],
+   "h": "Vocês têm passaporte?",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ sommeil.",
+   "a": "Ont",
+   "o": [
+    "Ont",
+    "A",
+    "Est",
+    "Avez"
+   ],
+   "h": "Eles têm sono.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Nous avons rendez-vous' significa:",
+   "a": "Temos um compromisso",
+   "o": [
+    "Temos um encontro",
+    "Temos uma festa",
+    "Temos um compromisso",
+    "Temos uma reunião"
+   ],
+   "h": "avoir rendez-vous",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Avoir sommeil' significa?",
+   "a": "Ter sono",
+   "o": [
+    "A",
+    "Ont",
+    "Suis",
+    "Ter sono"
+   ],
+   "h": "avoir sommeil",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ un vélo.",
+   "a": "A",
+   "o": [
+    "As",
+    "Suis",
+    "Avez",
+    "A"
+   ],
+   "h": "Ele tem uma bicicleta.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ de la fièvre.",
+   "a": "Ont",
+   "o": [
+    "Avons",
+    "Sommes",
+    "Ont",
+    "Avez"
+   ],
+   "h": "Eles estão com febre.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'n'avoir qu'à' significa?",
+   "a": "Basta apenas",
+   "o": [
+    "Basta apenas",
+    "Sommes",
+    "As",
+    "Avez"
+   ],
+   "h": "Tu n'as qu'à partir = Basta partir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Elle ___ soif.",
+   "a": "A",
+   "o": [
+    "Sont",
+    "A",
+    "Ont",
+    "Avons"
+   ],
+   "h": "Ela está com sede.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ intérêt à étudier.",
+   "a": "Avez",
+   "o": [
+    "As",
+    "Avez",
+    "Avons",
+    "Sont"
+   ],
+   "h": "É do interesse de vocês estudar.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Conjuga 'avoir' para 'tu'?",
+   "a": "As",
+   "o": [
+    "Avez",
+    "Sont",
+    "As",
+    "Ai"
+   ],
+   "h": "tu avoir = as",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'avoir tendance' significa?",
+   "a": "Ter tendência",
+   "o": [
+    "A",
+    "Ont",
+    "Ter tendência",
+    "Suis"
+   ],
+   "h": "avoir tendance à = tender a",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "J'___ chaud.",
+   "a": "Ai",
+   "o": [
+    "Avez",
+    "Avons",
+    "Êtes",
+    "Ai"
+   ],
+   "h": "Estou com calor.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Avoir soif' significa?",
+   "a": "Ter sede",
+   "o": [
+    "Ai",
+    "Ter sede",
+    "Ont",
+    "Êtes"
+   ],
+   "h": "avoir soif",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Avoir hâte' significa?",
+   "a": "Ter pressa",
+   "o": [
+    "A",
+    "Ter pressa",
+    "As",
+    "Suis"
+   ],
+   "h": "avoir hâte",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Conjuga 'avoir' para 'je'?",
+   "a": "Ai",
+   "o": [
+    "Suis",
+    "Ai",
+    "Avons",
+    "A"
+   ],
+   "h": "je avoir = ai",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ l'intention de partir.",
+   "a": "Avons",
+   "o": [
+    "Suis",
+    "A",
+    "Ont",
+    "Avons"
+   ],
+   "h": "Temos intenção de partir.",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Ils ont de la chance' significa:",
+   "a": "Eles têm sorte",
+   "o": [
+    "Ont",
+    "Êtes",
+    "Eles têm sorte",
+    "As"
+   ],
+   "h": "avoir de la chance",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Avoir honte' significa?",
+   "a": "Ter vergonha",
+   "o": [
+    "Ont",
+    "Sommes",
+    "Ter vergonha",
+    "A"
+   ],
+   "h": "avoir honte",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Avoir mal' significa?",
+   "a": "Ter dor",
+   "o": [
+    "Sommes",
+    "A",
+    "Ter dor",
+    "Avons"
+   ],
+   "h": "avoir mal",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Qual pronome usa 'as' com avoir?",
+   "a": "Tu",
+   "o": [
+    "Ai",
+    "Êtes",
+    "As",
+    "Tu"
+   ],
+   "h": "tu as",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ faim?",
+   "a": "As",
+   "o": [
+    "As",
+    "Ont",
+    "Avez",
+    "Es"
+   ],
+   "h": "Você está com fome?",
+   "t": "",
+   "l": ""
+  }
+ ],
+ "etre": [
+  {
+   "q": "'être dans ses petits souliers' significa?",
+   "a": "Estar na saia justa",
+   "o": [
+    "Estar na saia justa",
+    "Estar na lua",
+    "Estar no olho do furacão",
+    "Estar no céu das ideias"
+   ],
+   "h": "expressão: estar constrangido",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ en vacances.",
+   "a": "Sommes",
+   "o": [
+    "Sont",
+    "Es",
+    "A",
+    "Sommes"
+   ],
+   "h": "estado/característica: être (de férias)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ venus te voir.",
+   "a": "Sommes",
+   "o": [
+    "Ont",
+    "Sommes",
+    "Êtes",
+    "Suis"
+   ],
+   "h": "venir usa être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ journaliste.",
+   "a": "Sont",
+   "o": [
+    "Suis",
+    "A",
+    "Sont",
+    "Est"
+   ],
+   "h": "profissão: être (jornalista)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Je ___ dans la ville.",
+   "a": "Suis",
+   "o": [
+    "Suis",
+    "Sont",
+    "Ai",
+    "Es"
+   ],
+   "h": "localização/nacionalidade: être (na cidade)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Conjuga 'être' para 'ils/elles'?",
+   "a": "Sont",
+   "o": [
+    "Sont",
+    "Ai",
+    "Êtes",
+    "Es"
+   ],
+   "h": "ils/elles être = sont",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ conscient.",
+   "a": "Est",
+   "o": [
+    "Sommes",
+    "Est",
+    "Avons",
+    "Êtes"
+   ],
+   "h": "estado/característica: être (ciente)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'São três horas' em francês:",
+   "a": "Il est trois heures.",
+   "o": [
+    "Il est trois heures.",
+    "Il est deux heures.",
+    "Il est treize heures.",
+    "Il est quatre heures."
+   ],
+   "h": "il est + hora",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ triste.",
+   "a": "Sont",
+   "o": [
+    "Êtes",
+    "Ai",
+    "Suis",
+    "Sont"
+   ],
+   "h": "estado/característica: être (triste)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Pronome que usa 'sont' com être?",
+   "a": "Ils/elles",
+   "o": [
+    "Est",
+    "Es",
+    "Ils/elles",
+    "Avons"
+   ],
+   "h": "ils/elles sont",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Qual é o ERRO: 'Je suis vingt ans'?",
+   "a": "Deve ser 'J'ai vingt ans'",
+   "o": [
+    "Deve ser 'J'ai dix ans'",
+    "Deve ser 'Je suis jeune'",
+    "Deve ser 'J'ai trente ans'",
+    "Deve ser 'J'ai vingt ans'"
+   ],
+   "h": "idade: avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Je ___ fatigué.",
+   "a": "Suis",
+   "o": [
+    "Avez",
+    "Suis",
+    "Est",
+    "Sont"
+   ],
+   "h": "estado/característica: être (cansado)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'être en mesure de' significa?",
+   "a": "Estar em condições de",
+   "o": [
+    "Estar em condições de",
+    "Estar a cargo de",
+    "Estar na dúvida sobre",
+    "Estar em vez de"
+   ],
+   "h": "être en mesure de répondre",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ perdu.",
+   "a": "Sommes",
+   "o": [
+    "Ai",
+    "Sommes",
+    "Est",
+    "Es"
+   ],
+   "h": "estado/característica: être (perdido)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Conjuga 'être' para 'il/elle'?",
+   "a": "Est",
+   "o": [
+    "Sont",
+    "Es",
+    "As",
+    "Est"
+   ],
+   "h": "il/elle être = est",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ absent.",
+   "a": "Sont",
+   "o": [
+    "Sommes",
+    "Sont",
+    "Avez",
+    "Suis"
+   ],
+   "h": "estado/característica: être (ausente)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ en Espagne.",
+   "a": "Est",
+   "o": [
+    "Est",
+    "Sont",
+    "Avons",
+    "Êtes"
+   ],
+   "h": "localização/nacionalidade: être (na Espanha)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Je ___ à Paris.",
+   "a": "Suis",
+   "o": [
+    "Es",
+    "Suis",
+    "Est",
+    "As"
+   ],
+   "h": "localização/nacionalidade: être (em Paris)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Pronome que usa 'es' com être?",
+   "a": "Tu",
+   "o": [
+    "As",
+    "Tu",
+    "Es",
+    "Suis"
+   ],
+   "h": "tu es",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'être à bout de forces' significa?",
+   "a": "Estar no limite",
+   "o": [
+    "Ont",
+    "Sommes",
+    "Êtes",
+    "Estar no limite"
+   ],
+   "h": "não ter mais energia",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ d'accord.",
+   "a": "Est",
+   "o": [
+    "Êtes",
+    "Avons",
+    "Suis",
+    "Est"
+   ],
+   "h": "estado/característica: être (de acordo)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'É meio-dia' em francês:",
+   "a": "Il est midi.",
+   "o": [
+    "Avons",
+    "Il est midi.",
+    "Êtes",
+    "Suis"
+   ],
+   "h": "midi = meio-dia",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ en forme.",
+   "a": "Êtes",
+   "o": [
+    "Ont",
+    "Suis",
+    "Sommes",
+    "Êtes"
+   ],
+   "h": "estado/característica: être (em forma)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'être en panne' significa?",
+   "a": "Estar quebrado",
+   "o": [
+    "Estar quebrado",
+    "Es",
+    "As",
+    "Êtes"
+   ],
+   "h": "carro, computador, etc",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'être en avance' significa?",
+   "a": "Estar adiantado",
+   "o": [
+    "Sommes",
+    "Estar adiantado",
+    "As",
+    "Sont"
+   ],
+   "h": "contrário de en retard",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'É meia-noite' em francês:",
+   "a": "Il est minuit.",
+   "o": [
+    "Êtes",
+    "Il est minuit.",
+    "Ai",
+    "Es"
+   ],
+   "h": "minuit = meia-noite",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ resté à la maison.",
+   "a": "Est",
+   "o": [
+    "Suis",
+    "Avons",
+    "Est",
+    "Êtes"
+   ],
+   "h": "rester usa être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ comptable.",
+   "a": "Sommes",
+   "o": [
+    "Est",
+    "Ai",
+    "Êtes",
+    "Sommes"
+   ],
+   "h": "profissão: être (contador)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ européen.",
+   "a": "Sommes",
+   "o": [
+    "Êtes",
+    "Est",
+    "Sommes",
+    "Avez"
+   ],
+   "h": "localização/nacionalidade: être (europeu)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Pronome que usa 'est' com être?",
+   "a": "Il/elle",
+   "o": [
+    "Suis",
+    "Avez",
+    "Il/elle",
+    "Sommes"
+   ],
+   "h": "il/elle est",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ espagnol.",
+   "a": "Sont",
+   "o": [
+    "Avons",
+    "Êtes",
+    "Sont",
+    "Est"
+   ],
+   "h": "localização/nacionalidade: être (espanhol)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Ils sont en retard' significa:",
+   "a": "Eles estão atrasados",
+   "o": [
+    "Eles estão cansados",
+    "Eles estão adiantados",
+    "Eles estão perdidos",
+    "Eles estão atrasados"
+   ],
+   "h": "être en retard",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Pronome que usa 'êtes' com être?",
+   "a": "Vous",
+   "o": [
+    "Sont",
+    "Est",
+    "Vous",
+    "Ont"
+   ],
+   "h": "vous êtes",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Pronome que usa 'suis' com être?",
+   "a": "Je",
+   "o": [
+    "Ont",
+    "Je",
+    "Sont",
+    "Sommes"
+   ],
+   "h": "je suis",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'être à court de' significa?",
+   "a": "Estar sem",
+   "o": [
+    "Est",
+    "Es",
+    "As",
+    "Estar sem"
+   ],
+   "h": "être à court de ressources",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Tu es d'accord?' significa:",
+   "a": "Você concorda?",
+   "o": [
+    "Es",
+    "Você concorda?",
+    "Ai",
+    "Suis"
+   ],
+   "h": "être d'accord",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Conjuga 'être' para 'je'?",
+   "a": "Suis",
+   "o": [
+    "Es",
+    "Sommes",
+    "Suis",
+    "Avez"
+   ],
+   "h": "je être = suis",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ heureux.",
+   "a": "Est",
+   "o": [
+    "A",
+    "Es",
+    "Sont",
+    "Est"
+   ],
+   "h": "estado/característica: être (feliz)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Forma de 'être' para 'je'?",
+   "a": "Suis",
+   "o": [
+    "Ont",
+    "Suis",
+    "Sont",
+    "Sommes"
+   ],
+   "h": "je: suis",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ pharmacien.",
+   "a": "Est",
+   "o": [
+    "Êtes",
+    "Ai",
+    "Es",
+    "Est"
+   ],
+   "h": "profissão: être (farmacêutico)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Je ___ disponible.",
+   "a": "Suis",
+   "o": [
+    "Est",
+    "Sommes",
+    "Ont",
+    "Suis"
+   ],
+   "h": "estado/característica: être (disponível)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Elle ___ montée en haut.",
+   "a": "Est",
+   "o": [
+    "Ai",
+    "Est",
+    "Es",
+    "Sont"
+   ],
+   "h": "monter usa être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ rentré tard.",
+   "a": "Es",
+   "o": [
+    "Sommes",
+    "Ont",
+    "Es",
+    "Suis"
+   ],
+   "h": "rentrer usa être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ au Canada.",
+   "a": "Sommes",
+   "o": [
+    "Sont",
+    "Avez",
+    "Sommes",
+    "Suis"
+   ],
+   "h": "localização/nacionalidade: être (no Canadá)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Elle ___ devenue célèbre.",
+   "a": "Est",
+   "o": [
+    "Suis",
+    "Ai",
+    "Est",
+    "Es"
+   ],
+   "h": "devenir usa être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'être censé' significa?",
+   "a": "Ser suposto/dever",
+   "o": [
+    "Ser necessário/precisar",
+    "Ser capaz/conseguir",
+    "Ser possível/poder",
+    "Ser suposto/dever"
+   ],
+   "h": "être censé + inf",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Je ___ célèbre.",
+   "a": "Suis",
+   "o": [
+    "Suis",
+    "Sommes",
+    "A",
+    "Sont"
+   ],
+   "h": "estado/característica: être (famoso)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Je ___ brésilien.",
+   "a": "Suis",
+   "o": [
+    "Est",
+    "Avez",
+    "Suis",
+    "Sommes"
+   ],
+   "h": "localização/nacionalidade: être (brasileiro)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Forma de 'être' para 'tu'?",
+   "a": "Es",
+   "o": [
+    "Es",
+    "Sont",
+    "Êtes",
+    "Ai"
+   ],
+   "h": "tu: es",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ en France.",
+   "a": "Sommes",
+   "o": [
+    "Suis",
+    "Es",
+    "Sommes",
+    "As"
+   ],
+   "h": "localização/nacionalidade: être (na França)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Je ___ en retard.",
+   "a": "Suis",
+   "o": [
+    "Suis",
+    "Êtes",
+    "Es",
+    "Ai"
+   ],
+   "h": "estado/característica: être (atrasado)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Elles ___ cuisinier.",
+   "a": "Sont",
+   "o": [
+    "Suis",
+    "Sont",
+    "Est",
+    "Avez"
+   ],
+   "h": "profissão: être (cozinheiro)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ américain.",
+   "a": "Êtes",
+   "o": [
+    "Êtes",
+    "Avons",
+    "Est",
+    "Sont"
+   ],
+   "h": "localização/nacionalidade: être (americano)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ infirmière.",
+   "a": "Êtes",
+   "o": [
+    "Sont",
+    "Êtes",
+    "As",
+    "Est"
+   ],
+   "h": "profissão: être (enfermeira)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Pronome que usa 'sommes' com être?",
+   "a": "Nous",
+   "o": [
+    "Suis",
+    "Nous",
+    "As",
+    "Es"
+   ],
+   "h": "nous sommes",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ à Lyon.",
+   "a": "Es",
+   "o": [
+    "Est",
+    "Es",
+    "Sommes",
+    "A"
+   ],
+   "h": "localização/nacionalidade: être (em Lyon)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tradução de 'nous sommes'?",
+   "a": "Nós somos/estamos",
+   "o": [
+    "Nós somos/estamos",
+    "Vocês são/estão",
+    "Eles são/estão",
+    "Eu sou/estou"
+   ],
+   "h": "sommes = nós somos/estamos",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ sortis sans permission.",
+   "a": "Êtes",
+   "o": [
+    "Sommes",
+    "Suis",
+    "Êtes",
+    "Avez"
+   ],
+   "h": "sortir usa être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tradução de 'il/elle est'?",
+   "a": "Ele/ela é/está",
+   "o": [
+    "As",
+    "Suis",
+    "Est",
+    "Ele/ela é/está"
+   ],
+   "h": "est = ele/ela é/está",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Qual é o ERRO: 'Elle a médecin'?",
+   "a": "Deve ser 'Elle est médecin'",
+   "o": [
+    "Deve ser 'Elle est infirmière'",
+    "Deve ser 'Elle a médecin'",
+    "Deve ser 'Elle est médecin'",
+    "Deve ser 'Elle est docteur'"
+   ],
+   "h": "profissão: être, sem artigo",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ responsable.",
+   "a": "Sommes",
+   "o": [
+    "Sommes",
+    "Êtes",
+    "Ai",
+    "Sont"
+   ],
+   "h": "estado/característica: être (responsável)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Elle ___ directeur.",
+   "a": "Est",
+   "o": [
+    "Êtes",
+    "Sont",
+    "Ai",
+    "Est"
+   ],
+   "h": "profissão: être (diretor)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Que horas são?' em francês:",
+   "a": "Quelle heure est-il?",
+   "o": [
+    "Quel jour est-on?",
+    "Quelle saison sommes-nous?",
+    "Quelle temps fait-il?",
+    "Quelle heure est-il?"
+   ],
+   "h": "horas: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ français.",
+   "a": "Es",
+   "o": [
+    "As",
+    "Êtes",
+    "Sommes",
+    "Es"
+   ],
+   "h": "localização/nacionalidade: être (francês)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'être en passe de' significa?",
+   "a": "Estar prestes a",
+   "o": [
+    "Êtes",
+    "Sont",
+    "Estar prestes a",
+    "Ont"
+   ],
+   "h": "être en passe de réussir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ content.",
+   "a": "Êtes",
+   "o": [
+    "Sont",
+    "Êtes",
+    "Avons",
+    "Es"
+   ],
+   "h": "estado/característica: être (contente)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ professeur.",
+   "a": "Es",
+   "o": [
+    "Sommes",
+    "Es",
+    "Est",
+    "Ai"
+   ],
+   "h": "profissão: être (professor)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Forma de 'être' para 'il/elle'?",
+   "a": "Est",
+   "o": [
+    "Est",
+    "Es",
+    "Avez",
+    "Sommes"
+   ],
+   "h": "il/elle: est",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'São dez e meia' em francês:",
+   "a": "Il est dix heures et demie.",
+   "o": [
+    "Il est dix heures moins le quart.",
+    "Il est dix heures et demie.",
+    "Il est dix heures et quart.",
+    "Il est onze heures."
+   ],
+   "h": "et demie = e meia",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ descendus vite.",
+   "a": "Sont",
+   "o": [
+    "Êtes",
+    "Sont",
+    "Avons",
+    "Est"
+   ],
+   "h": "descendre usa être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tradução de 'je suis'?",
+   "a": "Eu sou/estou",
+   "o": [
+    "Avez",
+    "Est",
+    "Eu sou/estou",
+    "Es"
+   ],
+   "h": "suis = eu sou/estou",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ revenu de voyage.",
+   "a": "Est",
+   "o": [
+    "Suis",
+    "Avons",
+    "Sont",
+    "Est"
+   ],
+   "h": "revenir usa être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ italien.",
+   "a": "Sont",
+   "o": [
+    "Êtes",
+    "Sommes",
+    "Sont",
+    "Ont"
+   ],
+   "h": "localização/nacionalidade: être (italiano)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Nous sommes perdus' significa:",
+   "a": "Nós estamos perdidos",
+   "o": [
+    "Nós estamos voltando",
+    "Nós estamos chegando",
+    "Nós estamos saindo",
+    "Nós estamos perdidos"
+   ],
+   "h": "estar perdido: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Conjuga 'être' para 'nous'?",
+   "a": "Sommes",
+   "o": [
+    "Sommes",
+    "Ont",
+    "Suis",
+    "Est"
+   ],
+   "h": "nous être = sommes",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tradução de 'ils/elles sont'?",
+   "a": "Eles/elas são/estão",
+   "o": [
+    "Você é/está",
+    "Eu sou/estou",
+    "Eles/elas são/estão",
+    "Nós somos/estamos"
+   ],
+   "h": "sont = eles/elas são/estão",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Forma de 'être' para 'nous'?",
+   "a": "Sommes",
+   "o": [
+    "Ont",
+    "Êtes",
+    "Es",
+    "Sommes"
+   ],
+   "h": "nous: sommes",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'São oito menos quinze' em francês:",
+   "a": "Il est huit heures moins le quart.",
+   "o": [
+    "Il est sept heures et demie.",
+    "Il est huit heures moins le quart.",
+    "Il est huit heures et quart.",
+    "Il est neuf heures moins dix."
+   ],
+   "h": "moins le quart = -15 min",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ dentiste.",
+   "a": "Es",
+   "o": [
+    "Es",
+    "Ont",
+    "Sont",
+    "Suis"
+   ],
+   "h": "profissão: être (dentista)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'être en désaccord' significa?",
+   "a": "Discordar",
+   "o": [
+    "Sont",
+    "Discordar",
+    "Suis",
+    "Ai"
+   ],
+   "h": "contrário de d'accord",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Elle ___ arrivée hier.",
+   "a": "Est",
+   "o": [
+    "Sont",
+    "Avez",
+    "Est",
+    "Suis"
+   ],
+   "h": "arriver usa être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ au bureau.",
+   "a": "Est",
+   "o": [
+    "Est",
+    "Sommes",
+    "Es",
+    "A"
+   ],
+   "h": "localização/nacionalidade: être (no escritório)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Elle est enceinte' significa:",
+   "a": "Ela está grávida",
+   "o": [
+    "Ela está feliz",
+    "Ela está grávida",
+    "Ela está doente",
+    "Ela está cansada"
+   ],
+   "h": "estado físico: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'être au courant' significa?",
+   "a": "Estar por dentro",
+   "o": [
+    "Estar por fora",
+    "Estar por dentro",
+    "Estar de acordo",
+    "Estar em cima"
+   ],
+   "h": "être au courant = saber",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ partis tôt.",
+   "a": "Sont",
+   "o": [
+    "Avez",
+    "Suis",
+    "Sont",
+    "Es"
+   ],
+   "h": "partir usa être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'être en train de' significa?",
+   "a": "Estar fazendo algo agora",
+   "o": [
+    "Ter acabado de fazer",
+    "Estar prestes a fazer algo",
+    "Estar fazendo algo agora",
+    "Ter feito algo recentemente"
+   ],
+   "h": "être en train de + inf",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Elles ___ tombées.",
+   "a": "Sont",
+   "o": [
+    "Sont",
+    "Est",
+    "A",
+    "Es"
+   ],
+   "h": "tomber usa être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Je ___ médecin.",
+   "a": "Suis",
+   "o": [
+    "Ont",
+    "Suis",
+    "Est",
+    "Sommes"
+   ],
+   "h": "profissão: être (médico)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ à l'école.",
+   "a": "Sont",
+   "o": [
+    "Sont",
+    "Sommes",
+    "Avons",
+    "Suis"
+   ],
+   "h": "localização/nacionalidade: être (na escola)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'être sur le point de' significa?",
+   "a": "Estar a ponto de",
+   "o": [
+    "Estar longe de",
+    "Estar a ponto de",
+    "Ter acabado de",
+    "Estar em vez de"
+   ],
+   "h": "être sur le point de partir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Je ___ architecte.",
+   "a": "Suis",
+   "o": [
+    "Suis",
+    "Es",
+    "A",
+    "Sont"
+   ],
+   "h": "profissão: être (arquiteto)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tradução de 'vous êtes'?",
+   "a": "Vocês são/estão",
+   "o": [
+    "Avez",
+    "Sont",
+    "Vocês são/estão",
+    "Êtes"
+   ],
+   "h": "êtes = vocês são/estão",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ en bonne santé.",
+   "a": "Sont",
+   "o": [
+    "Suis",
+    "Avez",
+    "Êtes",
+    "Sont"
+   ],
+   "h": "estado/característica: être (saudável)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ prêt.",
+   "a": "Es",
+   "o": [
+    "Est",
+    "Es",
+    "Sont",
+    "Avons"
+   ],
+   "h": "estado/característica: être (pronto)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Hoje é segunda-feira' em francês:",
+   "a": "Aujourd'hui c'est lundi.",
+   "o": [
+    "Aujourd'hui c'est lundi.",
+    "Aujourd'hui c'est mercredi.",
+    "Aujourd'hui c'est mardi.",
+    "Aujourd'hui c'est vendredi."
+   ],
+   "h": "datas: c'est (être)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ malade.",
+   "a": "Êtes",
+   "o": [
+    "Êtes",
+    "Est",
+    "Sont",
+    "Avez"
+   ],
+   "h": "estado/característica: être (doente)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'être de taille à' significa?",
+   "a": "Ser capaz de",
+   "o": [
+    "Est",
+    "Avons",
+    "Suis",
+    "Ser capaz de"
+   ],
+   "h": "être de taille à = conseguir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ japonais.",
+   "a": "Est",
+   "o": [
+    "Es",
+    "Ai",
+    "Est",
+    "Suis"
+   ],
+   "h": "localização/nacionalidade: être (japonês)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ belge.",
+   "a": "Êtes",
+   "o": [
+    "Suis",
+    "Êtes",
+    "Ai",
+    "Es"
+   ],
+   "h": "localização/nacionalidade: être (belga)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ en avance.",
+   "a": "Es",
+   "o": [
+    "Es",
+    "Ai",
+    "Suis",
+    "Êtes"
+   ],
+   "h": "estado/característica: être (adiantado)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ ingénieur.",
+   "a": "Est",
+   "o": [
+    "Êtes",
+    "Sont",
+    "A",
+    "Est"
+   ],
+   "h": "profissão: être (engenheiro)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ avocat.",
+   "a": "Sommes",
+   "o": [
+    "As",
+    "Es",
+    "Sommes",
+    "Suis"
+   ],
+   "h": "profissão: être (advogado)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ en vacances.",
+   "a": "Êtes",
+   "o": [
+    "Sont",
+    "Êtes",
+    "Sommes",
+    "As"
+   ],
+   "h": "localização/nacionalidade: être (de férias)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'São sete e quinze' em francês:",
+   "a": "Il est sept heures et quart.",
+   "o": [
+    "Il est six heures et demie.",
+    "Il est huit heures et quart.",
+    "Il est sept heures moins le quart.",
+    "Il est sept heures et quart."
+   ],
+   "h": "et quart = e quinze",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ sûr.",
+   "a": "Es",
+   "o": [
+    "Es",
+    "Ai",
+    "Êtes",
+    "Suis"
+   ],
+   "h": "estado/característica: être (certo)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Forma de 'être' para 'ils/elles'?",
+   "a": "Sont",
+   "o": [
+    "Sont",
+    "Êtes",
+    "A",
+    "Sommes"
+   ],
+   "h": "ils/elles: sont",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'être en retard' significa?",
+   "a": "Estar atrasado",
+   "o": [
+    "Suis",
+    "Estar atrasado",
+    "Avez",
+    "Est"
+   ],
+   "h": "être en retard",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'être d'accord' significa?",
+   "a": "Concordar",
+   "o": [
+    "Est",
+    "Concordar",
+    "A",
+    "Êtes"
+   ],
+   "h": "être d'accord = concordar",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ à la maison.",
+   "a": "Es",
+   "o": [
+    "Suis",
+    "Sommes",
+    "Es",
+    "Avez"
+   ],
+   "h": "localização/nacionalidade: être (em casa)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Conjuga 'être' para 'tu'?",
+   "a": "Es",
+   "o": [
+    "Suis",
+    "Est",
+    "Es",
+    "As"
+   ],
+   "h": "tu être = es",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ intelligent.",
+   "a": "Es",
+   "o": [
+    "Ont",
+    "Sont",
+    "Êtes",
+    "Es"
+   ],
+   "h": "estado/característica: être (inteligente)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tradução de 'tu es'?",
+   "a": "Você é/está",
+   "o": [
+    "Avons",
+    "Est",
+    "Es",
+    "Você é/está"
+   ],
+   "h": "es = você é/está",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Forma de 'être' para 'vous'?",
+   "a": "Êtes",
+   "o": [
+    "Sommes",
+    "Suis",
+    "As",
+    "Êtes"
+   ],
+   "h": "vous: êtes",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Elle ___ née en 1990.",
+   "a": "Est",
+   "o": [
+    "Avez",
+    "Suis",
+    "Est",
+    "Sommes"
+   ],
+   "h": "naître usa être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Conjuga 'être' para 'vous'?",
+   "a": "Êtes",
+   "o": [
+    "Êtes",
+    "Ont",
+    "Sommes",
+    "Suis"
+   ],
+   "h": "vous être = êtes",
+   "t": "",
+   "l": ""
+  }
+ ],
+ "avoir_etre": [
+  {
+   "q": "Vous ___ en avance.",
+   "a": "Êtes",
+   "o": [
+    "Êtes",
+    "Suis",
+    "Avez",
+    "Ont"
+   ],
+   "h": "être en avance",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Qual é o ERRO: 'Elle a médecin'?",
+   "a": "Deve ser Elle est médecin",
+   "o": [
+    "Deve ser Elle a médecin",
+    "Deve ser Elle être médecin",
+    "Deve ser Elle est médecin",
+    "Deve ser Elle est docteur"
+   ],
+   "h": "profissão: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ du temps.",
+   "a": "Avons",
+   "o": [
+    "Ai",
+    "Sont",
+    "Avons",
+    "Avez"
+   ],
+   "h": "posse: avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Qual frase está CORRETA?",
+   "a": "Tu as peur?",
+   "o": [
+    "Tu as peur?",
+    "Ont",
+    "Avons",
+    "Es"
+   ],
+   "h": "medo: avoir peur",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ heureux.",
+   "a": "Sont",
+   "o": [
+    "Ont",
+    "Sont",
+    "Sommes",
+    "As"
+   ],
+   "h": "estado: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "J'___ du pain sur la planche.",
+   "a": "Ai",
+   "o": [
+    "Ont",
+    "Es",
+    "Ai",
+    "Est"
+   ],
+   "h": "avoir du pain sur la planche = muito trabalho",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ eu tort de partir.",
+   "a": "Avons",
+   "o": [
+    "Avez",
+    "Ai",
+    "Avons",
+    "Es"
+   ],
+   "h": "avoir eu tort = ter errado",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ dans ses petits souliers.",
+   "a": "Est",
+   "o": [
+    "Est",
+    "A",
+    "Suis",
+    "Ont"
+   ],
+   "h": "être dans ses petits souliers = na saia justa",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Ela tem vergonha.' — qual verbo usar?",
+   "a": "Avoir (elle a honte)",
+   "o": [
+    "Être (elle a honte)",
+    "Être (elle est honteuse)",
+    "Avoir (elle a eu honte)",
+    "Avoir (elle a honte)"
+   ],
+   "h": "avoir honte",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ prêt?",
+   "a": "Es",
+   "o": [
+    "A",
+    "Avez",
+    "Ont",
+    "Es"
+   ],
+   "h": "estado: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ faim?",
+   "a": "Avez",
+   "o": [
+    "Avez",
+    "Sont",
+    "Est",
+    "Ont"
+   ],
+   "h": "avoir faim",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "J'___ honte.",
+   "a": "Ai",
+   "o": [
+    "Sont",
+    "Est",
+    "Ai",
+    "Avez"
+   ],
+   "h": "avoir honte",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Eu tenho fome.' — qual verbo usar?",
+   "a": "Avoir (j'ai faim)",
+   "o": [
+    "Être (je suis faim)",
+    "Avoir (j'ai faim)",
+    "Avoir (j'ai très faim)",
+    "Être (j'ai besoin)"
+   ],
+   "h": "sensações: avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ responsables.",
+   "a": "Sont",
+   "o": [
+    "Suis",
+    "Sont",
+    "Es",
+    "Est"
+   ],
+   "h": "qualidade: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Vocês estão atrasados?' — qual verbo usar?",
+   "a": "Être (vous êtes en retard)",
+   "o": [
+    "Avoir (vous avez du retard)",
+    "Avoir (vous avez retard)",
+    "Être (vous êtes en retard)",
+    "Être (vous êtes tard)"
+   ],
+   "h": "état: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Qual é o ERRO: 'Il est vingt ans'?",
+   "a": "Deve ser Il a vingt ans",
+   "o": [
+    "Deve ser Il est âgé",
+    "Deve ser Il a vingt ans",
+    "Deve ser Il a deux ans",
+    "Deve ser Il est vingt ans"
+   ],
+   "h": "idade: avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Elle est née en 1990' usa être porque:",
+   "a": "Naître usa être como auxiliar",
+   "o": [
+    "Naître segue a regra geral",
+    "Naître usa avoir como auxiliar",
+    "Naître usa être como auxiliar",
+    "Naître funciona como verbo regular"
+   ],
+   "h": "verbos de movimento: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ conscient?",
+   "a": "Es",
+   "o": [
+    "Avons",
+    "Ai",
+    "Es",
+    "Suis"
+   ],
+   "h": "estado: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ tort.",
+   "a": "A",
+   "o": [
+    "Ont",
+    "Est",
+    "A",
+    "Avons"
+   ],
+   "h": "avoir tort",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ amis.",
+   "a": "Sommes",
+   "o": [
+    "Sont",
+    "Est",
+    "Sommes",
+    "Avons"
+   ],
+   "h": "identidade: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Ele é professor.' — qual verbo usar?",
+   "a": "Être (il est professeur)",
+   "o": [
+    "Avoir (il a professeur)",
+    "Avoir (il est prof)",
+    "Être (il est enseignant)",
+    "Être (il est professeur)"
+   ],
+   "h": "profissão: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ en retard.",
+   "a": "Sont",
+   "o": [
+    "Suis",
+    "Avons",
+    "Sont",
+    "As"
+   ],
+   "h": "être en retard",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Ela tem sede.' — qual verbo usar?",
+   "a": "Avoir (elle a soif)",
+   "o": [
+    "Avoir (elle a très soif)",
+    "Être (elle a soif)",
+    "Avoir (elle a soif)",
+    "Être (elle est soifée)"
+   ],
+   "h": "sensação: avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ prêts?",
+   "a": "Êtes",
+   "o": [
+    "Suis",
+    "A",
+    "Avons",
+    "Êtes"
+   ],
+   "h": "estado: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ en vacances.",
+   "a": "Sommes",
+   "o": [
+    "Es",
+    "Est",
+    "Sommes",
+    "Suis"
+   ],
+   "h": "situação: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Je ___ content.",
+   "a": "Suis",
+   "o": [
+    "Ai",
+    "Sommes",
+    "Suis",
+    "A"
+   ],
+   "h": "estado: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Qual frase está CORRETA?",
+   "a": "Il est à Paris.",
+   "o": [
+    "Avons",
+    "As",
+    "Avez",
+    "Il est à Paris."
+   ],
+   "h": "localização: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ chaud.",
+   "a": "Ont",
+   "o": [
+    "Est",
+    "Ont",
+    "Es",
+    "Suis"
+   ],
+   "h": "avoir chaud",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Ele tem medo de altura.' — qual verbo usar?",
+   "a": "Avoir (il a peur des hauteurs)",
+   "o": [
+    "Être (il est effrayé)",
+    "Être (il est peureux)",
+    "Avoir (il a peur du vide)",
+    "Avoir (il a peur des hauteurs)"
+   ],
+   "h": "avoir peur",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ sommeil?",
+   "a": "Avez",
+   "o": [
+    "Sommes",
+    "Êtes",
+    "Avez",
+    "A"
+   ],
+   "h": "avoir sommeil",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "J'___ rendez-vous.",
+   "a": "Ai",
+   "o": [
+    "Ont",
+    "Est",
+    "Ai",
+    "As"
+   ],
+   "h": "avoir rendez-vous",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Nós temos sorte.' — qual verbo usar?",
+   "a": "Avoir (nous avons de la chance)",
+   "o": [
+    "Être (nous avons chance)",
+    "Être (nous sommes chanceux)",
+    "Avoir (nous avons bien chance)",
+    "Avoir (nous avons de la chance)"
+   ],
+   "h": "avoir de la chance",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ en passe de réussir.",
+   "a": "Sont",
+   "o": [
+    "Est",
+    "Suis",
+    "Sont",
+    "Es"
+   ],
+   "h": "être en passe de = estar prestes a",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ grand.",
+   "a": "Est",
+   "o": [
+    "Suis",
+    "Avez",
+    "Est",
+    "Ont"
+   ],
+   "h": "característica: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Nós estamos cansados.' — qual verbo usar?",
+   "a": "Être (nous sommes fatigués)",
+   "o": [
+    "Avoir (nous sommes fatigués)",
+    "Être (nous sommes fatigués)",
+    "Être (nous sommes las)",
+    "Avoir (nous avons fatigues)"
+   ],
+   "h": "estado: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Elle ___ enceinte.",
+   "a": "Est",
+   "o": [
+    "Avez",
+    "Est",
+    "Êtes",
+    "Sommes"
+   ],
+   "h": "estado: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Qual frase está CORRETA?",
+   "a": "Elle est médecin.",
+   "o": [
+    "Elle a médecin.",
+    "Elle est le médecin.",
+    "Elle est une médecin.",
+    "Elle est médecin."
+   ],
+   "h": "profissão: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "J'___ beau insister, il refuse.",
+   "a": "Ai",
+   "o": [
+    "Sont",
+    "A",
+    "Avons",
+    "Ai"
+   ],
+   "h": "avoir beau = por mais que...",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Elle ___ tombée amoureuse.",
+   "a": "Est",
+   "o": [
+    "Avez",
+    "Est",
+    "Suis",
+    "Es"
+   ],
+   "h": "tomber usa être no passé composé",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ en France.",
+   "a": "Est",
+   "o": [
+    "A",
+    "Est",
+    "Sont",
+    "Êtes"
+   ],
+   "h": "localização: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'J'ai beau essayer' significa:",
+   "a": "Por mais que eu tente",
+   "o": [
+    "Antes que eu tente",
+    "Depois que eu tente",
+    "Por mais que eu tente",
+    "Mesmo que eu tente"
+   ],
+   "h": "avoir beau = por mais que",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Ils sont partis tôt' usa être porque:",
+   "a": "Partir usa être como auxiliar",
+   "o": [
+    "Partir usa ambos os auxiliares",
+    "Partir usa avoir como auxiliar",
+    "Partir segue a regra geral",
+    "Partir usa être como auxiliar"
+   ],
+   "h": "verbos de movimento: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Travailler' usa qual auxiliar no passé composé?",
+   "a": "Avoir (il a travaillé)",
+   "o": [
+    "Être (il a travaillé)",
+    "Avoir (il a travaillé)",
+    "Avoir (il a bien travaillé)",
+    "Être (il est travaillé)"
+   ],
+   "h": "travailler usa avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Elas são felizes.' — qual verbo usar?",
+   "a": "Être (elles sont heureuses)",
+   "o": [
+    "Avoir (elles ont heureuses)",
+    "Avoir (elles sont heureuses)",
+    "Être (elles sont heureuse)",
+    "Être (elles sont heureuses)"
+   ],
+   "h": "estado emocional: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ le vent en poupe.",
+   "a": "Avons",
+   "o": [
+    "As",
+    "Ai",
+    "Avez",
+    "Avons"
+   ],
+   "h": "avoir le vent en poupe = estar indo bem",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ une voiture.",
+   "a": "A",
+   "o": [
+    "A",
+    "Suis",
+    "Êtes",
+    "Avez"
+   ],
+   "h": "posse: avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ absent.",
+   "a": "Est",
+   "o": [
+    "Est",
+    "Avons",
+    "Ai",
+    "Avez"
+   ],
+   "h": "estado: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Qual é o ERRO: 'Nous sommes soif'?",
+   "a": "Deve ser Nous avons soif",
+   "o": [
+    "Deve ser Nous sommes assoiffés",
+    "Deve ser Nous avons soif",
+    "Deve ser Nous avons peur",
+    "Deve ser Nous avons froid"
+   ],
+   "h": "sede: avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ sommeil.",
+   "a": "A",
+   "o": [
+    "Sont",
+    "Sommes",
+    "A",
+    "Avons"
+   ],
+   "h": "avoir sommeil",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ de la chance!",
+   "a": "As",
+   "o": [
+    "As",
+    "Es",
+    "Êtes",
+    "Sommes"
+   ],
+   "h": "avoir de la chance",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ en forme.",
+   "a": "Sommes",
+   "o": [
+    "Es",
+    "Avons",
+    "Avez",
+    "Sommes"
+   ],
+   "h": "estado: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Tomber' usa qual auxiliar no passé composé?",
+   "a": "Être (il est tombé)",
+   "o": [
+    "Être (il est tombé)",
+    "Être (il est tombé par terre)",
+    "Avoir (il est tombé)",
+    "Avoir (il a tombé)"
+   ],
+   "h": "tomber usa être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ la grippe?",
+   "a": "Avez",
+   "o": [
+    "A",
+    "Avez",
+    "Sommes",
+    "Suis"
+   ],
+   "h": "avoir la grippe",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Ele está em Paris.' — qual verbo usar?",
+   "a": "Être (il est à Paris)",
+   "o": [
+    "Être (il est en Paris)",
+    "Avoir (il est à Paris)",
+    "Avoir (il a Paris)",
+    "Être (il est à Paris)"
+   ],
+   "h": "localização: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ en train de changer.",
+   "a": "Sommes",
+   "o": [
+    "Sommes",
+    "Est",
+    "Suis",
+    "Êtes"
+   ],
+   "h": "être en train de = estar fazendo",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Nós somos amigos.' — qual verbo usar?",
+   "a": "Être (nous sommes amis)",
+   "o": [
+    "Avoir (nous avons amis)",
+    "Être (nous sommes amis)",
+    "Être (nous sommes amies)",
+    "Avoir (nous sommes amis)"
+   ],
+   "h": "identidade: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Elle ___ peur.",
+   "a": "A",
+   "o": [
+    "A",
+    "Êtes",
+    "Avons",
+    "Avez"
+   ],
+   "h": "avoir peur",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Qual frase está CORRETA?",
+   "a": "Nous avons faim.",
+   "o": [
+    "Nous sommes faim.",
+    "Nous avons faim.",
+    "Nous sommes affamés.",
+    "Nous avons très faim."
+   ],
+   "h": "fome: avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ censés partir demain.",
+   "a": "Sont",
+   "o": [
+    "Ai",
+    "Sont",
+    "Êtes",
+    "Es"
+   ],
+   "h": "être censé = ser suposto",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Elle ___ en mesure de répondre.",
+   "a": "Est",
+   "o": [
+    "Ont",
+    "Avons",
+    "Es",
+    "Est"
+   ],
+   "h": "être en mesure = ser capaz",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ froid?",
+   "a": "As",
+   "o": [
+    "As",
+    "Suis",
+    "Ont",
+    "Sommes"
+   ],
+   "h": "avoir froid",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ beaucoup d'argent.",
+   "a": "Ont",
+   "o": [
+    "Sont",
+    "Suis",
+    "As",
+    "Ont"
+   ],
+   "h": "posse: avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ un frère?",
+   "a": "As",
+   "o": [
+    "Sommes",
+    "A",
+    "As",
+    "Ai"
+   ],
+   "h": "posse: avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ de la chance.",
+   "a": "Avez",
+   "o": [
+    "Avons",
+    "Êtes",
+    "A",
+    "Avez"
+   ],
+   "h": "avoir de la chance",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ disponibles?",
+   "a": "Êtes",
+   "o": [
+    "Sont",
+    "Êtes",
+    "Avez",
+    "Suis"
+   ],
+   "h": "estado: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Você está doente?' — qual verbo usar?",
+   "a": "Être (tu es malade)",
+   "o": [
+    "Avoir (tu as maladie)",
+    "Avoir (tu es malade)",
+    "Être (tu es malade)",
+    "Être (tu est malade)"
+   ],
+   "h": "état: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Ela é médica.' — qual verbo usar?",
+   "a": "Être (elle est médecin)",
+   "o": [
+    "Être (elle est médecine)",
+    "Être (elle est médecin)",
+    "Avoir (elle est médecin)",
+    "Avoir (elle a médecin)"
+   ],
+   "h": "profissão: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ français?",
+   "a": "Êtes",
+   "o": [
+    "A",
+    "Avez",
+    "Êtes",
+    "Avons"
+   ],
+   "h": "nationalidade: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ fatigués.",
+   "a": "Sont",
+   "o": [
+    "Avez",
+    "Est",
+    "Sont",
+    "Ai"
+   ],
+   "h": "estado: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ tendance à exagérer.",
+   "a": "Ont",
+   "o": [
+    "Est",
+    "Ont",
+    "A",
+    "As"
+   ],
+   "h": "avoir tendance",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Arriver' usa qual auxiliar no passé composé?",
+   "a": "Être (il est arrivé)",
+   "o": [
+    "Avoir (il est arrivé)",
+    "Être (il est arrivé)",
+    "Être (il est arrivée)",
+    "Avoir (il a arrivé)"
+   ],
+   "h": "arriver usa être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ mal à la tête.",
+   "a": "Ont",
+   "o": [
+    "Êtes",
+    "As",
+    "Ont",
+    "A"
+   ],
+   "h": "avoir mal",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Eles têm experiência.' — qual verbo usar?",
+   "a": "Avoir (ils ont de l'expérience)",
+   "o": [
+    "Être (ils ont de l'expérience)",
+    "Avoir (ils ont de l'expérience)",
+    "Être (ils sont expérimentés)",
+    "Avoir (ils ont beaucoup d'expérience)"
+   ],
+   "h": "posse: avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Grandir' usa qual auxiliar no passé composé?",
+   "a": "Avoir (il a grandi)",
+   "o": [
+    "Avoir (il a grandi)",
+    "Être (il est grandi)",
+    "Être (il a grandi)",
+    "Avoir (il a bien grandi)"
+   ],
+   "h": "grandir usa avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Je ___ médecin.",
+   "a": "Suis",
+   "o": [
+    "Suis",
+    "Avons",
+    "Êtes",
+    "A"
+   ],
+   "h": "profissão: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ en retard.",
+   "a": "Es",
+   "o": [
+    "Avons",
+    "A",
+    "Est",
+    "Es"
+   ],
+   "h": "être en retard",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Elle ___ belle.",
+   "a": "Est",
+   "o": [
+    "Suis",
+    "Est",
+    "Avez",
+    "Avons"
+   ],
+   "h": "característica: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ sûrs?",
+   "a": "Êtes",
+   "o": [
+    "Suis",
+    "Ai",
+    "Sont",
+    "Êtes"
+   ],
+   "h": "estado: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ confiance.",
+   "a": "Avons",
+   "o": [
+    "Es",
+    "Avons",
+    "Êtes",
+    "Est"
+   ],
+   "h": "avoir confiance",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Je ___ brésilien.",
+   "a": "Suis",
+   "o": [
+    "Avons",
+    "Suis",
+    "Ont",
+    "Ai"
+   ],
+   "h": "nationalidade: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ raison.",
+   "a": "Avons",
+   "o": [
+    "Ont",
+    "Avons",
+    "Ai",
+    "Es"
+   ],
+   "h": "avoir raison",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Il est question de budget' significa:",
+   "a": "Trata-se de orçamento",
+   "o": [
+    "Depende do orçamento",
+    "Fala-se de dinheiro",
+    "Trata-se de orçamento",
+    "Trata-se de trabalho"
+   ],
+   "h": "il est question de = trata-se de",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ besoin de repos.",
+   "a": "Avons",
+   "o": [
+    "As",
+    "A",
+    "Avez",
+    "Avons"
+   ],
+   "h": "avoir besoin",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ d'accord.",
+   "a": "Sommes",
+   "o": [
+    "Sommes",
+    "A",
+    "Êtes",
+    "Avons"
+   ],
+   "h": "être d'accord",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Elle ___ de taille à le faire.",
+   "a": "Est",
+   "o": [
+    "As",
+    "Est",
+    "Avons",
+    "Sommes"
+   ],
+   "h": "être de taille à = ser capaz",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu n'___ qu'à lui parler.",
+   "a": "As",
+   "o": [
+    "Ai",
+    "Sommes",
+    "A",
+    "As"
+   ],
+   "h": "n'avoir qu'à = basta apenas",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Qual é o ERRO: 'Je suis faim'?",
+   "a": "Deve ser J'ai faim",
+   "o": [
+    "Deve ser J'ai soif",
+    "Deve ser J'ai faim",
+    "Deve ser J'avais faim",
+    "Deve ser Je suis affamé"
+   ],
+   "h": "fome: avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ perdus.",
+   "a": "Sommes",
+   "o": [
+    "Sommes",
+    "Avons",
+    "A",
+    "Est"
+   ],
+   "h": "estado: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Qual é o ERRO: 'Tu es chaud'?",
+   "a": "Deve ser Tu as chaud",
+   "o": [
+    "Deve ser Tu as fièvre",
+    "Deve ser Tu es chaud",
+    "Deve ser Tu as froid",
+    "Deve ser Tu as chaud"
+   ],
+   "h": "calor: avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Estou em casa.' — qual verbo usar?",
+   "a": "Être (je suis à la maison)",
+   "o": [
+    "Être (je suis chez moi)",
+    "Avoir (j'ai maison)",
+    "Être (je suis à la maison)",
+    "Avoir (je suis à maison)"
+   ],
+   "h": "localização: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Elas têm razão.' — qual verbo usar?",
+   "a": "Avoir (elles ont raison)",
+   "o": [
+    "Être (elles ont raison)",
+    "Être (elles sont dans le vrai)",
+    "Avoir (elles ont raison)",
+    "Avoir (elles ont bien raison)"
+   ],
+   "h": "avoir raison",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Você é brasileiro?' — qual verbo usar?",
+   "a": "Être (tu es brésilien)",
+   "o": [
+    "Être (tu es brésilien)",
+    "Avoir (tu as brésilien)",
+    "Avoir (tu es brésilien)",
+    "Être (tu est brésilien)"
+   ],
+   "h": "nacionalidade: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Eu preciso de ajuda.' — qual verbo usar?",
+   "a": "Avoir (j'ai besoin d'aide)",
+   "o": [
+    "Avoir (j'ai un besoin)",
+    "Être (j'ai besoin d'aide)",
+    "Avoir (j'ai besoin d'aide)",
+    "Être (je suis besoin d'aide)"
+   ],
+   "h": "avoir besoin",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "J'___ faim.",
+   "a": "Ai",
+   "o": [
+    "Ont",
+    "Ai",
+    "Suis",
+    "Es"
+   ],
+   "h": "avoir faim",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Qual frase está CORRETA?",
+   "a": "J'ai vingt ans.",
+   "o": [
+    "Sont",
+    "A",
+    "As",
+    "J'ai vingt ans."
+   ],
+   "h": "idade: avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "J'___ envie de café.",
+   "a": "Ai",
+   "o": [
+    "Avons",
+    "Ai",
+    "Sont",
+    "Sommes"
+   ],
+   "h": "avoir envie",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Entrer' usa qual auxiliar no passé composé?",
+   "a": "Être (il est entré)",
+   "o": [
+    "Avoir (il est entré)",
+    "Être (il est rentré)",
+    "Être (il est entré)",
+    "Avoir (il a entré)"
+   ],
+   "h": "entrer usa être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Je ___ étudiant.",
+   "a": "Suis",
+   "o": [
+    "Êtes",
+    "Sommes",
+    "Suis",
+    "As"
+   ],
+   "h": "identidade: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ honte.",
+   "a": "As",
+   "o": [
+    "Êtes",
+    "Avez",
+    "Sont",
+    "As"
+   ],
+   "h": "avoir honte",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ le droit.",
+   "a": "Ont",
+   "o": [
+    "Ont",
+    "Sommes",
+    "Avez",
+    "A"
+   ],
+   "h": "avoir le droit",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Elle ___ trente ans.",
+   "a": "A",
+   "o": [
+    "Sont",
+    "Avez",
+    "A",
+    "Ai"
+   ],
+   "h": "idade: avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "J'___ soif.",
+   "a": "Ai",
+   "o": [
+    "A",
+    "Est",
+    "As",
+    "Ai"
+   ],
+   "h": "avoir soif",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Eu tenho 25 anos.' — qual verbo usar?",
+   "a": "Avoir (j'ai 25 ans)",
+   "o": [
+    "Avoir (j'ai vingt-cinq années)",
+    "Être (j'ai 25 ans de vie)",
+    "Être (j'ai 25 ans)",
+    "Avoir (j'ai 25 ans)"
+   ],
+   "h": "idade: avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ malade?",
+   "a": "Es",
+   "o": [
+    "Es",
+    "Ai",
+    "Est",
+    "Êtes"
+   ],
+   "h": "estado: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ affaire à un expert.",
+   "a": "Avez",
+   "o": [
+    "A",
+    "Ont",
+    "Avez",
+    "Avons"
+   ],
+   "h": "avoir affaire à = lidar com",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Il ___ question de budget.",
+   "a": "Est",
+   "o": [
+    "Es",
+    "Est",
+    "As",
+    "Ont"
+   ],
+   "h": "il est question de = trata-se de",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ d'accord?",
+   "a": "Es",
+   "o": [
+    "Es",
+    "Est",
+    "Êtes",
+    "As"
+   ],
+   "h": "être d'accord",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Je ___ à Paris.",
+   "a": "Suis",
+   "o": [
+    "Suis",
+    "Sommes",
+    "Ai",
+    "Avez"
+   ],
+   "h": "localização: être",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Manger' usa qual auxiliar no passé composé?",
+   "a": "Avoir (il a mangé)",
+   "o": [
+    "Avoir (il a bien mangé)",
+    "Avoir (il a mangé)",
+    "Être (il est mangé)",
+    "Être (il a mangé)"
+   ],
+   "h": "manger usa avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ intérêt à écouter.",
+   "a": "Avez",
+   "o": [
+    "Avons",
+    "Êtes",
+    "Ont",
+    "Avez"
+   ],
+   "h": "avoir intérêt = ser do interesse",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Você tem um cachorro?' — qual verbo usar?",
+   "a": "Avoir (tu as un chien)",
+   "o": [
+    "Être (tu as un chien)",
+    "Être (tu es chien)",
+    "Avoir (tu as une chienne)",
+    "Avoir (tu as un chien)"
+   ],
+   "h": "posse: avoir",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Vous ___ intérêt à partir.",
+   "a": "Avez",
+   "o": [
+    "Avez",
+    "Ai",
+    "Es",
+    "Est"
+   ],
+   "h": "avoir intérêt",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Tu ___ l'air fatigué.",
+   "a": "As",
+   "o": [
+    "As",
+    "Es",
+    "Ont",
+    "A"
+   ],
+   "h": "avoir l'air",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Ils ___ au courant.",
+   "a": "Sont",
+   "o": [
+    "Suis",
+    "Avons",
+    "Sont",
+    "Avez"
+   ],
+   "h": "être au courant",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Nous ___ du mal.",
+   "a": "Avons",
+   "o": [
+    "Êtes",
+    "Avons",
+    "Ont",
+    "A"
+   ],
+   "h": "avoir du mal",
+   "t": "",
+   "l": ""
+  }
+ ],
+ "fill_in": [
+  {
+   "q": "Elle ___ née en 1995.",
+   "a": "Est",
+   "o": [
+    "Ai",
+    "Est",
+    "As",
+    "A"
+   ],
+   "h": "naître: être auxiliar",
+   "t": "Ela nasceu em 1995.",
+   "l": "médio"
+  },
+  {
+   "q": "Vous ___ de la peine à accepter la vérité.",
+   "a": "Avez",
+   "o": [
+    "A",
+    "Ai",
+    "Avez",
+    "As"
+   ],
+   "h": "avoir de la peine à",
+   "t": "Têm dificuldade de aceitar a verdade.",
+   "l": "difícil"
+  },
+  {
+   "q": "Vous ___ de la famille ici?",
+   "a": "Avez",
+   "o": [
+    "As",
+    "A",
+    "Ai",
+    "Avez"
+   ],
+   "h": "posse: avoir",
+   "t": "Têm família aqui?",
+   "l": "médio"
+  },
+  {
+   "q": "Il ___ bonne mine aujourd'hui.",
+   "a": "A",
+   "o": [
+    "Avons",
+    "As",
+    "Ai",
+    "A"
+   ],
+   "h": "avoir bonne mine",
+   "t": "Ele está com boa aparência.",
+   "l": "médio"
+  },
+  {
+   "q": "Ils ___ beaucoup d'amis.",
+   "a": "Ont",
+   "o": [
+    "A",
+    "As",
+    "Ont",
+    "Ai"
+   ],
+   "h": "posse: avoir",
+   "t": "Eles têm muitos amigos.",
+   "l": "fácil"
+  },
+  {
+   "q": "Tu ___ malade?",
+   "a": "Es",
+   "o": [
+    "Ai",
+    "Es",
+    "A",
+    "As"
+   ],
+   "h": "estado: être",
+   "t": "Você está doente?",
+   "l": "fácil"
+  },
+  {
+   "q": "Nous ___ le vent en poupe.",
+   "a": "Avons",
+   "o": [
+    "Ai",
+    "Avons",
+    "A",
+    "As"
+   ],
+   "h": "avoir le vent en poupe",
+   "t": "Estamos com tudo a favor.",
+   "l": "difícil"
+  },
+  {
+   "q": "Elle ___ de la fièvre.",
+   "a": "A",
+   "o": [
+    "Ai",
+    "Avons",
+    "A",
+    "As"
+   ],
+   "h": "avoir de la fièvre",
+   "t": "Ela está com febre.",
+   "l": "médio"
+  },
+  {
+   "q": "Elle ___ grandi dans une grande famille.",
+   "a": "A",
+   "o": [
+    "A",
+    "Avons",
+    "As",
+    "Ai"
+   ],
+   "h": "grandir: avoir auxiliar",
+   "t": "Ela cresceu em família grande.",
+   "l": "difícil"
+  },
+  {
+   "q": "J'___ du mal à comprendre.",
+   "a": "Ai",
+   "o": [
+    "As",
+    "Avons",
+    "A",
+    "Ai"
+   ],
+   "h": "avoir du mal à",
+   "t": "Tenho dificuldade de entender.",
+   "l": "médio"
+  },
+  {
+   "q": "Tu n'___ qu'à lui parler.",
+   "a": "As",
+   "o": [
+    "As",
+    "Ai",
+    "A",
+    "Avons"
+   ],
+   "h": "n'avoir qu'à = basta",
+   "t": "Basta você falar com ele.",
+   "l": "difícil"
+  },
+  {
+   "q": "Nous ___ beau essayer, c'est impossible.",
+   "a": "Avons",
+   "o": [
+    "A",
+    "As",
+    "Avons",
+    "Ai"
+   ],
+   "h": "avoir beau",
+   "t": "Por mais que tentemos, é impossível.",
+   "l": "difícil"
+  },
+  {
+   "q": "Il ___ dans ses petits souliers avant l'examen.",
+   "a": "Est",
+   "o": [
+    "As",
+    "A",
+    "Ai",
+    "Est"
+   ],
+   "h": "être dans ses petits souliers",
+   "t": "Ele está na saia justa antes da prova.",
+   "l": "difícil"
+  },
+  {
+   "q": "Il ___ vingt-cinq ans.",
+   "a": "A",
+   "o": [
+    "As",
+    "Avons",
+    "Ai",
+    "A"
+   ],
+   "h": "idade: avoir",
+   "t": "Ele tem vinte e cinco anos.",
+   "l": "fácil"
+  },
+  {
+   "q": "Tu ___ français?",
+   "a": "Es",
+   "o": [
+    "Ai",
+    "As",
+    "A",
+    "Es"
+   ],
+   "h": "nacionalidade: être",
+   "t": "Você é francês?",
+   "l": "fácil"
+  },
+  {
+   "q": "Ils ___ à Paris.",
+   "a": "Sont",
+   "o": [
+    "A",
+    "As",
+    "Ai",
+    "Sont"
+   ],
+   "h": "localização: être",
+   "t": "Eles estão em Paris.",
+   "l": "fácil"
+  },
+  {
+   "q": "Nous ___ eu raison d'insister.",
+   "a": "Avons",
+   "o": [
+    "Ai",
+    "As",
+    "Avons",
+    "A"
+   ],
+   "h": "avoir eu raison",
+   "t": "Tivemos razão em insistir.",
+   "l": "médio"
+  },
+  {
+   "q": "Ils ___ tendance à arriver tard.",
+   "a": "Ont",
+   "o": [
+    "Ont",
+    "As",
+    "Ai",
+    "A"
+   ],
+   "h": "avoir tendance",
+   "t": "Tendem a chegar tarde.",
+   "l": "médio"
+  },
+  {
+   "q": "Ils ___ en mesure de répondre.",
+   "a": "Sont",
+   "o": [
+    "A",
+    "Sont",
+    "As",
+    "Ai"
+   ],
+   "h": "être en mesure",
+   "t": "Estão em condições de responder.",
+   "l": "médio"
+  },
+  {
+   "q": "Elle ___ grandi à Paris.",
+   "a": "A",
+   "o": [
+    "Ai",
+    "Avons",
+    "As",
+    "A"
+   ],
+   "h": "grandir: avoir auxiliar",
+   "t": "Ela cresceu em Paris.",
+   "l": "difícil"
+  },
+  {
+   "q": "J'___ sommeil.",
+   "a": "Ai",
+   "o": [
+    "Avons",
+    "As",
+    "Ai",
+    "A"
+   ],
+   "h": "avoir sommeil",
+   "t": "Estou com sono.",
+   "l": "fácil"
+  },
+  {
+   "q": "Vous ___ raison.",
+   "a": "Avez",
+   "o": [
+    "As",
+    "Ai",
+    "A",
+    "Avez"
+   ],
+   "h": "avoir raison",
+   "t": "Vocês têm razão.",
+   "l": "fácil"
+  },
+  {
+   "q": "Tu ___ né(e) en quelle année?",
+   "a": "Es",
+   "o": [
+    "As",
+    "Ai",
+    "Es",
+    "A"
+   ],
+   "h": "naître: être",
+   "t": "Em que ano você nasceu?",
+   "l": "médio"
+  },
+  {
+   "q": "Elle ___ professeure de français.",
+   "a": "Est",
+   "o": [
+    "A",
+    "As",
+    "Ai",
+    "Est"
+   ],
+   "h": "profissão: être",
+   "t": "Ela é professora de francês.",
+   "l": "médio"
+  },
+  {
+   "q": "J'___ la tête dans les nuages.",
+   "a": "Ai",
+   "o": [
+    "A",
+    "As",
+    "Ai",
+    "Avons"
+   ],
+   "h": "avoir la tête dans les nuages",
+   "t": "Estou com a cabeça nas nuvens.",
+   "l": "médio"
+  },
+  {
+   "q": "Tu ___ froid?",
+   "a": "As",
+   "o": [
+    "As",
+    "Ai",
+    "A",
+    "Avons"
+   ],
+   "h": "frio: avoir froid",
+   "t": "Você está com frio?",
+   "l": "fácil"
+  },
+  {
+   "q": "Tu ___ sympathique.",
+   "a": "Es",
+   "o": [
+    "As",
+    "Es",
+    "Ai",
+    "A"
+   ],
+   "h": "característica: être",
+   "t": "Você é simpático.",
+   "l": "fácil"
+  },
+  {
+   "q": "Tu ___ prêt?",
+   "a": "Es",
+   "o": [
+    "A",
+    "As",
+    "Ai",
+    "Es"
+   ],
+   "h": "estado: être",
+   "t": "Você está pronto?",
+   "l": "fácil"
+  },
+  {
+   "q": "Il ___ content de te voir.",
+   "a": "Est",
+   "o": [
+    "A",
+    "As",
+    "Est",
+    "Ai"
+   ],
+   "h": "estado: être",
+   "t": "Ele está feliz de ver você.",
+   "l": "fácil"
+  },
+  {
+   "q": "Vous ___ en avance aujourd'hui!",
+   "a": "Êtes",
+   "o": [
+    "Êtes",
+    "Ai",
+    "A",
+    "As"
+   ],
+   "h": "être en avance",
+   "t": "Estão adiantados hoje!",
+   "l": "médio"
+  },
+  {
+   "q": "Nous ___ faim.",
+   "a": "Avons",
+   "o": [
+    "Avons",
+    "As",
+    "Ai",
+    "A"
+   ],
+   "h": "fome: avoir",
+   "t": "Nós temos fome.",
+   "l": "fácil"
+  },
+  {
+   "q": "Il ___ la grippe.",
+   "a": "A",
+   "o": [
+    "Ai",
+    "As",
+    "Avons",
+    "A"
+   ],
+   "h": "doenças: avoir",
+   "t": "Ele está com gripe.",
+   "l": "médio"
+  },
+  {
+   "q": "Vous ___ disponibles demain?",
+   "a": "Êtes",
+   "o": [
+    "Ai",
+    "Êtes",
+    "A",
+    "As"
+   ],
+   "h": "estado: être",
+   "t": "Estão disponíveis amanhã?",
+   "l": "fácil"
+  },
+  {
+   "q": "Vous ___ responsables de ce projet.",
+   "a": "Êtes",
+   "o": [
+    "A",
+    "Êtes",
+    "Ai",
+    "As"
+   ],
+   "h": "qualidade: être",
+   "t": "São responsáveis pelo projeto.",
+   "l": "médio"
+  },
+  {
+   "q": "Vous ___ la tête dans les nuages.",
+   "a": "Avez",
+   "o": [
+    "Avez",
+    "Ai",
+    "As",
+    "A"
+   ],
+   "h": "avoir la tête dans les nuages",
+   "t": "Vocês estão distraídos.",
+   "l": "difícil"
+  },
+  {
+   "q": "Nous ___ l'habitude de dîner tard.",
+   "a": "Avons",
+   "o": [
+    "Ai",
+    "A",
+    "As",
+    "Avons"
+   ],
+   "h": "avoir l'habitude",
+   "t": "Temos o hábito de jantar tarde.",
+   "l": "médio"
+  },
+  {
+   "q": "J'___ rendez-vous à midi.",
+   "a": "Ai",
+   "o": [
+    "Ai",
+    "Avons",
+    "As",
+    "A"
+   ],
+   "h": "avoir rendez-vous",
+   "t": "Tenho compromisso ao meio-dia.",
+   "l": "médio"
+  },
+  {
+   "q": "Nous ___ à Lyon.",
+   "a": "Sommes",
+   "o": [
+    "Ai",
+    "A",
+    "As",
+    "Sommes"
+   ],
+   "h": "localização: être",
+   "t": "Estamos em Lyon.",
+   "l": "fácil"
+  },
+  {
+   "q": "Nous ___ l'intention de voyager.",
+   "a": "Avons",
+   "o": [
+    "A",
+    "As",
+    "Ai",
+    "Avons"
+   ],
+   "h": "avoir l'intention",
+   "t": "Temos intenção de viajar.",
+   "l": "médio"
+  },
+  {
+   "q": "Elle ___ revenue de loin.",
+   "a": "Est",
+   "o": [
+    "A",
+    "As",
+    "Est",
+    "Ai"
+   ],
+   "h": "revenir: être auxiliar",
+   "t": "Ela se recuperou de muito longe.",
+   "l": "médio"
+  },
+  {
+   "q": "J'___ eu du mal à terminer ce projet.",
+   "a": "Ai",
+   "o": [
+    "As",
+    "Avons",
+    "Ai",
+    "A"
+   ],
+   "h": "avoir eu du mal",
+   "t": "Tive dificuldade de terminar o projeto.",
+   "l": "difícil"
+  },
+  {
+   "q": "Nous ___ en panne d'idées.",
+   "a": "Sommes",
+   "o": [
+    "Ai",
+    "Sommes",
+    "A",
+    "As"
+   ],
+   "h": "être en panne",
+   "t": "Estamos sem ideias.",
+   "l": "médio"
+  },
+  {
+   "q": "Tu ___ d'accord avec elle?",
+   "a": "Es",
+   "o": [
+    "Es",
+    "Ai",
+    "A",
+    "As"
+   ],
+   "h": "être d'accord",
+   "t": "Você concorda com ela?",
+   "l": "médio"
+  },
+  {
+   "q": "Il ___ en train de lire.",
+   "a": "Est",
+   "o": [
+    "A",
+    "Est",
+    "Ai",
+    "As"
+   ],
+   "h": "être en train de",
+   "t": "Ele está lendo.",
+   "l": "médio"
+  },
+  {
+   "q": "Elles ___ rentrées très tard.",
+   "a": "Sont",
+   "o": [
+    "Sont",
+    "A",
+    "Ai",
+    "As"
+   ],
+   "h": "rentrer: être auxiliar",
+   "t": "Elas voltaram muito tarde.",
+   "l": "difícil"
+  },
+  {
+   "q": "Nous ___ affaire à une situation complexe.",
+   "a": "Avons",
+   "o": [
+    "A",
+    "Ai",
+    "Avons",
+    "As"
+   ],
+   "h": "avoir affaire à",
+   "t": "Lidamos com situação complexa.",
+   "l": "difícil"
+  },
+  {
+   "q": "J'___ deux sœurs.",
+   "a": "Ai",
+   "o": [
+    "Ai",
+    "A",
+    "Avons",
+    "As"
+   ],
+   "h": "posse: avoir",
+   "t": "Tenho duas irmãs.",
+   "l": "fácil"
+  },
+  {
+   "q": "J'___ le sentiment d'être observé.",
+   "a": "Ai",
+   "o": [
+    "Avons",
+    "A",
+    "Ai",
+    "As"
+   ],
+   "h": "avoir le sentiment",
+   "t": "Tenho o sentimento de ser observado.",
+   "l": "difícil"
+  },
+  {
+   "q": "Elles ___ arrivées hier.",
+   "a": "Sont",
+   "o": [
+    "Ai",
+    "Sont",
+    "As",
+    "A"
+   ],
+   "h": "arriver: être auxiliar",
+   "t": "Elas chegaram ontem.",
+   "l": "médio"
+  },
+  {
+   "q": "Elle ___ de taille à le faire.",
+   "a": "Est",
+   "o": [
+    "Est",
+    "Ai",
+    "As",
+    "A"
+   ],
+   "h": "être de taille à",
+   "t": "Ela é capaz de fazer isso.",
+   "l": "difícil"
+  },
+  {
+   "q": "Nous ___ des amis.",
+   "a": "Avons",
+   "o": [
+    "Avons",
+    "As",
+    "Ai",
+    "A"
+   ],
+   "h": "posse: avoir",
+   "t": "Temos amigos.",
+   "l": "fácil"
+  },
+  {
+   "q": "Il ___ conscient du problème.",
+   "a": "Est",
+   "o": [
+    "Est",
+    "As",
+    "A",
+    "Ai"
+   ],
+   "h": "état: être",
+   "t": "Ele está ciente do problema.",
+   "l": "médio"
+  },
+  {
+   "q": "Vous ___ français(es)?",
+   "a": "Êtes",
+   "o": [
+    "A",
+    "Ai",
+    "As",
+    "Êtes"
+   ],
+   "h": "nacionalidade: être",
+   "t": "Vocês são franceses?",
+   "l": "fácil"
+  },
+  {
+   "q": "Tu ___ l'air en forme!",
+   "a": "As",
+   "o": [
+    "A",
+    "As",
+    "Avons",
+    "Ai"
+   ],
+   "h": "avoir l'air",
+   "t": "Você parece em forma!",
+   "l": "médio"
+  },
+  {
+   "q": "J'___ l'impression qu'il ment.",
+   "a": "Ai",
+   "o": [
+    "A",
+    "Avons",
+    "Ai",
+    "As"
+   ],
+   "h": "avoir l'impression",
+   "t": "Tenho a impressão que ele mente.",
+   "l": "médio"
+  },
+  {
+   "q": "Tu ___ prêt(e) à partir?",
+   "a": "Es",
+   "o": [
+    "As",
+    "Ai",
+    "A",
+    "Es"
+   ],
+   "h": "estado: être",
+   "t": "Você está pronto para partir?",
+   "l": "fácil"
+  },
+  {
+   "q": "Vous ___ intérêt à écouter ce conseil.",
+   "a": "Avez",
+   "o": [
+    "Avez",
+    "As",
+    "A",
+    "Ai"
+   ],
+   "h": "avoir intérêt à",
+   "t": "É do interesse de vocês ouvir.",
+   "l": "difícil"
+  },
+  {
+   "q": "Nous ___ besoin de repos.",
+   "a": "Avons",
+   "o": [
+    "Ai",
+    "A",
+    "As",
+    "Avons"
+   ],
+   "h": "avoir besoin",
+   "t": "Precisamos de descanso.",
+   "l": "médio"
+  },
+  {
+   "q": "J'___ chaud.",
+   "a": "Ai",
+   "o": [
+    "Ai",
+    "As",
+    "A",
+    "Avons"
+   ],
+   "h": "calor: avoir chaud",
+   "t": "Estou com calor.",
+   "l": "fácil"
+  },
+  {
+   "q": "Tu ___ censé(e) connaître les règles.",
+   "a": "Es",
+   "o": [
+    "Ai",
+    "A",
+    "Es",
+    "As"
+   ],
+   "h": "être censé",
+   "t": "Você deveria conhecer as regras.",
+   "l": "difícil"
+  },
+  {
+   "q": "Il ___ à deux doigts de réussir.",
+   "a": "Est",
+   "o": [
+    "As",
+    "Ai",
+    "Est",
+    "A"
+   ],
+   "h": "être à deux doigts de = quase",
+   "t": "Ele está quase conseguindo.",
+   "l": "difícil"
+  },
+  {
+   "q": "Il ___ dans ses petits souliers.",
+   "a": "Est",
+   "o": [
+    "Est",
+    "A",
+    "Ai",
+    "As"
+   ],
+   "h": "être dans ses petits souliers",
+   "t": "Ele está na saia justa.",
+   "l": "difícil"
+  },
+  {
+   "q": "Nous ___ tombés d'accord finalement.",
+   "a": "Sommes",
+   "o": [
+    "A",
+    "Ai",
+    "Sommes",
+    "As"
+   ],
+   "h": "tomber d'accord: être",
+   "t": "Chegamos a um acordo finalmente.",
+   "l": "difícil"
+  },
+  {
+   "q": "Nous ___ hâte de te voir.",
+   "a": "Avons",
+   "o": [
+    "As",
+    "Ai",
+    "A",
+    "Avons"
+   ],
+   "h": "avoir hâte",
+   "t": "Estamos ansiosos para ver você.",
+   "l": "médio"
+  },
+  {
+   "q": "Ils ___ l'habitude de marcher.",
+   "a": "Ont",
+   "o": [
+    "A",
+    "As",
+    "Ai",
+    "Ont"
+   ],
+   "h": "avoir l'habitude",
+   "t": "Têm o hábito de caminhar.",
+   "l": "médio"
+  },
+  {
+   "q": "Vous ___ en bonne santé?",
+   "a": "Êtes",
+   "o": [
+    "Ai",
+    "A",
+    "Êtes",
+    "As"
+   ],
+   "h": "estado: être",
+   "t": "Estão com boa saúde?",
+   "l": "fácil"
+  },
+  {
+   "q": "Vous ___ tort cette fois.",
+   "a": "Avez",
+   "o": [
+    "A",
+    "Avez",
+    "Ai",
+    "As"
+   ],
+   "h": "avoir tort",
+   "t": "Estão errados desta vez.",
+   "l": "fácil"
+  },
+  {
+   "q": "Il ___ un vélo.",
+   "a": "A",
+   "o": [
+    "A",
+    "Ai",
+    "Avons",
+    "As"
+   ],
+   "h": "posse: avoir",
+   "t": "Ele tem uma bicicleta.",
+   "l": "fácil"
+  },
+  {
+   "q": "Ils ___ contents.",
+   "a": "Sont",
+   "o": [
+    "As",
+    "Ai",
+    "Sont",
+    "A"
+   ],
+   "h": "estado: être",
+   "t": "Eles estão felizes.",
+   "l": "fácil"
+  },
+  {
+   "q": "Vous ___ un rendez-vous?",
+   "a": "Avez",
+   "o": [
+    "A",
+    "As",
+    "Avez",
+    "Ai"
+   ],
+   "h": "avoir rendez-vous",
+   "t": "Têm um compromisso?",
+   "l": "fácil"
+  },
+  {
+   "q": "Il ___ en passe de devenir célèbre.",
+   "a": "Est",
+   "o": [
+    "Ai",
+    "A",
+    "Est",
+    "As"
+   ],
+   "h": "être en passe de",
+   "t": "Ele está prestes a ser famoso.",
+   "l": "difícil"
+  },
+  {
+   "q": "Ils ___ en désaccord total.",
+   "a": "Sont",
+   "o": [
+    "A",
+    "Sont",
+    "Ai",
+    "As"
+   ],
+   "h": "être en désaccord",
+   "t": "Estão em total desacordo.",
+   "l": "difícil"
+  },
+  {
+   "q": "Vous ___ sortis sans permission.",
+   "a": "Êtes",
+   "o": [
+    "A",
+    "As",
+    "Êtes",
+    "Ai"
+   ],
+   "h": "sortir: être auxiliar",
+   "t": "Saíram sem permissão.",
+   "l": "médio"
+  },
+  {
+   "q": "Tu ___ l'air fatigué.",
+   "a": "As",
+   "o": [
+    "A",
+    "Ai",
+    "Avons",
+    "As"
+   ],
+   "h": "avoir l'air = parecer",
+   "t": "Você parece cansado.",
+   "l": "médio"
+  },
+  {
+   "q": "Tu ___ de la chance!",
+   "a": "As",
+   "o": [
+    "A",
+    "Avons",
+    "As",
+    "Ai"
+   ],
+   "h": "avoir de la chance",
+   "t": "Você tem sorte!",
+   "l": "médio"
+  },
+  {
+   "q": "Nous ___ tort dans cette situation.",
+   "a": "Avons",
+   "o": [
+    "A",
+    "Avons",
+    "Ai",
+    "As"
+   ],
+   "h": "avoir tort",
+   "t": "Erramos nessa situação.",
+   "l": "médio"
+  },
+  {
+   "q": "Vous ___ sûrs de ça?",
+   "a": "Êtes",
+   "o": [
+    "Êtes",
+    "As",
+    "A",
+    "Ai"
+   ],
+   "h": "être sûr",
+   "t": "Têm certeza disso?",
+   "l": "médio"
+  },
+  {
+   "q": "Ils ___ de la fièvre.",
+   "a": "Ont",
+   "o": [
+    "A",
+    "Ai",
+    "As",
+    "Ont"
+   ],
+   "h": "avoir de la fièvre",
+   "t": "Eles estão com febre.",
+   "l": "fácil"
+  },
+  {
+   "q": "Nous ___ une grande famille.",
+   "a": "Avons",
+   "o": [
+    "As",
+    "Ai",
+    "Avons",
+    "A"
+   ],
+   "h": "posse: avoir",
+   "t": "Temos uma família grande.",
+   "l": "fácil"
+  },
+  {
+   "q": "Tu ___ bien fait d'insister.",
+   "a": "As",
+   "o": [
+    "A",
+    "Avons",
+    "As",
+    "Ai"
+   ],
+   "h": "avoir bien fait",
+   "t": "Você fez bem em insistir.",
+   "l": "difícil"
+  },
+  {
+   "q": "Ils ___ fatigués.",
+   "a": "Sont",
+   "o": [
+    "Sont",
+    "Ai",
+    "A",
+    "As"
+   ],
+   "h": "estado: être",
+   "t": "Eles estão cansados.",
+   "l": "fácil"
+  },
+  {
+   "q": "J'___ soif.",
+   "a": "Ai",
+   "o": [
+    "As",
+    "Avons",
+    "A",
+    "Ai"
+   ],
+   "h": "sede: avoir soif",
+   "t": "Estou com sede.",
+   "l": "fácil"
+  },
+  {
+   "q": "Nous ___ du temps à perdre.",
+   "a": "Avons",
+   "o": [
+    "Avons",
+    "Ai",
+    "As",
+    "A"
+   ],
+   "h": "posse: avoir",
+   "t": "Temos tempo a perder.",
+   "l": "médio"
+  },
+  {
+   "q": "Tu ___ à bout de forces.",
+   "a": "Es",
+   "o": [
+    "Ai",
+    "As",
+    "A",
+    "Es"
+   ],
+   "h": "être à bout de",
+   "t": "Você está no limite das forças.",
+   "l": "difícil"
+  },
+  {
+   "q": "Nous ___ étudiants.",
+   "a": "Sommes",
+   "o": [
+    "Sommes",
+    "A",
+    "As",
+    "Ai"
+   ],
+   "h": "identidade: être",
+   "t": "Somos estudantes.",
+   "l": "fácil"
+  },
+  {
+   "q": "Tu n'___ qu'à suivre les instructions.",
+   "a": "As",
+   "o": [
+    "As",
+    "Avons",
+    "Ai",
+    "A"
+   ],
+   "h": "n'avoir qu'à",
+   "t": "Basta seguir as instruções.",
+   "l": "difícil"
+  },
+  {
+   "q": "Il ___ à court d'arguments.",
+   "a": "Est",
+   "o": [
+    "As",
+    "Est",
+    "Ai",
+    "A"
+   ],
+   "h": "être à court de",
+   "t": "Ele está sem argumentos.",
+   "l": "difícil"
+  },
+  {
+   "q": "Elle ___ en mesure de répondre.",
+   "a": "Est",
+   "o": [
+    "Est",
+    "Ai",
+    "A",
+    "As"
+   ],
+   "h": "être en mesure de",
+   "t": "Ela está em condições de responder.",
+   "l": "difícil"
+  },
+  {
+   "q": "J'___ beau chercher, je ne trouve pas.",
+   "a": "Ai",
+   "o": [
+    "As",
+    "Avons",
+    "A",
+    "Ai"
+   ],
+   "h": "avoir beau = por mais que...",
+   "t": "Por mais que procure, não encontro.",
+   "l": "difícil"
+  },
+  {
+   "q": "Ils ___ en mesure de résoudre le problème.",
+   "a": "Sont",
+   "o": [
+    "As",
+    "Ai",
+    "A",
+    "Sont"
+   ],
+   "h": "être en mesure de",
+   "t": "Estão em condições de resolver.",
+   "l": "difícil"
+  },
+  {
+   "q": "Il ___ question de budget.",
+   "a": "Est",
+   "o": [
+    "A",
+    "Ai",
+    "Est",
+    "As"
+   ],
+   "h": "il est question de = trata-se de",
+   "t": "É uma questão de orçamento.",
+   "l": "difícil"
+  },
+  {
+   "q": "Elles ___ professeurs.",
+   "a": "Sont",
+   "o": [
+    "As",
+    "Ai",
+    "Sont",
+    "A"
+   ],
+   "h": "profissão: être",
+   "t": "Elas são professoras.",
+   "l": "fácil"
+  },
+  {
+   "q": "Nous ___ en train de changer d'avis.",
+   "a": "Sommes",
+   "o": [
+    "Sommes",
+    "As",
+    "A",
+    "Ai"
+   ],
+   "h": "être en train de",
+   "t": "Estamos mudando de ideia.",
+   "l": "difícil"
+  },
+  {
+   "q": "Tu ___ conscient de tes erreurs?",
+   "a": "Es",
+   "o": [
+    "A",
+    "As",
+    "Es",
+    "Ai"
+   ],
+   "h": "être conscient",
+   "t": "Você está ciente dos seus erros?",
+   "l": "difícil"
+  },
+  {
+   "q": "Il ___ revenu de voyage.",
+   "a": "Est",
+   "o": [
+    "As",
+    "Est",
+    "Ai",
+    "A"
+   ],
+   "h": "revenir: être auxiliar",
+   "t": "Ele voltou de viagem.",
+   "l": "médio"
+  },
+  {
+   "q": "Nous ___ de bons amis.",
+   "a": "Sommes",
+   "o": [
+    "Ai",
+    "As",
+    "Sommes",
+    "A"
+   ],
+   "h": "identidade: être",
+   "t": "Somos bons amigos.",
+   "l": "fácil"
+  },
+  {
+   "q": "Elle ___ fatiguée.",
+   "a": "Est",
+   "o": [
+    "A",
+    "As",
+    "Ai",
+    "Est"
+   ],
+   "h": "estado: être",
+   "t": "Ela está cansada.",
+   "l": "fácil"
+  },
+  {
+   "q": "Ils ___ à court d'idées.",
+   "a": "Sont",
+   "o": [
+    "A",
+    "Ai",
+    "As",
+    "Sont"
+   ],
+   "h": "être à court de",
+   "t": "Estão sem ideias.",
+   "l": "difícil"
+  },
+  {
+   "q": "Tu ___ de taille à relever ce défi.",
+   "a": "Es",
+   "o": [
+    "Es",
+    "As",
+    "A",
+    "Ai"
+   ],
+   "h": "être de taille à",
+   "t": "Você é capaz de enfrentar esse desafio.",
+   "l": "difícil"
+  },
+  {
+   "q": "Tu ___ en bonne santé?",
+   "a": "Es",
+   "o": [
+    "Ai",
+    "As",
+    "A",
+    "Es"
+   ],
+   "h": "état: être",
+   "t": "Você está com boa saúde?",
+   "l": "médio"
+  },
+  {
+   "q": "Vous ___ en train de travailler?",
+   "a": "Êtes",
+   "o": [
+    "As",
+    "Êtes",
+    "Ai",
+    "A"
+   ],
+   "h": "être en train de",
+   "t": "Estão trabalhando?",
+   "l": "médio"
+  },
+  {
+   "q": "J'___ besoin de vacances.",
+   "a": "Ai",
+   "o": [
+    "As",
+    "Ai",
+    "A",
+    "Avons"
+   ],
+   "h": "avoir besoin",
+   "t": "Preciso de férias.",
+   "l": "médio"
+  },
+  {
+   "q": "Nous ___ chaud ici.",
+   "a": "Avons",
+   "o": [
+    "A",
+    "Avons",
+    "Ai",
+    "As"
+   ],
+   "h": "avoir chaud",
+   "t": "Estamos com calor aqui.",
+   "l": "fácil"
+  },
+  {
+   "q": "J'___ une idée!",
+   "a": "Ai",
+   "o": [
+    "A",
+    "Ai",
+    "As",
+    "Avons"
+   ],
+   "h": "posse: avoir",
+   "t": "Tenho uma ideia!",
+   "l": "fácil"
+  },
+  {
+   "q": "J'___ l'habitude de travailler tard.",
+   "a": "Ai",
+   "o": [
+    "As",
+    "A",
+    "Ai",
+    "Avons"
+   ],
+   "h": "avoir l'habitude",
+   "t": "Tenho o hábito de trabalhar tarde.",
+   "l": "difícil"
+  },
+  {
+   "q": "Tu ___ à bout de patience?",
+   "a": "Es",
+   "o": [
+    "Es",
+    "As",
+    "A",
+    "Ai"
+   ],
+   "h": "être à bout de",
+   "t": "Você está no limite?",
+   "l": "médio"
+  },
+  {
+   "q": "J'___ du mal à me concentrer.",
+   "a": "Ai",
+   "o": [
+    "Ai",
+    "As",
+    "Avons",
+    "A"
+   ],
+   "h": "avoir du mal à",
+   "t": "Tenho dificuldade de me concentrar.",
+   "l": "médio"
+  },
+  {
+   "q": "Nous ___ contents.",
+   "a": "Sommes",
+   "o": [
+    "Sommes",
+    "A",
+    "Ai",
+    "As"
+   ],
+   "h": "estado: être",
+   "t": "Estamos felizes.",
+   "l": "fácil"
+  },
+  {
+   "q": "J'___ honte de ma réaction.",
+   "a": "Ai",
+   "o": [
+    "Ai",
+    "As",
+    "Avons",
+    "A"
+   ],
+   "h": "avoir honte",
+   "t": "Tenho vergonha da minha reação.",
+   "l": "médio"
+  },
+  {
+   "q": "Ils ___ au courant des dernières nouvelles.",
+   "a": "Sont",
+   "o": [
+    "A",
+    "As",
+    "Ai",
+    "Sont"
+   ],
+   "h": "être au courant",
+   "t": "Estão por dentro das últimas notícias.",
+   "l": "difícil"
+  },
+  {
+   "q": "Il ___ grand et fort.",
+   "a": "Est",
+   "o": [
+    "Est",
+    "As",
+    "A",
+    "Ai"
+   ],
+   "h": "característica: être",
+   "t": "Ele é alto e forte.",
+   "l": "fácil"
+  },
+  {
+   "q": "Il ___ faim.",
+   "a": "A",
+   "o": [
+    "A",
+    "Avons",
+    "Ai",
+    "As"
+   ],
+   "h": "avoir faim",
+   "t": "Ele tem fome.",
+   "l": "fácil"
+  },
+  {
+   "q": "Nous ___ eu tort de partir.",
+   "a": "Avons",
+   "o": [
+    "Ai",
+    "As",
+    "Avons",
+    "A"
+   ],
+   "h": "avoir eu tort",
+   "t": "Erramos ao partir.",
+   "l": "difícil"
+  },
+  {
+   "q": "Vous ___ un chien?",
+   "a": "Avez",
+   "o": [
+    "Avez",
+    "Ai",
+    "As",
+    "A"
+   ],
+   "h": "posse: avoir",
+   "t": "Vocês têm um cachorro?",
+   "l": "fácil"
+  },
+  {
+   "q": "J'___ trente ans.",
+   "a": "Ai",
+   "o": [
+    "Avons",
+    "Ai",
+    "A",
+    "As"
+   ],
+   "h": "idade: avoir",
+   "t": "Tenho trinta anos.",
+   "l": "médio"
+  },
+  {
+   "q": "J'___ froid ce matin.",
+   "a": "Ai",
+   "o": [
+    "Avons",
+    "A",
+    "As",
+    "Ai"
+   ],
+   "h": "avoir froid",
+   "t": "Estou com frio esta manhã.",
+   "l": "fácil"
+  },
+  {
+   "q": "Tu ___ d'accord?",
+   "a": "Es",
+   "o": [
+    "Ai",
+    "A",
+    "Es",
+    "As"
+   ],
+   "h": "être d'accord",
+   "t": "Você concorda?",
+   "l": "fácil"
+  },
+  {
+   "q": "Elle ___ peur du noir.",
+   "a": "A",
+   "o": [
+    "As",
+    "Avons",
+    "Ai",
+    "A"
+   ],
+   "h": "avoir peur",
+   "t": "Ela tem medo do escuro.",
+   "l": "fácil"
+  },
+  {
+   "q": "Nous ___ sur le point de trouver la solution.",
+   "a": "Sommes",
+   "o": [
+    "Sommes",
+    "A",
+    "Ai",
+    "As"
+   ],
+   "h": "être sur le point de",
+   "t": "Estamos prestes a achar a solução.",
+   "l": "difícil"
+  },
+  {
+   "q": "Vous ___ droit à une pause.",
+   "a": "Avez",
+   "o": [
+    "Avez",
+    "Ai",
+    "A",
+    "As"
+   ],
+   "h": "avoir droit",
+   "t": "Têm direito a uma pausa.",
+   "l": "médio"
+  },
+  {
+   "q": "Ils ___ passés par des moments difficiles.",
+   "a": "Sont",
+   "o": [
+    "Ai",
+    "As",
+    "A",
+    "Sont"
+   ],
+   "h": "passer: être auxiliar",
+   "t": "Passaram por momentos difíceis.",
+   "l": "difícil"
+  },
+  {
+   "q": "Ils ___ tombés dans le piège.",
+   "a": "Sont",
+   "o": [
+    "Ai",
+    "A",
+    "Sont",
+    "As"
+   ],
+   "h": "tomber: être auxiliar",
+   "t": "Eles caíram na armadilha.",
+   "l": "difícil"
+  },
+  {
+   "q": "J'___ envie d'un café.",
+   "a": "Ai",
+   "o": [
+    "A",
+    "Avons",
+    "Ai",
+    "As"
+   ],
+   "h": "avoir envie",
+   "t": "Estou com vontade de café.",
+   "l": "médio"
+  },
+  {
+   "q": "Ils ___ au courant de la situation.",
+   "a": "Sont",
+   "o": [
+    "Sont",
+    "Ai",
+    "As",
+    "A"
+   ],
+   "h": "être au courant",
+   "t": "Estão por dentro da situação.",
+   "l": "médio"
+  },
+  {
+   "q": "Vous ___ en passe de battre un record.",
+   "a": "Êtes",
+   "o": [
+    "Êtes",
+    "Ai",
+    "A",
+    "As"
+   ],
+   "h": "être en passe de",
+   "t": "Estão prestes a bater um recorde.",
+   "l": "difícil"
+  },
+  {
+   "q": "Je ___ brésilien.",
+   "a": "Suis",
+   "o": [
+    "A",
+    "Suis",
+    "Ai",
+    "As"
+   ],
+   "h": "nacionalidade: être",
+   "t": "Eu sou brasileiro.",
+   "l": "fácil"
+  },
+  {
+   "q": "Vous ___ un passeport?",
+   "a": "Avez",
+   "o": [
+    "As",
+    "A",
+    "Ai",
+    "Avez"
+   ],
+   "h": "posse: avoir",
+   "t": "Têm passaporte?",
+   "l": "fácil"
+  },
+  {
+   "q": "Elle ___ le cœur sur la main.",
+   "a": "A",
+   "o": [
+    "Ai",
+    "As",
+    "Avons",
+    "A"
+   ],
+   "h": "avoir le cœur sur la main",
+   "t": "Ela é muito generosa.",
+   "l": "difícil"
+  },
+  {
+   "q": "Vous ___ affaire à un expert.",
+   "a": "Avez",
+   "o": [
+    "As",
+    "Ai",
+    "Avez",
+    "A"
+   ],
+   "h": "avoir affaire à",
+   "t": "Vocês lidam com um especialista.",
+   "l": "difícil"
+  },
+  {
+   "q": "Elle ___ très belle.",
+   "a": "Est",
+   "o": [
+    "Est",
+    "As",
+    "A",
+    "Ai"
+   ],
+   "h": "característica: être",
+   "t": "Ela é muito bonita.",
+   "l": "fácil"
+  },
+  {
+   "q": "J'___ beau répéter, il n'écoute pas.",
+   "a": "Ai",
+   "o": [
+    "A",
+    "Ai",
+    "As",
+    "Avons"
+   ],
+   "h": "avoir beau",
+   "t": "Por mais que repita, ele não escuta.",
+   "l": "difícil"
+  },
+  {
+   "q": "Nous ___ censés rendre le travail demain.",
+   "a": "Sommes",
+   "o": [
+    "A",
+    "Ai",
+    "Sommes",
+    "As"
+   ],
+   "h": "être censé",
+   "t": "Deveríamos entregar o trabalho amanhã.",
+   "l": "difícil"
+  },
+  {
+   "q": "Ils ___ en France.",
+   "a": "Sont",
+   "o": [
+    "Sont",
+    "A",
+    "Ai",
+    "As"
+   ],
+   "h": "localização: être",
+   "t": "Eles estão na França.",
+   "l": "fácil"
+  },
+  {
+   "q": "J'___ du mal à me lever.",
+   "a": "Ai",
+   "o": [
+    "Ai",
+    "As",
+    "Avons",
+    "A"
+   ],
+   "h": "avoir du mal à",
+   "t": "Tenho dificuldade de levantar.",
+   "l": "médio"
+  },
+  {
+   "q": "Tu ___ les yeux bleus.",
+   "a": "As",
+   "o": [
+    "Avons",
+    "As",
+    "A",
+    "Ai"
+   ],
+   "h": "posse: avoir",
+   "t": "Você tem olhos azuis.",
+   "l": "fácil"
+  },
+  {
+   "q": "Tu ___ en train de faire une erreur.",
+   "a": "Es",
+   "o": [
+    "As",
+    "Es",
+    "A",
+    "Ai"
+   ],
+   "h": "être en train de",
+   "t": "Você está cometendo um erro.",
+   "l": "médio"
+  },
+  {
+   "q": "Tu ___ en avance?",
+   "a": "Es",
+   "o": [
+    "As",
+    "A",
+    "Es",
+    "Ai"
+   ],
+   "h": "être en avance",
+   "t": "Você está adiantado?",
+   "l": "fácil"
+  },
+  {
+   "q": "Ils ___ de bons résultats.",
+   "a": "Ont",
+   "o": [
+    "As",
+    "A",
+    "Ai",
+    "Ont"
+   ],
+   "h": "posse: avoir",
+   "t": "Eles têm bons resultados.",
+   "l": "fácil"
+  },
+  {
+   "q": "Elles ___ tombées dans l'escalier.",
+   "a": "Sont",
+   "o": [
+    "A",
+    "Sont",
+    "As",
+    "Ai"
+   ],
+   "h": "tomber: être auxiliar",
+   "t": "Elas caíram na escada.",
+   "l": "médio"
+  },
+  {
+   "q": "Ils ___ beaucoup de travail.",
+   "a": "Ont",
+   "o": [
+    "A",
+    "As",
+    "Ai",
+    "Ont"
+   ],
+   "h": "posse: avoir",
+   "t": "Eles têm muito trabalho.",
+   "l": "fácil"
+  },
+  {
+   "q": "Ils ___ partis tôt ce matin.",
+   "a": "Sont",
+   "o": [
+    "Ai",
+    "A",
+    "As",
+    "Sont"
+   ],
+   "h": "partir: être auxiliar",
+   "t": "Partiram cedo esta manhã.",
+   "l": "médio"
+  },
+  {
+   "q": "Vous ___ l'habitude de voyager.",
+   "a": "Avez",
+   "o": [
+    "As",
+    "A",
+    "Avez",
+    "Ai"
+   ],
+   "h": "avoir l'habitude",
+   "t": "Têm o hábito de viajar.",
+   "l": "médio"
+  },
+  {
+   "q": "Nous ___ eu raison de douter.",
+   "a": "Avons",
+   "o": [
+    "Avons",
+    "As",
+    "Ai",
+    "A"
+   ],
+   "h": "avoir eu raison",
+   "t": "Tivemos razão em duvidar.",
+   "l": "difícil"
+  },
+  {
+   "q": "Tu ___ l'air de ne pas comprendre.",
+   "a": "As",
+   "o": [
+    "As",
+    "Ai",
+    "A",
+    "Avons"
+   ],
+   "h": "avoir l'air de",
+   "t": "Você parece não entender.",
+   "l": "médio"
+  },
+  {
+   "q": "Nous ___ en train de tout perdre.",
+   "a": "Sommes",
+   "o": [
+    "As",
+    "Ai",
+    "Sommes",
+    "A"
+   ],
+   "h": "être en train de",
+   "t": "Estamos perdendo tudo.",
+   "l": "difícil"
+  },
+  {
+   "q": "Ils ___ en passe de réussir.",
+   "a": "Sont",
+   "o": [
+    "Sont",
+    "A",
+    "As",
+    "Ai"
+   ],
+   "h": "être en passe de",
+   "t": "Estão prestes a ter sucesso.",
+   "l": "difícil"
+  },
+  {
+   "q": "Ils ___ besoin de plus de temps.",
+   "a": "Ont",
+   "o": [
+    "A",
+    "As",
+    "Ai",
+    "Ont"
+   ],
+   "h": "avoir besoin",
+   "t": "Precisam de mais tempo.",
+   "l": "médio"
+  },
+  {
+   "q": "J'___ beau essayer, je n'y arrive pas.",
+   "a": "Ai",
+   "o": [
+    "Ai",
+    "As",
+    "Avons",
+    "A"
+   ],
+   "h": "avoir beau",
+   "t": "Por mais que tente, não consigo.",
+   "l": "difícil"
+  },
+  {
+   "q": "Vous ___ les mains liées dans cette situation.",
+   "a": "Avez",
+   "o": [
+    "Avez",
+    "A",
+    "Ai",
+    "As"
+   ],
+   "h": "avoir les mains liées",
+   "t": "Vocês têm as mãos atadas.",
+   "l": "difícil"
+  },
+  {
+   "q": "Il ___ parti avant minuit.",
+   "a": "Est",
+   "o": [
+    "A",
+    "As",
+    "Ai",
+    "Est"
+   ],
+   "h": "partir: être auxiliar",
+   "t": "Ele foi antes da meia-noite.",
+   "l": "médio"
+  },
+  {
+   "q": "J'___ du mal à croire cette histoire.",
+   "a": "Ai",
+   "o": [
+    "Avons",
+    "As",
+    "A",
+    "Ai"
+   ],
+   "h": "avoir du mal à",
+   "t": "Tenho dificuldade de acreditar.",
+   "l": "difícil"
+  },
+  {
+   "q": "Elle ___ tombée amoureuse de lui.",
+   "a": "Est",
+   "o": [
+    "Ai",
+    "As",
+    "Est",
+    "A"
+   ],
+   "h": "tomber: être auxiliar",
+   "t": "Ela se apaixonou por ele.",
+   "l": "difícil"
+  },
+  {
+   "q": "J'___ peur.",
+   "a": "Ai",
+   "o": [
+    "Ai",
+    "As",
+    "Avons",
+    "A"
+   ],
+   "h": "medo: avoir peur",
+   "t": "Estou com medo.",
+   "l": "fácil"
+  },
+  {
+   "q": "Vous ___ le droit de refuser.",
+   "a": "Avez",
+   "o": [
+    "Avez",
+    "A",
+    "As",
+    "Ai"
+   ],
+   "h": "avoir le droit",
+   "t": "Têm o direito de recusar.",
+   "l": "difícil"
+  },
+  {
+   "q": "Il ___ trente ans.",
+   "a": "A",
+   "o": [
+    "Avons",
+    "Ai",
+    "A",
+    "As"
+   ],
+   "h": "idade: avoir",
+   "t": "Ele tem trinta anos.",
+   "l": "fácil"
+  },
+  {
+   "q": "Vous ___ en retard encore?",
+   "a": "Êtes",
+   "o": [
+    "Ai",
+    "As",
+    "Êtes",
+    "A"
+   ],
+   "h": "être en retard",
+   "t": "Estão atrasados de novo?",
+   "l": "médio"
+  },
+  {
+   "q": "Nous ___ en désaccord.",
+   "a": "Sommes",
+   "o": [
+    "Sommes",
+    "As",
+    "A",
+    "Ai"
+   ],
+   "h": "être en désaccord",
+   "t": "Discordamos.",
+   "l": "médio"
+  },
+  {
+   "q": "Elles ___ en retard.",
+   "a": "Sont",
+   "o": [
+    "Sont",
+    "Ai",
+    "As",
+    "A"
+   ],
+   "h": "être en retard",
+   "t": "Elas estão atrasadas.",
+   "l": "fácil"
+  },
+  {
+   "q": "J'___ mal à la tête.",
+   "a": "Ai",
+   "o": [
+    "As",
+    "A",
+    "Avons",
+    "Ai"
+   ],
+   "h": "avoir mal à",
+   "t": "Estou com dor de cabeça.",
+   "l": "fácil"
+  },
+  {
+   "q": "Elles ___ belles.",
+   "a": "Sont",
+   "o": [
+    "As",
+    "A",
+    "Ai",
+    "Sont"
+   ],
+   "h": "característica: être",
+   "t": "Elas são bonitas.",
+   "l": "fácil"
+  },
+  {
+   "q": "Il ___ sur le point de partir.",
+   "a": "Est",
+   "o": [
+    "Est",
+    "Ai",
+    "As",
+    "A"
+   ],
+   "h": "être sur le point de",
+   "t": "Ele está prestes a partir.",
+   "l": "médio"
+  },
+  {
+   "q": "Il ___ médecin.",
+   "a": "Est",
+   "o": [
+    "A",
+    "Est",
+    "Ai",
+    "As"
+   ],
+   "h": "profissão: être",
+   "t": "Ele é médico.",
+   "l": "fácil"
+  },
+  {
+   "q": "Nous ___ en vacances.",
+   "a": "Sommes",
+   "o": [
+    "As",
+    "A",
+    "Sommes",
+    "Ai"
+   ],
+   "h": "situação: être",
+   "t": "Estamos de férias.",
+   "l": "fácil"
+  },
+  {
+   "q": "Ils ___ confiance en leur équipe.",
+   "a": "Ont",
+   "o": [
+    "As",
+    "Ai",
+    "A",
+    "Ont"
+   ],
+   "h": "avoir confiance",
+   "t": "Confiam na equipe deles.",
+   "l": "médio"
+  },
+  {
+   "q": "J'___ quinze ans.",
+   "a": "Ai",
+   "o": [
+    "Avons",
+    "As",
+    "A",
+    "Ai"
+   ],
+   "h": "idade: avoir",
+   "t": "Tenho quinze anos.",
+   "l": "fácil"
+  },
+  {
+   "q": "Il ___ toujours ponctuel.",
+   "a": "Est",
+   "o": [
+    "A",
+    "Est",
+    "Ai",
+    "As"
+   ],
+   "h": "característica: être",
+   "t": "Ele é sempre pontual.",
+   "l": "médio"
+  },
+  {
+   "q": "Tu ___ sûr de ta réponse?",
+   "a": "Es",
+   "o": [
+    "Es",
+    "Ai",
+    "As",
+    "A"
+   ],
+   "h": "être sûr",
+   "t": "Você tem certeza?",
+   "l": "médio"
+  },
+  {
+   "q": "Tu ___ en retard!",
+   "a": "Es",
+   "o": [
+    "As",
+    "Es",
+    "A",
+    "Ai"
+   ],
+   "h": "être en retard",
+   "t": "Você está atrasado!",
+   "l": "fácil"
+  },
+  {
+   "q": "Tu ___ l'intention de partir?",
+   "a": "As",
+   "o": [
+    "As",
+    "A",
+    "Avons",
+    "Ai"
+   ],
+   "h": "avoir l'intention",
+   "t": "Você pretende partir?",
+   "l": "médio"
+  },
+  {
+   "q": "Ils ___ tombés d'accord finalement.",
+   "a": "Sont",
+   "o": [
+    "Sont",
+    "A",
+    "As",
+    "Ai"
+   ],
+   "h": "tomber d'accord: être auxiliar",
+   "t": "Chegaram a um acordo.",
+   "l": "difícil"
+  },
+  {
+   "q": "Ils ___ devenus célèbres.",
+   "a": "Sont",
+   "o": [
+    "Sont",
+    "A",
+    "Ai",
+    "As"
+   ],
+   "h": "devenir: être auxiliar",
+   "t": "Eles se tornaram famosos.",
+   "l": "médio"
+  },
+  {
+   "q": "J'___ du pain sur la planche ce week-end.",
+   "a": "Ai",
+   "o": [
+    "As",
+    "Ai",
+    "Avons",
+    "A"
+   ],
+   "h": "avoir du pain sur la planche",
+   "t": "Tenho muito trabalho este fim de semana.",
+   "l": "difícil"
+  },
+  {
+   "q": "Tu ___ bien fait de partir.",
+   "a": "As",
+   "o": [
+    "A",
+    "Ai",
+    "As",
+    "Avons"
+   ],
+   "h": "avoir bien fait",
+   "t": "Você fez bem em partir.",
+   "l": "médio"
+  },
+  {
+   "q": "Nous ___ perdus.",
+   "a": "Sommes",
+   "o": [
+    "Sommes",
+    "Ai",
+    "A",
+    "As"
+   ],
+   "h": "estado: être",
+   "t": "Estamos perdidos.",
+   "l": "fácil"
+  },
+  {
+   "q": "J'___ beau insister, il refuse.",
+   "a": "Ai",
+   "o": [
+    "As",
+    "A",
+    "Ai",
+    "Avons"
+   ],
+   "h": "avoir beau",
+   "t": "Por mais que insista, ele recusa.",
+   "l": "difícil"
+  },
+  {
+   "q": "Nous ___ soif.",
+   "a": "Avons",
+   "o": [
+    "A",
+    "Avons",
+    "Ai",
+    "As"
+   ],
+   "h": "avoir soif",
+   "t": "Temos sede.",
+   "l": "fácil"
+  },
+  {
+   "q": "Nous ___ censés partir à l'aube.",
+   "a": "Sommes",
+   "o": [
+    "Sommes",
+    "As",
+    "Ai",
+    "A"
+   ],
+   "h": "être censé = ser suposto",
+   "t": "Devemos partir ao amanhecer.",
+   "l": "difícil"
+  },
+  {
+   "q": "J'___ le cafard ce soir.",
+   "a": "Ai",
+   "o": [
+    "Avons",
+    "Ai",
+    "A",
+    "As"
+   ],
+   "h": "avoir le cafard",
+   "t": "Estou melancólico esta noite.",
+   "l": "difícil"
+  },
+  {
+   "q": "J'___ un frère.",
+   "a": "Ai",
+   "o": [
+    "As",
+    "Ai",
+    "Avons",
+    "A"
+   ],
+   "h": "posse: avoir",
+   "t": "Tenho um irmão.",
+   "l": "fácil"
+  },
+  {
+   "q": "Nous ___ d'accord sur ce point.",
+   "a": "Sommes",
+   "o": [
+    "As",
+    "Sommes",
+    "Ai",
+    "A"
+   ],
+   "h": "être d'accord",
+   "t": "Concordamos neste ponto.",
+   "l": "médio"
+  },
+  {
+   "q": "Elle ___ ici tous les jours.",
+   "a": "Est",
+   "o": [
+    "Est",
+    "A",
+    "Ai",
+    "As"
+   ],
+   "h": "localização: être",
+   "t": "Ela está aqui todos os dias.",
+   "l": "fácil"
+  },
+  {
+   "q": "Elle ___ confiance en lui.",
+   "a": "A",
+   "o": [
+    "As",
+    "A",
+    "Avons",
+    "Ai"
+   ],
+   "h": "avoir confiance",
+   "t": "Ela confia nele.",
+   "l": "médio"
+  },
+  {
+   "q": "J'___ du recul sur ça.",
+   "a": "Ai",
+   "o": [
+    "Avons",
+    "A",
+    "Ai",
+    "As"
+   ],
+   "h": "avoir du recul",
+   "t": "Tenho perspectiva sobre isso.",
+   "l": "médio"
+  },
+  {
+   "q": "Ils ___ l'air de s'amuser.",
+   "a": "Ont",
+   "o": [
+    "Ai",
+    "A",
+    "Ont",
+    "As"
+   ],
+   "h": "avoir l'air",
+   "t": "Parecem se divertir.",
+   "l": "médio"
+  },
+  {
+   "q": "Tu ___ intelligent(e).",
+   "a": "Es",
+   "o": [
+    "Es",
+    "A",
+    "As",
+    "Ai"
+   ],
+   "h": "característica: être",
+   "t": "Você é inteligente.",
+   "l": "fácil"
+  },
+  {
+   "q": "Tu ___ faim?",
+   "a": "As",
+   "o": [
+    "Ai",
+    "As",
+    "A",
+    "Avons"
+   ],
+   "h": "fome: avoir",
+   "t": "Você está com fome?",
+   "l": "fácil"
+  },
+  {
+   "q": "Tu n'___ qu'à suivre tes instincts.",
+   "a": "As",
+   "o": [
+    "As",
+    "Avons",
+    "Ai",
+    "A"
+   ],
+   "h": "n'avoir qu'à",
+   "t": "Basta seguir seus instintos.",
+   "l": "difícil"
+  },
+  {
+   "q": "Vous ___ tort.",
+   "a": "Avez",
+   "o": [
+    "As",
+    "Avez",
+    "A",
+    "Ai"
+   ],
+   "h": "avoir tort",
+   "t": "Vocês estão errados.",
+   "l": "fácil"
+  },
+  {
+   "q": "J'___ envie de dormir.",
+   "a": "Ai",
+   "o": [
+    "Ai",
+    "Avons",
+    "As",
+    "A"
+   ],
+   "h": "avoir envie",
+   "t": "Estou com vontade de dormir.",
+   "l": "fácil"
+  },
+  {
+   "q": "Elle ___ sortie sans dire au revoir.",
+   "a": "Est",
+   "o": [
+    "Est",
+    "A",
+    "As",
+    "Ai"
+   ],
+   "h": "sortir: être auxiliar",
+   "t": "Ela saiu sem se despedir.",
+   "l": "difícil"
+  },
+  {
+   "q": "Tu ___ l'intention de rester?",
+   "a": "As",
+   "o": [
+    "A",
+    "As",
+    "Ai",
+    "Avons"
+   ],
+   "h": "avoir l'intention",
+   "t": "Você pretende ficar?",
+   "l": "difícil"
+  },
+  {
+   "q": "Nous ___ en vacances bientôt.",
+   "a": "Sommes",
+   "o": [
+    "Sommes",
+    "As",
+    "A",
+    "Ai"
+   ],
+   "h": "situação: être",
+   "t": "Estaremos de férias em breve.",
+   "l": "médio"
+  },
+  {
+   "q": "Vous ___ le même âge?",
+   "a": "Avez",
+   "o": [
+    "A",
+    "Avez",
+    "As",
+    "Ai"
+   ],
+   "h": "idade: avoir",
+   "t": "Têm a mesma idade?",
+   "l": "médio"
+  },
+  {
+   "q": "Elle ___ du pain sur la planche.",
+   "a": "A",
+   "o": [
+    "A",
+    "Ai",
+    "Avons",
+    "As"
+   ],
+   "h": "avoir du pain sur la planche",
+   "t": "Ela tem muito trabalho.",
+   "l": "difícil"
+  },
+  {
+   "q": "Elle ___ à la maison.",
+   "a": "Est",
+   "o": [
+    "Est",
+    "A",
+    "Ai",
+    "As"
+   ],
+   "h": "localização: être",
+   "t": "Ela está em casa.",
+   "l": "fácil"
+  },
+  {
+   "q": "Vous ___ de la chance de partir.",
+   "a": "Avez",
+   "o": [
+    "A",
+    "Avez",
+    "As",
+    "Ai"
+   ],
+   "h": "avoir de la chance",
+   "t": "Têm sorte de poder partir.",
+   "l": "difícil"
+  },
+  {
+   "q": "Elle ___ un appartement.",
+   "a": "A",
+   "o": [
+    "As",
+    "Ai",
+    "A",
+    "Avons"
+   ],
+   "h": "posse: avoir",
+   "t": "Ela tem um apartamento.",
+   "l": "fácil"
+  },
+  {
+   "q": "Vous ___ de la chance!",
+   "a": "Avez",
+   "o": [
+    "A",
+    "Avez",
+    "As",
+    "Ai"
+   ],
+   "h": "avoir de la chance",
+   "t": "Têm sorte!",
+   "l": "fácil"
+  },
+  {
+   "q": "Vous ___ peur de l'avion?",
+   "a": "Avez",
+   "o": [
+    "A",
+    "Avez",
+    "Ai",
+    "As"
+   ],
+   "h": "avoir peur",
+   "t": "Têm medo de avião?",
+   "l": "médio"
+  },
+  {
+   "q": "Elle ___ enceinte.",
+   "a": "Est",
+   "o": [
+    "As",
+    "Ai",
+    "Est",
+    "A"
+   ],
+   "h": "estado: être",
+   "t": "Ela está grávida.",
+   "l": "médio"
+  }
+ ],
+ "numbers": [
+  {
+   "q": "6 × 6 = ? (em francês)",
+   "a": "Trente-six",
+   "o": [
+    "Quatre-vingt-dix",
+    "Vingt-huit",
+    "Trente-six",
+    "Soixante-dix"
+   ],
+   "h": "6×6=36 = trente-six",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '90' em francês?",
+   "a": "Quatre-vingt-dix",
+   "o": [
+    "Vingt et un",
+    "Vingt-deux",
+    "Vingt-cinq",
+    "Quatre-vingt-dix"
+   ],
+   "h": "90 = quatre-vingt-dix",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Il est midi' significa:",
+   "a": "São meio-dia.",
+   "o": [
+    "São doze horas da noite.",
+    "São duas horas.",
+    "É uma hora.",
+    "São meio-dia."
+   ],
+   "h": "midi = meio-dia",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'São oito menos quinze' em francês:",
+   "a": "Il est huit heures moins le quart.",
+   "o": [
+    "Il est huit heures moins le quart.",
+    "Il est huit heures et quart.",
+    "Il est sept heures et quart.",
+    "Il a huit heures moins quart."
+   ],
+   "h": "moins le quart = -15 min",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '500' em francês?",
+   "a": "Cinq cents",
+   "o": [
+    "Vingt et un",
+    "Vingt-cinq",
+    "Cinq cents",
+    "Vingt-deux"
+   ],
+   "h": "500 = cinq cents",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "10 × 10 = ? (em francês)",
+   "a": "Cent",
+   "o": [
+    "Soixante-dix",
+    "Quatre-vingt-dix",
+    "Vingt-huit",
+    "Cent"
+   ],
+   "h": "10×10=100 = cent",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "4 × 4 = ? (em francês)",
+   "a": "Seize",
+   "o": [
+    "Soixante-dix",
+    "Seize",
+    "Vingt-huit",
+    "Quatre-vingt-dix"
+   ],
+   "h": "4×4=16 = seize",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "11 + 11 = ? (em francês)",
+   "a": "Vingt-deux",
+   "o": [
+    "Vingt-deux",
+    "Quatre-vingt-dix",
+    "Vingt-huit",
+    "Soixante-dix"
+   ],
+   "h": "11+11=22 = vingt-deux",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'quatre-vingt-un' em números?",
+   "a": "81",
+   "o": [
+    "83",
+    "80",
+    "82",
+    "81"
+   ],
+   "h": "quatre-vingt-un = 81",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "15 + 15 = ? (em francês)",
+   "a": "Trente",
+   "o": [
+    "Trente",
+    "Quatre-vingt-dix",
+    "Soixante-dix",
+    "Vingt-huit"
+   ],
+   "h": "15+15=30 = trente",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'douze' em números?",
+   "a": "12",
+   "o": [
+    "2",
+    "0",
+    "1",
+    "12"
+   ],
+   "h": "douze = 12",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "8 × 10 = ? (em francês)",
+   "a": "Quatre-vingts",
+   "o": [
+    "Vingt-huit",
+    "Quatre-vingt-dix",
+    "Soixante-dix",
+    "Quatre-vingts"
+   ],
+   "h": "8×10=80 = quatre-vingts",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'six' em números?",
+   "a": "6",
+   "o": [
+    "0",
+    "6",
+    "1",
+    "2"
+   ],
+   "h": "six = 6",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "8 + 8 = ? (em francês)",
+   "a": "Seize",
+   "o": [
+    "Seize",
+    "Quatre-vingt-dix",
+    "Vingt-huit",
+    "Soixante-dix"
+   ],
+   "h": "8+8=16 = seize",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '80' em francês?",
+   "a": "Quatre-vingts",
+   "o": [
+    "Quatre-vingts",
+    "Vingt-deux",
+    "Vingt et un",
+    "Vingt-cinq"
+   ],
+   "h": "80 = quatre-vingts",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '21' em francês?",
+   "a": "Vingt et un",
+   "o": [
+    "Vingt-deux",
+    "Vingt et un",
+    "Trente",
+    "Vingt-cinq"
+   ],
+   "h": "21 = vingt et un",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "20 - 7 = ? (em francês)",
+   "a": "Treize",
+   "o": [
+    "Quatre-vingt-dix",
+    "Treize",
+    "Vingt-huit",
+    "Soixante-dix"
+   ],
+   "h": "20-7=13 = treize",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'soixante-quinze' em números?",
+   "a": "75",
+   "o": [
+    "77",
+    "76",
+    "74",
+    "75"
+   ],
+   "h": "soixante-quinze = 75",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '4º' em francês?",
+   "a": "Quatrième",
+   "o": [
+    "Deuxième",
+    "Quatrième",
+    "Premier",
+    "Troisième"
+   ],
+   "h": "4º = quatrième",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '200' em francês?",
+   "a": "Deux cents",
+   "o": [
+    "Vingt-deux",
+    "Vingt-cinq",
+    "Vingt et un",
+    "Deux cents"
+   ],
+   "h": "200 = deux cents",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "60 + 20 = ? (em francês)",
+   "a": "Quatre-vingts",
+   "o": [
+    "Soixante-dix",
+    "Quatre-vingts",
+    "Quatre-vingt-dix",
+    "Vingt-huit"
+   ],
+   "h": "60+20=80 = quatre-vingts",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'vingt' em números?",
+   "a": "20",
+   "o": [
+    "1",
+    "2",
+    "20",
+    "0"
+   ],
+   "h": "vingt = 20",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '19' em francês?",
+   "a": "Dix-neuf",
+   "o": [
+    "Deux",
+    "Un/une",
+    "Dix-neuf",
+    "Zéro"
+   ],
+   "h": "19 = dix-neuf",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '2º' em francês?",
+   "a": "Deuxième",
+   "o": [
+    "Troisième",
+    "Premier",
+    "Deuxième"
+   ],
+   "h": "2º = deuxième",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '31' em francês?",
+   "a": "Trente et un",
+   "o": [
+    "Vingt et un",
+    "Trente et un",
+    "Vingt-cinq",
+    "Vingt-deux"
+   ],
+   "h": "31 = trente et un",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '6' em francês?",
+   "a": "Six",
+   "o": [
+    "Zéro",
+    "Six",
+    "Un/une",
+    "Deux"
+   ],
+   "h": "6 = six",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '10º' em francês?",
+   "a": "Dixième",
+   "o": [
+    "Deuxième",
+    "Troisième",
+    "Premier",
+    "Dixième"
+   ],
+   "h": "10º = dixième",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "7 + 8 = ? (em francês)",
+   "a": "Quinze",
+   "o": [
+    "Quatre-vingt-dix",
+    "Quinze",
+    "Soixante-dix",
+    "Vingt-huit"
+   ],
+   "h": "7+8=15 = quinze",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "7 × 7 = ? (em francês)",
+   "a": "Quarante-neuf",
+   "o": [
+    "Vingt-huit",
+    "Quatre-vingt-dix",
+    "Soixante-dix",
+    "Quarante-neuf"
+   ],
+   "h": "7×7=49 = quarante-neuf",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '17' em francês?",
+   "a": "Dix-sept",
+   "o": [
+    "Un/une",
+    "Zéro",
+    "Dix-sept",
+    "Deux"
+   ],
+   "h": "17 = dix-sept",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '85' em francês?",
+   "a": "Quatre-vingt-cinq",
+   "o": [
+    "Vingt et un",
+    "Quatre-vingt-cinq",
+    "Vingt-cinq",
+    "Vingt-deux"
+   ],
+   "h": "85 = quatre-vingt-cinq",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '10' em francês?",
+   "a": "Dix",
+   "o": [
+    "Zéro",
+    "Deux",
+    "Un/une",
+    "Dix"
+   ],
+   "h": "10 = dix",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'quinze' em números?",
+   "a": "15",
+   "o": [
+    "15",
+    "1",
+    "0",
+    "2"
+   ],
+   "h": "quinze = 15",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'sept' em números?",
+   "a": "7",
+   "o": [
+    "0",
+    "1",
+    "7",
+    "2"
+   ],
+   "h": "sept = 7",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'São três horas' em francês:",
+   "a": "Il est trois heures.",
+   "o": [
+    "Nous avons trois heures.",
+    "C'est trois heures.",
+    "Il a trois heures.",
+    "Il est trois heures."
+   ],
+   "h": "il est + hora",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '40' em francês?",
+   "a": "Quarante",
+   "o": [
+    "Vingt-deux",
+    "Vingt-cinq",
+    "Quarante",
+    "Vingt et un"
+   ],
+   "h": "40 = quarante",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'treize' em números?",
+   "a": "13",
+   "o": [
+    "0",
+    "13",
+    "2",
+    "1"
+   ],
+   "h": "treize = 13",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '1000000' em francês?",
+   "a": "Un million",
+   "o": [
+    "Un million",
+    "Vingt et un",
+    "Vingt-cinq",
+    "Vingt-deux"
+   ],
+   "h": "1000000 = un million",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '15' em francês?",
+   "a": "Quinze",
+   "o": [
+    "Deux",
+    "Quinze",
+    "Zéro",
+    "Un/une"
+   ],
+   "h": "15 = quinze",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '30' em francês?",
+   "a": "Trente",
+   "o": [
+    "Vingt-deux",
+    "Vingt-cinq",
+    "Vingt et un",
+    "Trente"
+   ],
+   "h": "30 = trente",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'quatre' em números?",
+   "a": "4",
+   "o": [
+    "2",
+    "4",
+    "0",
+    "1"
+   ],
+   "h": "quatre = 4",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'soixante et onze' em números?",
+   "a": "71",
+   "o": [
+    "71",
+    "73",
+    "72",
+    "70"
+   ],
+   "h": "soixante et onze = 71",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'soixante-cinq' em números?",
+   "a": "65",
+   "o": [
+    "64",
+    "65",
+    "66",
+    "67"
+   ],
+   "h": "soixante-cinq = 65",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "7 × 4 = ? (em francês)",
+   "a": "Vingt-huit",
+   "o": [
+    "Soixante-dix",
+    "Quatre-vingt-dix",
+    "Dix-huit",
+    "Vingt-huit"
+   ],
+   "h": "7×4=28 = vingt-huit",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '71' em francês?",
+   "a": "Soixante et onze",
+   "o": [
+    "Vingt-deux",
+    "Vingt-cinq",
+    "Vingt et un",
+    "Soixante et onze"
+   ],
+   "h": "71 = soixante et onze",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'quatorze' em números?",
+   "a": "14",
+   "o": [
+    "1",
+    "0",
+    "2",
+    "14"
+   ],
+   "h": "quatorze = 14",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "14 × 5 = ? (em francês)",
+   "a": "Soixante-dix",
+   "o": [
+    "Dix-huit",
+    "Quatre-vingt-dix",
+    "Vingt-huit",
+    "Soixante-dix"
+   ],
+   "h": "14×5=70 = soixante-dix",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '7' em francês?",
+   "a": "Sept",
+   "o": [
+    "Sept",
+    "Deux",
+    "Un/une",
+    "Zéro"
+   ],
+   "h": "7 = sept",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "20 + 20 = ? (em francês)",
+   "a": "Quarante",
+   "o": [
+    "Quatre-vingt-dix",
+    "Soixante-dix",
+    "Vingt-huit",
+    "Quarante"
+   ],
+   "h": "20+20=40 = quarante",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'zéro' em números?",
+   "a": "0",
+   "o": [
+    "2",
+    "0",
+    "1",
+    "3"
+   ],
+   "h": "zéro = 0",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'trente et un' em números?",
+   "a": "31",
+   "o": [
+    "32",
+    "33",
+    "31",
+    "30"
+   ],
+   "h": "trente et un = 31",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'dix-sept' em números?",
+   "a": "17",
+   "o": [
+    "17",
+    "0",
+    "2",
+    "1"
+   ],
+   "h": "dix-sept = 17",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '59' em francês?",
+   "a": "Cinquante-neuf",
+   "o": [
+    "Cinquante-neuf",
+    "Vingt et un",
+    "Vingt-deux",
+    "Vingt-cinq"
+   ],
+   "h": "59 = cinquante-neuf",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '16' em francês?",
+   "a": "Seize",
+   "o": [
+    "Un/une",
+    "Zéro",
+    "Deux",
+    "Seize"
+   ],
+   "h": "16 = seize",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz 'último' em francês?",
+   "a": "Dernier/dernière",
+   "o": [
+    "Suivant/suivante",
+    "Dernier/dernière",
+    "Précédent/précédente",
+    "Prochain/prochaine"
+   ],
+   "h": "último = dernier/dernière",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'menos quinze' nas horas em francês:",
+   "a": "Moins le quart",
+   "o": [
+    "Moins le quart",
+    "Sans quart",
+    "Moins quinze",
+    "Moins quart"
+   ],
+   "h": "menos quinze = moins le quart",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '12' em francês?",
+   "a": "Douze",
+   "o": [
+    "Deux",
+    "Un/une",
+    "Zéro",
+    "Douze"
+   ],
+   "h": "12 = douze",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '1000' em francês?",
+   "a": "Mille",
+   "o": [
+    "Mille",
+    "Vingt-cinq",
+    "Vingt-deux",
+    "Vingt et un"
+   ],
+   "h": "1000 = mille",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '1º/1ª' em francês?",
+   "a": "Premier/première",
+   "o": [
+    "Deuxième/seconde",
+    "Troisième/tierce",
+    "Quatrième/quarte",
+    "Premier/première"
+   ],
+   "h": "1º/1ª = premier/première",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '2' em francês?",
+   "a": "Deux",
+   "o": [
+    "Trois",
+    "Un/une",
+    "Deux",
+    "Zéro"
+   ],
+   "h": "2 = deux",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '91' em francês?",
+   "a": "Quatre-vingt-onze",
+   "o": [
+    "Vingt-deux",
+    "Vingt-cinq",
+    "Quatre-vingt-onze",
+    "Vingt et un"
+   ],
+   "h": "91 = quatre-vingt-onze",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '79' em francês?",
+   "a": "Soixante-dix-neuf",
+   "o": [
+    "Vingt-deux",
+    "Vingt et un",
+    "Soixante-dix-neuf",
+    "Vingt-cinq"
+   ],
+   "h": "79 = soixante-dix-neuf",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'trois' em números?",
+   "a": "3",
+   "o": [
+    "0",
+    "1",
+    "2",
+    "3"
+   ],
+   "h": "trois = 3",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "9 × 10 = ? (em francês)",
+   "a": "Quatre-vingt-dix",
+   "o": [
+    "Vingt-huit",
+    "Dix-huit",
+    "Soixante-dix",
+    "Quatre-vingt-dix"
+   ],
+   "h": "9×10=90 = quatre-vingt-dix",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'vingt-cinq' em números?",
+   "a": "25",
+   "o": [
+    "26",
+    "25",
+    "24",
+    "27"
+   ],
+   "h": "vingt-cinq = 25",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'São sete e quinze' em francês:",
+   "a": "Il est sept heures et quart.",
+   "o": [
+    "Il est sept heures.",
+    "Il est sept heures et demie.",
+    "Il est sept heures et quart.",
+    "Il a sept heures quart."
+   ],
+   "h": "et quart = +15 min",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'soixante-douze' em números?",
+   "a": "72",
+   "o": [
+    "71",
+    "74",
+    "73",
+    "72"
+   ],
+   "h": "soixante-douze = 72",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "2 × 9 = ? (em francês)",
+   "a": "Dix-huit",
+   "o": [
+    "Soixante-dix",
+    "Vingt-huit",
+    "Dix-huit",
+    "Quatre-vingt-dix"
+   ],
+   "h": "2×9=18 = dix-huit",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'e quinze' nas horas em francês:",
+   "a": "Et quart",
+   "o": [
+    "Et quarter",
+    "Et quart",
+    "Et quinze",
+    "Quart d'heure"
+   ],
+   "h": "e quinze = et quart",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '45' em francês?",
+   "a": "Quarante-cinq",
+   "o": [
+    "Vingt-deux",
+    "Vingt et un",
+    "Quarante-cinq",
+    "Vingt-cinq"
+   ],
+   "h": "45 = quarante-cinq",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Une douzaine' significa:",
+   "a": "Uma dúzia (12 itens)",
+   "o": [
+    "Um punhado",
+    "Uma dezena",
+    "Uma centena",
+    "Uma dúzia (12 itens)"
+   ],
+   "h": "douzaine = dúzia",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'São dez e meia' em francês:",
+   "a": "Il est dix heures et demie.",
+   "o": [
+    "Il a dix heures.",
+    "Il est dix heures et demie.",
+    "Il est dix heures et quart.",
+    "Il est dix heures."
+   ],
+   "h": "et demie = e meia",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'un/une' em números?",
+   "a": "1",
+   "o": [
+    "2",
+    "1",
+    "0",
+    "3"
+   ],
+   "h": "un/une = 1",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'seize' em números?",
+   "a": "16",
+   "o": [
+    "2",
+    "16",
+    "0",
+    "1"
+   ],
+   "h": "seize = 16",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'e meia' nas horas em francês:",
+   "a": "Et demie",
+   "o": [
+    "Et demi",
+    "Et moitié",
+    "Et demie",
+    "Demi-heure"
+   ],
+   "h": "e meia = et demie",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'quarante-cinq' em números?",
+   "a": "45",
+   "o": [
+    "44",
+    "46",
+    "45",
+    "47"
+   ],
+   "h": "quarante-cinq = 45",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "6 × 5 = ? (em francês)",
+   "a": "Trente",
+   "o": [
+    "Vingt-huit",
+    "Soixante-dix",
+    "Quatre-vingt-dix",
+    "Trente"
+   ],
+   "h": "6×5=30 = trente",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'huit' em números?",
+   "a": "8",
+   "o": [
+    "0",
+    "2",
+    "1",
+    "8"
+   ],
+   "h": "huit = 8",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'deux' em números?",
+   "a": "2",
+   "o": [
+    "0",
+    "3",
+    "1",
+    "2"
+   ],
+   "h": "deux = 2",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "4 × 5 = ? (em francês)",
+   "a": "Vingt",
+   "o": [
+    "Vingt-huit",
+    "Soixante-dix",
+    "Quatre-vingt-dix",
+    "Vingt"
+   ],
+   "h": "4×5=20 = vingt",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "12 × 5 = ? (em francês)",
+   "a": "Soixante",
+   "o": [
+    "Vingt-huit",
+    "Soixante",
+    "Quatre-vingt-dix",
+    "Soixante-dix"
+   ],
+   "h": "12×5=60 = soixante",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'deux cents' em números?",
+   "a": "200",
+   "o": [
+    "200",
+    "201",
+    "199",
+    "202"
+   ],
+   "h": "deux cents = 200",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'2025' em francês:",
+   "a": "Deux mille vingt-cinq",
+   "o": [
+    "Vingt mille vingt-cinq",
+    "Deux mille vingt-cinq",
+    "Deux mille et vingt-cinq",
+    "Deux cents vingt-cinq"
+   ],
+   "h": "anos: mille + resto",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'dix' em números?",
+   "a": "10",
+   "o": [
+    "1",
+    "0",
+    "10",
+    "2"
+   ],
+   "h": "dix = 10",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '3º' em francês?",
+   "a": "Troisième",
+   "o": [
+    "Premier",
+    "Troisième",
+    "Deuxième"
+   ],
+   "h": "3º = troisième",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'neuf' em números?",
+   "a": "9",
+   "o": [
+    "9",
+    "0",
+    "2",
+    "1"
+   ],
+   "h": "neuf = 9",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "5 × 5 = ? (em francês)",
+   "a": "Vingt-cinq",
+   "o": [
+    "Soixante-dix",
+    "Quatre-vingt-dix",
+    "Vingt-cinq",
+    "Vingt-huit"
+   ],
+   "h": "5×5=25 = vingt-cinq",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'dix-huit' em números?",
+   "a": "18",
+   "o": [
+    "2",
+    "0",
+    "1",
+    "18"
+   ],
+   "h": "dix-huit = 18",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '22' em francês?",
+   "a": "Vingt-deux",
+   "o": [
+    "Vingt-cinq",
+    "Trente",
+    "Vingt et un",
+    "Vingt-deux"
+   ],
+   "h": "22 = vingt-deux",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '150' em francês?",
+   "a": "Cent cinquante",
+   "o": [
+    "Vingt et un",
+    "Vingt-cinq",
+    "Vingt-deux",
+    "Cent cinquante"
+   ],
+   "h": "150 = cent cinquante",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '81' em francês?",
+   "a": "Quatre-vingt-un",
+   "o": [
+    "Vingt-deux",
+    "Quatre-vingt-un",
+    "Vingt et un",
+    "Vingt-cinq"
+   ],
+   "h": "81 = quatre-vingt-un",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Como se pergunta Que horas são?' em francês:",
+   "a": "Quelle heure est-il?",
+   "o": [
+    "Quel heure est?",
+    "Quelle heure est-il?",
+    "Combien d'heures?",
+    "Quelle heure a-t-il?"
+   ],
+   "h": "Quelle heure est-il?",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'cent cinquante' em números?",
+   "a": "150",
+   "o": [
+    "149",
+    "152",
+    "150",
+    "151"
+   ],
+   "h": "cent cinquante = 150",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "3 × 4 = ? (em francês)",
+   "a": "Douze",
+   "o": [
+    "Quatre-vingt-dix",
+    "Vingt-huit",
+    "Soixante-dix",
+    "Douze"
+   ],
+   "h": "3×4=12 = douze",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Il est minuit' significa:",
+   "a": "É meia-noite.",
+   "o": [
+    "É tarde.",
+    "São meio-dia.",
+    "É meia-noite.",
+    "São doze horas."
+   ],
+   "h": "minuit = meia-noite",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "50 + 50 = ? (em francês)",
+   "a": "Cent",
+   "o": [
+    "Vingt-huit",
+    "Soixante-dix",
+    "Quatre-vingt-dix",
+    "Cent"
+   ],
+   "h": "50+50=100 = cent",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '11' em francês?",
+   "a": "Onze",
+   "o": [
+    "Onze",
+    "Zéro",
+    "Deux",
+    "Un/une"
+   ],
+   "h": "11 = onze",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '4' em francês?",
+   "a": "Quatre",
+   "o": [
+    "Deux",
+    "Zéro",
+    "Quatre",
+    "Un/une"
+   ],
+   "h": "4 = quatre",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '1' em francês?",
+   "a": "Un/une",
+   "o": [
+    "Deux",
+    "Trois",
+    "Zéro",
+    "Un/une"
+   ],
+   "h": "1 = un/une",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '1000000000' em francês?",
+   "a": "Un milliard",
+   "o": [
+    "Vingt-cinq",
+    "Vingt et un",
+    "Vingt-deux",
+    "Un milliard"
+   ],
+   "h": "1000000000 = un milliard",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "100 ÷ 2 = ? (em francês)",
+   "a": "Cinquante",
+   "o": [
+    "Soixante-dix",
+    "Cinquante",
+    "Quatre-vingt-dix",
+    "Vingt-huit"
+   ],
+   "h": "100÷2=50 = cinquante",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'quatre-vingts' em números?",
+   "a": "80",
+   "o": [
+    "82",
+    "79",
+    "81",
+    "80"
+   ],
+   "h": "quatre-vingts = 80",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '50' em francês?",
+   "a": "Cinquante",
+   "o": [
+    "Vingt-cinq",
+    "Vingt-deux",
+    "Cinquante",
+    "Vingt et un"
+   ],
+   "h": "50 = cinquante",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '95' em francês?",
+   "a": "Quatre-vingt-quinze",
+   "o": [
+    "Vingt et un",
+    "Quatre-vingt-quinze",
+    "Vingt-cinq",
+    "Vingt-deux"
+   ],
+   "h": "95 = quatre-vingt-quinze",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Une centaine' significa:",
+   "a": "Cerca de cem",
+   "o": [
+    "Um século",
+    "Cerca de cem",
+    "Exatamente cem",
+    "Cem anos"
+   ],
+   "h": "centaine ≈ 100",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '70' em francês?",
+   "a": "Soixante-dix",
+   "o": [
+    "Vingt-cinq",
+    "Vingt et un",
+    "Soixante-dix",
+    "Vingt-deux"
+   ],
+   "h": "70 = soixante-dix",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '72' em francês?",
+   "a": "Soixante-douze",
+   "o": [
+    "Vingt-deux",
+    "Vingt-cinq",
+    "Vingt et un",
+    "Soixante-douze"
+   ],
+   "h": "72 = soixante-douze",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "100 - 10 = ? (em francês)",
+   "a": "Quatre-vingt-dix",
+   "o": [
+    "Soixante-dix",
+    "Vingt-huit",
+    "Dix-huit",
+    "Quatre-vingt-dix"
+   ],
+   "h": "100-10=90 = quatre-vingt-dix",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "100 - 30 = ? (em francês)",
+   "a": "Soixante-dix",
+   "o": [
+    "Soixante-dix",
+    "Quatre-vingt-dix",
+    "Dix-huit",
+    "Vingt-huit"
+   ],
+   "h": "100-30=70 = soixante-dix",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '25' em francês?",
+   "a": "Vingt-cinq",
+   "o": [
+    "Vingt-deux",
+    "Vingt-cinq",
+    "Vingt et un",
+    "Trente"
+   ],
+   "h": "25 = vingt-cinq",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "25 × 2 = ? (em francês)",
+   "a": "Cinquante",
+   "o": [
+    "Quatre-vingt-dix",
+    "Cinquante",
+    "Vingt-huit",
+    "Soixante-dix"
+   ],
+   "h": "25×2=50 = cinquante",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '75' em francês?",
+   "a": "Soixante-quinze",
+   "o": [
+    "Vingt-deux",
+    "Soixante-quinze",
+    "Vingt-cinq",
+    "Vingt et un"
+   ],
+   "h": "75 = soixante-quinze",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '14' em francês?",
+   "a": "Quatorze",
+   "o": [
+    "Deux",
+    "Quatorze",
+    "Zéro",
+    "Un/une"
+   ],
+   "h": "14 = quatorze",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '13' em francês?",
+   "a": "Treize",
+   "o": [
+    "Un/une",
+    "Zéro",
+    "Treize",
+    "Deux"
+   ],
+   "h": "13 = treize",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'quatre-vingt-dix' em números?",
+   "a": "90",
+   "o": [
+    "90",
+    "92",
+    "91",
+    "89"
+   ],
+   "h": "quatre-vingt-dix = 90",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '100' em francês?",
+   "a": "Cent",
+   "o": [
+    "Vingt et un",
+    "Cent",
+    "Vingt-deux",
+    "Vingt-cinq"
+   ],
+   "h": "100 = cent",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '5' em francês?",
+   "a": "Cinq",
+   "o": [
+    "Cinq",
+    "Deux",
+    "Un/une",
+    "Zéro"
+   ],
+   "h": "5 = cinq",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '18' em francês?",
+   "a": "Dix-huit",
+   "o": [
+    "Dix-huit",
+    "Un/une",
+    "Zéro",
+    "Deux"
+   ],
+   "h": "18 = dix-huit",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '20' em francês?",
+   "a": "Vingt",
+   "o": [
+    "Zéro",
+    "Deux",
+    "Vingt",
+    "Un/une"
+   ],
+   "h": "20 = vingt",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'dix-neuf' em números?",
+   "a": "19",
+   "o": [
+    "0",
+    "19",
+    "1",
+    "2"
+   ],
+   "h": "dix-neuf = 19",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'vingt-deux' em números?",
+   "a": "22",
+   "o": [
+    "23",
+    "21",
+    "24",
+    "22"
+   ],
+   "h": "vingt-deux = 22",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Por que 70 é 'soixante-dix'?",
+   "a": "França usa 60+10 (sistema vigesimal)",
+   "o": [
+    "É uma escolha aleatória",
+    "França usa 60+10 (sistema vigesimal)",
+    "Vem do latim",
+    "Bélgica e Suíça também usam"
+   ],
+   "h": "soixante-dix = 60+10",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'quatre-vingt-onze' em números?",
+   "a": "91",
+   "o": [
+    "90",
+    "92",
+    "93",
+    "91"
+   ],
+   "h": "quatre-vingt-onze = 91",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'o primeiro de janeiro' em francês:",
+   "a": "Le premier janvier",
+   "o": [
+    "Le un janvier",
+    "Le premier de janvier",
+    "Le première janvier",
+    "Le premier janvier"
+   ],
+   "h": "datas: premier para dia 1",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "9 + 9 = ? (em francês)",
+   "a": "Dix-huit",
+   "o": [
+    "Soixante-dix",
+    "Dix-huit",
+    "Quatre-vingt-dix",
+    "Vingt-huit"
+   ],
+   "h": "9+9=18 = dix-huit",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '8' em francês?",
+   "a": "Huit",
+   "o": [
+    "Huit",
+    "Un/une",
+    "Deux",
+    "Zéro"
+   ],
+   "h": "8 = huit",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '65' em francês?",
+   "a": "Soixante-cinq",
+   "o": [
+    "Soixante-cinq",
+    "Vingt et un",
+    "Vingt-deux",
+    "Vingt-cinq"
+   ],
+   "h": "65 = soixante-cinq",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '99' em francês?",
+   "a": "Quatre-vingt-dix-neuf",
+   "o": [
+    "Quatre-vingt-dix-neuf",
+    "Vingt-deux",
+    "Vingt-cinq",
+    "Vingt et un"
+   ],
+   "h": "99 = quatre-vingt-dix-neuf",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'onze' em números?",
+   "a": "11",
+   "o": [
+    "1",
+    "2",
+    "0",
+    "11"
+   ],
+   "h": "onze = 11",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'Quatre-vingts' perde o S quando:",
+   "a": "Seguido de outro número (ex: quatre-vingt-cinq)",
+   "o": [
+    "Nunca perde o S",
+    "Sempre perde o S",
+    "Antes de vogal",
+    "Seguido de outro número (ex: quatre-vingt-cinq)"
+   ],
+   "h": "80 perde S: quatre-vingt-cinq (85)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "3 × 3 = ? (em francês)",
+   "a": "Neuf",
+   "o": [
+    "Neuf",
+    "Vingt-huit",
+    "Soixante-dix",
+    "Quatre-vingt-dix"
+   ],
+   "h": "3×3=9 = neuf",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'soixante-dix' em números?",
+   "a": "70",
+   "o": [
+    "70",
+    "72",
+    "71",
+    "69"
+   ],
+   "h": "soixante-dix = 70",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '60' em francês?",
+   "a": "Soixante",
+   "o": [
+    "Vingt-cinq",
+    "Vingt et un",
+    "Vingt-deux",
+    "Soixante"
+   ],
+   "h": "60 = soixante",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '5º' em francês?",
+   "a": "Cinquième",
+   "o": [
+    "Troisième",
+    "Cinquième",
+    "Deuxième",
+    "Premier"
+   ],
+   "h": "5º = cinquième",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '0' em francês?",
+   "a": "Zéro",
+   "o": [
+    "Un/une",
+    "Zéro",
+    "Deux",
+    "Trois"
+   ],
+   "h": "0 = zéro",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '9' em francês?",
+   "a": "Neuf",
+   "o": [
+    "Un/une",
+    "Neuf",
+    "Zéro",
+    "Deux"
+   ],
+   "h": "9 = neuf",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é 'cinq' em números?",
+   "a": "5",
+   "o": [
+    "5",
+    "0",
+    "1",
+    "2"
+   ],
+   "h": "cinq = 5",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "6 + 7 = ? (em francês)",
+   "a": "Treize",
+   "o": [
+    "Soixante-dix",
+    "Vingt-huit",
+    "Treize",
+    "Quatre-vingt-dix"
+   ],
+   "h": "6+7=13 = treize",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "10 + 5 = ? (em francês)",
+   "a": "Quinze",
+   "o": [
+    "Quatre-vingt-dix",
+    "Quinze",
+    "Soixante-dix",
+    "Vingt-huit"
+   ],
+   "h": "10+5=15 = quinze",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se diz '3' em francês?",
+   "a": "Trois",
+   "o": [
+    "Deux",
+    "Zéro",
+    "Trois",
+    "Un/une"
+   ],
+   "h": "3 = trois",
+   "t": "",
+   "l": ""
+  }
+ ],
+ "pronon": [
+  {
+   "q": "O consoante final de 'chef' é:",
+   "a": "F final pronunciado (CaReFuL)",
+   "o": [
+    "Sempre pronunciado",
+    "F final pronunciado (CaReFuL)",
+    "Sempre mudo",
+    "Depende do acento"
+   ],
+   "h": "chef = chêf",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "\"gn\" soa como?",
+   "a": "Nh (como em montanha)",
+   "o": [
+    "Pronúncia portuguesa",
+    "Som gutural",
+    "Nh (como em montanha)",
+    "Som inglês"
+   ],
+   "h": "montagne = mõtânh",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'nous avons'?",
+   "a": "Nu-zavõ",
+   "o": [
+    "Sem ligação",
+    "Nu-zavõ",
+    "Pronúncia separada",
+    "Nous avons"
+   ],
+   "h": "liaison: S vira Z",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'H em homme' soa como:",
+   "a": "Mudo — lê-se om",
+   "o": [
+    "Som mudo",
+    "Mudo — lê-se om",
+    "Som nasal",
+    "Som de i"
+   ],
+   "h": "H mudo: homme = om",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "\"ui\" soa como?",
+   "a": "Üi",
+   "o": [
+    "Som gutural",
+    "Som inglês",
+    "Üi",
+    "Pronúncia portuguesa"
+   ],
+   "h": "nuit=nüi",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "\"et\" faz liaison?",
+   "a": "Não — et nunca faz liaison",
+   "o": [
+    "Som inglês",
+    "Pronúncia portuguesa",
+    "Som gutural",
+    "Não — et nunca faz liaison"
+   ],
+   "h": "et elle = é-él (não é-tél)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "\"ail\" em travail soa como?",
+   "a": "Ay (travay)",
+   "o": [
+    "Pronúncia igual ao português",
+    "Som mudo",
+    "Ay (travay)",
+    "Som nasal"
+   ],
+   "h": "ail = ay",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'merci'?",
+   "a": "Mêr-sí",
+   "o": [
+    "Mêr-sí",
+    "Pronúncia portuguesa",
+    "Pronúncia italiana",
+    "Som inglês"
+   ],
+   "h": "R pronunciado, C final = sí",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'j em jour'?",
+   "a": "Zh (j inglês em measure)",
+   "o": [
+    "Pronúncia portuguesa",
+    "Zh (j inglês em measure)",
+    "Pronúncia italiana",
+    "Som inglês"
+   ],
+   "h": "j francês = zh suave",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O consoante final de 'chaud' é:",
+   "a": "D final mudo",
+   "o": [
+    "Depende do acento",
+    "Sempre pronunciado",
+    "Sempre mudo",
+    "D final mudo"
+   ],
+   "h": "chaud = chô",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'oi em voilà'?",
+   "a": "Uá",
+   "o": [
+    "I",
+    "Ou",
+    "Som português",
+    "Uá"
+   ],
+   "h": "voilà = vuálà",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'français'?",
+   "a": "Frã-sê",
+   "o": [
+    "Pronúncia italiana",
+    "Pronúncia portuguesa",
+    "Som inglês",
+    "Frã-sê"
+   ],
+   "h": "an=ã nasal, ai=ê",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'boulangerie'?",
+   "a": "Bu-lã-jrí",
+   "o": [
+    "Pronúncia portuguesa",
+    "Pronúncia italiana",
+    "Bu-lã-jrí",
+    "Som inglês"
+   ],
+   "h": "ou=u, an=ã, g+e=j",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O consoante final de 'repas' é:",
+   "a": "S final mudo",
+   "o": [
+    "Sempre pronunciado",
+    "Depende do acento",
+    "S final mudo",
+    "Sempre mudo"
+   ],
+   "h": "repas = repá",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'â (circunflexo)' soa como:",
+   "a": "A prolongado",
+   "o": [
+    "Som nasal",
+    "Som de i",
+    "Som mudo",
+    "A prolongado"
+   ],
+   "h": "pâte = pât",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'oi em moi'?",
+   "a": "Uá",
+   "o": [
+    "Som português",
+    "I",
+    "Ou",
+    "Uá"
+   ],
+   "h": "moi = muá",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "H mudo vs H aspirado?",
+   "a": "Mudo permite liaison/elision; aspirado não",
+   "o": [
+    "Pronúncia portuguesa",
+    "Mudo permite liaison/elision; aspirado não",
+    "Som gutural",
+    "Som inglês"
+   ],
+   "h": "homme (mudo) vs hibou (aspirado)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'deux'?",
+   "a": "Dö",
+   "o": [
+    "Pronúncia italiana",
+    "Dö",
+    "Pronúncia portuguesa",
+    "Som inglês"
+   ],
+   "h": "eu = ö",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "\"an/en/am/em\" soa como?",
+   "a": "Ã nasal",
+   "o": [
+    "Ã nasal",
+    "Som gutural",
+    "Pronúncia portuguesa",
+    "Som inglês"
+   ],
+   "h": "enfant=ãfã, temps=tã",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O consoante final de 'trop' é:",
+   "a": "P final mudo",
+   "o": [
+    "Sempre pronunciado",
+    "Depende do acento",
+    "Sempre mudo",
+    "P final mudo"
+   ],
+   "h": "trop = trô",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'les amis'?",
+   "a": "Lé-zami",
+   "o": [
+    "Les amis",
+    "Lé-zami",
+    "Sem ligação",
+    "Pronúncia separada"
+   ],
+   "h": "liaison: S vira Z",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O \"j\" francês soa como?",
+   "a": "Zh (j em inglês measure)",
+   "o": [
+    "Zh (j em inglês measure)",
+    "Som gutural",
+    "Som inglês",
+    "Pronúncia portuguesa"
+   ],
+   "h": "jour = júr",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'ô (circunflexo)' soa como:",
+   "a": "Ô fechado",
+   "o": [
+    "Som nasal",
+    "Som de i",
+    "Som mudo",
+    "Ô fechado"
+   ],
+   "h": "hôtel = otél",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'un em un'?",
+   "a": "Ẽ (nasal)",
+   "o": [
+    "Som português",
+    "Ou",
+    "I",
+    "Ẽ (nasal)"
+   ],
+   "h": "un = ẽ",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'fille'?",
+   "a": "Fíy",
+   "o": [
+    "Som inglês",
+    "Pronúncia portuguesa",
+    "Fíy",
+    "Pronúncia italiana"
+   ],
+   "h": "ill = y (fille = garota)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O consoante final de 'corps' é:",
+   "a": "PS finais mudos",
+   "o": [
+    "Depende do acento",
+    "Sempre mudo",
+    "Sempre pronunciado",
+    "PS finais mudos"
+   ],
+   "h": "corps = kôr",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é a regra CaReFuL?",
+   "a": "C, R, F, L finais costumam ser pronunciados",
+   "o": [
+    "Som gutural",
+    "Som inglês",
+    "C, R, F, L finais costumam ser pronunciados",
+    "Pronúncia portuguesa"
+   ],
+   "h": "CaReFuL = C R F L pronunciados",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'eau'?",
+   "a": "Ô",
+   "o": [
+    "Ô",
+    "Som inglês",
+    "Pronúncia portuguesa",
+    "Pronúncia italiana"
+   ],
+   "h": "eau = ô",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'H em hier' soa como:",
+   "a": "Mudo — lê-se iér",
+   "o": [
+    "Nasal — lê-se ĩér",
+    "Mudo — lê-se iér",
+    "Aspirado — lê-se hier",
+    "Pronunciado — lê-se hjer"
+   ],
+   "h": "H mudo: hier = iér",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O consoante final de 'français' é:",
+   "a": "S final mudo",
+   "o": [
+    "Sempre mudo",
+    "Sempre pronunciado",
+    "S final mudo",
+    "Depende do acento"
+   ],
+   "h": "français = frãsê",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "\"ill\" soa como? (regra geral)",
+   "a": "Y (como fille = fíy)",
+   "o": [
+    "Som inglês",
+    "Som gutural",
+    "Y (como fille = fíy)",
+    "Pronúncia portuguesa"
+   ],
+   "h": "mas ville = víl (exceção!)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'au em chaud'?",
+   "a": "Ô",
+   "o": [
+    "Ou",
+    "Ô",
+    "Som português",
+    "I"
+   ],
+   "h": "chaud = chô",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O consoante final de 'voix' é:",
+   "a": "X final mudo",
+   "o": [
+    "Depende do acento",
+    "X final mudo",
+    "Sempre mudo",
+    "Sempre pronunciado"
+   ],
+   "h": "voix = vuá",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "\"monsieur\" se pronuncia?",
+   "a": "Mesjö",
+   "o": [
+    "Som mudo",
+    "Pronúncia igual ao português",
+    "Som nasal",
+    "Mesjö"
+   ],
+   "h": "pronúncia muito irregular",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O consoante final de 'grand' é:",
+   "a": "D final mudo",
+   "o": [
+    "D final mudo",
+    "Depende do acento",
+    "Sempre pronunciado",
+    "Sempre mudo"
+   ],
+   "h": "grand = grã",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "\"fille\" vs \"ville\": diferença?",
+   "a": "Fille=fíy (ill=y), ville=víl (ill=l, exceção)",
+   "o": [
+    "Pronúncia igual ao português",
+    "Som nasal",
+    "Fille=fíy (ill=y), ville=víl (ill=l, exceção)",
+    "Som mudo"
+   ],
+   "h": "ville é exceção à regra ill=y",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'oi'?",
+   "a": "Uá",
+   "o": [
+    "Uá",
+    "Pronúncia italiana",
+    "Pronúncia portuguesa",
+    "Som inglês"
+   ],
+   "h": "oi = uá",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'les enfants'?",
+   "a": "Lé-zãfã",
+   "o": [
+    "Lé-zãfã",
+    "Sem ligação",
+    "Les enfants",
+    "Pronúncia separada"
+   ],
+   "h": "liaison: S vira Z",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'on em bon'?",
+   "a": "Õ (nasal)",
+   "o": [
+    "Ou",
+    "Õ (nasal)",
+    "I",
+    "Som português"
+   ],
+   "h": "bon = bõ",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'H em habiter' soa como:",
+   "a": "Mudo — lê-se abité",
+   "o": [
+    "Nasal — lê-se ãbité",
+    "Mudo — lê-se abité",
+    "Aspirado — lê-se habité",
+    "Pronunciado — lê-se habité"
+   ],
+   "h": "H mudo: habiter = abité",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'femme'?",
+   "a": "Fam",
+   "o": [
+    "Pronúncia italiana",
+    "Pronúncia portuguesa",
+    "Som inglês",
+    "Fam"
+   ],
+   "h": "em = a (exceção!)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'ou'?",
+   "a": "U",
+   "o": [
+    "Pronúncia portuguesa",
+    "U",
+    "Pronúncia italiana",
+    "Som inglês"
+   ],
+   "h": "ou = u (como lua)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'peur'?",
+   "a": "Pör",
+   "o": [
+    "Pör",
+    "Som inglês",
+    "Pronúncia portuguesa",
+    "Pronúncia italiana"
+   ],
+   "h": "eur = ör",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'ien em bien'?",
+   "a": "Biẽ (nasal)",
+   "o": [
+    "I",
+    "Som português",
+    "Ou",
+    "Biẽ (nasal)"
+   ],
+   "h": "bien = biẽ",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "\"ge/gi\" soa como?",
+   "a": "Zh suave (j de jour)",
+   "o": [
+    "Som mudo",
+    "Zh suave (j de jour)",
+    "Pronúncia igual ao português",
+    "Som nasal"
+   ],
+   "h": "genre=zhãr",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'on est'?",
+   "a": "O-nê",
+   "o": [
+    "O-nê",
+    "Pronúncia separada",
+    "On est",
+    "Sem ligação"
+   ],
+   "h": "liaison: N liga",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'ch em chat'?",
+   "a": "Sh (como show)",
+   "o": [
+    "Pronúncia portuguesa",
+    "Pronúncia italiana",
+    "Sh (como show)",
+    "Som inglês"
+   ],
+   "h": "ch = sh",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O consoante final de 'tout' é:",
+   "a": "T final mudo",
+   "o": [
+    "Depende do acento",
+    "Sempre mudo",
+    "Sempre pronunciado",
+    "T final mudo"
+   ],
+   "h": "tout = tu",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'ï (trema)' soa como:",
+   "a": "Vogal separada da anterior",
+   "o": [
+    "Vogal alongada",
+    "Vogal separada da anterior",
+    "Vogal fundida com a anterior",
+    "Ditongo com a anterior"
+   ],
+   "h": "naïf = na-if",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'premier étage'?",
+   "a": "Premié-rétaj",
+   "o": [
+    "Premier étage",
+    "Sem ligação",
+    "Premié-rétaj",
+    "Pronúncia separada"
+   ],
+   "h": "liaison: R liga",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'nuit'?",
+   "a": "Nüi",
+   "o": [
+    "Pronúncia italiana",
+    "Nüi",
+    "Som inglês",
+    "Pronúncia portuguesa"
+   ],
+   "h": "ui = üi",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'soeur'?",
+   "a": "Sör",
+   "o": [
+    "Som inglês",
+    "Pronúncia portuguesa",
+    "Sör",
+    "Pronúncia italiana"
+   ],
+   "h": "oeu = ö",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "\"eu\" soa como?",
+   "a": "Ö (boca arredondada, som de E)",
+   "o": [
+    "Pronúncia portuguesa",
+    "Som gutural",
+    "Som inglês",
+    "Ö (boca arredondada, som de E)"
+   ],
+   "h": "feu=fö, deux=dö",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'deux enfants'?",
+   "a": "Dö-zãfã",
+   "o": [
+    "Pronúncia separada",
+    "Sem ligação",
+    "Deux enfants",
+    "Dö-zãfã"
+   ],
+   "h": "liaison: X vira Z",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O consoante final de 'bras' é:",
+   "a": "S final mudo",
+   "o": [
+    "Depende do acento",
+    "S final mudo",
+    "Sempre mudo",
+    "Sempre pronunciado"
+   ],
+   "h": "bras = brá",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "\"Paris\" é pronunciado?",
+   "a": "Pa-rí (S final mudo)",
+   "o": [
+    "Pa-rí (S final mudo)",
+    "Som nasal",
+    "Som mudo",
+    "Pronúncia igual ao português"
+   ],
+   "h": "Paris = parí, S mudo",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O consoante final de 'pied' é:",
+   "a": "D final mudo",
+   "o": [
+    "Sempre pronunciado",
+    "Sempre mudo",
+    "Depende do acento",
+    "D final mudo"
+   ],
+   "h": "pied = pié",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "\"femme\" se pronuncia?",
+   "a": "Fam (em=a, exceção!)",
+   "o": [
+    "Pronúncia igual ao português",
+    "Fam (em=a, exceção!)",
+    "Som mudo",
+    "Som nasal"
+   ],
+   "h": "femme é exceção: em=a",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "\"eau/au\" soa como?",
+   "a": "Ô (sempre)",
+   "o": [
+    "Ô (sempre)",
+    "Som gutural",
+    "Som inglês",
+    "Pronúncia portuguesa"
+   ],
+   "h": "beau=bô, chaud=chô",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'oin em loin'?",
+   "a": "Luẽ (nasal)",
+   "o": [
+    "I",
+    "Luẽ (nasal)",
+    "Ou",
+    "Som português"
+   ],
+   "h": "loin = luẽ",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O consoante final de 'bal' é:",
+   "a": "L final pronunciado (CaReFuL)",
+   "o": [
+    "Sempre pronunciado",
+    "Sempre mudo",
+    "L final pronunciado (CaReFuL)",
+    "Depende do acento"
+   ],
+   "h": "bal = bal",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O \"r\" francês soa como?",
+   "a": "R gutural (da garganta)",
+   "o": [
+    "Pronúncia portuguesa",
+    "Som gutural",
+    "R gutural (da garganta)",
+    "Som inglês"
+   ],
+   "h": "différent do espanhol e português",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'en été'?",
+   "a": "Ã-neté",
+   "o": [
+    "Pronúncia separada",
+    "Sem ligação",
+    "Ã-neté",
+    "En été"
+   ],
+   "h": "liaison: N liga",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O consoante final de 'petit' é:",
+   "a": "T final mudo",
+   "o": [
+    "Sempre mudo",
+    "Sempre pronunciado",
+    "T final mudo",
+    "Depende do acento"
+   ],
+   "h": "petit = peti",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'grenouille'?",
+   "a": "Gre-nuy",
+   "o": [
+    "Pronúncia portuguesa",
+    "Som inglês",
+    "Gre-nuy",
+    "Pronúncia italiana"
+   ],
+   "h": "ouille = uy",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'et elle'?",
+   "a": "No liaison",
+   "o": [
+    "Sem ligação",
+    "No liaison",
+    "Pronúncia separada",
+    "Et elle"
+   ],
+   "h": "liaison: et nunca faz liaison",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O consoante final de 'toujours' é:",
+   "a": "S final mudo",
+   "o": [
+    "S final mudo",
+    "Depende do acento",
+    "Sempre mudo",
+    "Sempre pronunciado"
+   ],
+   "h": "toujours = tujúr",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'é (agudo)' soa como:",
+   "a": "Ê fechado",
+   "o": [
+    "Som nasal",
+    "Ê fechado",
+    "Som mudo",
+    "Som de i"
+   ],
+   "h": "été = etê",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O que é liaison?",
+   "a": "Consoante final muda liga à vogal seguinte",
+   "o": [
+    "Pronúncia portuguesa",
+    "Som gutural",
+    "Som inglês",
+    "Consoante final muda liga à vogal seguinte"
+   ],
+   "h": "les amis = lé-zami",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'à (grave)' soa como:",
+   "a": "A (mesmo som, uso gramatical)",
+   "o": [
+    "Ã (som nasal)",
+    "A (mesmo som, uso gramatical)",
+    "Â (som mais fechado)",
+    "Ai (ditongo)"
+   ],
+   "h": "à e a têm mesmo som",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'è (grave)' soa como:",
+   "a": "É aberto",
+   "o": [
+    "Som de i",
+    "Som nasal",
+    "É aberto",
+    "Som mudo"
+   ],
+   "h": "père = pér",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'ç (cedilha)' soa como:",
+   "a": "Som de S",
+   "o": [
+    "Som mudo",
+    "Som nasal",
+    "Som de i",
+    "Som de S"
+   ],
+   "h": "garçon = garsõ",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'vous êtes'?",
+   "a": "Vu-zêt",
+   "o": [
+    "Sem ligação",
+    "Pronúncia separada",
+    "Vu-zêt",
+    "Vous êtes"
+   ],
+   "h": "liaison: S vira Z",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'oeu em coeur'?",
+   "a": "Ör (boca O, fala E)",
+   "o": [
+    "I",
+    "Som português",
+    "Ör (boca O, fala E)",
+    "Ou"
+   ],
+   "h": "coeur = kör",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O consoante final de 'nez' é:",
+   "a": "Z final mudo",
+   "o": [
+    "Sempre mudo",
+    "Depende do acento",
+    "Z final mudo",
+    "Sempre pronunciado"
+   ],
+   "h": "nez = né",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'ei em beige'?",
+   "a": "Ê",
+   "o": [
+    "Ou",
+    "Som português",
+    "Ê",
+    "I"
+   ],
+   "h": "beige = bêj",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'mon ami'?",
+   "a": "Mo-nami",
+   "o": [
+    "Mon ami",
+    "Sem ligação",
+    "Mo-nami",
+    "Pronúncia separada"
+   ],
+   "h": "liaison: N liga",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Quando o N desaparece?",
+   "a": "Quando forma vogal nasal (vogal+N sem vogal depois)",
+   "o": [
+    "Som inglês",
+    "Pronúncia portuguesa",
+    "Quando forma vogal nasal (vogal+N sem vogal depois)",
+    "Som gutural"
+   ],
+   "h": "bon=bõ, N some",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Quando vogal+N NÃO é nasal?",
+   "a": "Quando vem outra vogal depois do N",
+   "o": [
+    "Pronúncia portuguesa",
+    "Som inglês",
+    "Som gutural",
+    "Quando vem outra vogal depois do N"
+   ],
+   "h": "bonne = bon+ne, N pronunciado",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'in em vin'?",
+   "a": "Ẽ (nasal)",
+   "o": [
+    "Som português",
+    "Ẽ (nasal)",
+    "Ou",
+    "I"
+   ],
+   "h": "vin = vẽ",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'heure'?",
+   "a": "Ör",
+   "o": [
+    "Som inglês",
+    "Ör",
+    "Pronúncia italiana",
+    "Pronúncia portuguesa"
+   ],
+   "h": "H mudo + eur = ör",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'restaurant'?",
+   "a": "Rês-to-rã",
+   "o": [
+    "Som inglês",
+    "Rês-to-rã",
+    "Pronúncia portuguesa",
+    "Pronúncia italiana"
+   ],
+   "h": "T final mudo, an nasal",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Diferença é/è/ê?",
+   "a": "É = ê fechado; è/ê = é aberto",
+   "o": [
+    "É = ê fechado; è/ê = é aberto",
+    "Som inglês",
+    "Som gutural",
+    "Pronúncia portuguesa"
+   ],
+   "h": "été (é) vs père (è)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'accueil'?",
+   "a": "A-köy",
+   "o": [
+    "Pronúncia italiana",
+    "Pronúncia portuguesa",
+    "A-köy",
+    "Som inglês"
+   ],
+   "h": "ueil = öy",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'un ami'?",
+   "a": "Ẽ-nami",
+   "o": [
+    "Un ami",
+    "Sem ligação",
+    "Ẽ-nami",
+    "Pronúncia separada"
+   ],
+   "h": "liaison: N liga",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'ville'?",
+   "a": "Víl",
+   "o": [
+    "Som inglês",
+    "Pronúncia portuguesa",
+    "Víl",
+    "Pronúncia italiana"
+   ],
+   "h": "ill = l (exceção: ville=víl)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'des enfants'?",
+   "a": "Dé-zãfã",
+   "o": [
+    "Dé-zãfã",
+    "Des enfants",
+    "Pronúncia separada",
+    "Sem ligação"
+   ],
+   "h": "liaison: S vira Z",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "\"ou\" soa como?",
+   "a": "U (como lua, NÃO ou português)",
+   "o": [
+    "U (como lua, NÃO ou português)",
+    "Som inglês",
+    "Som gutural",
+    "Pronúncia portuguesa"
+   ],
+   "h": "vous=vu, tout=tu",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "\"tion\" em nation soa como?",
+   "a": "Siõ (nasiõ)",
+   "o": [
+    "Som mudo",
+    "Siõ (nasiõ)",
+    "Pronúncia igual ao português",
+    "Som nasal"
+   ],
+   "h": "tion = siõ",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'voiture'?",
+   "a": "Vua-tür",
+   "o": [
+    "Vua-tür",
+    "Pronúncia portuguesa",
+    "Som inglês",
+    "Pronúncia italiana"
+   ],
+   "h": "oi=uá, eu=ü",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'ils ont'?",
+   "a": "Il-zõ",
+   "o": [
+    "Ils ont",
+    "Sem ligação",
+    "Pronúncia separada",
+    "Il-zõ"
+   ],
+   "h": "liaison: S vira Z",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "\"gue/gui\" soa como?",
+   "a": "G duro (igual g de gato)",
+   "o": [
+    "Som mudo",
+    "Pronúncia igual ao português",
+    "G duro (igual g de gato)",
+    "Som nasal"
+   ],
+   "h": "guerre=gêr, guide=gíd",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O consoante final de 'lac' é:",
+   "a": "C final pronunciado (CaReFuL)",
+   "o": [
+    "Sempre mudo",
+    "Depende do acento",
+    "C final pronunciado (CaReFuL)",
+    "Sempre pronunciado"
+   ],
+   "h": "lac = lak",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O consoante final de 'Paris' é:",
+   "a": "S final mudo",
+   "o": [
+    "Sempre pronunciado",
+    "S final mudo",
+    "Sempre mudo",
+    "Depende do acento"
+   ],
+   "h": "Paris = parí",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'neuf'?",
+   "a": "Nöf",
+   "o": [
+    "Som inglês",
+    "Nöf",
+    "Pronúncia portuguesa",
+    "Pronúncia italiana"
+   ],
+   "h": "eu=ö, F final pronunciado",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'fleur'?",
+   "a": "Flör",
+   "o": [
+    "Pronúncia italiana",
+    "Flör",
+    "Som inglês",
+    "Pronúncia portuguesa"
+   ],
+   "h": "eur = ör",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'an em grand'?",
+   "a": "Ã (nasal)",
+   "o": [
+    "Ã (nasal)",
+    "I",
+    "Som português",
+    "Ou"
+   ],
+   "h": "grand = grã",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'ui em nuit'?",
+   "a": "Üi",
+   "o": [
+    "Som português",
+    "I",
+    "Ou",
+    "Üi"
+   ],
+   "h": "nuit = nüi",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'an em enfant'?",
+   "a": "Ã (nasal)",
+   "o": [
+    "I",
+    "Ã (nasal)",
+    "Som português",
+    "Ou"
+   ],
+   "h": "enfant = ãfã",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'eur em peur'?",
+   "a": "Ör",
+   "o": [
+    "Ör",
+    "Som português",
+    "Ou",
+    "I"
+   ],
+   "h": "peur = pör",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'ê (circunflexo)' soa como:",
+   "a": "É aberto (igual a è)",
+   "o": [
+    "É aberto (igual a è)",
+    "É fechado (como em café)",
+    "É nasal",
+    "É mudo"
+   ],
+   "h": "fête = fêt",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'gn em montagne'?",
+   "a": "Nh (como montanha)",
+   "o": [
+    "Som inglês",
+    "Pronúncia portuguesa",
+    "Nh (como montanha)",
+    "Pronúncia italiana"
+   ],
+   "h": "gn = nh",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'qu em que'?",
+   "a": "K",
+   "o": [
+    "Pronúncia portuguesa",
+    "K",
+    "Pronúncia italiana",
+    "Som inglês"
+   ],
+   "h": "qu = k",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'chez eux'?",
+   "a": "Ché-zö",
+   "o": [
+    "Chez eux",
+    "Pronúncia separada",
+    "Sem ligação",
+    "Ché-zö"
+   ],
+   "h": "liaison: Z liga",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'soleil'?",
+   "a": "So-lêy",
+   "o": [
+    "Pronúncia italiana",
+    "Som inglês",
+    "So-lêy",
+    "Pronúncia portuguesa"
+   ],
+   "h": "eil = êy",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O acento não muda a pronúncia em?",
+   "a": "À (grave em A: mesmo som de a)",
+   "o": [
+    "Som nasal",
+    "Pronúncia igual ao português",
+    "Som mudo",
+    "À (grave em A: mesmo som de a)"
+   ],
+   "h": "à e a soam igual",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'eau em beau'?",
+   "a": "Ô",
+   "o": [
+    "I",
+    "Ou",
+    "Som português",
+    "Ô"
+   ],
+   "h": "beau = bô",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "\"oi\" soa como?",
+   "a": "Uá",
+   "o": [
+    "Som gutural",
+    "Som inglês",
+    "Uá",
+    "Pronúncia portuguesa"
+   ],
+   "h": "moi=muá, voilà=vuálà",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'monsieur'?",
+   "a": "Mesjö",
+   "o": [
+    "Mesjö",
+    "Som inglês",
+    "Pronúncia italiana",
+    "Pronúncia portuguesa"
+   ],
+   "h": "pronúncia irregular",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O consoante final de 'vous' é:",
+   "a": "S final mudo",
+   "o": [
+    "Depende do acento",
+    "Sempre mudo",
+    "S final mudo",
+    "Sempre pronunciado"
+   ],
+   "h": "vous = vu",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'ain em pain'?",
+   "a": "Ẽ (nasal)",
+   "o": [
+    "Ẽ (nasal)",
+    "I",
+    "Som português",
+    "Ou"
+   ],
+   "h": "pain = pẽ",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'mes amis'?",
+   "a": "Mé-zami",
+   "o": [
+    "Pronúncia separada",
+    "Mé-zami",
+    "Sem ligação",
+    "Mes amis"
+   ],
+   "h": "liaison: S vira Z",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'eu em feu'?",
+   "a": "Ö (boca em O, fala E)",
+   "o": [
+    "Ou",
+    "I",
+    "Ö (boca em O, fala E)",
+    "Som português"
+   ],
+   "h": "feu = fö",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'ph em pharmacie'?",
+   "a": "F",
+   "o": [
+    "Pronúncia italiana",
+    "Som inglês",
+    "F",
+    "Pronúncia portuguesa"
+   ],
+   "h": "ph = f",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'au'?",
+   "a": "Ô",
+   "o": [
+    "Ô",
+    "Pronúncia italiana",
+    "Som inglês",
+    "Pronúncia portuguesa"
+   ],
+   "h": "au = ô (igual a eau)",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'coeur'?",
+   "a": "Kör",
+   "o": [
+    "Som inglês",
+    "Pronúncia portuguesa",
+    "Pronúncia italiana",
+    "Kör"
+   ],
+   "h": "oeu = ö",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "\"ph\" soa como?",
+   "a": "F",
+   "o": [
+    "Pronúncia portuguesa",
+    "Som gutural",
+    "Som inglês",
+    "F"
+   ],
+   "h": "pharmacie = farmasí",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "\"euil\" em accueil soa como?",
+   "a": "Öy (akoy)",
+   "o": [
+    "Som mudo",
+    "Som nasal",
+    "Pronúncia igual ao português",
+    "Öy (akoy)"
+   ],
+   "h": "euil = öy",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'H em hôpital' soa como:",
+   "a": "Mudo — lê-se opitál",
+   "o": [
+    "Aspirado — lê-se hôpital",
+    "Mudo — lê-se opitál",
+    "Pronunciado — lê-se hopital",
+    "Nasal — lê-se õpital"
+   ],
+   "h": "H mudo: hôpital = opitál",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'bonjour'?",
+   "a": "Bõ-júr",
+   "o": [
+    "Pronúncia portuguesa",
+    "Pronúncia italiana",
+    "Bõ-júr",
+    "Som inglês"
+   ],
+   "h": "bon=bõ nasal, jour=júr",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'ai em j'ai'?",
+   "a": "Ê",
+   "o": [
+    "Ou",
+    "I",
+    "Som português",
+    "Ê"
+   ],
+   "h": "j'ai = jê",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'H em heure' soa como:",
+   "a": "Mudo — lê-se ör",
+   "o": [
+    "Som mudo",
+    "Som nasal",
+    "Mudo — lê-se ör",
+    "Som de i"
+   ],
+   "h": "H mudo: heure = ör",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "\"ch\" soa como?",
+   "a": "Sh (como show)",
+   "o": [
+    "Sh (como show)",
+    "Som inglês",
+    "Pronúncia portuguesa",
+    "Som gutural"
+   ],
+   "h": "chat = shá",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "\"qu\" soa como?",
+   "a": "K",
+   "o": [
+    "Pronúncia portuguesa",
+    "Som gutural",
+    "Som inglês",
+    "K"
+   ],
+   "h": "que = ke",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O consoante final de 'mer' é:",
+   "a": "R final pronunciado (CaReFuL)",
+   "o": [
+    "R final pronunciado (CaReFuL)",
+    "Sempre mudo",
+    "Depende do acento",
+    "Sempre pronunciado"
+   ],
+   "h": "mer = mêr",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'en em temps'?",
+   "a": "Ã (nasal)",
+   "o": [
+    "I",
+    "Som português",
+    "Ã (nasal)",
+    "Ou"
+   ],
+   "h": "temps = tã",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "Como se pronuncia 'ou em vous'?",
+   "a": "U (como lua)",
+   "o": [
+    "Ou",
+    "Som português",
+    "U (como lua)",
+    "I"
+   ],
+   "h": "vous = vu",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "'H em hibou' soa como:",
+   "a": "Aspirado — le hibou (sem liaison)",
+   "o": [
+    "Mudo — l'hibou (com liaison)",
+    "Pronunciado — lê-se jibou",
+    "Aspirado — le hibou (sem liaison)",
+    "Nasal — l'hibou"
+   ],
+   "h": "H aspirado impede liaison",
+   "t": "",
+   "l": ""
+  },
+  {
+   "q": "O consoante final de 'sang' é:",
+   "a": "G final mudo",
+   "o": [
+    "Depende do acento",
+    "Sempre mudo",
+    "G final mudo",
+    "Sempre pronunciado"
+   ],
+   "h": "sang = sã",
+   "t": "",
+   "l": ""
+  }
+ ]
+}

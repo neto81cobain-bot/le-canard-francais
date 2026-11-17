@@ -1,0 +1,94 @@
+import React from 'react';
+import { View, Text, ScrollView } from 'react-native';
+import { router } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useStore } from '../../store';
+import { useTheme, fonts, radius, palette, shadow } from '../../theme';
+import { T, Card, Tap, Section, Chip } from '../../components/ui';
+import Icon from '../../components/Icon';
+import Duck from '../../components/Duck';
+import { Appear } from '../../components/extras';
+import { SOUNDS, SCENARIOS } from '../../content/extras';
+import { aiAvailable } from '../../services/ai';
+
+export default function Speak() {
+  const { state } = useStore();
+  const t = useTheme();
+  const insets = useSafeAreaInsets();
+  const ai = aiAvailable();
+
+  return (
+    <ScrollView style={{ flex: 1, backgroundColor: t.bg }} contentContainerStyle={{ padding: 20, paddingTop: insets.top + 16, paddingBottom: 50 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+        <View style={{ flex: 1 }}>
+          <T v="h1">Falar</T>
+          <T v="body" color={t.text2}>Pronúncia, conversação e tradução por voz.</T>
+        </View>
+        <Duck mood="speak" size={86} />
+      </View>
+
+      {!ai ? (
+        <Card style={{ marginTop: 14, flexDirection: 'row', gap: 10, alignItems: 'center' }} tone={t.goldSoft}>
+          <Text style={{ fontSize: 22 }}>⚙️</Text>
+          <T v="small" color={t.text} style={{ flex: 1 }}>A avaliação por IA ainda não está ativa. Você ainda pode treinar ouvindo e repetindo. Para ativar: Perfil → Configurações → Avançado.</T>
+        </Card>
+      ) : null}
+
+      <View style={{ flexDirection: 'row', gap: 12, marginTop: 18 }}>
+        <Tap onPress={() => router.push('/speak')} style={[{ flex: 1, borderRadius: radius.lg, backgroundColor: palette.red, padding: 16, minHeight: 150, justifyContent: 'space-between' }, shadow(t, 1)]}>
+          <View style={{ width: 46, height: 46, borderRadius: 14, backgroundColor: 'rgba(255,255,255,0.2)', alignItems: 'center', justifyContent: 'center' }}>
+            <Icon name="mic" size={24} color="#fff" />
+          </View>
+          <View>
+            <Text style={{ fontFamily: fonts.display, fontSize: 19, color: '#fff' }}>Avaliação de fala</Text>
+            <Text style={{ fontFamily: fonts.bodySemi, fontSize: 13, color: 'rgba(255,255,255,0.9)' }}>Nota palavra por palavra</Text>
+          </View>
+        </Tap>
+        <Tap onPress={() => router.push('/translate')} style={[{ flex: 1, borderRadius: radius.lg, backgroundColor: t.primary, padding: 16, minHeight: 150, justifyContent: 'space-between' }, shadow(t, 1)]}>
+          <View style={{ width: 46, height: 46, borderRadius: 14, backgroundColor: 'rgba(255,255,255,0.2)', alignItems: 'center', justifyContent: 'center' }}>
+            <Icon name="swap" size={24} color="#fff" />
+          </View>
+          <View>
+            <Text style={{ fontFamily: fonts.display, fontSize: 19, color: '#fff' }}>Falar e traduzir</Text>
+            <Text style={{ fontFamily: fonts.bodySemi, fontSize: 13, color: 'rgba(255,255,255,0.9)' }}>PT ⇄ FR por voz</Text>
+          </View>
+        </Tap>
+      </View>
+
+      <Section title="Sons do francês" />
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12 }}>
+        {SOUNDS.map((s, i) => {
+          const best = state.soundBest?.[s.id];
+          return (
+            <Appear key={s.id} delay={i * 40} style={{ width: '47%', flexGrow: 1 }}>
+              <Tap onPress={() => router.push({ pathname: '/sound/[id]', params: { id: s.id } })} style={{ backgroundColor: t.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: t.border, padding: 14, gap: 8, minHeight: 120 }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <View style={{ width: 44, height: 44, borderRadius: 14, backgroundColor: s.color, alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 22 }}>{s.emoji}</Text>
+                  </View>
+                  {best != null ? <Chip label={`${best}%`} color={best >= 80 ? t.success : t.text2} bg={best >= 80 ? t.successSoft : t.surface2} /> : null}
+                </View>
+                <T v="bodyBold">{s.title}</T>
+              </Tap>
+            </Appear>
+          );
+        })}
+      </View>
+
+      <Section title="Conversa com o Canard" />
+      <T v="small" style={{ marginTop: -6, marginBottom: 12 }}>Situações reais: você fala, o Canard responde e corrige com gentileza.</T>
+      <Card padded={false}>
+        {SCENARIOS.map((s, i) => (
+          <Tap key={s.id} scaleTo={0.99} onPress={() => router.push({ pathname: '/conversation/[id]', params: { id: s.id } })} style={{ flexDirection: 'row', alignItems: 'center', gap: 14, padding: 14, borderBottomWidth: i === SCENARIOS.length - 1 ? 0 : 1, borderBottomColor: t.border }}>
+            <Text style={{ fontSize: 30 }}>{s.emoji}</Text>
+            <View style={{ flex: 1 }}>
+              <T v="bodyBold">{s.title}</T>
+              <T v="small" numberOfLines={1}>{s.goal}</T>
+            </View>
+            <Chip label={s.level} color={t.primary} bg={t.primarySoft} />
+          </Tap>
+        ))}
+      </Card>
+    </ScrollView>
+  );
+}

@@ -1,0 +1,6 @@
+name = "canard-ai"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+# A chave da Groq NÃO fica aqui. Cadastre com:
+#   npx wrangler secret put GROQ_API_KEY

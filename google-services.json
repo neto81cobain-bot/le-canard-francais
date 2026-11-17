@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1091898156126",
+    "firebase_url": "https://app-frances-7b500-default-rtdb.firebaseio.com",
+    "project_id": "app-frances-7b500",
+    "storage_bucket": "app-frances-7b500.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1091898156126:android:0e49866a8a1142531700cf",
+        "android_client_info": {
+          "package_name": "com.raimundo.lecanardfrancais"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1091898156126-7eioukc73jl112q724u2968ic1obn162.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqXNcFn6ZYogW-S7pgbTOJ_MmtxqHHhUw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1091898156126-7eioukc73jl112q724u2968ic1obn162.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

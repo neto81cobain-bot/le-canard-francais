@@ -1,0 +1,91 @@
+# Publica atualizações automaticamente a cada push na branch main.
+#
+#  • Mudou só código/conteúdo  → atualização OTA (EAS Update). O app baixa pelo botão
+#    "Buscar atualizações" em Configurações, sem reinstalar.
+#  • Mudou a "version" no app.json → gera um APK novo (EAS Build) e publica como
+#    GitHub Release. O botão "Buscar atualizações" oferece o download do APK.
+#
+# Configuração única: crie o segredo EXPO_TOKEN no repositório
+# (Settings → Secrets and variables → Actions). Veja o README.
+
+name: Publicar
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '**.md'
+      - 'worker/**'
+      - 'firebase/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+      changed: ${{ steps.v.outputs.changed }}
+      configured: ${{ steps.v.outputs.configured }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - id: v
+        run: |
+          NEW=$(node -p "require('./app.json').expo.version")
+          OLD=$(git show HEAD~1:app.json 2>/dev/null | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{try{console.log(JSON.parse(s).expo.version)}catch{console.log('')}})")
+          echo "version=$NEW" >> $GITHUB_OUTPUT
+          if [ "$NEW" != "$OLD" ] && [ -n "$OLD" ]; then echo "changed=true" >> $GITHUB_OUTPUT; else echo "changed=false" >> $GITHUB_OUTPUT; fi
+          if node -e "process.exit(require('./app.json').expo.extra?.eas?.projectId ? 0 : 1)"; then echo "configured=true" >> $GITHUB_OUTPUT; else echo "configured=false" >> $GITHUB_OUTPUT; echo "::warning::Projeto EAS ainda não configurado. Rode 'npx eas-cli init' e 'npx eas-cli update:configure' uma vez (veja o README)."; fi
+
+  ota:
+    needs: detect
+    if: needs.detect.outputs.changed == 'false' && needs.detect.outputs.configured == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+      - run: npm ci
+      - name: Publicar atualização OTA
+        env:
+          MSG: ${{ github.event.head_commit.message || 'Atualização' }}
+        run: eas update --branch production --message "$MSG" --platform android --non-interactive
+
+  release:
+    needs: detect
+    if: needs.detect.outputs.changed == 'true' && needs.detect.outputs.configured == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+      - run: npm ci
+      - name: Gerar APK no EAS Build
+        run: eas build --platform android --profile production --non-interactive --wait --json > build.json
+      - name: Baixar APK
+        run: |
+          URL=$(node -p "JSON.parse(require('fs').readFileSync('build.json','utf8'))[0].artifacts.buildUrl")
+          curl -L "$URL" -o "le-canard-francais-v${{ needs.detect.outputs.version }}.apk"
+      - name: Criar GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MSG: ${{ github.event.head_commit.message || 'Nova versão' }}
+          VER: ${{ needs.detect.outputs.version }}
+        run: |
+          gh release create "v$VER" "le-canard-francais-v$VER.apk" --title "Le canard français $VER" --notes "$MSG"

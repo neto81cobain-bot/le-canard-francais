@@ -1,0 +1,41 @@
+{
+  "rules": {
+    "profiles": {
+      ".read": "auth != null",
+      "$uid": { ".write": "auth != null && auth.uid === $uid" }
+    },
+    "codes": {
+      ".read": "auth != null",
+      "$code": { ".write": "auth != null && (!data.exists() || data.val() === auth.uid) && newData.val() === auth.uid" }
+    },
+    "leagues": {
+      "$week": {
+        "$tier": {
+          ".read": "auth != null",
+          ".indexOn": ["xp"],
+          "$uid": { ".write": "auth != null && auth.uid === $uid" }
+        }
+      }
+    },
+    "backups": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    },
+    "cheers": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid",
+        "$from": { ".write": "auth != null && auth.uid === $from" }
+      }
+    },
+    "ranking": {
+      ".read": "auth != null",
+      "$week": {
+        ".indexOn": ["weekXP"],
+        "$uid": { ".write": "auth != null && auth.uid === $uid" }
+      }
+    }
+  }
+}
