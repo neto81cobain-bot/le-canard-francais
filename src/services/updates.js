@@ -33,14 +33,22 @@ export function updateInfo() {
 
 // Returns { kind: 'ota' | 'apk' | 'none' | 'error', ... }
 export async function checkForUpdates() {
+  let otaError = null;
   // 1) OTA
   if (Updates.isEnabled && !__DEV__) {
     try {
       const res = await Updates.checkForUpdateAsync();
       if (res.isAvailable) return { kind: 'ota' };
+      // Downloaded in the background at launch but not running yet → just restart
+      try {
+        const st = await Updates.getStateAsync?.();
+        if (st?.isUpdatePending) return { kind: 'ota', pending: true };
+      } catch {}
     } catch (e) {
-      // keep going to GitHub check
+      otaError = e?.message || String(e);
     }
+  } else if (!Updates.isEnabled) {
+    otaError = 'Atualização pelo ar desligada neste aparelho.';
   }
   // 2) GitHub Release with a newer APK
   if (CONFIG.githubRepo && !CONFIG.githubRepo.includes('SEU_USUARIO')) {
@@ -56,15 +64,14 @@ export async function checkForUpdates() {
           return { kind: 'apk', version: latest, notes: rel.body || '', url: apk?.browser_download_url || rel.html_url };
         }
       }
-    } catch (e) {
-      return { kind: 'error', message: 'Sem conexão com o GitHub.' };
-    }
+    } catch {}
   }
+  if (otaError) return { kind: 'error', message: 'Não consegui verificar: ' + otaError };
   return { kind: 'none' };
 }
 
-export async function applyOta() {
-  await Updates.fetchUpdateAsync();
+export async function applyOta(pending) {
+  if (!pending) await Updates.fetchUpdateAsync();
   await Updates.reloadAsync();
 }
 

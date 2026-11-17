@@ -220,7 +220,7 @@ export default function Settings() {
                 <>
                   <T v="bodyBold">🎉 Nova atualização disponível!</T>
                   <T v="small" color={t.text}>Ela é baixada em segundos e o app reinicia sozinho. Seu progresso é mantido.</T>
-                  <Button title="Baixar e reiniciar" variant="success" small loading={busy === 'apply'} onPress={async () => { setBusy('apply'); try { await applyOta(); } catch (e) { Alert.alert('Erro', e.message); setBusy(null); } }} />
+                  <Button title="Baixar e reiniciar" variant="success" small loading={busy === 'apply'} onPress={async () => { setBusy('apply'); try { await applyOta(update.pending); } catch (e) { Alert.alert('Erro', e.message); setBusy(null); } }} />
                 </>
               ) : null}
               {update.kind === 'apk' ? (

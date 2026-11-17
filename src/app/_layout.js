@@ -18,6 +18,8 @@ import { StoreProvider, useStore, getStateSnapshotForCloud } from '../store';
 import { ThemeProvider, useTheme } from '../theme';
 import Celebration from '../components/Celebration';
 import DialogHost from '../components/DialogHost';
+import * as Updates from 'expo-updates';
+import { Alert } from '../services/dialog';
 import { RootErrorScreen } from '../components/ErrorBoundary';
 import { installGlobalHandler, logError } from '../services/diagnostics';
 import { setFeedbackPrefs } from '../services/feedback';
@@ -44,6 +46,18 @@ function Effects() {
     setSpeechRate(state.settings.speechRate);
     setAiOverride({ apiUrl: state.settings.apiUrl, key: state.settings.ownGroqKey });
   }, [state.settings]);
+
+  // An update downloaded in the background (at launch) → offer to restart now
+  const { isUpdatePending } = Updates.useUpdates();
+  const asked = useRef(false);
+  useEffect(() => {
+    if (!isUpdatePending || asked.current) return;
+    asked.current = true;
+    Alert.alert('Atualização pronta! 🦆', 'Uma versão nova do app foi baixada. Reiniciar agora para usar?', [
+      { text: 'Depois', style: 'cancel' },
+      { text: 'Reiniciar', onPress: () => Updates.reloadAsync().catch(() => {}) },
+    ]);
+  }, [isUpdatePending]);
 
   // Reminders follow the streak state
   useEffect(() => {
