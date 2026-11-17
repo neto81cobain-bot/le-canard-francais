@@ -1,0 +1,13 @@
+# Rode manualmente no expo.dev (Workflows → Gerar APK → Run) só quando mudar algo nativo.
+name: Gerar APK
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  build_android:
+    name: Gerar APK
+    type: build
+    params:
+      platform: android
+      profile: preview

@@ -1,0 +1,18 @@
+# Igual ao Vortex: a cada push na main, publica a atualização OTA direto (1 job só).
+# O app baixa pelo botão "Buscar atualizações" em Configurações.
+# Se um dia adicionar biblioteca nativa / permissão / ícone, rode o workflow
+# "Gerar APK" (gerar-apk.yml) manualmente no expo.dev e instale o APK novo.
+name: Atualizar app (OTA)
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  publish_update:
+    name: Publicar atualização
+    type: update
+    environment: preview
+    params:
+      branch: preview
+      platform: android
