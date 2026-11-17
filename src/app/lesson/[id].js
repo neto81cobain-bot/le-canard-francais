@@ -34,7 +34,7 @@ export default function LessonScreen() {
 
   const allSentences = useMemo(() => LESSONS.filter((l) => l.unitId === lesson?.unitId).flatMap((l) => l.sentences), [id]);
   const exercises = useMemo(
-    () => (retry ? retry : lesson ? buildLesson(lesson, { allSentences, speak: true, unitNumber: unit.number }) : []),
+    () => (retry ? retry : lesson ? buildLesson(lesson, { allSentences, speak: true, unitNumber: unit.number, verbs: unit.verbs, tenses: unit.tenses }) : []),
     [id, round, retry]
   );
 

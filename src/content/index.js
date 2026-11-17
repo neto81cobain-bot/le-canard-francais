@@ -1,6 +1,10 @@
 import A1 from './a1';
 import A2 from './a2';
 import B1 from './b1';
+import B2 from './b2';
+import C1 from './c1';
+import EXTRA from './extraA';
+import { getVerb } from './verbs';
 import legacyBank from './legacyBank.json';
 
 const split = (s, n) => {
@@ -9,7 +13,25 @@ const split = (s, n) => {
   return parts;
 };
 
+// Verbs and tenses practised in each A1–B1 unit (B2/C1 declare their own)
+const UNIT_VERBS = {
+  u1: [['s\'appeler', 'être', 'parler'], ['present']],
+  u2: [['être', 'avoir', 'aller'], ['present']],
+  u3: [['avoir', 'être', 'aimer', 'habiter'], ['present']],
+  u4: [['prendre', 'boire', 'manger', 'vouloir', 'payer'], ['present']],
+  u5: [['coûter', 'acheter', 'payer', 'commencer'], ['present']],
+  u6: [['parler', 'travailler', 'aller', 'faire', 'se lever', 'regarder', 'écouter'], ['present']],
+  u7: [['aller', 'prendre', 'venir', 'tourner', 'descendre', 'traverser'], ['present', 'imperatif']],
+  u8: [['faire', 'prendre', 'voir', 'aller', 'partir', 'manger', 'boire', 'lire'], ['passe_compose']],
+  u9: [['acheter', 'essayer', 'choisir', 'préférer', 'mettre'], ['present', 'passe_compose']],
+  u10: [['être', 'avoir', 'habiter', 'faire', 'aller', 'jouer'], ['imparfait', 'passe_compose']],
+  u11: [['être', 'avoir', 'aller', 'faire', 'pouvoir', 'venir', 'voir'], ['futur']],
+  u12: [['être', 'avoir', 'faire', 'aller', 'pouvoir', 'partir', 'finir'], ['subjonctif', 'present']],
+};
+
 function parseLesson(raw, unit, index) {
+  const extra = EXTRA[raw.id] || {};
+  raw = { ...raw, vocab: [...(raw.vocab || []), ...(extra.vocab || [])], sentences: [...(raw.sentences || []), ...(extra.sentences || [])], quiz: [...(raw.quiz || []), ...(extra.quiz || [])] };
   const vocab = (raw.vocab || []).map((v) => {
     const [fr, pt, emoji] = split(v, 3);
     return { fr: fr.trim(), pt: pt.trim(), emoji: emoji.trim() || null, isWord: true, lessonId: raw.id, key: 'w:' + fr.trim() };
@@ -40,11 +62,16 @@ function parseLesson(raw, unit, index) {
   return { ...raw, unitId: unit.id, level: unit.level, index, vocab, sentences, quiz, fill, dialogue, teach };
 }
 
-export const UNITS = [...A1, ...A2, ...B1].map((u, ui) => ({
-  ...u,
-  number: ui + 1,
-  lessons: u.lessons.map((l, li) => parseLesson(l, u, li)),
-}));
+export const UNITS = [...A1, ...A2, ...B1, ...B2, ...C1].map((u, ui) => {
+  const [verbs, tenses] = UNIT_VERBS[u.id] || [u.verbs || [], u.tenses || ['present']];
+  return {
+    ...u,
+    number: ui + 1,
+    verbs: verbs.filter((v) => getVerb(v)),
+    tenses,
+    lessons: u.lessons.map((l, li) => parseLesson(l, u, li)),
+  };
+});
 
 export const LESSONS = UNITS.flatMap((u) => u.lessons);
 export const getUnit = (id) => UNITS.find((u) => u.id === id);
@@ -54,6 +81,8 @@ export const LEVEL_INFO = {
   A1: { name: 'A1 · Iniciante', color: '#2A9D8F' },
   A2: { name: 'A2 · Básico', color: '#D9822B' },
   B1: { name: 'B1 · Intermediário', color: '#7C5CFC' },
+  B2: { name: 'B2 · Avançado', color: '#E63946' },
+  C1: { name: 'C1 · Fluente', color: '#1E3A8A' },
 };
 
 // Is a lesson available? Lessons unlock in order inside an unlocked unit.

@@ -9,10 +9,11 @@ import { T, Button, ProgressBar, Chip, Sheet } from './ui';
 import Icon from './Icon';
 import Duck from './Duck';
 import { AudioButton, useShake } from './extras';
-import { ImageEx, McqEx, TranslateEx, BuildEx, ListenEx, FillEx, MatchEx, DialogueEx, SpeakEx } from './Exercises';
-import { checkTyped, normalize, snapshot } from '../engine/exercises';
+import { ImageEx, McqEx, TranslateEx, BuildEx, ListenEx, FillEx, MatchEx, DialogueEx, SpeakEx, ConjugateEx, WriteEx, PairsEx, TrueFalseEx } from './Exercises';
+import { checkTyped, checkSentence, normalize, snapshot } from '../engine/exercises';
 import { fx } from '../services/feedback';
 import { speak } from '../services/speech';
+import { ExerciseBoundary } from './ErrorBoundary';
 
 const PRAISE = ['Magnifique !', 'Très bien !', 'Parfait !', 'Bravo !', 'Excellent !', 'Super !', 'Génial !', 'Bien joué !'];
 const COMFORT = ['Pas de panique !', 'Presque !', 'Courage !', 'On continue !', 'Quase lá!'];
@@ -31,6 +32,19 @@ function grade(ex, value) {
     case 'listen':
     case 'fill':
       return checkTyped(value, ex.answer);
+    case 'write':
+      return checkSentence(value, ex.answer);
+    case 'pairs':
+    case 'truefalse':
+      return { ok: value === ex.answer };
+    case 'conjugate': {
+      if (ex.choice) return { ok: value === ex.answer };
+      let v = String(value || '').trim();
+      // accept the answer typed together with the subject
+      const subj = ex.subject.replace(/^que |^qu'/, '').replace('il/elle', '(il|elle)').replace('ils/elles', '(ils|elles)');
+      v = v.replace(new RegExp('^(que |qu\'|qu’)?' + subj.replace("'", "['’]") + '\\s*', 'i'), '').replace(/\s*!$/, '');
+      return checkTyped(v, ex.answer, ex.alternatives || []);
+    }
     case 'dialogue': {
       const ok = (value || []).every((l, i) => l.id === i) && (value || []).length === ex.lines.length;
       return { ok };
@@ -43,7 +57,7 @@ function grade(ex, value) {
 function hasValue(ex, v) {
   if (ex.type === 'build') return (v || []).length > 0;
   if (ex.type === 'dialogue') return (v || []).length === ex.lines.length;
-  if (ex.type === 'listen' || ex.type === 'fill') return !!(v || '').trim();
+  if (ex.type === 'listen' || ex.type === 'fill' || ex.type === 'conjugate' || ex.type === 'write') return !!(v || '').trim();
   return v != null;
 }
 
@@ -54,11 +68,19 @@ function correctText(ex) {
   }
   if (ex.type === 'dialogue') return ex.lines.map((l, i) => `${i + 1}. ${l.fr}`).join('\n');
   if (ex.type === 'build') return ex.item.fr;
+  if (ex.type === 'conjugate') return ex.full;
+  if (ex.type === 'truefalse') return ex.answer === 'V' ? 'Verdadeiro' : 'Falso';
+  if (ex.type === 'pairs') {
+    const o = ex.options.find((x) => x.fr === ex.answer);
+    return `${ex.answer} (${o?.pt || ''})`;
+  }
   return ex.answer;
 }
 
 function explanation(ex) {
   if (ex.why) return ex.why;
+  if (ex.type === 'pairs') return ex.tip ? `${ex.groupTitle}: ${ex.tip}` : '';
+  if (ex.type === 'write') return ex.item ? `“${ex.item.fr}” = ${ex.item.pt}` : '';
   if (ex.type === 'build' || ex.type === 'listen' || ex.type === 'translate') return ex.item ? `“${ex.item.fr}” = ${ex.item.pt}` : '';
   if (ex.type === 'mcq' && ex.item) return `${ex.item.fr} = ${ex.item.pt}`;
   return '';
@@ -67,6 +89,7 @@ function explanation(ex) {
 function audioFor(ex) {
   if (ex.item?.fr) return ex.item.fr;
   if (ex.type === 'fill') return ex.prompt.replace('___', ex.answer);
+  if (ex.type === 'pairs') return ex.answer;
   if (ex.type === 'mcq' && ex.prompt.includes('___')) return ex.prompt.replace('___', ex.answer).replace(/\(.*?\)/g, '');
   return null;
 }
@@ -179,7 +202,7 @@ export default function Session({ exercises: initial, title, kind = 'lesson', ti
 
   const check = () => {
     const g = grade(ex, value);
-    record(g.ok, g.note);
+    record(g.ok, g.note, g.words ? { words: g.words } : {});
   };
 
   if (!ex) return null;
@@ -191,7 +214,7 @@ export default function Session({ exercises: initial, title, kind = 'lesson', ti
   // In timed mode, choosing an option checks immediately
   const onChange = (v) => {
     setValue(v);
-    if (timed && !result && (ex.type === 'mcq' || ex.type === 'image' || ex.type === 'translate')) {
+    if (timed && !result && (ex.type === 'mcq' || ex.type === 'image' || ex.type === 'translate' || (ex.type === 'conjugate' && ex.choice))) {
       const g = grade(ex, v);
       record(g.ok, g.note);
     }
@@ -207,6 +230,10 @@ export default function Session({ exercises: initial, title, kind = 'lesson', ti
       case 'listen': return <ListenEx {...p} />;
       case 'fill': return <FillEx {...p} />;
       case 'dialogue': return <DialogueEx {...p} />;
+      case 'conjugate': return <ConjugateEx {...p} />;
+      case 'write': return <WriteEx {...p} />;
+      case 'pairs': return <PairsEx {...p} />;
+      case 'truefalse': return <TrueFalseEx {...p} />;
       case 'match': return <MatchEx key={idx} ex={ex} onComplete={(ok) => record(ok, ok ? null : 'Alguns pares trocados — eles voltam na revisão.')} />;
       case 'speak':
         return (
@@ -254,7 +281,7 @@ export default function Session({ exercises: initial, title, kind = 'lesson', ti
               <Text style={{ fontFamily: fonts.bodyHeavy, color: palette.goldDark, fontSize: 13 }}>ERRO ANTERIOR — TENTE DE NOVO</Text>
             </View>
           ) : null}
-          {body}
+          <ExerciseBoundary key={'eb' + idx} color={color} onSkip={() => advance()}>{body}</ExerciseBoundary>
         </Animated.View>
       </ScrollView>
 
@@ -281,10 +308,17 @@ export default function Session({ exercises: initial, title, kind = 'lesson', ti
             <View>
               <T v="bodyBold" color={fbColor}>Resposta certa:</T>
               <T v="body" color={t.text}>{correctText(ex)}</T>
+              {result.words?.length ? (
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 4, marginTop: 6 }}>
+                  {result.words.map((w, i) => (
+                    <Text key={i} style={{ fontFamily: fonts.bodyHeavy, fontSize: 13, paddingHorizontal: 6, paddingVertical: 2, borderRadius: 6, overflow: 'hidden', color: w.status === 'good' ? t.success : w.status === 'close' ? palette.goldDark : t.error, backgroundColor: t.surface }}>{w.display}</Text>
+                  ))}
+                </View>
+              ) : null}
             </View>
           ) : null}
           {result.note ? <T v="small" color={t.text}>{result.note}</T> : null}
-          {explanation(ex) && (!result.ok || ex.type === 'mcq') ? (
+          {explanation(ex) && (!result.ok || ex.type === 'mcq' || ex.type === 'pairs' || ex.type === 'truefalse') ? (
             <View style={{ flexDirection: 'row', gap: 8, alignItems: 'flex-start', backgroundColor: t.surface, borderRadius: 14, padding: 12 }}>
               <Text style={{ fontSize: 18 }}>💡</Text>
               <T v="small" color={t.text} style={{ flex: 1 }}>{explanation(ex).replace(/\*/g, '')}</T>

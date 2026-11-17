@@ -11,7 +11,9 @@ import { Appear } from '../../components/extras';
 import Session from '../../components/Session';
 import ResultView from '../../components/ResultView';
 import { UNITS, LESSONS, getUnit, bankQuestions, BANK_TOPICS } from '../../content';
-import { buildReview, buildFromMistakes, buildUnitTest, buildBank, buildLesson, shuffle } from '../../engine/exercises';
+import { buildReview, buildFromMistakes, buildUnitTest, buildBank, buildLesson, buildConjugation, shuffle, buildListening, buildWriting, buildSpeaking } from '../../engine/exercises';
+import { TENSES, VERBS, VERB_LEVELS, getVerb } from '../../content/verbs';
+import { Chip } from '../../components/ui';
 import { dueItems, weakestItems } from '../../store/logic';
 
 const MODES = {
@@ -20,6 +22,10 @@ const MODES = {
   timed: { title: 'Contra o relógio', emoji: '⏱️', mood: 'celebrate', intro: 'Você tem 90 segundos! Responda o máximo que conseguir. Acertos seguidos multiplicam seu XP.' },
   daily: { title: 'Desafio diário', emoji: '⚡', mood: 'proud', intro: 'Questões mais difíceis, misturando tudo o que você já estudou. XP em dobro hoje!' },
   test: { title: 'Teste da unidade', emoji: '🏆', mood: 'teach', intro: 'Mostre o que aprendeu! Com 80% de acerto você conclui a unidade e libera a próxima.' },
+  verbs: { title: 'Treino de verbos', emoji: '🔤', mood: 'teach', intro: 'Escolha os tempos e o grupo de verbos. Digite a forma certa — o Canard aceita com ou sem o pronome.' },
+  listening: { title: 'Treino de escuta', emoji: '👂', mood: 'listen', intro: 'Sons parecidos, ditados e frases para montar de ouvido. Use fones se puder — e repita em voz alta o que ouvir!' },
+  writing: { title: 'Treino de escrita', emoji: '✍️', mood: 'teach', intro: 'Agora é você quem escreve! Traduza frases para o francês, complete lacunas e escreva ditados. Use a dica 💡 se travar.' },
+  speaking: { title: 'Treino de pronúncia', emoji: '🗣️', mood: 'speak', intro: 'Ouça o modelo, grave sua voz e veja palavra por palavra o que saiu bem. No meio, alguns pares de sons para afinar o ouvido.' },
   bank: { title: 'Treino por tema', emoji: '✍️', mood: 'teach', intro: 'Questões rápidas para fixar o conteúdo, com explicação em cada erro.' },
 };
 
@@ -28,12 +34,15 @@ function learnedLessons(state) {
 }
 
 export default function Practice() {
-  const { mode, unit: unitId, key } = useLocalSearchParams();
+  const { mode, unit: unitId, key, verb: verbParam, tense: tenseParam, level: levelParam } = useLocalSearchParams();
   const { state, actions } = useStore();
   const t = useTheme();
   const insets = useSafeAreaInsets();
   const [phase, setPhase] = useState(mode === 'review' || mode === 'mistakes' || mode === 'bank' ? 'practice' : 'intro');
   const [result, setResult] = useState(null);
+  const myLevel = UNITS[Math.min(UNITS.length, state.unlockedUnit) - 1]?.level || 'A1';
+  const [vSet, setVSet] = useState(verbParam ? 'one' : levelParam ? levelParam : 'top');
+  const [vTenses, setVTenses] = useState(tenseParam ? [tenseParam] : ['present']);
   const cfg = MODES[mode] || MODES.review;
   const unit = unitId ? getUnit(unitId) : null;
   const bankTopic = BANK_TOPICS.find((b) => b.key === key);
@@ -49,8 +58,16 @@ export default function Practice() {
       return buildReview(items, { pool, count: 12 });
     }
     if (mode === 'mistakes') return buildFromMistakes(state.mistakes, 12);
+    if (mode === 'listening') return buildListening(pool, 12);
+    if (mode === 'writing') return buildWriting(pool, (learned.length ? learned : UNITS[0].lessons).flatMap((l) => l.fill || []), 12);
+    if (mode === 'speaking') return buildSpeaking(pool, 8);
     if (mode === 'test' && unit) return buildUnitTest(unit, { speak: false });
     if (mode === 'bank') return buildBank(bankQuestions(key), 15);
+    if (mode === 'verbs') {
+      const lvlIdx = (l) => VERB_LEVELS.indexOf(l);
+      const verbs = vSet === 'one' ? [verbParam] : vSet === 'top' ? VERBS.filter((v) => v.top).map((v) => v.inf) : vSet === 'all' ? null : VERBS.filter((v) => lvlIdx(v.level) <= lvlIdx(vSet)).map((v) => v.inf);
+      return buildConjugation({ verbs, tenses: vTenses, count: 15, choiceRatio: vTenses.some((x) => ['passe_compose', 'plus_que_parfait', 'futur_anterieur', 'conditionnel_passe'].includes(x)) ? 0.35 : 0.25 });
+    }
     if (mode === 'timed') {
       const quiz = (learned.length ? learned : UNITS[0].lessons).flatMap((l) => l.quiz.map((q) => ({ type: 'mcq', title: 'Rápido!', prompt: q.q, answer: q.a, options: shuffle(q.o), why: q.why })));
       const bank = buildBank([...bankQuestions('avoir'), ...bankQuestions('etre'), ...bankQuestions('numbers')], 40);
@@ -63,7 +80,7 @@ export default function Practice() {
       return shuffle(hard).slice(0, 15);
     }
     return [];
-  }, [mode, unitId, key]);
+  }, [mode, unitId, key, vSet, vTenses.join(',')]);
 
   if (!exercises.length) {
     return (
@@ -78,7 +95,7 @@ export default function Practice() {
   }
 
   if (phase === 'intro') {
-    const title = mode === 'test' ? `Teste · Unidade ${unit.number}` : mode === 'bank' ? bankTopic?.title : cfg.title;
+    const title = mode === 'verbs' && verbParam ? `Treino: ${verbParam}` : mode === 'test' ? `Teste · Unidade ${unit.number}` : mode === 'bank' ? bankTopic?.title : cfg.title;
     return (
       <View style={{ flex: 1, backgroundColor: t.bg, paddingTop: insets.top }}>
         <View style={{ paddingHorizontal: 16, paddingVertical: 12 }}>
@@ -96,10 +113,48 @@ export default function Practice() {
               <Bubble style={{ flex: 1, marginBottom: 24 }}><T v="bodyBold">{cfg.intro}</T></Bubble>
             </View>
           </Appear>
+          {mode === 'verbs' ? (
+            <View style={{ alignSelf: 'stretch', marginTop: 20, gap: 10 }}>
+              <T v="label">Tempos verbais</T>
+              <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}>
+                {TENSES.map((x) => {
+                  const on = vTenses.includes(x.id);
+                  return (
+                    <Pressable key={x.id} onPress={() => setVTenses(on ? (vTenses.length > 1 ? vTenses.filter((y) => y !== x.id) : vTenses) : [...vTenses, x.id])}>
+                      <Chip label={`${x.name} · ${x.level}`} big bg={on ? t.primary : t.surface2} color={on ? '#fff' : t.text2} />
+                    </Pressable>
+                  );
+                })}
+              </View>
+              {!verbParam ? (
+                <>
+                  <T v="label" style={{ marginTop: 8 }}>Verbos</T>
+                  <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}>
+                    {[['top', '⭐ Essenciais'], ...VERB_LEVELS.map((l) => [l, 'Até ' + l]), ['all', `Todos (${VERBS.length})`]].map(([k, l]) => (
+                      <Pressable key={k} onPress={() => setVSet(k)}>
+                        <Chip label={l} big bg={vSet === k ? palette.red : t.surface2} color={vSet === k ? '#fff' : t.text2} />
+                      </Pressable>
+                    ))}
+                  </View>
+                  <T v="caption">Seu nível atual: {myLevel}</T>
+                </>
+              ) : (
+                <T v="bodyBold">Verbo: {verbParam} ({getVerb(verbParam)?.pt})</T>
+              )}
+            </View>
+          ) : null}
           <Appear delay={300} style={{ alignSelf: 'stretch' }}>
             <View style={{ flexDirection: 'row', gap: 10, marginTop: 24 }}>
-              {(mode === 'timed'
+              {(mode === 'verbs'
+                ? [{ e: '📝', l: '15 formas' }, { e: '⌨️', l: 'Digitar + escolher' }, { e: '🧠', l: 'Entra na revisão' }]
+                : mode === 'timed'
                 ? [{ e: '⏱️', l: '90 segundos' }, { e: '🔥', l: 'Combo x2' }, { e: '🏅', l: `Recorde: ${state.stats.timedBest}` }]
+                : mode === 'listening'
+                ? [{ e: '🎧', l: 'Pares de sons' }, { e: '📝', l: 'Ditado' }, { e: '🧩', l: 'Montar de ouvido' }]
+                : mode === 'writing'
+                ? [{ e: '✍️', l: 'PT → FR' }, { e: '🔤', l: 'Lacunas' }, { e: '💡', l: 'Dicas' }]
+                : mode === 'speaking'
+                ? [{ e: '🎤', l: `${exercises.length} frases` }, { e: '📊', l: 'Nota por palavra' }, { e: '👂', l: 'Pares de sons' }]
                 : mode === 'daily'
                   ? [{ e: '🎯', l: '15 questões' }, { e: '⚡', l: 'XP em dobro' }, { e: state.daily.challengeDone ? '✅' : '📅', l: state.daily.challengeDone ? 'Feito hoje' : '1x por dia' }]
                   : [{ e: '📝', l: `${exercises.length} questões` }, { e: '🎯', l: 'Meta: 80%' }, { e: '🔓', l: 'Libera a próxima' }]
@@ -169,12 +224,26 @@ export default function Practice() {
   } else if (mode === 'review') {
     title = 'Memória refrescada!';
     subtitle = 'As palavras revisadas vão voltar daqui a mais tempo. É assim que se aprende para sempre.';
+  } else if (mode === 'verbs') {
+    title = pct >= 80 ? 'Conjugação afiada!' : 'Bom treino!';
+    subtitle = 'As formas que você errou voltam na revisão inteligente.';
+  } else if (mode === 'listening') {
+    title = pct >= 80 ? 'Ouvido de francês! 👂' : 'Bom treino!';
+    subtitle = 'Ouvir todo dia é o que faz o francês “destravar”. Volte amanhã!';
+  } else if (mode === 'writing') {
+    title = pct >= 80 ? 'Escrita afiada! ✍️' : 'Bom treino!';
+    subtitle = 'Escrever fixa a ortografia e a gramática. Tente também o Diário!';
+  } else if (mode === 'speaking') {
+    title = 'Sua voz em francês! 🗣️';
+    subtitle = 'Repita as frases difíceis algumas vezes ao longo do dia.';
   } else if (mode === 'mistakes') {
     title = pct >= 80 ? 'Erros corrigidos!' : 'Bom treino!';
     subtitle = 'O que você acertou saiu da lista de erros.';
   }
   const acts = [{ title: 'Continuar', icon: 'chevron', onPress: () => router.back() }];
   if (mode === 'test' && !passed) acts.push({ title: 'Ver o guia da unidade', icon: 'book', onPress: () => router.replace({ pathname: '/unit/[id]', params: { id: unit.id } }) });
+  if (mode === 'verbs') acts.push({ title: 'Treinar de novo', icon: 'refresh', onPress: () => router.replace({ pathname: '/practice/[mode]', params: { mode, verb: verbParam || '', tense: vTenses[0] } }) });
+  if (['listening', 'writing', 'speaking'].includes(mode)) acts.push({ title: 'Treinar de novo', icon: 'refresh', onPress: () => router.replace({ pathname: '/practice/[mode]', params: { mode } }) });
   if (mode === 'timed' || mode === 'bank') acts.push({ title: 'Jogar de novo', icon: 'refresh', onPress: () => router.replace({ pathname: '/practice/[mode]', params: { mode, key } }) });
   return <ResultView title={title} subtitle={subtitle} xp={r.xp} correct={r.correct} total={r.total} seconds={r.seconds} bestCombo={r.bestCombo} passed={passed} actions={acts} />;
 }

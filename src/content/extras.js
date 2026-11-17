@@ -179,4 +179,12 @@ export const PLACEMENT = [
   { q: 'Quand j\'___ petit, j\'habitais à Belém.', a: 'étais', o: ['étais', 'ai été', 'suis', 'serai'], unit: 10 },
   { q: 'S\'il fait beau, nous ___ à la plage.', a: 'irons', o: ['irons', 'allons aller', 'irions', 'sommes allés'], unit: 11 },
   { q: 'Il faut que tu ___ patient.', a: 'sois', o: ['sois', 'es', 'seras', 'étais'], unit: 12 },
+  { q: 'Si j\'avais le temps, je ___ plus.', a: 'lirais', o: ['lirais', 'lirai', 'lisais', 'lis'], unit: 13 },
+  { q: 'Quand je suis arrivé, il ___ déjà parti.', a: 'était', o: ['était', 'avait', 'est', 'serait'], unit: 14 },
+  { q: 'Tu vas à Paris ? Oui, j\'___ vais.', a: 'y', o: ['y', 'en', 'le', 'lui'], unit: 15 },
+  { q: 'C\'est le livre ___ je t\'ai parlé.', a: 'dont', o: ['dont', 'que', 'qui', 'où'], unit: 16 },
+  { q: 'Bien qu\'il ___ tard, je travaille.', a: 'soit', o: ['soit', 'est', 'sera', 'était'], unit: 17 },
+  { q: '« Je viendrai. » → Il a dit qu\'il ___.', a: 'viendrait', o: ['viendrait', 'viendra', 'venait', 'vient'], unit: 18 },
+  { q: 'Forma formal de "Est-ce qu\'il parle ?":', a: 'Parle-t-il ?', o: ['Parle-t-il ?', 'Parle-il ?', 'Il parle-t-il ?', 'Parle il ?'], unit: 19 },
+  { q: '"Ce n\'est pas terrible" significa…', a: 'Não é muito bom', o: ['Não é muito bom', 'É ótimo', 'É assustador', 'É incrível'], unit: 20 },
 ];

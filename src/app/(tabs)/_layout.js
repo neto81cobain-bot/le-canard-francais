@@ -10,7 +10,7 @@ const TABS = {
   index: { label: 'Aprender', icon: 'home' },
   praticar: { label: 'Praticar', icon: 'dumbbell' },
   falar: { label: 'Falar', icon: 'mic' },
-  liga: { label: 'Liga', icon: 'trophy' },
+  liga: { label: 'Clube', icon: 'trophy' },
   perfil: { label: 'Perfil', icon: 'user' },
 };
 

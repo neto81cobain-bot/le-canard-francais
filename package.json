@@ -29,6 +29,7 @@
     "expo-web-browser": "~58.1.0",
     "qrcode-generator": "^1.4.4",
     "react": "19.3.0",
+    "react-dom": "19.3.0",
     "react-native": "0.88.1",
     "react-native-gesture-handler": "~3.3.0",
     "react-native-reanimated": "4.7.1",
@@ -40,13 +41,9 @@
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
-    "lint": "expo lint",
     "build:apk": "eas build -p android --profile production",
     "update": "eas update --branch production --auto"
   },
   "private": true,
-  "devDependencies": {
-    "eslint": "^9.39.5",
-    "eslint-config-expo": "^58.0.4"
-  }
+  "devDependencies": {}
 }

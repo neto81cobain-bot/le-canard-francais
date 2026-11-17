@@ -1,3 +1,5 @@
+import { VERBS, TENSES, conjugate, acceptedForms, getVerb } from '../content/verbs';
+import { MINIMAL_PAIRS, SOUND_GROUPS } from '../content/skills';
 // Turns lesson content into a varied, progressive exercise sequence,
 // and checks typed answers with friendly tolerance.
 
@@ -155,8 +157,50 @@ function mkDialogue(lines) {
   return { type: 'dialogue', lines: slice, shuffled: shuffle(slice.map((l, i) => ({ ...l, id: i }))) };
 }
 
+
+// Write the French sentence (PT → FR, typed). Graded word by word, tolerant.
+export function mkWrite(item) {
+  if (!item || !item.fr || !item.pt) return null;
+  const n = tokenize(item.fr).length;
+  if (n < 2 || n > 9) return null;
+  return { type: 'write', item, prompt: item.pt, answer: item.fr };
+}
+
+// Minimal pair: hear one word, pick which one it was.
+export function mkPairs(pair) {
+  const p = pair || pick(MINIMAL_PAIRS, 1)[0];
+  if (!p) return null;
+  const first = Math.random() < 0.5;
+  const target = first ? p.a : p.b;
+  return {
+    type: 'pairs',
+    prompt: target,
+    answer: target,
+    options: shuffle([{ fr: p.a, pt: p.pa }, { fr: p.b, pt: p.pb }]),
+    group: p.group,
+    tip: SOUND_GROUPS[p.group]?.tip || '',
+    groupTitle: SOUND_GROUPS[p.group]?.title || '',
+  };
+}
+
+// True / false about a text
+export function mkTrueFalse(statement, isTrue, why, context) {
+  return { type: 'truefalse', prompt: statement, answer: isTrue ? 'V' : 'F', why, context };
+}
+
+// Is a typed sentence "close enough"? (for free writing)
+export function checkSentence(input, answer) {
+  const exact = checkTyped(input, answer);
+  if (exact.ok) return exact;
+  const cmp = compareWords(answer, input);
+  const inLen = normalize(input, { accents: false }).split(' ').filter(Boolean).length;
+  const tgtLen = cmp.words.length;
+  if (cmp.score >= 85 && Math.abs(inLen - tgtLen) <= 1) return { ok: true, note: 'Quase! Compare com a forma exata: ' + answer };
+  return { ok: false, words: cmp.words };
+}
+
 // ─── LESSON SEQUENCE ──────────────────────────────────────
-export function buildLesson(lesson, { allSentences = [], speak = true, unitNumber = 1 } = {}) {
+export function buildLesson(lesson, { allSentences = [], speak = true, unitNumber = 1, verbs = [], tenses = ['present'] } = {}) {
   const v = lesson.vocab;
   const s = lesson.sentences;
   const out = [];
@@ -183,10 +227,19 @@ export function buildLesson(lesson, { allSentences = [], speak = true, unitNumbe
   // 3) Structure
   const builds = pick(s, 2);
   builds.forEach((it, i) => add(mkBuild(it, [...s, ...allSentences], { listen: i === 1 })));
+  // Verbs of the unit
+  if (verbs.length) {
+    buildConjugation({ verbs, tenses, count: 2, choiceRatio: 0 }).forEach((c, i) => add(i === 0 || unitNumber < 2 ? mkConjugate(getVerb(c.verb), c.tense, c.person, { choice: true }) : c));
+  }
   // 4) Production
   const listenItem = pick(s.filter((x) => !builds.includes(x)), 1)[0] || s[0];
   if (listenItem && unitNumber >= 2) add(mkListenType(listenItem));
+  if (unitNumber <= 12 && Math.random() < 0.6) add(mkPairs());
   lesson.fill.slice(0, 2).forEach((f) => add(mkFill(f)));
+  if (unitNumber >= 2) {
+    const wr = pick(s.filter((x) => x !== listenItem && tokenize(x.fr).length <= 8), 1)[0];
+    if (wr) add(mkWrite(wr));
+  }
   if (speak) {
     const sp = pick(s.filter((x) => tokenize(x.fr).length <= 7), 1)[0];
     if (sp) add(mkSpeak(sp));
@@ -211,14 +264,21 @@ export function buildUnitTest(unit, { speak = false } = {}) {
   const im = mkImagePt(pick(vocab, 1)[0], vocab); if (im) out.push(im);
   const m = mkMatch(vocab); if (m) out.push(m);
   if (speak) out.push(mkSpeak(pick(sentences.filter((x) => tokenize(x.fr).length <= 6), 1)[0] || sentences[0]));
-  return shuffle(out).slice(0, 15);
+  if (unit.verbs && unit.verbs.length) buildConjugation({ verbs: unit.verbs, tenses: unit.tenses, count: 3, choiceRatio: 0.3 }).forEach((c) => out.push(c));
+  return shuffle(out).slice(0, 18);
 }
 
 // Review session from SRS items (words/sentences) + mistakes
 export function buildReview(items, { pool = [], count = 12 } = {}) {
   const out = [];
   const words = items.filter((i) => (i.key || '').startsWith('w:'));
-  const sents = items.filter((i) => !(i.key || '').startsWith('w:'));
+  const verbs = items.filter((i) => (i.key || '').startsWith('v:'));
+  const sents = items.filter((i) => !(i.key || '').startsWith('w:') && !(i.key || '').startsWith('v:'));
+  verbs.forEach((it) => {
+    const [, inf, tense, idx] = it.key.split(':');
+    const v = getVerb(inf);
+    if (v) out.push(mkConjugate(v, tense, parseInt(idx, 10)));
+  });
   const vocabPool = pool.filter((p) => p.isWord);
   const sentPool = pool.filter((p) => !p.isWord);
   words.forEach((w, i) => {
@@ -247,4 +307,95 @@ export function buildBank(questions, count = 15) {
 export function snapshot(ex) {
   const base = { prompt: ex.prompt || ex.fr || ex.answer || '', answer: ex.answer || ex.fr || '' };
   return { ...base, exercise: ex };
+}
+
+// ─── VERB CONJUGATION ─────────────────────────────────────
+
+export function mkConjugate(v, tenseId, i, { choice = false } = {}) {
+  const table = conjugate(v, tenseId);
+  if (!table || !table[i]) return null;
+  const tense = TENSES.find((t) => t.id === tenseId);
+  const cell = table[i];
+  const base = {
+    type: 'conjugate',
+    verb: v.inf,
+    verbPt: v.pt,
+    tense: tenseId,
+    tenseName: tense.name,
+    tensePt: tense.pt,
+    subject: cell.subject,
+    person: i,
+    answer: cell.form,
+    alternatives: acceptedForms(v, tenseId, i).slice(1),
+    full: cell.full,
+    why: `${v.inf} (${v.pt}) · ${tense.name}: ${table.map((c) => c.full).join(' · ')}`,
+    item: { fr: cell.full.replace(/ !$/, ''), pt: `${v.pt} — ${tense.pt}`, key: `v:${v.inf}:${tenseId}:${i}` },
+  };
+  if (!choice) return base;
+  // multiple-choice version: distractors from other persons / tenses of the same verb
+  const pool = new Set();
+  table.forEach((c) => c.form !== cell.form && pool.add(c.form));
+  TENSES.forEach((t) => {
+    const tb = conjugate(v, t.id);
+    if (tb && tb[i] && tb[i].form !== cell.form) pool.add(tb[i].form);
+  });
+  const options = shuffle([cell.form, ...shuffle([...pool]).slice(0, 3)]);
+  return { ...base, choice: true, options };
+}
+
+export function buildConjugation({ verbs, tenses, count = 15, choiceRatio = 0.3 }) {
+  const vs = (verbs && verbs.length ? verbs : VERBS.map((v) => v.inf)).map(getVerb).filter(Boolean);
+  const ts = tenses && tenses.length ? tenses : ['present'];
+  const out = [];
+  let guard = 0;
+  while (out.length < count && guard++ < count * 10) {
+    const v = vs[Math.floor(Math.random() * vs.length)];
+    const t = ts[Math.floor(Math.random() * ts.length)];
+    const n = t === 'imperatif' ? 3 : 6;
+    const ex = mkConjugate(v, t, Math.floor(Math.random() * n), { choice: Math.random() < choiceRatio });
+    if (ex && !out.find((o) => o.item.key === ex.item.key)) out.push(ex);
+  }
+  return out;
+}
+
+// ─── SKILL SESSIONS ───────────────────────────────────────
+export function buildListening(pool, count = 12) {
+  const sents = pool.filter((p) => !p.isWord && tokenize(p.fr).length <= 9);
+  const out = [];
+  pick(MINIMAL_PAIRS, Math.ceil(count / 2)).forEach((p) => out.push(mkPairs(p)));
+  pick(sents, Math.floor(count / 4)).forEach((it) => out.push(mkListenType(it)));
+  pick(sents, Math.floor(count / 4)).forEach((it) => out.push(mkBuild(it, sents, { listen: true })));
+  return shuffle(out.filter(Boolean)).slice(0, count);
+}
+
+export function buildWriting(pool, fills = [], count = 12) {
+  const sents = pool.filter((p) => !p.isWord);
+  const out = [];
+  pick(sents, Math.ceil(count * 0.6)).forEach((it) => out.push(mkWrite(it)));
+  pick(fills, Math.ceil(count * 0.25)).forEach((f) => out.push(mkFill(f)));
+  pick(sents, 2).forEach((it) => out.push(mkListenType(it)));
+  return shuffle(out.filter(Boolean)).slice(0, count);
+}
+
+export function buildSpeaking(pool, count = 8) {
+  const sents = pool.filter((p) => !p.isWord && tokenize(p.fr).length <= 8);
+  const out = pick(sents, count).map(mkSpeak);
+  pick(MINIMAL_PAIRS, 3).forEach((p) => out.splice(Math.floor(Math.random() * out.length), 0, mkPairs(p)));
+  return out.filter(Boolean);
+}
+
+export function buildStoryQuiz(story) {
+  const out = [];
+  story.q.forEach((q) => out.push({ type: 'mcq', title: story.level >= 'B2' ? 'Compréhension' : 'Compreensão do texto', prompt: q.q, answer: q.a, options: shuffle([q.a, ...q.o]) }));
+  story.tf.forEach((x) => out.push(mkTrueFalse(x.q, x.a, x.why)));
+  // one translation + one sentence to write, from the text itself
+  const lines = story.lines.filter((l) => l.pt && tokenize(l.fr).length <= 12);
+  const tr = pick(lines, 1)[0];
+  if (tr) {
+    const others = pick(story.lines.filter((l) => l !== tr && l.pt), 3).map((l) => l.pt);
+    if (others.length >= 2) out.push({ type: 'translate', item: { fr: tr.fr, pt: tr.pt, key: 's:' + tr.fr }, prompt: tr.fr, answer: tr.pt, options: shuffle([tr.pt, ...others]) });
+  }
+  const wordItems = story.words.map((w) => ({ fr: w.fr, pt: w.pt, isWord: true }));
+  if (wordItems.length >= 4) out.push({ type: 'match', pairs: pick(wordItems, 5) });
+  return shuffle(out);
 }

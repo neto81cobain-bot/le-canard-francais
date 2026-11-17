@@ -17,14 +17,19 @@ import { Nunito_800ExtraBold } from '@expo-google-fonts/nunito/800ExtraBold';
 import { StoreProvider, useStore, getStateSnapshotForCloud } from '../store';
 import { ThemeProvider, useTheme } from '../theme';
 import Celebration from '../components/Celebration';
+import { RootErrorScreen } from '../components/ErrorBoundary';
 import { setFeedbackPrefs } from '../services/feedback';
 import { setSpeechRate } from '../services/speech';
 import { setAiOverride } from '../services/ai';
 import { scheduleReminders } from '../services/notifications';
 import { pushProgress, takeCheers } from '../services/cloud';
-import { dayKey } from '../store/dates';
+import { dayKey, weekKey, mondayKey } from '../store/dates';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
+
+export function ErrorBoundary(props) {
+  return <RootErrorScreen {...props} />;
+}
 
 function Effects() {
   const { state, actions } = useStore();
@@ -59,7 +64,19 @@ function Effects() {
       const a = await pushProgress(state.auth, state, doBackup ? getStateSnapshotForCloud(state) : null);
       if (a.idToken !== state.auth.idToken) actions.setAuth(a);
       const cheers = await takeCheers(a);
-      if (cheers.length) actions.set((s) => ({ cheers: [...(s.cheers || []), ...cheers].slice(-10) }));
+      if (cheers.length) {
+        const wk = weekKey();
+        actions.set((s) => {
+          const duelsIn = cheers.filter((c) => c.kind === 'duel' && c.from && c.week === wk && !(s.duels || []).find((d) => d.uid === c.from && d.week === wk));
+          const friends = [...(s.friends || [])];
+          duelsIn.forEach((d) => { if (!friends.find((f) => f.uid === d.from)) friends.push({ uid: d.from, name: d.name }); });
+          return {
+            cheers: [...(s.cheers || []), ...cheers].slice(-10),
+            friends,
+            duels: [...(s.duels || []), ...duelsIn.map((d) => ({ uid: d.from, name: d.name, week: wk, mon: mondayKey(), theirXP: 0, status: 'active', invitedBy: 'them' }))],
+          };
+        });
+      }
     } catch {}
   };
   useEffect(() => { sync(false); }, [state.xp, state.auth?.uid]);

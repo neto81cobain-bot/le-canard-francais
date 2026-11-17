@@ -10,6 +10,8 @@ import Duck from '../../components/Duck';
 import { Appear } from '../../components/extras';
 import { dueItems } from '../../store/logic';
 import { BANK_TOPICS } from '../../content';
+import { VERBS } from '../../content/verbs';
+import { STORY_LIST } from '../../content/stories';
 
 function BigTile({ emoji, title, sub, color, onPress, badge }) {
   const t = useTheme();
@@ -56,13 +58,36 @@ export default function Practice() {
         </Tap>
       </Appear>
 
-      <View style={{ flexDirection: 'row', gap: 12, marginTop: 14 }}>
+      <Section title="As 4 habilidades" />
+      <View style={{ flexDirection: 'row', gap: 12 }}>
+        <BigTile emoji="📖" title="Leitura" sub={`${Object.keys(state.stories || {}).length}/${STORY_LIST.length} histórias`} color="#7C5CFC" onPress={() => router.push('/stories')} />
+        <BigTile emoji="👂" title="Escuta" sub="Sons parecidos e ditado" color="#0E7490" onPress={() => go('listening')} />
+      </View>
+      <View style={{ flexDirection: 'row', gap: 12, marginTop: 12 }}>
+        <BigTile emoji="✍️" title="Escrita" sub="Escreva frases em francês" color={palette.green} onPress={() => go('writing')} />
+        <BigTile emoji="🗣️" title="Pronúncia" sub="Grave e receba nota" color={palette.red} onPress={() => go('speaking')} />
+      </View>
+      <Tap onPress={() => router.push('/diary')} style={[{ marginTop: 12, borderRadius: radius.lg, backgroundColor: t.surface, borderWidth: 2, borderColor: t.border, padding: 16, flexDirection: 'row', alignItems: 'center', gap: 14 }]}>
+        <Text style={{ fontSize: 34 }}>📓</Text>
+        <View style={{ flex: 1 }}>
+          <T v="bodyBold">Diário em francês</T>
+          <T v="small">Um tema por dia. Escreva e receba correção com explicação de cada erro.</T>
+        </View>
+        <Icon name="chevron" size={20} color={t.text3} />
+      </Tap>
+
+      <Section title="Revisar e desafiar" />
+      <View style={{ flexDirection: 'row', gap: 12 }}>
         <BigTile emoji="🎯" title="Meus erros" sub="Treine o que você errou" color={palette.coral} badge={state.mistakes.length ? String(state.mistakes.length) : null} onPress={() => go('mistakes')} />
         <BigTile emoji="⏱️" title="Contra o relógio" sub={`Recorde: ${state.stats.timedBest}`} color={palette.goldDark} onPress={() => go('timed')} />
       </View>
       <View style={{ flexDirection: 'row', gap: 12, marginTop: 12 }}>
         <BigTile emoji="⚡" title="Desafio diário" sub={state.daily.challengeDone ? 'Concluído hoje ✓' : 'XP em dobro hoje'} color={palette.red} onPress={() => go('daily')} />
         <BigTile emoji="🃏" title="Flashcards" sub={`${words + state.saved.length} cartões`} color={palette.green} onPress={() => router.push('/flashcards')} />
+      </View>
+      <View style={{ flexDirection: 'row', gap: 12, marginTop: 12 }}>
+        <BigTile emoji="📖" title="Conjugador" sub={`${VERBS.length} verbos · 10 tempos`} color={palette.purple} onPress={() => router.push('/verbs')} />
+        <BigTile emoji="🔤" title="Treino de verbos" sub="Conjugue digitando" color="#0E7490" onPress={() => go('verbs')} />
       </View>
 
       <Section title="Ferramentas" />

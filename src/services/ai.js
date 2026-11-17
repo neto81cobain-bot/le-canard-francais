@@ -134,3 +134,33 @@ Responda SEMPRE em JSON: {"reply": "...", "translation": "tradução da sua fala
 export async function transcribeFrench(uri) {
   return transcribe(uri, 'fr');
 }
+
+// ─── WRITING CORRECTION (diary) ───────────────────────────
+export async function correctWriting(text, prompt, level = 'A1') {
+  const res = await chat(
+    [
+      {
+        role: 'system',
+        content: `Você é um professor de francês paciente corrigindo um texto curto de um aluno brasileiro de nível ${level}.
+Tema proposto: "${prompt}".
+Responda SEMPRE em JSON:
+{"corrected": "o texto inteiro corrigido em francês natural, mantendo as ideias do aluno",
+ "score": número de 0 a 100 (qualidade considerando o nível),
+ "errors": [{"wrong": "trecho errado", "right": "forma certa", "why": "explicação curta em português"}],
+ "praise": "um elogio específico e curto em português",
+ "tip": "uma dica prática em português para o próximo texto"}
+No máximo 6 erros, os mais importantes. Se o texto estiver em português, traduza-o em "corrected" e dê score baixo explicando que é para escrever em francês.`,
+      },
+      { role: 'user', content: text },
+    ],
+    { json: true, maxTokens: 900 }
+  );
+  if (!res || !res.corrected) throw new AiError('Não consegui corrigir agora. Tente de novo.');
+  return {
+    corrected: String(res.corrected),
+    score: Math.max(0, Math.min(100, parseInt(res.score, 10) || 0)),
+    errors: Array.isArray(res.errors) ? res.errors.slice(0, 6) : [],
+    praise: res.praise || '',
+    tip: res.tip || '',
+  };
+}

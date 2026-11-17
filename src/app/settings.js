@@ -129,7 +129,7 @@ export default function Settings() {
           </>
         ) : (
           <View style={{ padding: 16, gap: 10 }}>
-            <T v="small">Entre para salvar seu progresso na nuvem, participar das ligas e ter amigos.</T>
+            <T v="small">Entre para salvar seu progresso na nuvem, e estudar junto com amigos no Clube.</T>
             <Button title="Entrar com Google" icon="cloud" onPress={login} loading={busy === 'login'} />
           </View>
         )}

@@ -4,9 +4,11 @@ App para aprender francês com o Monsieur Canard. Feito em React Native nativo (
 
 ## O que tem
 
-- **Curso em trilha A1 → B1**: 12 unidades, 62 lições (incluindo 12 histórias), 408 palavras e 284 frases com áudio.
+- **Curso completo A1 → C1**: 20 unidades, 102 lições (incluindo 20 histórias), 836 palavras e 666 frases com áudio.
+- **Conjugador com 199 verbos × 10 tempos** (présent, passé composé, impératif, imparfait, futur, conditionnel, subjonctif, plus-que-parfait, futur antérieur, conditionnel passé), com tabela que fala, treino por tempo/nível e revisão espaçada das formas que você erra.
+- **Cada unidade treina seus verbos**: exercícios de conjugação entram nas lições e nos testes.
 - **Cada lição é uma aula**: introdução com o pato → explicação com exemplos e tabelas que falam → prática → resultado.
-- **8 tipos de exercício**: imagem, múltipla escolha, tradução, montar frase, ouvir e escrever, completar digitando, combinar pares, ordenar diálogo e falar.
+- **10 tipos de exercício**: imagem, múltipla escolha, tradução, montar frase, ouvir e escrever, completar digitando, combinar pares, ordenar diálogo, falar e conjugar.
 - **Explicação em cada erro**. Os erros voltam no fim da lição e vão para “Meus erros”.
 - **Revisão espaçada** (SM-2), flashcards, dicionário pessoal, falsos cognatos e notas culturais.
 - **Teste de nivelamento**, teste por unidade (80% libera a próxima) e onboarding.
@@ -62,42 +64,37 @@ Copie a URL que aparecer (ex.: `https://canard-ai.seunome.workers.dev`) para `ap
 
 > Para testar antes de subir o servidor: no app, vá em Configurações → Avançado e cole uma chave Groq pessoal. Ela fica só naquele aparelho.
 
-### 4. GitHub + atualizações automáticas
+### 4. Atualizações automáticas (EAS Workflows)
 
-1. Em `app.json` → `expo.extra.githubRepo`, coloque `seu-usuario/nome-do-repo`.
-2. Ligue o projeto ao EAS (cria o `projectId` e a URL de updates):
-   ```bash
-   npx eas-cli@latest login
-   npx eas-cli@latest init
-   npx eas-cli@latest update:configure
-   ```
-3. Crie um token em https://expo.dev/settings/access-tokens e salve no GitHub em **Settings → Secrets and variables → Actions → New secret**, com o nome `EXPO_TOKEN`.
-4. Gere o primeiro APK e instale no celular:
-   ```bash
-   npx eas-cli@latest build -p android --profile production
-   ```
-   > Use a mesma conta Expo da versão 1.0, para o APK ser assinado com a mesma chave e instalar por cima.
-
----
-
-## Como atualizar depois (só `git push`)
-
-O workflow `.github/workflows/publish.yml` roda a cada push na `main`:
+O repositório já vem com `.eas/workflows/publish.yml`. Com o repositório ligado ao projeto no expo.dev (o mesmo do botão **Build from GitHub**), cada push na `main` roda sozinho:
 
 | O que você mudou | O que acontece | No celular |
 | --- | --- | --- |
-| Código, telas, conteúdo das lições | Publica uma **atualização OTA** (EAS Update) | Configurações → **Buscar atualizações** → “Baixar e reiniciar” |
-| A `version` no `app.json` (ex.: 2.0.0 → 2.1.0) | Gera um **APK novo** e cria um **GitHub Release** | Configurações → **Buscar atualizações** → “Baixar APK” |
+| Código, telas, conteúdo das lições | Publica uma **atualização OTA** no canal `preview` | Configurações → **Buscar atualizações** → “Baixar e reiniciar” |
+| Algo nativo (biblioteca nova, permissão, ícone) | Gera um **APK novo** automaticamente | Baixe o APK na página de builds do expo.dev |
 
-Mude a `version` só quando adicionar uma biblioteca nativa nova ou mexer em permissões. Para conteúdo e telas, basta o push.
+O primeiro push gera o APK (ainda não existe build compatível). Instale esse APK; dali em diante, push = atualização no app.
 
----
+## Enviar para o GitHub
+
+Use o **git** ou o **GitHub Desktop**, não o “Add file → Upload” do site: o upload pelo navegador ignora as pastas que começam com ponto (`.eas`, `.gitignore`), e sem elas as atualizações automáticas não funcionam.
+
+```bash
+git clone https://github.com/neto81cobain-bot/le-canard-francais.git
+cd le-canard-francais
+# apague tudo aqui, menos a pasta .git, e copie TODO o conteúdo do zip
+git add -A
+git commit -m "Le canard français 2.0"
+git push
+```
 
 ## Onde editar
 
 | O quê | Arquivo |
 | --- | --- |
-| Lições A1 / A2 / B1 | `src/content/a1.js`, `a2.js`, `b1.js` |
+| Lições A1 / A2 / B1 / B2 / C1 | `src/content/a1.js`, `a2.js`, `b1.js`, `b2.js`, `c1.js` |
+| Reforço das lições A1–B1 | `src/content/extraA.js` |
+| Verbos e regras de conjugação | `src/content/verbs.js` |
 | Sons, frases do dia, cultura, falsos cognatos, cenários, nivelamento | `src/content/extras.js` |
 | Banco de questões da versão 1.0 (818 questões) | `src/content/legacyBank.json` |
 | Cores e fontes | `src/theme/index.js` |

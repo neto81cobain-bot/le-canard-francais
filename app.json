@@ -9,7 +9,7 @@
     "userInterfaceStyle": "automatic",
     "backgroundColor": "#FBF7F0",
     "runtimeVersion": {
-      "policy": "appVersion"
+      "policy": "fingerprint"
     },
     "android": {
       "package": "com.raimundo.lecanardfrancais",
@@ -24,9 +24,7 @@
         "android.permission.RECORD_AUDIO",
         "android.permission.MODIFY_AUDIO_SETTINGS",
         "android.permission.INTERNET",
-        "android.permission.POST_NOTIFICATIONS",
-        "android.permission.FOREGROUND_SERVICE",
-        "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+        "android.permission.POST_NOTIFICATIONS"
       ],
       "blockedPermissions": [
         "android.permission.READ_EXTERNAL_STORAGE",
@@ -87,13 +85,9 @@
       "expo-image"
     ],
     "extra": {
-      "githubRepo": "SEU_USUARIO/le-canard-francais",
+      "githubRepo": "neto81cobain-bot/le-canard-francais",
       "apiUrl": "",
-      "router": {
-        "asyncRoutes": {
-          "web": true
-        }
-      },
+      "router": {},
       "eas": {
         "projectId": "0fdbca02-bb8c-4274-a120-feeb7d2298ed"
       }
@@ -101,6 +95,11 @@
     "web": {
       "output": "single",
       "favicon": "./assets/favicon.png"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/0fdbca02-bb8c-4274-a120-feeb7d2298ed",
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0
     }
   }
 }

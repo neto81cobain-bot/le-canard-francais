@@ -1,5 +1,5 @@
 // Cloud sync with Firebase Realtime Database (REST).
-// Paths: profiles/{uid}, codes/{CODE}, leagues/{week}/{tier}/{uid}, backups/{uid}, cheers/{uid}/{from}
+// Paths: profiles/{uid}, codes/{CODE}, backups/{uid}, cheers/{uid}/{from}
 import { CONFIG } from './config';
 import { freshToken } from './auth';
 import { weekKey } from '../store/dates';
@@ -43,25 +43,9 @@ export async function pushProgress(auth, state, snapshot) {
   await Promise.all([
     req(db('profiles/' + a.uid, a.idToken), { method: 'PUT', body: JSON.stringify(profile) }),
     req(db('codes/' + profile.code, a.idToken), { method: 'PUT', body: JSON.stringify(a.uid) }).catch(() => {}),
-    req(db(`leagues/${wk}/${state.league.tier}/${a.uid}`, a.idToken), {
-      method: 'PUT',
-      body: JSON.stringify({ name: profile.name, photo: profile.photo, xp: profile.weekXP, streak: profile.streak, ts: Date.now() }),
-    }),
     snapshot ? req(db('backups/' + a.uid, a.idToken), { method: 'PUT', body: JSON.stringify({ at: Date.now(), data: JSON.stringify(snapshot) }) }) : null,
   ]);
   return a;
-}
-
-export async function fetchLeague(auth, tier, week = weekKey()) {
-  const a = await withAuth(auth);
-  let data;
-  try {
-    data = await req(db(`leagues/${week}/${tier}`, a.idToken, '&orderBy="xp"&limitToLast=30'));
-  } catch {
-    data = await req(db(`leagues/${week}/${tier}`, a.idToken));
-  }
-  const list = Object.entries(data || {}).map(([uid, v]) => ({ uid, ...v })).sort((x, y) => (y.xp || 0) - (x.xp || 0));
-  return { auth: a, list };
 }
 
 export async function fetchBackup(auth) {
@@ -115,5 +99,11 @@ export async function takeCheers(auth) {
   const a = await withAuth(auth);
   const data = await req(db('cheers/' + a.uid, a.idToken)).catch(() => null);
   if (data) await req(db('cheers/' + a.uid, a.idToken), { method: 'DELETE' }).catch(() => {});
-  return Object.values(data || {});
+  return Object.entries(data || {}).map(([from, v]) => ({ from, ...(v || {}) }));
+}
+
+// A duel is a weekly XP race between two friends. The invite travels through the cheers inbox.
+export async function sendDuel(auth, toUid, name, week) {
+  const a = await withAuth(auth);
+  await req(db(`cheers/${toUid}/${a.uid}`, a.idToken), { method: 'PUT', body: JSON.stringify({ name, ts: Date.now(), kind: 'duel', week }) });
 }

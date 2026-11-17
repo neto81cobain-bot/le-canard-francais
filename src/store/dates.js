@@ -51,3 +51,10 @@ export function weekdayOf(key) {
   const [y, m, d] = key.split('-').map(Number);
   return new Date(y, m - 1, d).getDay();
 }
+
+// Monday (start of the ISO week) of the given day key
+export function mondayKey(key = dayKey()) {
+  const [y, m, d] = key.split('-').map(Number);
+  const wd = new Date(y, m - 1, d).getDay();
+  return addDays(key, -((wd + 6) % 7));
+}

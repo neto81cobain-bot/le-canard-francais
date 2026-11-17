@@ -55,6 +55,9 @@ export const initialState = {
   hearts: { count: 5, refillAt: null },
   inventory: { owned: [], equipped: null },
   friends: [],
+  stories: {}, // storyId -> { stars, at }
+  diary: [], // { at, prompt, text, corrected, score }
+  duels: [], // { uid, name, week, theirXP, status }
   translateHistory: [],
   lastLessonId: null,
   auth: null,
@@ -191,12 +194,16 @@ export function StoreProvider({ children }) {
             exercises: s.stats.exercises + 1,
             correct: s.stats.correct + (correct ? 1 : 0),
             bestCombo: Math.max(s.stats.bestCombo, combo || 0),
+            pairs: (s.stats.pairs || 0) + (correct && kind === 'pairs' ? 1 : 0),
           },
           daily: {
             ...s.daily,
             correct: s.daily.correct + (correct ? 1 : 0),
             combo: Math.max(s.daily.combo, combo || 0),
-            listen: s.daily.listen + (correct && kind === 'listen' ? 1 : 0),
+            listen: s.daily.listen + (correct && (kind === 'listen' || kind === 'pairs') ? 1 : 0),
+            verbs: (s.daily.verbs || 0) + (correct && kind === 'conjugate' ? 1 : 0),
+            written: (s.daily.written || 0) + (correct && kind === 'write' ? 1 : 0),
+            pairs: (s.daily.pairs || 0) + (correct && kind === 'pairs' ? 1 : 0),
           },
         };
         if (item && item.fr) {

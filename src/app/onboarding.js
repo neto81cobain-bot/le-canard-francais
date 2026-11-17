@@ -26,6 +26,7 @@ const LEVELS = [
   { id: 'zero', label: 'Nada, estou começando', emoji: '🥚', sub: 'Começo pela unidade 1' },
   { id: 'some', label: 'Sei algumas palavras', emoji: '🐣', sub: 'Posso fazer um teste rápido' },
   { id: 'talk', label: 'Consigo conversar', emoji: '🦆', sub: 'Teste de nivelamento recomendado' },
+  { id: 'adv', label: 'Sou avançado', emoji: '🗼', sub: 'O teste pode liberar até o C1' },
 ];
 const MINUTES = [
   { v: 5, label: 'Tranquilo', sub: '5 min por dia' },
@@ -131,7 +132,7 @@ export default function Onboarding() {
         setChosen(null);
         if (pi + 1 >= placement.length) {
           const firstWrong = scores.find((s) => !s.ok);
-          const u = firstWrong ? firstWrong.unit : 12;
+          const u = firstWrong ? firstWrong.unit : 20;
           setUnlocked(Math.max(1, u));
           setPlacing(false);
           setStep(3);
@@ -243,7 +244,7 @@ export default function Onboarding() {
       </ScrollView>
 
       <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: 20, paddingBottom: 20 + insets.bottom, backgroundColor: t.bg, borderTopWidth: 1, borderTopColor: t.border, gap: 10 }}>
-        {step === 2 && (level === 'some' || level === 'talk') && unlocked === 1 ? (
+        {step === 2 && (level === 'some' || level === 'talk' || level === 'adv') && unlocked === 1 ? (
           <>
             <Button title="Fazer teste de 2 minutos" icon="target" onPress={() => { setPi(0); setPScore([]); setPlacing(true); }} />
             <Button title="Começar do zero" variant="ghost" onPress={() => setStep(3)} small />

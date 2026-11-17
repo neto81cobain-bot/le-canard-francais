@@ -10,6 +10,7 @@ import Duck, { DuckAvatar } from '../../components/Duck';
 import { AudioButton, Appear } from '../../components/extras';
 import { UNITS, lessonState, unitProgress, nextLesson, LEVEL_INFO } from '../../content';
 import { DAILY_PHRASES, CULTURE } from '../../content/extras';
+import { STORY_LIST } from '../../content/stories';
 import { goalXP, missionProgress, dueItems } from '../../store/logic';
 import { dayKey } from '../../store/dates';
 import { fx } from '../../services/feedback';
@@ -95,6 +96,7 @@ export default function Learn() {
   const allMissions = missions.every((m) => m.done);
   const phrase = DAILY_PHRASES[dayIndex() % DAILY_PHRASES.length];
   const due = useMemo(() => dueItems(state.srs, Date.now(), 200), [state.srs]);
+  const nextStory = useMemo(() => STORY_LIST.find((s) => s.unit <= state.unlockedUnit && !state.stories?.[s.id]), [state.stories, state.unlockedUnit]);
   const dueByLesson = useMemo(() => {
     const m = {};
     due.forEach((d) => d.lessonId && (m[d.lessonId] = (m[d.lessonId] || 0) + 1));
@@ -145,14 +147,27 @@ export default function Learn() {
       </View>
 
       <ScrollView ref={scrollRef} contentContainerStyle={{ padding: 20, paddingBottom: 60 }} showsVerticalScrollIndicator={false}>
-        {/* CHEERS */}
-        {(state.cheers || []).length ? (
-          <Card style={{ marginBottom: 14, flexDirection: 'row', alignItems: 'center', gap: 12 }} tone={t.skySoft} onPress={() => actions.set({ cheers: [] })}>
-            <Text style={{ fontSize: 28 }}>📣</Text>
-            <T v="bodyBold" style={{ flex: 1 }}>{state.cheers.map((c) => c.name).join(', ')} mandou “Bon courage !” pra você</T>
-            <Icon name="close" size={18} color={t.text3} />
-          </Card>
-        ) : null}
+        {/* CHEERS & DUEL INVITES */}
+        {(state.cheers || []).length ? (() => {
+          const duelsIn = state.cheers.filter((c) => c.kind === 'duel');
+          const cheers = state.cheers.filter((c) => c.kind !== 'duel');
+          return (
+            <Card style={{ marginBottom: 14, gap: 8 }} tone={t.skySoft} onPress={() => { actions.set({ cheers: [] }); if (duelsIn.length) router.push('/(tabs)/liga'); }}>
+              {cheers.length ? (
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                  <Text style={{ fontSize: 28 }}>📣</Text>
+                  <T v="bodyBold" style={{ flex: 1 }}>{[...new Set(cheers.map((c) => c.name))].join(', ')} mandou “Bon courage !” pra você</T>
+                </View>
+              ) : null}
+              {duelsIn.length ? (
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                  <Text style={{ fontSize: 28 }}>⚔️</Text>
+                  <T v="bodyBold" style={{ flex: 1 }}>{[...new Set(duelsIn.map((c) => c.name))].join(', ')} te desafiou para um duelo de XP esta semana! Toque para ver.</T>
+                </View>
+              ) : null}
+            </Card>
+          );
+        })() : null}
 
         {/* DAILY GOAL + MISSIONS */}
         <Appear>
@@ -222,6 +237,22 @@ export default function Learn() {
             <T v="small" center>Continue revisando na aba Praticar para não esquecer.</T>
           </Card>
         )}
+
+        {/* QUICK PRACTICE: review + story */}
+        <Appear delay={110}>
+          <View style={{ flexDirection: 'row', gap: 12, marginTop: 16 }}>
+            <Tap onPress={() => router.push({ pathname: '/practice/[mode]', params: { mode: 'review' } })} style={[{ flex: 1, borderRadius: radius.lg, padding: 14, backgroundColor: t.surface, borderWidth: 2, borderColor: due.length ? palette.gold : t.border, gap: 4 }]}>
+              <Text style={{ fontSize: 26 }}>🧠</Text>
+              <T v="bodyBold">{due.length ? `${Math.min(due.length, 99)} para revisar` : 'Revisão em dia'}</T>
+              <T v="caption">{due.length ? 'Leva ~2 minutos' : 'Treinar os mais fracos'}</T>
+            </Tap>
+            <Tap onPress={() => router.push(nextStory ? { pathname: '/story/[id]', params: { id: nextStory.id } } : '/stories')} style={[{ flex: 1, borderRadius: radius.lg, padding: 14, backgroundColor: t.surface, borderWidth: 2, borderColor: t.border, gap: 4 }]}>
+              <Text style={{ fontSize: 26 }}>{nextStory ? nextStory.emoji : '📚'}</Text>
+              <T v="bodyBold" numberOfLines={1}>{nextStory ? nextStory.title : 'Histórias'}</T>
+              <T v="caption">{nextStory ? `História ${nextStory.level} para ler` : 'Releia suas favoritas'}</T>
+            </Tap>
+          </View>
+        </Appear>
 
         {/* PHRASE OF THE DAY */}
         <Appear delay={140}>

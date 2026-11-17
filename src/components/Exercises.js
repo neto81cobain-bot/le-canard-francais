@@ -114,7 +114,8 @@ export function TranslateEx({ ex, value, onChange, locked, autoAudio }) {
 }
 
 // ─── BUILD THE SENTENCE (word tiles) ──────────────────────
-export function BuildEx({ ex, value = [], onChange, locked, autoAudio }) {
+export function BuildEx({ ex, value: rawValue, onChange, locked, autoAudio }) {
+  const value = Array.isArray(rawValue) ? rawValue : [];
   const t = useTheme();
   const chosenIds = value.map((v) => v.id);
   const add = (tile) => {
@@ -279,7 +280,8 @@ export function MatchEx({ ex, onComplete }) {
 }
 
 // ─── ORDER THE DIALOGUE ───────────────────────────────────
-export function DialogueEx({ ex, value = [], onChange, locked }) {
+export function DialogueEx({ ex, value: rawValue, onChange, locked }) {
+  const value = Array.isArray(rawValue) ? rawValue : [];
   const t = useTheme();
   const placed = value.map((v) => v.id);
   return (
@@ -429,6 +431,120 @@ export function SpeakEx({ ex, onComplete, onSkip, onSpoken }) {
             <Text style={{ fontFamily: fonts.bodyHeavy, color: t.text3, fontSize: 14 }}>NÃO POSSO FALAR AGORA</Text>
           </Pressable>
         ) : null}
+      </View>
+    </View>
+  );
+}
+
+// ─── CONJUGATE ────────────────────────────────────────────
+export function ConjugateEx({ ex, value, onChange, locked }) {
+  const t = useTheme();
+  return (
+    <View>
+      <Prompt title={ex.choice ? 'Escolha a forma certa' : 'Conjugue o verbo'} mood="teach">
+        <View style={{ backgroundColor: t.surface, borderWidth: 2, borderColor: t.border, borderRadius: 18, padding: 14, gap: 8 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+            <Text style={{ fontFamily: fonts.displayItalic, fontSize: 22, color: t.text }}>{ex.verb}</Text>
+            <Text style={{ fontFamily: fonts.bodySemi, fontSize: 14, color: t.text2 }}>({ex.verbPt})</Text>
+          </View>
+          <View style={{ alignSelf: 'flex-start', backgroundColor: t.primarySoft, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 4 }}>
+            <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 12, color: t.mode === 'dark' ? t.sky : t.primary }}>{ex.tenseName.toUpperCase()} · {ex.tensePt}</Text>
+          </View>
+        </View>
+      </Prompt>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 14 }}>
+        <Text style={{ fontFamily: fonts.displayItalic, fontSize: 24, color: t.text }}>{ex.subject}</Text>
+        <View style={{ flex: 1, borderBottomWidth: 3, borderColor: t.sky, paddingBottom: 4 }}>
+          <Text style={{ fontFamily: fonts.displayItalic, fontSize: 24, color: value ? t.text : t.text3 }}>{ex.choice ? value || '…' : value || '…'}</Text>
+        </View>
+      </View>
+      {ex.choice ? (
+        <View style={{ gap: 10 }}>
+          {ex.options.map((o) => (
+            <OptionCard key={o} label={o} selected={value === o} disabled={locked} onPress={() => { onChange(o); fx.select(); }} />
+          ))}
+        </View>
+      ) : (
+        <TypeBox value={value} onChange={onChange} locked={locked} placeholder="Digite só o verbo conjugado…" />
+      )}
+    </View>
+  );
+}
+
+// ─── WRITE IN FRENCH (PT → FR, typed) ─────────────────────
+export function WriteEx({ ex, value, onChange, locked }) {
+  const t = useTheme();
+  const [hint, setHint] = useState(false);
+  const hintText = ex.answer
+    .split(/\s+/)
+    .map((w) => w.replace(/^([^\s]{1,2})([\wÀ-ÿ'’-]*)/, (_, a, b) => a + b.replace(/[\wÀ-ÿ]/g, '_')))
+    .join(' ');
+  return (
+    <View>
+      <Prompt title="Escreva em francês" mood="teach">
+        <View style={{ backgroundColor: t.surface, borderWidth: 2, borderColor: t.border, borderRadius: 18, padding: 14, gap: 8 }}>
+          <T v="bodyBold" style={{ fontSize: 18 }}>{ex.prompt}</T>
+          {hint ? (
+            <Text style={{ fontFamily: fonts.bodyBold, fontSize: 16, letterSpacing: 1, color: t.sky }}>{hintText}</Text>
+          ) : !locked ? (
+            <Pressable onPress={() => setHint(true)} hitSlop={8}>
+              <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 13, color: t.sky }}>💡 Mostrar dica</Text>
+            </Pressable>
+          ) : null}
+        </View>
+      </Prompt>
+      <TypeBox value={value} onChange={onChange} locked={locked} placeholder="Escreva a frase em francês…" />
+    </View>
+  );
+}
+
+// ─── MINIMAL PAIRS (which one did you hear?) ──────────────
+export function PairsEx({ ex, value, onChange, locked, autoAudio }) {
+  const t = useTheme();
+  return (
+    <View>
+      <Prompt title="Qual palavra você ouviu?" mood="listen">
+        <View style={{ gap: 8 }}>
+          <AudioPair text={ex.prompt} size={64} autoPlay={autoAudio !== false} />
+          <T v="caption">Treino de som: {ex.groupTitle}</T>
+        </View>
+      </Prompt>
+      <View style={{ flexDirection: 'row', gap: 12 }}>
+        {ex.options.map((o) => (
+          <View key={o.fr} style={{ flex: 1, gap: 8 }}>
+            <OptionCard
+              label={o.fr}
+              sub={locked ? o.pt : null}
+              big
+              selected={value === o.fr}
+              status={locked ? (o.fr === ex.answer ? 'ok' : value === o.fr ? 'bad' : null) : null}
+              disabled={locked}
+              onPress={() => { onChange(o.fr); fx.select(); }}
+              style={{ alignItems: 'center', minHeight: 96 }}
+            />
+            {locked ? <View style={{ alignItems: 'center' }}><AudioButton text={o.fr} size={40} /></View> : null}
+          </View>
+        ))}
+      </View>
+    </View>
+  );
+}
+
+// ─── TRUE OR FALSE ────────────────────────────────────────
+export function TrueFalseEx({ ex, value, onChange, locked }) {
+  const t = useTheme();
+  return (
+    <View>
+      <Prompt title="Verdadeiro ou falso?" mood="think">
+        <View style={{ backgroundColor: t.surface, borderWidth: 2, borderColor: t.border, borderRadius: 18, padding: 14 }}>
+          <T v="bodyBold" style={{ fontSize: 18, lineHeight: 25 }}>{ex.prompt}</T>
+        </View>
+      </Prompt>
+      {ex.context ? <T v="small" style={{ marginBottom: 12 }}>{ex.context}</T> : null}
+      <View style={{ flexDirection: 'row', gap: 12 }}>
+        {[['V', '✅', 'Verdadeiro'], ['F', '❌', 'Falso']].map(([k, e, l]) => (
+          <OptionCard key={k} emoji={e} label={l} big selected={value === k} disabled={locked} onPress={() => { onChange(k); fx.select(); }} style={{ flex: 1, minHeight: 120 }} />
+        ))}
       </View>
     </View>
   );
