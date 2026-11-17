@@ -16,7 +16,7 @@ jobs:
     type: update
     environment: preview
     params:
-      branch: preview
+      channel: preview
       platform: android
 
   publish_production:
@@ -24,5 +24,5 @@ jobs:
     type: update
     environment: preview
     params:
-      branch: production
+      channel: production
       platform: android
