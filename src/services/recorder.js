@@ -11,9 +11,9 @@ const OPTIONS = {
   isMeteringEnabled: true,
 };
 
-export function useRecorder({ maxMs = 9000, onDone } = {}) {
+export function useRecorder({ maxMs = 12000, onDone } = {}) {
   const recorder = useAudioRecorder(OPTIONS);
-  const st = useAudioRecorderState(recorder, 150);
+  const st = useAudioRecorderState(recorder, 100);
   const [phase, setPhase] = useState('idle'); // idle | recording | done | denied
   const startAt = useRef(0);
   const spoke = useRef(false);
@@ -55,19 +55,40 @@ export function useRecorder({ maxMs = 9000, onDone } = {}) {
     return true;
   }, [recorder]);
 
-  // Silence detection
+  // Silence detection, adaptive to the room: we learn the background-noise level during
+  // the first ~0.4 s and the user's voice peak, then stop when the level falls back
+  // close to the noise floor (or well below the voice peak) for a short while.
+  const floor = useRef(null);
+  const peak = useRef(-160);
   useEffect(() => {
-    if (phase !== 'recording') return;
+    if (phase !== 'recording') { floor.current = null; peak.current = -160; return; }
     const now = Date.now();
-    const level = st.metering ?? -160;
-    if (level > -38) {
-      spoke.current = true;
-      silentSince.current = 0;
-    } else if (spoke.current) {
-      if (!silentSince.current) silentSince.current = now;
-      if (now - silentSince.current > 1300) stop();
+    const elapsed = now - startAt.current;
+    const level = st.metering;
+    if (typeof level === 'number' && level > -159) {
+      if (elapsed < 400) {
+        floor.current = floor.current == null ? level : Math.min(floor.current, level);
+      } else {
+        if (floor.current == null) floor.current = level;
+        // floor drifts down slowly if the room gets quieter
+        if (level < floor.current) floor.current = level;
+        peak.current = Math.max(peak.current, level);
+        const speechLine = Math.max(floor.current + 10, -45);
+        if (level > speechLine) {
+          spoke.current = true;
+          silentSince.current = 0;
+        } else if (spoke.current) {
+          const quietLine = Math.max(floor.current + 6, peak.current - 22);
+          if (level < quietLine) {
+            if (!silentSince.current) silentSince.current = now;
+            if (now - silentSince.current > 750) stop();
+          } else {
+            silentSince.current = 0;
+          }
+        }
+      }
     }
-    if (now - startAt.current > maxMs) stop();
+    if (elapsed > maxMs || (!spoke.current && elapsed > 6000)) stop();
   }, [st.durationMillis, st.metering, phase]);
 
   const level = Math.max(0, Math.min(1, ((st.metering ?? -60) + 60) / 50));

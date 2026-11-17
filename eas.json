@@ -12,13 +12,13 @@
       }
     },
     "production": {
-      "channel": "production",
+      "channel": "preview",
       "android": {
         "buildType": "apk"
       }
     },
     "playstore": {
-      "channel": "production",
+      "channel": "preview",
       "android": {
         "buildType": "app-bundle"
       }

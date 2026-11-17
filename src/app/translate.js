@@ -20,9 +20,12 @@ export default function Translate() {
   const [text, setText] = useState('');
   const [busy, setBusy] = useState(false);
   const ai = aiAvailable();
+  // older versions could save { translation, note } objects here — flatten them
+  const str = (v) => (v && typeof v === 'object' ? String(v.translation || '') : String(v || ''));
+  const history = (state.translateHistory || []).map((h) => ({ ...h, translation: str(h.translation), fr: str(h.fr), pt: str(h.pt), note: typeof h.note === 'string' ? h.note : (h.translation && h.translation.note) || '' })).filter((h) => h.translation);
 
   const add = (heard, res) => {
-    if (!heard || !res.translation) return;
+    if (!heard || !res?.translation || typeof res.translation !== 'string') return;
     const fr = dir === 'pt-fr' ? res.translation : heard;
     const pt = dir === 'pt-fr' ? heard : res.translation;
     actions.addTranslation({ id: Date.now(), dir, source: heard, translation: res.translation, note: res.note || '', fr, pt });
@@ -81,13 +84,16 @@ export default function Translate() {
 
       {!ai ? (
         <Empty emoji="⚙️" title="Tradutor por IA desativado" text="Configure o servidor de IA em Perfil → Configurações → Avançado para usar o tradutor." />
+      ) : !history.length ? (
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <Empty emoji="🗣️" title="Fale ou digite algo" text="Ex.: “Onde fica a estação de trem?” — o Canard traduz e você ouve a pronúncia." />
+        </View>
       ) : (
         <FlatList
-          data={state.translateHistory}
+          data={history}
           inverted
           keyExtractor={(x) => String(x.id)}
           contentContainerStyle={{ padding: 20, gap: 14 }}
-          ListEmptyComponent={<View style={{ transform: [{ scaleY: -1 }] }}><Empty emoji="🗣️" title="Fale ou digite algo" text="Ex.: “Onde fica a estação de trem?” — o Canard traduz e você ouve a pronúncia." /></View>}
           renderItem={({ item }) => {
             const saved = state.saved.find((c) => c.fr === item.fr);
             return (

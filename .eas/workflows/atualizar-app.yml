@@ -1,5 +1,7 @@
-# Igual ao Vortex: a cada push na main, publica a atualização OTA direto (1 job só).
-# O app baixa pelo botão "Buscar atualizações" em Configurações.
+# Igual ao Vortex: a cada push na main, publica a atualização OTA direto.
+# Publica nos dois canais (preview e production) para funcionar com qualquer APK,
+# não importa o perfil escolhido no "Build from GitHub". Os dois jobs rodam em paralelo.
+# O app baixa sozinho e pergunta "Reiniciar?" (ou use Buscar atualizações em Configurações).
 # Se um dia adicionar biblioteca nativa / permissão / ícone, rode o workflow
 # "Gerar APK" (gerar-apk.yml) manualmente no expo.dev e instale o APK novo.
 name: Atualizar app (OTA)
@@ -9,10 +11,18 @@ on:
     branches: ['main']
 
 jobs:
-  publish_update:
-    name: Publicar atualização
+  publish_preview:
+    name: Publicar (preview)
     type: update
     environment: preview
     params:
       branch: preview
+      platform: android
+
+  publish_production:
+    name: Publicar (production)
+    type: update
+    environment: preview
+    params:
+      branch: production
       platform: android

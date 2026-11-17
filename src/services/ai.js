@@ -113,8 +113,8 @@ export async function translateAudio(uri, direction = 'pt-fr') {
   const from = direction === 'pt-fr' ? 'pt' : 'fr';
   const heard = await transcribe(uri, from);
   if (!heard) return { heard: '', translation: '' };
-  const translation = await translateText(heard, direction);
-  return { heard, translation };
+  const tr = await translateText(heard, direction);
+  return { heard, translation: tr.translation || '', note: tr.note || '' };
 }
 
 export async function translateText(text, direction = 'pt-fr') {
