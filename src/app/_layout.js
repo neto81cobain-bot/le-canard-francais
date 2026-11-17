@@ -17,7 +17,9 @@ import { Nunito_800ExtraBold } from '@expo-google-fonts/nunito/800ExtraBold';
 import { StoreProvider, useStore, getStateSnapshotForCloud } from '../store';
 import { ThemeProvider, useTheme } from '../theme';
 import Celebration from '../components/Celebration';
+import DialogHost from '../components/DialogHost';
 import { RootErrorScreen } from '../components/ErrorBoundary';
+import { installGlobalHandler, logError } from '../services/diagnostics';
 import { setFeedbackPrefs } from '../services/feedback';
 import { setSpeechRate } from '../services/speech';
 import { setAiOverride } from '../services/ai';
@@ -25,6 +27,7 @@ import { scheduleReminders } from '../services/notifications';
 import { pushProgress, takeCheers } from '../services/cloud';
 import { dayKey, weekKey, mondayKey } from '../store/dates';
 
+installGlobalHandler();
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
 export function ErrorBoundary(props) {
@@ -37,7 +40,7 @@ function Effects() {
   const lastBackup = useRef(0);
 
   useEffect(() => {
-    setFeedbackPrefs({ sounds: state.settings.sounds, haptics: state.settings.haptics });
+    setFeedbackPrefs({ sounds: state.settings.sounds, haptics: state.settings.haptics, pack: state.settings.soundPack || 'canard', tapSound: state.settings.tapSound !== false });
     setSpeechRate(state.settings.speechRate);
     setAiOverride({ apiUrl: state.settings.apiUrl, key: state.settings.ownGroqKey });
   }, [state.settings]);
@@ -63,6 +66,7 @@ function Effects() {
       if (doBackup) lastBackup.current = Date.now();
       const a = await pushProgress(state.auth, state, doBackup ? getStateSnapshotForCloud(state) : null);
       if (a.idToken !== state.auth.idToken) actions.setAuth(a);
+      if (state.lastSyncError || !state.lastSyncAt || Date.now() - state.lastSyncAt > 5 * 60 * 1000) actions.set({ lastSyncAt: Date.now(), lastSyncError: null });
       const cheers = await takeCheers(a);
       if (cheers.length) {
         const wk = weekKey();
@@ -77,7 +81,9 @@ function Effects() {
           };
         });
       }
-    } catch {}
+    } catch (e) {
+      if (e?.code === 'rules' && state.lastSyncError !== e.message) actions.set({ lastSyncError: e.message });
+    }
   };
   useEffect(() => { sync(false); }, [state.xp, state.auth?.uid]);
   useEffect(() => {
@@ -105,6 +111,7 @@ function Shell() {
       </Stack>
       <Effects />
       <Celebration />
+      <DialogHost />
     </View>
   );
 }

@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, Pressable, TextInput, ActivityIndicator, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import { View, Text, Pressable, TextInput, ActivityIndicator, ScrollView, Platform } from 'react-native';
+import { KeyboardAwareView } from '../../components/keyboard';
+import { Alert } from '../../services/dialog';
 import { useLocalSearchParams, router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useStore } from '../../store';
@@ -90,7 +92,7 @@ export default function Conversation() {
   }
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1, backgroundColor: t.bg, paddingTop: insets.top }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+    <KeyboardAwareView style={{ flex: 1, backgroundColor: t.bg, paddingTop: insets.top }}>
       <Header title={`${sc.emoji} ${sc.title}`} />
       <View style={{ marginHorizontal: 20, marginBottom: 8, backgroundColor: done ? t.successSoft : t.goldSoft, borderRadius: radius.md, padding: 12, flexDirection: 'row', gap: 8, alignItems: 'center' }}>
         <Text style={{ fontSize: 18 }}>{done ? '✅' : '🎯'}</Text>
@@ -162,6 +164,6 @@ export default function Conversation() {
         </View>
         {kb ? <AccentBar onInsert={(c) => setText(text + c)} /> : null}
       </View>
-    </KeyboardAvoidingView>
+    </KeyboardAwareView>
   );
 }

@@ -35,9 +35,23 @@ async function transcribe(uri, language = 'fr', prompt) {
   if (prompt) fd.append('prompt', prompt);
   fd.append('response_format', 'json');
   fd.append('temperature', '0');
-  const r = await fetch(ep.base + '/audio/transcriptions', { method: 'POST', headers: ep.headers, body: fd });
-  const d = await r.json().catch(() => ({}));
-  if (!r.ok) throw new AiError(d?.error?.message || 'Falha na transcrição (' + r.status + ')');
+  // XMLHttpRequest (React Native's own networking) understands { uri, name, type } file parts;
+  // the global fetch in this Expo version does not ("Unsupported FormDataPart implementation").
+  const d = await new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', ep.base + '/audio/transcriptions');
+    Object.entries(ep.headers || {}).forEach(([k, v]) => xhr.setRequestHeader(k, v));
+    xhr.timeout = 30000;
+    xhr.onload = () => {
+      let body = {};
+      try { body = JSON.parse(xhr.responseText || '{}'); } catch {}
+      if (xhr.status >= 200 && xhr.status < 300) resolve(body);
+      else reject(new AiError(body?.error?.message || 'Falha na transcrição (' + xhr.status + ')'));
+    };
+    xhr.onerror = () => reject(new AiError('Sem conexão com o servidor de IA.'));
+    xhr.ontimeout = () => reject(new AiError('O servidor de IA demorou demais. Tente de novo.'));
+    xhr.send(fd);
+  });
   return (d.text || '').trim();
 }
 

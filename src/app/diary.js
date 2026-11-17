@@ -1,6 +1,7 @@
 // Writing diary: a prompt per level, free writing, AI correction (or model answer to compare).
 import React, { useMemo, useRef, useState } from 'react';
-import { View, Text, TextInput, Pressable, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, TextInput, Pressable, ActivityIndicator } from 'react-native';
+import { Alert } from '../services/dialog';
 import { useStore } from '../store';
 import { useTheme, fonts, radius, palette } from '../theme';
 import { T, Screen, Card, Button, Chip } from '../components/ui';

@@ -11,7 +11,7 @@ import { Appear } from '../../components/extras';
 import Session from '../../components/Session';
 import ResultView from '../../components/ResultView';
 import { UNITS, LESSONS, getUnit, bankQuestions, BANK_TOPICS } from '../../content';
-import { buildReview, buildFromMistakes, buildUnitTest, buildBank, buildLesson, buildConjugation, shuffle, buildListening, buildWriting, buildSpeaking } from '../../engine/exercises';
+import { buildReview, buildFromMistakes, buildUnitTest, buildBank, buildLesson, buildConjugation, shuffle, buildListening, buildWriting, buildSpeaking, buildQuick } from '../../engine/exercises';
 import { TENSES, VERBS, VERB_LEVELS, getVerb } from '../../content/verbs';
 import { Chip } from '../../components/ui';
 import { dueItems, weakestItems } from '../../store/logic';
@@ -23,6 +23,7 @@ const MODES = {
   daily: { title: 'Desafio diário', emoji: '⚡', mood: 'proud', intro: 'Questões mais difíceis, misturando tudo o que você já estudou. XP em dobro hoje!' },
   test: { title: 'Teste da unidade', emoji: '🏆', mood: 'teach', intro: 'Mostre o que aprendeu! Com 80% de acerto você conclui a unidade e libera a próxima.' },
   verbs: { title: 'Treino de verbos', emoji: '🔤', mood: 'teach', intro: 'Escolha os tempos e o grupo de verbos. Digite a forma certa — o Canard aceita com ou sem o pronome.' },
+  quick: { title: 'Treino de 5 minutos', emoji: '⚡', mood: 'proud', intro: 'Um pouco de tudo: revisão do que você está esquecendo, ouvido, escrita e uma frase em voz alta. Perfeito para manter o streak!' },
   listening: { title: 'Treino de escuta', emoji: '👂', mood: 'listen', intro: 'Sons parecidos, ditados e frases para montar de ouvido. Use fones se puder — e repita em voz alta o que ouvir!' },
   writing: { title: 'Treino de escrita', emoji: '✍️', mood: 'teach', intro: 'Agora é você quem escreve! Traduza frases para o francês, complete lacunas e escreva ditados. Use a dica 💡 se travar.' },
   speaking: { title: 'Treino de pronúncia', emoji: '🗣️', mood: 'speak', intro: 'Ouça o modelo, grave sua voz e veja palavra por palavra o que saiu bem. No meio, alguns pares de sons para afinar o ouvido.' },
@@ -38,7 +39,7 @@ export default function Practice() {
   const { state, actions } = useStore();
   const t = useTheme();
   const insets = useSafeAreaInsets();
-  const [phase, setPhase] = useState(mode === 'review' || mode === 'mistakes' || mode === 'bank' ? 'practice' : 'intro');
+  const [phase, setPhase] = useState(mode === 'review' || mode === 'mistakes' || mode === 'bank' || mode === 'quick' ? 'practice' : 'intro');
   const [result, setResult] = useState(null);
   const myLevel = UNITS[Math.min(UNITS.length, state.unlockedUnit) - 1]?.level || 'A1';
   const [vSet, setVSet] = useState(verbParam ? 'one' : levelParam ? levelParam : 'top');
@@ -59,6 +60,11 @@ export default function Practice() {
     }
     if (mode === 'mistakes') return buildFromMistakes(state.mistakes, 12);
     if (mode === 'listening') return buildListening(pool, 12);
+    if (mode === 'quick') {
+      let items = dueItems(state.srs, Date.now(), 5);
+      if (items.length < 5) items = [...items, ...weakestItems(state.srs, Date.now(), 5 - items.length).filter((w) => !items.find((i) => i.key === w.key))];
+      return buildQuick(items, pool);
+    }
     if (mode === 'writing') return buildWriting(pool, (learned.length ? learned : UNITS[0].lessons).flatMap((l) => l.fill || []), 12);
     if (mode === 'speaking') return buildSpeaking(pool, 8);
     if (mode === 'test' && unit) return buildUnitTest(unit, { speak: false });
@@ -149,6 +155,8 @@ export default function Practice() {
                 ? [{ e: '📝', l: '15 formas' }, { e: '⌨️', l: 'Digitar + escolher' }, { e: '🧠', l: 'Entra na revisão' }]
                 : mode === 'timed'
                 ? [{ e: '⏱️', l: '90 segundos' }, { e: '🔥', l: 'Combo x2' }, { e: '🏅', l: `Recorde: ${state.stats.timedBest}` }]
+                : mode === 'quick'
+                ? [{ e: '🧠', l: 'Revisão' }, { e: '👂', l: 'Escuta' }, { e: '✍️', l: 'Escrita' }]
                 : mode === 'listening'
                 ? [{ e: '🎧', l: 'Pares de sons' }, { e: '📝', l: 'Ditado' }, { e: '🧩', l: 'Montar de ouvido' }]
                 : mode === 'writing'
@@ -227,6 +235,9 @@ export default function Practice() {
   } else if (mode === 'verbs') {
     title = pct >= 80 ? 'Conjugação afiada!' : 'Bom treino!';
     subtitle = 'As formas que você errou voltam na revisão inteligente.';
+  } else if (mode === 'quick') {
+    title = 'Treino feito! ⚡';
+    subtitle = 'Cinco minutos por dia valem mais que uma hora por semana. À demain !';
   } else if (mode === 'listening') {
     title = pct >= 80 ? 'Ouvido de francês! 👂' : 'Bom treino!';
     subtitle = 'Ouvir todo dia é o que faz o francês “destravar”. Volte amanhã!';
@@ -243,7 +254,7 @@ export default function Practice() {
   const acts = [{ title: 'Continuar', icon: 'chevron', onPress: () => router.back() }];
   if (mode === 'test' && !passed) acts.push({ title: 'Ver o guia da unidade', icon: 'book', onPress: () => router.replace({ pathname: '/unit/[id]', params: { id: unit.id } }) });
   if (mode === 'verbs') acts.push({ title: 'Treinar de novo', icon: 'refresh', onPress: () => router.replace({ pathname: '/practice/[mode]', params: { mode, verb: verbParam || '', tense: vTenses[0] } }) });
-  if (['listening', 'writing', 'speaking'].includes(mode)) acts.push({ title: 'Treinar de novo', icon: 'refresh', onPress: () => router.replace({ pathname: '/practice/[mode]', params: { mode } }) });
+  if (['listening', 'writing', 'speaking', 'quick'].includes(mode)) acts.push({ title: 'Treinar de novo', icon: 'refresh', onPress: () => router.replace({ pathname: '/practice/[mode]', params: { mode } }) });
   if (mode === 'timed' || mode === 'bank') acts.push({ title: 'Jogar de novo', icon: 'refresh', onPress: () => router.replace({ pathname: '/practice/[mode]', params: { mode, key } }) });
   return <ResultView title={title} subtitle={subtitle} xp={r.xp} correct={r.correct} total={r.total} seconds={r.seconds} bestCombo={r.bestCombo} passed={passed} actions={acts} />;
 }

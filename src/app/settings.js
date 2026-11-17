@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, Switch, Pressable, TextInput, Alert, Share, ActivityIndicator, Linking } from 'react-native';
+import { View, Text, Switch, Pressable, TextInput, Share, ActivityIndicator, Linking } from 'react-native';
+import { Alert } from '../services/dialog';
 import { router } from 'expo-router';
 import { useStore, getStateSnapshotForCloud } from '../store';
 import { useTheme, fonts, radius, palette } from '../theme';
@@ -11,6 +12,9 @@ import { pushProgress, fetchBackup, fetchLegacy } from '../services/cloud';
 import { checkForUpdates, applyOta, openApk, updateInfo } from '../services/updates';
 import { CONFIG } from '../services/config';
 import { scheduleReminders } from '../services/notifications';
+import { fx } from '../services/feedback';
+import { diagnosticsReport, clearErrors } from '../services/diagnostics';
+import * as Clipboard from 'expo-clipboard';
 
 function Group({ title, children }) {
   const t = useTheme();
@@ -51,6 +55,7 @@ export default function Settings() {
   const [importOpen, setImportOpen] = useState(false);
   const [importText, setImportText] = useState('');
   const [adv, setAdv] = useState(false);
+  const [diag, setDiag] = useState(null);
   const [apiUrl, setApiUrl] = useState(state.settings.apiUrl);
   const [groq, setGroq] = useState(state.settings.ownGroqKey);
   const info = updateInfo();
@@ -87,9 +92,11 @@ export default function Settings() {
     try {
       const a = await pushProgress(state.auth, state, getStateSnapshotForCloud(state));
       actions.setAuth(a);
-      Alert.alert('Sincronizado!', 'Seu progresso está salvo na nuvem. ☁️');
+      actions.set({ lastSyncAt: Date.now(), lastSyncError: null });
+      Alert.alert('Sincronizado! ☁️');
     } catch (e) {
-      Alert.alert('Erro', e.message);
+      actions.set({ lastSyncError: e.message });
+      Alert.alert('Não deu para sincronizar', e.message);
     } finally {
       setBusy(null);
     }
@@ -124,7 +131,7 @@ export default function Settings() {
               </View>
               <Chip label="Online" color={t.success} bg={t.successSoft} />
             </View>
-            <Row icon="cloud" title="Sincronizar agora" subtitle="Salva todo o progresso na nuvem" onPress={syncNow} right={busy === 'sync' ? <ActivityIndicator color={t.primary} /> : undefined} />
+            <Row icon="cloud" title="Sincronizar agora" subtitle={state.lastSyncError ? '⚠️ ' + (/trancada/.test(state.lastSyncError) ? 'Nuvem trancada: publique as regras do Firebase' : /internet/.test(state.lastSyncError) ? 'Sem internet na última tentativa' : state.lastSyncError.slice(0, 70)) : state.lastSyncAt ? `Última vez: ${new Date(state.lastSyncAt).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}` : 'Salva todo o progresso na nuvem'} onPress={syncNow} right={busy === 'sync' ? <ActivityIndicator color={t.primary} /> : undefined} />
             <Row icon="logout" iconColor={t.error} title="Sair da conta" onPress={() => Alert.alert('Sair?', 'Seu progresso continua salvo neste aparelho.', [{ text: 'Cancelar' }, { text: 'Sair', style: 'destructive', onPress: () => actions.setAuth(null) }])} last />
           </>
         ) : (
@@ -175,6 +182,13 @@ export default function Settings() {
       {/* SOUND */}
       <Group title="Sons e vibração">
         <Toggle icon="volume" title="Efeitos sonoros" value={s.sounds} onChange={(v) => actions.setSettings({ sounds: v })} />
+        {s.sounds ? (
+          <>
+            <Row icon="sparkles" title="Estilo dos sons" subtitle="Toque para ouvir" />
+            <Choice options={[['canard', '🦆 Canard'], ['suave', '🔔 Suave'], ['classico', '🎮 Clássico']]} value={s.soundPack || 'canard'} onChange={(v) => { actions.setSettings({ soundPack: v }); fx.preview(v); }} />
+            <Toggle icon="check" title="Som ao marcar opção" subtitle="Um toque curtinho quando você escolhe" value={s.tapSound !== false} onChange={(v) => actions.setSettings({ tapSound: v })} />
+          </>
+        ) : null}
         <Toggle icon="sparkles" title="Vibração" value={s.haptics} onChange={(v) => actions.setSettings({ haptics: v })} last />
       </Group>
 
@@ -256,11 +270,24 @@ export default function Settings() {
         ) : null}
       </Group>
 
+      <Group title="Ajuda">
+        <Row icon="info" title="Diagnóstico" subtitle="Se o app fechar sozinho, mande um print daqui" onPress={async () => setDiag(await diagnosticsReport())} last />
+      </Group>
+
       <View style={{ alignItems: 'center', marginTop: 30, gap: 6 }}>
         <Duck size={70} mood="happy" />
         <T v="caption">Le canard français · v{info.version}</T>
         <T v="caption">Feito com 🦆 por patoelho34</T>
       </View>
+
+      <Sheet visible={!!diag} onClose={() => setDiag(null)}>
+        <T v="h3">Diagnóstico</T>
+        <Text selectable style={{ marginTop: 10, fontFamily: fonts.bodySemi, fontSize: 12, lineHeight: 17, color: t.text2 }}>{diag?.text}</Text>
+        <View style={{ flexDirection: 'row', gap: 10, marginTop: 14 }}>
+          <Button title="Copiar" icon="copy" small style={{ flex: 1 }} onPress={() => { Clipboard.setStringAsync(diag.text); Alert.alert('Copiado!'); }} />
+          <Button title="Limpar" icon="trash" small variant="secondary" style={{ flex: 1 }} onPress={async () => { await clearErrors(); setDiag(await diagnosticsReport()); }} />
+        </View>
+      </Sheet>
 
       <Sheet visible={importOpen} onClose={() => setImportOpen(false)}>
         <T v="h3">Importar progresso</T>

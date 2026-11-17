@@ -1,5 +1,7 @@
 import React, { useMemo, useState } from 'react';
-import { View, TextInput, Text, ScrollView, KeyboardAvoidingView, Platform, Pressable, Alert } from 'react-native';
+import { View, TextInput, Text, ScrollView, Platform, Pressable } from 'react-native';
+import { KeyboardAwareView } from '../components/keyboard';
+import { Alert } from '../services/dialog';
 import { router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useStore } from '../store';
@@ -163,7 +165,7 @@ export default function Onboarding() {
   }
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1, backgroundColor: t.bg }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+    <KeyboardAwareView style={{ flex: 1, backgroundColor: t.bg }}>
       <View style={{ paddingTop: insets.top + 12, paddingHorizontal: 20, flexDirection: 'row', alignItems: 'center', gap: 12 }}>
         {step > 0 ? (
           <Pressable onPress={() => setStep(step - 1)} hitSlop={10}><Icon name="back" size={26} color={t.text3} stroke={2.6} /></Pressable>
@@ -257,6 +259,6 @@ export default function Onboarding() {
           />
         )}
       </View>
-    </KeyboardAvoidingView>
+    </KeyboardAwareView>
   );
 }

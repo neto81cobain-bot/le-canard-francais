@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, Pressable, TextInput, ActivityIndicator, FlatList, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import { View, Text, Pressable, TextInput, ActivityIndicator, FlatList, Platform } from 'react-native';
+import { KeyboardAwareView } from '../components/keyboard';
+import { Alert } from '../services/dialog';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useStore } from '../store';
 import { useTheme, fonts, radius, palette } from '../theme';
@@ -61,7 +63,7 @@ export default function Translate() {
   const to = dir === 'pt-fr' ? '🇫🇷 Français' : '🇧🇷 Português';
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1, backgroundColor: t.bg, paddingTop: insets.top }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+    <KeyboardAwareView style={{ flex: 1, backgroundColor: t.bg, paddingTop: insets.top }}>
       <Header
         title="Falar e traduzir"
         right={state.translateHistory.length ? (
@@ -139,6 +141,6 @@ export default function Translate() {
           </View>
         </View>
       ) : null}
-    </KeyboardAvoidingView>
+    </KeyboardAwareView>
   );
 }

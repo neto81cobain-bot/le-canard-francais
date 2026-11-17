@@ -2,7 +2,8 @@
 // expo-router opens this screen for that link. We hand the code to the sign-in in
 // progress (or finish the sign-in ourselves if the app was restarted) and go back.
 import React, { useEffect } from 'react';
-import { View, ActivityIndicator, Alert } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
+import { Alert } from '../services/dialog';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { handleOAuthRedirect } from '../services/auth';
 import { useStore } from '../store';

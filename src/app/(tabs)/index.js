@@ -1,5 +1,6 @@
 import React, { useMemo, useRef, useState, useEffect } from 'react';
-import { View, ScrollView, Text, Pressable, Animated, Easing, Alert } from 'react-native';
+import { View, ScrollView, Text, Pressable, Animated, Easing } from 'react-native';
+import { Alert } from '../../services/dialog';
 import { router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useStore } from '../../store';
@@ -238,9 +239,17 @@ export default function Learn() {
           </Card>
         )}
 
-        {/* QUICK PRACTICE: review + story */}
+        {/* QUICK PRACTICE: 5-min workout + review + story */}
         <Appear delay={110}>
-          <View style={{ flexDirection: 'row', gap: 12, marginTop: 16 }}>
+          <Tap onPress={() => router.push({ pathname: '/practice/[mode]', params: { mode: 'quick' } })} style={[{ marginTop: 16, borderRadius: radius.lg, padding: 16, backgroundColor: palette.gold, flexDirection: 'row', alignItems: 'center', gap: 14 }, shadow(t, 1)]}>
+            <Text style={{ fontSize: 34 }}>⚡</Text>
+            <View style={{ flex: 1 }}>
+              <Text style={{ fontFamily: fonts.display, fontSize: 19, color: '#fff' }}>Treino de 5 minutos</Text>
+              <Text style={{ fontFamily: fonts.bodySemi, fontSize: 13, color: 'rgba(255,255,255,0.92)' }}>Revisão + escuta + escrita + fala, num só</Text>
+            </View>
+            <Icon name="play" size={20} color="#fff" fill="#fff" />
+          </Tap>
+          <View style={{ flexDirection: 'row', gap: 12, marginTop: 12 }}>
             <Tap onPress={() => router.push({ pathname: '/practice/[mode]', params: { mode: 'review' } })} style={[{ flex: 1, borderRadius: radius.lg, padding: 14, backgroundColor: t.surface, borderWidth: 2, borderColor: due.length ? palette.gold : t.border, gap: 4 }]}>
               <Text style={{ fontSize: 26 }}>🧠</Text>
               <T v="bodyBold">{due.length ? `${Math.min(due.length, 99)} para revisar` : 'Revisão em dia'}</T>

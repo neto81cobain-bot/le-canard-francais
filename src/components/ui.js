@@ -6,6 +6,7 @@ import Svg, { Circle } from 'react-native-svg';
 import { useTheme, fonts, radius, shadow, palette } from '../theme';
 import Icon from './Icon';
 import { fx } from '../services/feedback';
+import { useKeyboardOverlap, scrollFocusedIntoView } from './keyboard';
 
 // ─── TEXT ─────────────────────────────────────────────────
 export function T({ v = 'body', color, style, children, center, ...rest }) {
@@ -195,19 +196,26 @@ export function Ring({ value = 0, size = 64, stroke = 8, color, track, children 
 export function Screen({ children, scroll = true, title, back = true, right, padded = true, bg, contentStyle, onBack, headerless }) {
   const t = useTheme();
   const insets = useSafeAreaInsets();
+  const wrap = useRef(null);
+  const sv = useRef(null);
+  const offset = useRef(0);
+  const overlap = useKeyboardOverlap(wrap, (kbTop) => scrollFocusedIntoView(sv, offset, kbTop));
   const body = scroll ? (
     <ScrollView
-      contentContainerStyle={[{ padding: padded ? 20 : 0, paddingBottom: 40 + insets.bottom }, contentStyle]}
+      ref={sv}
+      onScroll={(e) => { offset.current = e.nativeEvent.contentOffset.y; }}
+      scrollEventThrottle={32}
+      contentContainerStyle={[{ padding: padded ? 20 : 0, paddingBottom: 40 + insets.bottom + overlap }, contentStyle]}
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
     >
       {children}
     </ScrollView>
   ) : (
-    <View style={[{ flex: 1, padding: padded ? 20 : 0, paddingBottom: (padded ? 20 : 0) + insets.bottom }, contentStyle]}>{children}</View>
+    <View style={[{ flex: 1, padding: padded ? 20 : 0, paddingBottom: (padded ? 20 : 0) + insets.bottom + overlap }, contentStyle]}>{children}</View>
   );
   return (
-    <View style={{ flex: 1, backgroundColor: bg || t.bg, paddingTop: insets.top }}>
+    <View ref={wrap} style={{ flex: 1, backgroundColor: bg || t.bg, paddingTop: insets.top }}>
       {!headerless && (title || back) ? <Header title={title} back={back} right={right} onBack={onBack} /> : null}
       {body}
     </View>
@@ -273,12 +281,18 @@ export function Row({ icon, iconBg, iconColor, title, subtitle, right, onPress, 
 export function Sheet({ visible, onClose, children }) {
   const t = useTheme();
   const insets = useSafeAreaInsets();
+  const ref = useRef(null);
+  const overlap = useKeyboardOverlap(ref);
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose} statusBarTranslucent>
-      <Pressable style={{ flex: 1, backgroundColor: t.overlay }} onPress={onClose} />
-      <View style={{ backgroundColor: t.surface, borderTopLeftRadius: 28, borderTopRightRadius: 28, padding: 20, paddingBottom: 24 + insets.bottom }}>
-        <View style={{ width: 44, height: 5, borderRadius: 3, backgroundColor: t.border, alignSelf: 'center', marginBottom: 16 }} />
-        {children}
+      <View ref={ref} style={{ flex: 1, paddingBottom: overlap }}>
+        <Pressable style={{ flex: 1, backgroundColor: t.overlay }} onPress={onClose} />
+        <View style={{ backgroundColor: t.surface, borderTopLeftRadius: 28, borderTopRightRadius: 28, paddingTop: 12, maxHeight: '88%' }}>
+          <View style={{ width: 44, height: 5, borderRadius: 3, backgroundColor: t.border, alignSelf: 'center', marginBottom: 6 }} />
+          <ScrollView contentContainerStyle={{ padding: 20, paddingTop: 10, paddingBottom: 24 + (overlap ? 0 : insets.bottom) }} keyboardShouldPersistTaps="handled" bounces={false}>
+            {children}
+          </ScrollView>
+        </View>
       </View>
     </Modal>
   );

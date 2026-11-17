@@ -242,7 +242,7 @@ export function MatchEx({ ex, onComplete }) {
       setDone(nd);
       setSelL(null);
       setSelR(null);
-      if (nd.length === ex.pairs.length) setTimeout(() => onComplete(mistakes.current === 0, { mistakes: mistakes.current }), 300);
+      if (nd.length === ex.pairs.length) setTimeout(() => onComplete(mistakes.current <= 1, { mistakes: mistakes.current }), 300);
     } else {
       mistakes.current += 1;
       fx.wrong();
@@ -410,8 +410,11 @@ export function SpeakEx({ ex, onComplete, onSkip, onSpoken }) {
                 title={result.selfCheck ? 'Ficou bom!' : 'Continuar'}
                 small
                 style={{ flex: 1 }}
-                onPress={() => onComplete(result.selfCheck ? true : !result.error && !result.silent && score >= 60, { score })}
-                disabled={!result.selfCheck && (result.error || result.silent) ? false : false}
+                onPress={() => {
+                  // A technical error (no internet, server off) never costs a heart: just skip.
+                  if (result.error && !result.selfCheck) return onSkip ? onSkip() : onComplete(true, { skipped: true });
+                  onComplete(result.selfCheck ? true : !result.silent && score >= 60, { score });
+                }}
               />
             </View>
           </View>

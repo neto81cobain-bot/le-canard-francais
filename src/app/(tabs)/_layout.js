@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Pressable } from 'react-native';
-import { Tabs } from 'expo-router';
+import { Tabs, router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme, fonts } from '../../theme';
 import Icon from '../../components/Icon';
@@ -14,7 +14,7 @@ const TABS = {
   perfil: { label: 'Perfil', icon: 'user' },
 };
 
-function TabBar({ state, navigation }) {
+function TabBar({ state, navigation, emitter, navigateToTab }) {
   const t = useTheme();
   const insets = useSafeAreaInsets();
   return (
@@ -31,8 +31,17 @@ function TabBar({ state, navigation }) {
             accessibilityLabel={cfg.label}
             onPress={() => {
               fx.tap();
-              const e = navigation.emit({ type: 'tabPress', target: route.key, canPreventDefault: true });
-              if (!focused && !e.defaultPrevented) navigation.navigate(route.name);
+              // expo-router 58 passes `emitter` + `navigateToTab` (no `navigation` anymore)
+              const em = emitter || navigation;
+              let prevented = false;
+              try {
+                const e = em?.emit?.({ type: 'tabPress', target: route.key, canPreventDefault: true });
+                prevented = !!e?.defaultPrevented;
+              } catch {}
+              if (focused || prevented) return;
+              if (navigateToTab) navigateToTab(route.key);
+              else if (navigation?.navigate) navigation.navigate(route.name);
+              else router.navigate(route.name === 'index' ? '/' : '/' + route.name);
             }}
             style={{ flex: 1, alignItems: 'center', gap: 3, paddingVertical: 4 }}
           >

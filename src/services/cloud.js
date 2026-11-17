@@ -11,11 +11,25 @@ export function friendCode(uid) {
 }
 
 async function req(url, opts = {}) {
-  const r = await fetch(url, { ...opts, headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) } });
+  let r;
+  try {
+    r = await fetch(url, { ...opts, headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) } });
+  } catch {
+    throw new Error('Sem conexão com a internet. Tente de novo quando estiver online.');
+  }
   const txt = await r.text();
   let data = null;
   try { data = txt ? JSON.parse(txt) : null; } catch { data = txt; }
-  if (!r.ok) throw new Error((data && data.error) || 'HTTP ' + r.status);
+  if (!r.ok) {
+    const msg = (data && data.error) || 'HTTP ' + r.status;
+    if (/permission denied/i.test(msg) || r.status === 401 || r.status === 403) {
+      const e = new Error('A nuvem ainda está trancada: falta publicar as regras do banco no Firebase (Realtime Database → Regras). É uma vez só.');
+      e.code = 'rules';
+      throw e;
+    }
+    if (r.status === 404) throw new Error('Banco de dados não encontrado. Crie o Realtime Database no Firebase.');
+    throw new Error(msg);
+  }
   return data;
 }
 

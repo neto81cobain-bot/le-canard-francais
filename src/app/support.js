@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, Alert } from 'react-native';
+import { View, Text } from 'react-native';
+import { Alert } from '../services/dialog';
 import * as Clipboard from 'expo-clipboard';
 import Svg, { Rect } from 'react-native-svg';
 import { useTheme, fonts, radius, palette } from '../theme';

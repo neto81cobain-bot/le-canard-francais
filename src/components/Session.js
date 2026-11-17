@@ -1,6 +1,7 @@
 // Runs a sequence of exercises: progress, checking, feedback, retries, hearts, combo, timer.
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { View, Text, Pressable, ScrollView, Animated, Easing, Alert, BackHandler } from 'react-native';
+import { View, Text, Pressable, ScrollView, Animated, Easing, BackHandler, Keyboard } from 'react-native';
+import { Alert } from '../services/dialog';
 import { router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useStore } from '../store';
@@ -14,6 +15,7 @@ import { checkTyped, checkSentence, normalize, snapshot } from '../engine/exerci
 import { fx } from '../services/feedback';
 import { speak } from '../services/speech';
 import { ExerciseBoundary } from './ErrorBoundary';
+import { useKeyboardOverlap, scrollFocusedIntoView } from './keyboard';
 
 const PRAISE = ['Magnifique !', 'Très bien !', 'Parfait !', 'Bravo !', 'Excellent !', 'Super !', 'Génial !', 'Bien joué !'];
 const COMFORT = ['Pas de panique !', 'Presque !', 'Courage !', 'On continue !', 'Quase lá!'];
@@ -109,6 +111,10 @@ export default function Session({ exercises: initial, title, kind = 'lesson', ti
   const stats = useRef({ correct: 0, wrong: 0, total: 0, bestCombo: 0, start: Date.now(), wrongList: [], retried: new Set() });
   const finished = useRef(false);
   const heartsOn = state.settings.hearts && kind !== 'review' && !timed;
+  const wrap = useRef(null);
+  const sv = useRef(null);
+  const svOffset = useRef(0);
+  const kb = useKeyboardOverlap(wrap, (kbTop) => scrollFocusedIntoView(sv, svOffset, kbTop, 110));
 
   useEffect(() => {
     actions.set({ inLesson: true });
@@ -201,6 +207,7 @@ export default function Session({ exercises: initial, title, kind = 'lesson', ti
   };
 
   const check = () => {
+    Keyboard.dismiss();
     const g = grade(ex, value);
     record(g.ok, g.note, g.words ? { words: g.words } : {});
   };
@@ -234,7 +241,7 @@ export default function Session({ exercises: initial, title, kind = 'lesson', ti
       case 'write': return <WriteEx {...p} />;
       case 'pairs': return <PairsEx {...p} />;
       case 'truefalse': return <TrueFalseEx {...p} />;
-      case 'match': return <MatchEx key={idx} ex={ex} onComplete={(ok) => record(ok, ok ? null : 'Alguns pares trocados — eles voltam na revisão.')} />;
+      case 'match': return <MatchEx key={idx} ex={ex} onComplete={(ok, info) => record(ok, ok ? (info?.mistakes ? 'Só um par trocado — quase perfeito!' : null) : 'Alguns pares trocados — eles voltam na revisão.')} />;
       case 'speak':
         return (
           <SpeakEx
@@ -257,7 +264,7 @@ export default function Session({ exercises: initial, title, kind = 'lesson', ti
   const audio = result ? audioFor(ex) : null;
 
   return (
-    <View style={{ flex: 1, backgroundColor: t.bg, paddingTop: insets.top }}>
+    <View ref={wrap} style={{ flex: 1, backgroundColor: t.bg, paddingTop: insets.top }}>
       {/* TOP BAR */}
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 16, paddingVertical: 12 }}>
         <Pressable onPress={quit} hitSlop={12} accessibilityLabel="Sair"><Icon name="close" size={28} color={t.text3} stroke={2.6} /></Pressable>
@@ -273,7 +280,7 @@ export default function Session({ exercises: initial, title, kind = 'lesson', ti
         {combo >= 3 ? <Chip icon="flame" label={`x${combo}`} big color={palette.red} bg={palette.redSoft} /> : null}
       </View>
 
-      <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 200 }} keyboardShouldPersistTaps="handled">
+      <ScrollView ref={sv} onScroll={(e) => { svOffset.current = e.nativeEvent.contentOffset.y; }} scrollEventThrottle={32} contentContainerStyle={{ padding: 20, paddingBottom: 200 + kb }} keyboardShouldPersistTaps="handled">
         <Animated.View key={idx} style={shakeStyle}>
           {stats.current.retried.has(idx) && ex.type !== 'speak' ? (
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 10 }}>
@@ -287,13 +294,13 @@ export default function Session({ exercises: initial, title, kind = 'lesson', ti
 
       {/* BOTTOM: check button or feedback */}
       {!selfGraded && !timed && !result ? (
-        <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: 20, paddingBottom: 20 + insets.bottom, backgroundColor: t.bg, borderTopWidth: 1, borderTopColor: t.border }}>
+        <View style={{ position: 'absolute', left: 0, right: 0, bottom: kb, padding: 20, paddingBottom: kb ? 12 : 20 + insets.bottom, backgroundColor: t.bg, borderTopWidth: 1, borderTopColor: t.border }}>
           <Button title="Verificar" disabled={!hasValue(ex, value)} onPress={check} color={color} />
         </View>
       ) : null}
 
       {result && !result.flash ? (
-        <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: 20, paddingBottom: 20 + insets.bottom, backgroundColor: fbBg, borderTopLeftRadius: 24, borderTopRightRadius: 24, gap: 8 }}>
+        <View style={{ position: 'absolute', left: 0, right: 0, bottom: kb, padding: 20, paddingBottom: kb ? 12 : 20 + insets.bottom, backgroundColor: fbBg, borderTopLeftRadius: 24, borderTopRightRadius: 24, gap: 8 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
             <View style={{ width: 36, height: 36, borderRadius: 18, backgroundColor: fbColor, alignItems: 'center', justifyContent: 'center' }}>
               <Icon name={result.ok ? 'check' : 'close'} size={20} color="#fff" stroke={3} />

@@ -50,6 +50,21 @@ export function levenshtein(a, b) {
   return prev[n];
 }
 
+// Levenshtein + swapped neighbours count as one typo ("bonjuor" → "bonjour")
+export function typoDistance(a, b) {
+  const m = a.length, n = b.length;
+  const d = Array.from({ length: m + 1 }, (_, i) => [i, ...Array(n).fill(0)]);
+  for (let j = 0; j <= n; j++) d[0][j] = j;
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+    }
+  }
+  return d[m][n];
+}
+
 // Returns { ok, note }
 export function checkTyped(input, answer, alternatives = []) {
   const targets = [answer, ...alternatives];
@@ -63,8 +78,16 @@ export function checkTyped(input, answer, alternatives = []) {
   }
   for (const t of targets) {
     const n = normalize(t, { accents: false });
-    const d = levenshtein(normalize(input, { accents: false }), n);
-    if (n.length >= 6 && d === 1) return { ok: true, note: 'Pequeno erro de digitação. O certo é: ' + t };
+    const a = normalize(input, { accents: false });
+    if (n.length < 5 || Math.abs(a.length - n.length) > 1) continue;
+    const swap = typoDistance(a, n) === 1 && levenshtein(a, n) === 2; // two letters swapped
+    // a single wrong/missing letter is a typo only if the ending is right —
+    // endings carry grammar (parle × parles), so those stay wrong
+    const sameEnd = a.slice(-1) === n.slice(-1) && a[0] === n[0];
+    const lev = levenshtein(a, n);
+    if (swap || (sameEnd && (lev === 1 || (n.length >= 10 && lev === 2)))) {
+      return { ok: true, note: 'Pequeno erro de digitação. O certo é: ' + t };
+    }
   }
   return { ok: false };
 }
@@ -398,4 +421,21 @@ export function buildStoryQuiz(story) {
   const wordItems = story.words.map((w) => ({ fr: w.fr, pt: w.pt, isWord: true }));
   if (wordItems.length >= 4) out.push({ type: 'match', pairs: pick(wordItems, 5) });
   return shuffle(out);
+}
+
+// 5-minute mixed workout: review + listening + writing + speaking
+export function buildQuick(items, pool) {
+  const out = [];
+  if (items.length) out.push(...buildReview(items.slice(0, 5), { pool, count: 5 }));
+  const sents = pool.filter((p) => !p.isWord && tokenize(p.fr).length <= 8);
+  pick(MINIMAL_PAIRS, 2).forEach((p) => out.push(mkPairs(p)));
+  pick(sents, 2).forEach((it) => out.push(mkWrite(it)));
+  const l = pick(sents, 1)[0];
+  if (l) out.push(mkListenType(l));
+  const vocab = pool.filter((p) => p.isWord);
+  if (out.length < 9 && vocab.length >= 4) out.push(mkMatch(vocab));
+  const sp = pick(sents.filter((x) => tokenize(x.fr).length <= 6), 1)[0];
+  const body = shuffle(out.filter(Boolean)).slice(0, 10);
+  if (sp) body.push(mkSpeak(sp));
+  return body;
 }

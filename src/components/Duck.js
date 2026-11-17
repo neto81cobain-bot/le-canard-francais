@@ -83,8 +83,9 @@ export default function Duck({ size = 120, mood = 'happy', head = false, style, 
 }
 
 export function DuckAvatar({ size = 44, photo, style }) {
-  if (photo) {
-    return <Image source={{ uri: photo }} style={[{ width: size, height: size, borderRadius: size / 2 }, style]} />;
+  const [broken, setBroken] = React.useState(false);
+  if (photo && !broken) {
+    return <Image source={{ uri: photo }} onError={() => setBroken(true)} recyclingKey={photo} cachePolicy="memory-disk" style={[{ width: size, height: size, borderRadius: size / 2 }, style]} />;
   }
   return (
     <View style={[{ width: size, height: size, borderRadius: size / 2, overflow: 'hidden', backgroundColor: '#F4EFE6' }, style]}>

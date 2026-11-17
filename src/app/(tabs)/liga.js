@@ -1,5 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, ScrollView, Pressable, TextInput, ActivityIndicator, Alert, Share, RefreshControl } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useKeyboardOverlap, scrollFocusedIntoView } from '../../components/keyboard';
+import { View, Text, ScrollView, Pressable, TextInput, ActivityIndicator, Share, RefreshControl } from 'react-native';
+import { Alert } from '../../services/dialog';
 import * as Clipboard from 'expo-clipboard';
 import { Image } from 'expo-image';
 import { useFocusEffect } from 'expo-router';
@@ -63,6 +65,10 @@ export default function League() {
   const [friends, setFriends] = useState([]);
   const [code, setCode] = useState('');
   const [settle, setSettle] = useState(null);
+  const wrapRef = useRef(null);
+  const svRef = useRef(null);
+  const svOff = useRef(0);
+  const kbPad = useKeyboardOverlap(wrapRef, (kbTop) => scrollFocusedIntoView(svRef, svOff, kbTop));
   const tier = state.league.tier || 0;
   const league = LEAGUES[tier] || LEAGUES[0];
   const auth = state.auth;
@@ -420,8 +426,8 @@ export default function League() {
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: t.bg }}>
-      <ScrollView contentContainerStyle={{ padding: 20, paddingTop: insets.top + 20, paddingBottom: 50 }} refreshControl={<RefreshControl refreshing={loading} onRefresh={loadFriends} />}>
+    <View ref={wrapRef} style={{ flex: 1, backgroundColor: t.bg }}>
+      <ScrollView ref={svRef} onScroll={(e) => { svOff.current = e.nativeEvent.contentOffset.y; }} scrollEventThrottle={32} keyboardShouldPersistTaps="handled" contentContainerStyle={{ padding: 20, paddingTop: insets.top + 20, paddingBottom: 50 + kbPad }} refreshControl={<RefreshControl refreshing={loading} onRefresh={loadFriends} />}>
         {header}
         <Segmented value={tab} onChange={setTab} items={[['semana', 'Semana'], ['amigos', 'Amigos'], ['conquistas', 'Conquistas']]} />
         {tab === 'semana' ? renderWeek() : tab === 'amigos' ? renderFriends() : renderAchievements()}
