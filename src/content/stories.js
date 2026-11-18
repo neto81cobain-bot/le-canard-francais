@@ -466,8 +466,16 @@ export function parseStory(s) {
 import { STORIES_2 } from './stories2';
 import { STORIES_3 } from './stories3';
 import { STORIES_4 } from './stories4';
+import { STORIES_5 } from './stories5';
+import { STORIES_6 } from './stories6';
+import { STORIES_7 } from './stories7';
+import { STORIES_8 } from './stories8';
+import { STORIES_9 } from './stories9';
+import { STORIES_10 } from './stories10';
+import { STORIES_11 } from './stories11';
+import { STORIES_12 } from './stories12';
 
-export const STORY_LIST = [...STORIES, ...STORIES_2, ...STORIES_3, ...STORIES_4].sort((a, b) => a.unit - b.unit).map(parseStory);
+export const STORY_LIST = [...STORIES, ...STORIES_2, ...STORIES_3, ...STORIES_4, ...STORIES_5, ...STORIES_6, ...STORIES_7, ...STORIES_8, ...STORIES_9, ...STORIES_10, ...STORIES_11, ...STORIES_12].sort((a, b) => a.unit - b.unit).map(parseStory);
 import { NEWS } from './news';
 
 export const NEWS_LIST = NEWS.map(parseStory);

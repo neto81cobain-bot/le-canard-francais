@@ -200,15 +200,26 @@ export function useShake() {
 
 // ─── ACCENT KEYBOARD ROW ──────────────────────────────────
 const ACCENTS = ['é', 'è', 'ê', 'à', 'â', 'ç', 'ù', 'û', 'ô', 'î', 'ï', 'ë', 'œ', "'"];
+// Escondida por padrão (o teclado do celular já tem acentos: segure a letra).
+// Um toque em "Acentos" mostra/esconde; a escolha fica salva.
 export function AccentBar({ onInsert }) {
   const t = useTheme();
+  const { state, actions } = useStore();
+  const open = !!state.settings.accentBar;
   return (
-    <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 10 }}>
-      {ACCENTS.map((c) => (
-        <Pressable key={c} onPress={() => onInsert(c)} style={{ minWidth: 38, height: 38, borderRadius: 10, backgroundColor: t.surface, borderWidth: 1, borderColor: t.border, borderBottomWidth: 3, alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={{ fontFamily: fonts.bodyBold, fontSize: 17, color: t.text }}>{c}</Text>
-        </Pressable>
-      ))}
+    <View style={{ marginTop: 10, gap: 8 }}>
+      <Pressable onPress={() => actions.setSettings({ accentBar: !open })} hitSlop={8} style={{ alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 10, paddingVertical: 5, borderRadius: 12, backgroundColor: t.surface2 }}>
+        <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 12, color: t.text2 }}>{open ? 'Esconder acentos' : 'é à ç  Acentos'}</Text>
+      </Pressable>
+      {open ? (
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}>
+          {ACCENTS.map((c) => (
+            <Pressable key={c} onPress={() => onInsert(c)} style={{ minWidth: 38, height: 38, borderRadius: 10, backgroundColor: t.surface, borderWidth: 1, borderColor: t.border, borderBottomWidth: 3, alignItems: 'center', justifyContent: 'center' }}>
+              <Text style={{ fontFamily: fonts.bodyBold, fontSize: 17, color: t.text }}>{c}</Text>
+            </Pressable>
+          ))}
+        </View>
+      ) : null}
     </View>
   );
 }

@@ -147,7 +147,7 @@ export function ShareArt({ data, wear, size, svgRef }) {
       {/* streak */}
       <Rect x={W / 2 - 230} y="905" width="460" height="92" rx="46" fill="#FFFFFF" opacity={0.12} />
       <Flame x={W / 2 - 165} y={948} s={0.95} />
-      <SvgText x={W / 2 + 25} y="966" textAnchor="middle" fill="#FFFFFF" fontFamily={HEAVY} fontSize="42">{data.streak} {data.streak === 1 ? 'dia seguido' : 'dias seguidos'}</SvgText>
+      <SvgText x={W / 2 + 25} y="966" textAnchor="middle" fill="#FFFFFF" fontFamily={HEAVY} fontSize="42">{`${data.streak} ${data.streak === 1 ? 'dia seguido' : 'dias seguidos'}`}</SvgText>
 
       {/* XP herói */}
       <SvgText x={W / 2} y="1108" textAnchor="middle" fill={GOLD} fontFamily={DISPLAY} fontSize="140">{String(data.xp)}</SvgText>

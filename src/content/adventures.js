@@ -359,5 +359,9 @@ export const ADVENTURES = [
   },
 ];
 import { ADVENTURES_2 } from './adventures2';
-ADVENTURES.push(...ADVENTURES_2);
+import { ADVENTURES_3 } from './adventures3';
+import { ADVENTURES_4 } from './adventures4';
+import { ADVENTURES_5 } from './adventures5';
+import { ADVENTURES_6 } from './adventures6';
+ADVENTURES.push(...ADVENTURES_2, ...ADVENTURES_3, ...ADVENTURES_4, ...ADVENTURES_5, ...ADVENTURES_6);
 export const getAdventure = (id) => ADVENTURES.find((a) => a.id === id);
