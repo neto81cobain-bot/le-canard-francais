@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { View, AppState } from 'react-native';
-import { Stack, SplashScreen } from 'expo-router';
+import { Stack, SplashScreen, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -23,7 +23,7 @@ import { Alert } from '../services/dialog';
 import { RootErrorScreen } from '../components/ErrorBoundary';
 import { installGlobalHandler, logError } from '../services/diagnostics';
 import { setFeedbackPrefs } from '../services/feedback';
-import { setSpeechRate } from '../services/speech';
+import { setSpeechRate, stopSpeaking } from '../services/speech';
 import { setA11y } from '../services/a11y';
 import { setAiOverride } from '../services/ai';
 import { scheduleReminders, defaultReminders } from '../services/notifications';
@@ -49,6 +49,9 @@ export function ErrorBoundary(props) {
 
 function Effects() {
   const { state, actions } = useStore();
+  // Trocou de tela? A voz para (nada de áudio “fantasma” depois de sair).
+  const pathname = usePathname();
+  useEffect(() => { stopSpeaking(); }, [pathname]);
   const lastSync = useRef(0);
   const lastBackup = useRef(0);
   const online = useOnline();

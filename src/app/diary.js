@@ -203,7 +203,7 @@ export default function Diary() {
                   ))}
                 </Card>
               ) : null}
-              {res.tip ? <Card tone={palette.goldSoft}><T v="bodyBold" color={palette.goldDark}>💡 {res.tip}</T></Card> : null}
+              {res.tip ? <Card tone={t.goldSoft}><T v="bodyBold" color={t.mode === 'dark' ? palette.gold : palette.goldDark}>💡 {res.tip}</T></Card> : null}
             </>
           )}
           <T v="small" center>+{res.xp} XP</T>

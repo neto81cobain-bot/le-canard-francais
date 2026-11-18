@@ -145,13 +145,23 @@ export default function Learn() {
         <Pressable onPress={() => router.push('/(tabs)/perfil')}>
           <DuckAvatar size={42} photo={avatarOf(state)} mood={duckMood} />
         </Pressable>
-        <View style={{ flex: 1 }}>
-          <T v="caption">{duckMood === 'worried' ? 'O Canard está preocupado… 😟' : duckMood === 'sad' ? 'O Canard sentiu sua falta 🥺' : duckMood === 'sleep' ? 'O Canard cochilou esperando… 💤' : greet + ','}</T>
-          <T v="title" numberOfLines={1}>{firstName}!</T>
+        <View style={{ flex: 1, minWidth: 0 }}>
+          <T v="caption" numberOfLines={1}>{duckMood === 'worried' ? 'O Canard está preocupado… 😟' : duckMood === 'sad' ? 'O Canard sentiu sua falta 🥺' : duckMood === 'sleep' ? 'O Canard cochilou esperando… 💤' : greet + ','}</T>
+          <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.75} style={{ fontFamily: fonts.display, fontSize: 22, color: t.text }}>{firstName}!</Text>
         </View>
-        <Chip icon="flame" label={String(state.streak.count)} color={state.streak.lastDay === dayKey() ? palette.red : t.text3} bg={state.streak.lastDay === dayKey() ? palette.redSoft : t.surface2} big />
-        <Chip icon="bolt" label={String(state.xp)} color={palette.goldDark} bg={palette.goldSoft} big />
-        {state.settings.hearts ? <Chip icon="heart" label={String(state.hearts.count)} color={palette.coralDark} bg={palette.coralSoft} big /> : null}
+        {/* Contadores juntos numa pílula compacta: sobra espaço para o nome */}
+        <Pressable onPress={() => router.push('/(tabs)/perfil')} style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: t.surface, borderWidth: 1, borderColor: t.border, borderRadius: radius.pill, paddingHorizontal: 4, paddingVertical: 4 }}>
+          {[
+            ['flame', String(state.streak.count), state.streak.lastDay === dayKey() ? palette.red : t.text3],
+            ['bolt', String(state.xp), palette.gold],
+            ...(state.settings.hearts ? [['heart', String(state.hearts.count), palette.coral]] : []),
+          ].map(([ic, v, c], i) => (
+            <View key={ic} style={{ flexDirection: 'row', alignItems: 'center', gap: 3, paddingHorizontal: 7, paddingVertical: 3, borderLeftWidth: i ? 1 : 0, borderLeftColor: t.border }}>
+              <Icon name={ic} size={14} color={c} stroke={2.6} />
+              <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 13, color: t.text }}>{v}</Text>
+            </View>
+          ))}
+        </Pressable>
       </View>
 
       <ScrollView ref={scrollRef} contentContainerStyle={{ padding: 20, paddingBottom: 60 }} showsVerticalScrollIndicator={false}>

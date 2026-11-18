@@ -27,7 +27,7 @@ export default function Certificates() {
       <T v="small">Termine todas as unidades de um nível para ganhar um certificado em PDF para guardar ou compartilhar.</T>
       <View style={{ flexDirection: 'row', gap: 8 }}>
         {levels.map((lv) => (
-          <View key={lv.level} style={{ flex: 1, alignItems: 'center', gap: 4, padding: 10, borderRadius: radius.md || 12, backgroundColor: lv.done ? palette.goldSoft : t.surface2, opacity: lv.done ? 1 : 0.6 }}>
+          <View key={lv.level} style={{ flex: 1, alignItems: 'center', gap: 4, padding: 10, borderRadius: radius.md || 12, backgroundColor: lv.done ? t.goldSoft : t.surface2, opacity: lv.done ? 1 : 0.6 }}>
             <Text style={{ fontSize: 22 }}>{lv.done ? '📜' : '🔒'}</Text>
             <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 14, color: t.text }}>{lv.level}</Text>
           </View>

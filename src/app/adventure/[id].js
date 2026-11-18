@@ -70,7 +70,7 @@ export default function Adventure() {
                   <View style={{ backgroundColor: t.primary, borderRadius: 16, borderBottomRightRadius: 4, padding: 12 }}>
                     <Text style={{ fontFamily: fonts.bodyBold, fontSize: 16, color: '#fff' }}>{step.chose.fr}</Text>
                   </View>
-                  {step.chose.tip ? <View style={{ flexDirection: 'row', gap: 6, padding: 8, borderRadius: 10, backgroundColor: palette.goldSoft }}><Text>💡</Text><T v="caption" color={t.text} style={{ flex: 1 }}>{step.chose.tip}</T></View> : null}
+                  {step.chose.tip ? <View style={{ flexDirection: 'row', gap: 6, padding: 8, borderRadius: 10, backgroundColor: t.goldSoft }}><Text>💡</Text><T v="caption" color={t.text} style={{ flex: 1 }}>{step.chose.tip}</T></View> : null}
                 </View>
               ) : null}
             </View>

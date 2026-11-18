@@ -6,6 +6,7 @@ import { Tap } from './ui';
 import { speak, setSpeechRate } from '../services/speech';
 import { useStore } from '../store';
 import { a11y } from '../services/a11y';
+import { glossOf } from '../content/glossary';
 
 // Voice speed pill (cycles; saved in settings, applies everywhere)
 const SPEEDS = [[0.6, '🐢 0.6×'], [0.75, '0.75×'], [0.9, '1×'], [1.05, '1.15×'], [1.2, '🐇 1.3×']];
@@ -84,19 +85,41 @@ export function AudioPair({ text, size = 52, autoPlay }) {
 }
 
 // Tap a French sentence: words can be pronounced individually.
-export function SpeakableText({ text, style, color }) {
+// Frase em francês “tocável”: cada palavra fala sozinha e mostra o significado embaixo.
+export function SpeakableText({ text, style, color, gloss }) {
   const t = useTheme();
-  const parts = text.split(/(\s+)/);
+  const [tip, setTip] = useState(null);
+  const timer = useRef(null);
+  useEffect(() => () => clearTimeout(timer.current), []);
+  const parts = String(text || '').split(/(\s+)/);
+  const tap = (p, i) => {
+    const w = p.replace(/[.,!?;:«»"“”…]/g, '');
+    speak(w);
+    // Numa palavra solta (“O que significa?”), mostrar o significado entregaria a resposta.
+    const allow = gloss ?? /\s/.test(String(text || '').trim());
+    const g = allow ? glossOf(w) : null;
+    clearTimeout(timer.current);
+    setTip(g ? { i, w, g } : null);
+    if (g) timer.current = setTimeout(() => setTip(null), 3500);
+  };
   return (
-    <Text style={[{ fontFamily: fonts.displayItalic, fontSize: 22, lineHeight: 31, color: color || t.text }, style]}>
-      {parts.map((p, i) =>
-        /\s+/.test(p) ? p : (
-          <Text key={i} onPress={() => speak(p.replace(/[.,!?;:«»"]/g, ''))} suppressHighlighting>
-            {p}
-          </Text>
-        )
-      )}
-    </Text>
+    <View>
+      <Text style={[{ fontFamily: fonts.displayItalic, fontSize: 22, lineHeight: 31, color: color || t.text }, style]}>
+        {parts.map((p, i) =>
+          /\s+/.test(p) ? p : (
+            <Text key={i} onPress={() => tap(p, i)} suppressHighlighting style={tip?.i === i ? { color: t.primary, textDecorationLine: 'underline' } : null}>
+              {p}
+            </Text>
+          )
+        )}
+      </Text>
+      {tip ? (
+        <View style={{ alignSelf: 'flex-start', flexDirection: 'row', gap: 6, marginTop: 6, paddingHorizontal: 10, paddingVertical: 5, borderRadius: 10, backgroundColor: t.skySoft }}>
+          <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 13, color: t.text }}>{tip.w}</Text>
+          <Text style={{ fontFamily: fonts.bodySemi, fontSize: 13, color: t.text2 }}>= {tip.g}</Text>
+        </View>
+      ) : null}
+    </View>
   );
 }
 

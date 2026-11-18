@@ -354,7 +354,7 @@ export default function League() {
               const total = Math.max(1, mine + (d.theirXP || 0));
               const ahead = mine >= (d.theirXP || 0);
               return (
-                <Card key={d.uid} style={{ gap: 8 }} tone={ahead ? t.successSoft : palette.coralSoft}>
+                <Card key={d.uid} style={{ gap: 8 }} tone={ahead ? t.successSoft : t.errorSoft}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
                     <Text style={{ fontSize: 22 }}>⚔️</Text>
                     <T v="bodyBold" style={{ flex: 1 }}>Duelo de {th.emoji} {th.label} com {d.name}</T>

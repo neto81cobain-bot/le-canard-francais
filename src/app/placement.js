@@ -145,7 +145,7 @@ export default function Placement() {
           ))}
         </View>
         {weakest ? (
-          <Card style={{ marginTop: 16 }} tone={palette.goldSoft}>
+          <Card style={{ marginTop: 16 }} tone={t.goldSoft}>
             <T v="small" color={t.text}>💡 Seu ponto mais fraco é <T v="small" color={t.text} style={{ fontFamily: fonts.bodyHeavy }}>{SKILLS[weakest[0]].label.toLowerCase()}</T>. Treine na aba Praticar → As 4 habilidades.</T>
           </Card>
         ) : null}

@@ -13,7 +13,7 @@ import { AudioButton, useShake, SpeedChip } from './extras';
 import { ImageEx, McqEx, TranslateEx, BuildEx, ListenEx, FillEx, MatchEx, DialogueEx, SpeakEx, ConjugateEx, WriteEx, PairsEx, TrueFalseEx } from './Exercises';
 import { checkTyped, checkSentence, normalize, snapshot } from '../engine/exercises';
 import { fx } from '../services/feedback';
-import { speak } from '../services/speech';
+import { speak, stopSpeaking } from '../services/speech';
 import { ExerciseBoundary } from './ErrorBoundary';
 import { useKeyboardOverlap, scrollFocusedIntoView } from './keyboard';
 
@@ -119,7 +119,10 @@ export default function Session({ exercises: initial, title, kind = 'lesson', ti
 
   useEffect(() => {
     actions.set({ inLesson: true });
-    return () => actions.set({ inLesson: false });
+    return () => {
+      stopSpeaking();
+      actions.set({ inLesson: false });
+    };
   }, []);
 
   const quit = () => {
@@ -149,6 +152,7 @@ export default function Session({ exercises: initial, title, kind = 'lesson', ti
   const finish = () => {
     if (finished.current) return;
     finished.current = true;
+    stopSpeaking();
     const s = stats.current;
     onFinish({
       correct: s.correct,
@@ -162,6 +166,7 @@ export default function Session({ exercises: initial, title, kind = 'lesson', ti
   };
 
   const advance = () => {
+    stopSpeaking();
     setResult(null);
     setValue(null);
     if (idx + 1 >= queue.length) finish();
@@ -288,6 +293,12 @@ export default function Session({ exercises: initial, title, kind = 'lesson', ti
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 10 }}>
               <Icon name="refresh" size={16} color={palette.goldDark} />
               <Text style={{ fontFamily: fonts.bodyHeavy, color: palette.goldDark, fontSize: 13 }}>ERRO ANTERIOR — TENTE DE NOVO</Text>
+            </View>
+          ) : null}
+          {ex.item?.key && !state.srs?.[ex.item.key] && !stats.current.retried.has(idx) && ['image', 'mcq', 'translate', 'build', 'listen', 'write'].includes(ex.type) ? (
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 10 }}>
+              <Text style={{ fontSize: 13 }}>✨</Text>
+              <Text style={{ fontFamily: fonts.bodyHeavy, color: t.primary, fontSize: 12, letterSpacing: 0.5 }}>NOVO PARA VOCÊ — CAPRICHE NA ATENÇÃO</Text>
             </View>
           ) : null}
           <ExerciseBoundary key={'eb' + idx} color={color} onSkip={() => advance()}>{body}</ExerciseBoundary>

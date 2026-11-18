@@ -113,7 +113,7 @@ export function WeeklyChestCard({ style }) {
     Alert.alert(item ? `${item.emoji} Item raro!` : '🎁 Baú da semana!', item ? `Você ganhou: ${item.title}! Vista o Canard na Loja. (+${r.coins} 💶, +${r.xp} XP)` : `+${r.coins} 💶 e +${r.xp} XP. Semana que vem tem mais!`);
   };
   return (
-    <Card style={[{ flexDirection: 'row', alignItems: 'center', gap: 12 }, style]} tone={ready ? palette.goldSoft : undefined}>
+    <Card style={[{ flexDirection: 'row', alignItems: 'center', gap: 12 }, style]} tone={ready ? t.goldSoft : undefined}>
       <Text style={{ fontSize: 34, opacity: ready ? 1 : 0.5 }}>🎁</Text>
       <View style={{ flex: 1, gap: 4 }}>
         <T v="bodyBold">Baú surpresa da semana</T>

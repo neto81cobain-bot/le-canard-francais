@@ -75,7 +75,7 @@ export default function Grammar() {
                     );
                   })}
                   {g.tip ? (
-                    <View style={{ flexDirection: 'row', gap: 8, padding: 10, borderRadius: 12, backgroundColor: palette.goldSoft }}>
+                    <View style={{ flexDirection: 'row', gap: 8, padding: 10, borderRadius: 12, backgroundColor: t.goldSoft }}>
                       <Text>💡</Text>
                       <T v="small" color={t.text} style={{ flex: 1 }}>{g.tip}</T>
                     </View>

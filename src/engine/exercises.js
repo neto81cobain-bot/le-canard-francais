@@ -549,8 +549,11 @@ export const PRACTICE_FOCUS = [
 ];
 export const PRACTICE_ROUNDS = 5;
 
-function unitMaterial(unit) {
-  const lessons = (unit?.lessons || []).filter((l) => !l.story);
+// only = Set de ids de lições já feitas: o treino usa só o que a pessoa já estudou.
+function unitMaterial(unit, only) {
+  const all = (unit?.lessons || []).filter((l) => !l.story);
+  let lessons = only ? all.filter((l) => only.has(l.id)) : all;
+  if (!lessons.length) lessons = all.slice(0, 1);
   const vocab = lessons.flatMap((l) => l.vocab || []);
   const sentences = lessons.flatMap((l) => l.sentences || []);
   const fills = lessons.flatMap((l) => l.fill || []);
@@ -562,8 +565,8 @@ function unitMaterial(unit) {
 }
 
 // Every exercise the unit can produce (the "banco da unidade")
-export function unitBank(unit, { speak = true } = {}) {
-  const m = unitMaterial(unit);
+export function unitBank(unit, { speak = true, only } = {}) {
+  const m = unitMaterial(unit, only);
   const out = [];
   const add = (x) => x && out.push(x);
   const withEmoji = m.vocab.filter((v) => v.emoji);
@@ -586,18 +589,18 @@ const FOCUS_TYPES = {
   mix: () => true,
 };
 
-export function buildUnitPractice(unit, focus = 'mix', { count = 12, speak = true } = {}) {
-  const bank = unitBank(unit, { speak });
+export function buildUnitPractice(unit, focus = 'mix', { count = 12, speak = true, only } = {}) {
+  const bank = unitBank(unit, { speak, only });
   let list = bank.filter(FOCUS_TYPES[focus] || FOCUS_TYPES.mix);
   if (focus === 'listen' && (unit.number || 1) <= 12) list = [...list, ...pick(MINIMAL_PAIRS, 4).map((p) => mkPairs(p))];
-  if (focus === 'vocab') list = [...list, mkMatch(unitMaterial(unit).vocab), mkMatch(unitMaterial(unit).vocab)].filter(Boolean);
+  if (focus === 'vocab') list = [...list, mkMatch(unitMaterial(unit, only).vocab), mkMatch(unitMaterial(unit, only).vocab)].filter(Boolean);
   if (list.length < 4) list = bank;
   return pick(list, Math.min(count, list.length));
 }
 
 // Marathon: endless-feeling mix from everything unlocked
-export function buildMarathon(units, { count = 60, speak = false } = {}) {
-  const bank = units.flatMap((u) => unitBank(u, { speak }));
+export function buildMarathon(units, { count = 60, speak = false, only } = {}) {
+  const bank = units.flatMap((u) => unitBank(u, { speak, only }));
   return pick(bank.filter((e) => e.type !== 'speak'), count);
 }
 
@@ -612,5 +615,30 @@ export function buildWordQuiz(phrase, pool = []) {
   const b = mkBuild({ fr: phrase.fr, pt: phrase.pt, key: 's:' + phrase.fr }, pool);
   if (b) out.push(b);
   else out.push(mkListenType({ fr: phrase.fr, pt: phrase.pt, key: 's:' + phrase.fr }));
+  return out;
+}
+
+// Treino das palavras-chave de uma música (as letras não ficam no app).
+export function buildSongPractice(song, otherSongs = []) {
+  const W = (w) => { const [fr, pt] = w.split('|'); return { fr, pt, key: 'w:' + fr, isWord: true }; };
+  const words = (song?.words || []).map(W);
+  const pool = uniq([...words, ...otherSongs.flatMap((s) => s.words.map(W))], (x) => x.fr);
+  const others = (it) => pick(pool.filter((p) => p.fr !== it.fr && p.pt !== it.pt), 3);
+  const out = [];
+  // 1) reconhecer: ouvir/ler → significado
+  words.forEach((it) => {
+    const o = others(it);
+    if (o.length === 3) out.push({ type: 'mcq', item: it, title: 'O que significa?', prompt: it.fr, frPrompt: true, speakPrompt: it.fr, answer: it.pt, options: shuffle([it.pt, ...o.map((x) => x.pt)]) });
+  });
+  // 2) lembrar: português → francês
+  shuffle(words).forEach((it) => {
+    const o = others(it);
+    if (o.length === 3) out.push({ type: 'mcq', item: it, kind: 'vocab', title: 'Como se diz em francês?', prompt: '“' + it.pt + '”', answer: it.fr, options: shuffle([it.fr, ...o.map((x) => x.fr)]), audioOptions: true });
+  });
+  // 3) ligar os pares
+  const m = mkMatch(words);
+  if (m) out.push(m);
+  // 4) ouvir e escrever
+  shuffle(words).slice(0, 3).forEach((it) => out.push(mkListenType(it)));
   return out;
 }

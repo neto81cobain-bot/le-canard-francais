@@ -7,7 +7,7 @@ import { useTheme, fonts, unitColors, radius } from '../../theme';
 import { T, Button, ProgressBar, Bubble } from '../../components/ui';
 import Icon from '../../components/Icon';
 import Duck from '../../components/Duck';
-import { Appear, AudioButton } from '../../components/extras';
+import { Appear, AudioButton, SpeakableText } from '../../components/extras';
 import { TeachCard, Rich } from '../../components/Rich';
 import Session from '../../components/Session';
 import ResultView from '../../components/ResultView';
@@ -32,7 +32,8 @@ export default function LessonScreen() {
   const [round, setRound] = useState(0);
   const [retry, setRetry] = useState(null);
 
-  const allSentences = useMemo(() => LESSONS.filter((l) => l.unitId === lesson?.unitId).flatMap((l) => l.sentences), [id]);
+  // Distratores e opções só de lições já feitas (+ esta): nada de palavra nunca vista.
+  const allSentences = useMemo(() => LESSONS.filter((l) => l.unitId === lesson?.unitId && (l.id === id || state.lessons[l.id]?.done)).flatMap((l) => l.sentences), [id]);
   const exercises = useMemo(
     () => (retry ? retry : lesson ? buildLesson(lesson, { allSentences, speak: true, unitNumber: unit.number, verbs: unit.verbs, tenses: unit.tenses }) : []),
     [id, round, retry]
@@ -117,6 +118,23 @@ export default function LessonScreen() {
                     </Pressable>
                   ))}
                 </View>
+                {lesson.sentences.length ? (
+                  <View style={{ marginTop: 24 }}>
+                    <T v="h3" style={{ marginBottom: 4 }}>Frases que vão aparecer</T>
+                    <T v="small" style={{ marginBottom: 12 }}>Ouça antes de praticar — toque numa palavra para ver o significado.</T>
+                    <View style={{ gap: 8 }}>
+                      {lesson.sentences.map((x) => (
+                        <View key={x.fr} style={{ flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: t.surface, borderRadius: 14, borderWidth: 1, borderColor: t.border, padding: 10 }}>
+                          <AudioButton text={x.fr} size={34} />
+                          <View style={{ flex: 1 }}>
+                            <SpeakableText text={x.fr} style={{ fontSize: 16, lineHeight: 22 }} />
+                            <Text style={{ fontFamily: fonts.bodySemi, fontSize: 12, color: t.text2 }}>{x.pt}</Text>
+                          </View>
+                        </View>
+                      ))}
+                    </View>
+                  </View>
+                ) : null}
               </View>
             ) : null}
           </Appear>

@@ -16,7 +16,8 @@ export default function UnitGuide() {
   const t = useTheme();
   const unit = getUnit(id);
   const [open, setOpen] = useState(null);
-  const bankSize = useMemo(() => (unit ? unitBank(unit).length : 0), [id]);
+  const doneIds = Object.keys(state.lessons || {}).filter((k) => state.lessons[k]?.done);
+  const bankSize = useMemo(() => (unit ? unitBank(unit, { only: new Set(doneIds) }).length : 0), [id, doneIds.length]);
   if (!unit) return null;
   const color = unitColors[(unit.number - 1) % unitColors.length];
   const prog = unitProgress(state, unit);
@@ -51,7 +52,7 @@ export default function UnitGuide() {
       </View>
 
       <T v="h3" style={{ marginTop: 28, marginBottom: 4 }}>Treinos da unidade</T>
-      <T v="small" style={{ marginBottom: 12 }}>{PRACTICE_FOCUS.length * PRACTICE_ROUNDS} treinos extras · cada rodada sorteia exercícios diferentes do banco de {bankSize} questões.</T>
+      <T v="small" style={{ marginBottom: 12 }}>{PRACTICE_FOCUS.length * PRACTICE_ROUNDS} treinos extras · cada rodada sorteia exercícios diferentes do banco de {bankSize} questões. O banco cresce a cada lição que você termina — só entra o que você já estudou.</T>
       {unitLocked ? (
         <Card style={{ alignItems: 'center', gap: 6 }}><Icon name="lock" size={22} color={t.text3} /><T v="small" center>Os treinos liberam junto com a unidade.</T></Card>
       ) : (

@@ -28,9 +28,15 @@ async function pickVoice() {
   return voiceId;
 }
 
+// Cada fala recebe um número; stopSpeaking() invalida falas que ainda estavam
+// esperando a voz carregar (senão elas começavam depois do "Continuar").
+let speechToken = 0;
+
 export async function speak(text, { slow = false, onDone } = {}) {
   if (!text) return;
+  const my = ++speechToken;
   const voice = await pickVoice();
+  if (my !== speechToken) return;
   Speech.stop();
   Speech.speak(text.replace(/_+/g, '…'), {
     language: 'fr-FR',
@@ -44,11 +50,13 @@ export async function speak(text, { slow = false, onDone } = {}) {
 }
 
 export function speakPt(text, { onDone } = {}) {
+  speechToken += 1;
   Speech.stop();
   Speech.speak(text, { language: 'pt-BR', rate: 1.0, onDone, onStopped: onDone, onError: onDone });
 }
 
 export function stopSpeaking() {
+  speechToken += 1;
   Speech.stop();
 }
 

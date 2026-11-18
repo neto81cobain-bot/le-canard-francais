@@ -70,7 +70,11 @@ export function McqEx({ ex, value, onChange, locked }) {
         <View style={{ backgroundColor: t.surface, borderWidth: 2, borderColor: t.border, borderRadius: 18, padding: 14, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
           {ex.speakPrompt ? <AudioButton text={ex.speakPrompt} size={40} autoPlay /> : isFr ? <AudioButton text={ex.prompt.replace(/\(.*?\)/g, '')} size={40} /> : null}
           <View style={{ flex: 1, gap: 4 }}>
-            <Text style={{ fontFamily: isFr || ex.frPrompt ? fonts.displayItalic : fonts.bodyBold, fontSize: isFr || ex.frPrompt ? 21 : 18, lineHeight: isFr || ex.frPrompt ? 29 : 25, color: t.text }}>{ex.prompt}</Text>
+            {isFr || ex.frPrompt ? (
+              <SpeakableText text={ex.prompt} style={{ fontSize: 21, lineHeight: 29 }} />
+            ) : (
+              <Text style={{ fontFamily: fonts.bodyBold, fontSize: 18, lineHeight: 25, color: t.text }}>{ex.prompt}</Text>
+            )}
             {ex.sub ? <T v="small">{ex.sub}</T> : null}
           </View>
         </View>
@@ -106,7 +110,7 @@ export function TranslateEx({ ex, value, onChange, locked, autoAudio }) {
             <AudioButton text={ex.prompt} size={40} autoPlay={autoAudio} />
             <View style={{ flex: 1 }}><SpeakableText text={ex.prompt} /></View>
           </View>
-          <T v="caption">Toque numa palavra para ouvi-la</T>
+          <T v="caption">Toque numa palavra para ouvir e ver o significado</T>
         </View>
       </Prompt>
       <View style={{ gap: 12 }}>

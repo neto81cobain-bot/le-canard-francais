@@ -228,7 +228,7 @@ export function SundayCard({ style }) {
   if (new Date().getDay() !== 0) return null;
   const done = state.weeklyReview === state.week?.key;
   return (
-    <Tap onPress={P('weekly')} style={[{ flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14, borderRadius: radius.lg, backgroundColor: done ? t.surface : palette.goldSoft, borderWidth: 2, borderColor: done ? t.border : palette.gold }, style]}>
+    <Tap onPress={P('weekly')} style={[{ flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14, borderRadius: radius.lg, backgroundColor: done ? t.surface : t.goldSoft, borderWidth: 2, borderColor: done ? t.border : palette.gold }, style]}>
       <Text style={{ fontSize: 32 }}>{done ? '✅' : '🗓️'}</Text>
       <View style={{ flex: 1 }}>
         <T v="bodyBold">Revisão da semana</T>

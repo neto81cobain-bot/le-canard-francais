@@ -54,7 +54,7 @@ export function OfflineCard({ title = 'Sem internet por aqui', text, note, style
         <Text style={{ fontFamily: fonts.display, fontSize: 21, color: t.text, textAlign: 'center' }}>{title}</Text>
         {text ? <T v="body" center color={t.text2}>{text}</T> : null}
         {note ? (
-          <View style={{ flexDirection: 'row', gap: 8, padding: 10, borderRadius: 12, backgroundColor: palette.goldSoft }}>
+          <View style={{ flexDirection: 'row', gap: 8, padding: 10, borderRadius: 12, backgroundColor: t.goldSoft }}>
             <Text>💡</Text>
             <T v="small" color={t.text} style={{ flex: 1 }}>{note}</T>
           </View>

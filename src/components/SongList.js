@@ -8,6 +8,7 @@ import { AudioButton } from './extras';
 import { SONGS } from '../content/music';
 import { TIERS, tierOf, levelOpen, unlockAt } from '../content/levels';
 import { toast } from '../services/dialog';
+import { router } from 'expo-router';
 
 export const SONG_TIERS = TIERS.map((t) => ({ ...t, level: t.levels[0] }));
 
@@ -35,7 +36,7 @@ export function SongList({ tier }) {
               </View>
               <View style={{ flex: 1 }}>
                 <T v="bodyBold">{s.title}</T>
-                <T v="small">{s.artist}{s.year ? ` · ${s.year}` : ''}</T>
+                <T v="small">{s.artist}{s.year ? ` · ${s.year}` : ''}{state.songsTrained?.[s.id] != null ? ` · 🎯 ${state.songsTrained[s.id]}%` : ''}</T>
               </View>
               <Chip label={s.level} color={t.primary} bg={t.primarySoft} />
             </Pressable>
@@ -56,10 +57,11 @@ export function SongList({ tier }) {
                     </View>
                   );
                 })}
-                <View style={{ flexDirection: 'row', gap: 8, padding: 10, borderRadius: 12, backgroundColor: palette.goldSoft }}>
+                <View style={{ flexDirection: 'row', gap: 8, padding: 10, borderRadius: 12, backgroundColor: t.goldSoft }}>
                   <Text>💡</Text>
                   <T v="small" color={t.text} style={{ flex: 1 }}>{s.tip}</T>
                 </View>
+                <Button title="Treinar as palavras da música" icon="target" small color="#C2417B" onPress={() => router.push({ pathname: '/practice/[mode]', params: { mode: 'song', key: s.id } })} />
                 <View style={{ flexDirection: 'row', gap: 8 }}>
                   <Button title="YouTube" icon="play" small style={{ flex: 1 }} color="#DC2626" onPress={() => listen(s, 'yt')} />
                   <Button title="Spotify" icon="play" small style={{ flex: 1 }} color="#1DB954" onPress={() => listen(s, 'spotify')} />

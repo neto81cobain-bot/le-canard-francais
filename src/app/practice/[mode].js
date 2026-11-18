@@ -11,7 +11,8 @@ import { Appear } from '../../components/extras';
 import Session from '../../components/Session';
 import ResultView from '../../components/ResultView';
 import { UNITS, LESSONS, getUnit, bankQuestions, BANK_TOPICS, LESSON_TOPICS } from '../../content';
-import { buildReview, buildFromMistakes, buildUnitTest, buildBank, buildLesson, buildConjugation, shuffle, buildListening, buildWriting, buildSpeaking, buildQuick, buildVocab, buildPairsGroup, buildDictation, mistakeGroupOf, MISTAKE_GROUPS, buildUnitPractice, buildMarathon, buildWordQuiz, PRACTICE_FOCUS } from '../../engine/exercises';
+import { buildReview, buildFromMistakes, buildUnitTest, buildBank, buildLesson, buildConjugation, shuffle, buildListening, buildWriting, buildSpeaking, buildQuick, buildVocab, buildPairsGroup, buildDictation, mistakeGroupOf, MISTAKE_GROUPS, buildUnitPractice, buildMarathon, buildWordQuiz, PRACTICE_FOCUS, buildSongPractice } from '../../engine/exercises';
+import { SONGS } from '../../content/music';
 import { DAILY_PHRASES } from '../../content/extras';
 
 const dayIdxNow = () => { const d = new Date(); return Math.floor((d - new Date(d.getFullYear(), 0, 0)) / 86400000); };
@@ -41,6 +42,7 @@ const MODES = {
   marathon: { title: 'Maratona', emoji: '🏃', mood: 'celebrate', intro: 'Tudo misturado, de todas as unidades que você já liberou. Vá até onde aguentar — o placar conta seus acertos seguidos!' },
   wordquiz: { title: 'Frase do dia', emoji: '💬', mood: 'teach', intro: 'Três perguntas rápidas para a frase de hoje grudar na memória.' },
   weekly: { title: 'Revisão da semana', emoji: '🗓️', mood: 'proud', intro: 'Domingo é dia de revisar tudo o que você viu na semana. Vale um baú no final!' },
+  song: { title: 'Palavras da música', emoji: '🎵', mood: 'listen', intro: 'Treine as palavras-chave da música antes (ou depois) de ouvir. Quando elas aparecerem na canção, você vai reconhecer na hora!' },
   bank: { title: 'Treino por tema', emoji: '✍️', mood: 'teach', intro: 'Questões rápidas para fixar o conteúdo, com explicação em cada erro.' },
 };
 
@@ -65,6 +67,8 @@ export default function Practice() {
 
   const exercises = useMemo(() => {
     const learned = learnedLessons(state);
+    // Só lições que a pessoa já fez (nada de palavra nunca vista)
+    const only = new Set(Object.keys(state.lessons || {}).filter((k) => state.lessons[k]?.done));
     const pool = (learned.length ? learned : UNITS[0].lessons).flatMap((l) => [...l.vocab, ...l.sentences]);
     if (mode === 'review') {
       let items = dueItems(state.srs, Date.now(), 14);
@@ -88,9 +92,9 @@ export default function Practice() {
     if (mode === 'writing') return buildWriting(pool, (learned.length ? learned : UNITS[0].lessons).flatMap((l) => l.fill || []), 12);
     if (mode === 'speaking') return buildSpeaking(pool, 8, (learned.length ? learned : UNITS[0].lessons).flatMap((l) => l.fill || []));
     if (mode === 'test' && unit) return buildUnitTest(unit, { speak: false });
-    if (mode === 'unit' && unit) return buildUnitPractice(unit, focus || 'mix', { count: 12, speak: true });
-    if (mode === 'unitbank' && unit) return buildUnitPractice(unit, 'mix', { count: 20, speak: false });
-    if (mode === 'marathon') return buildMarathon(UNITS.filter((u) => u.number <= Math.max(1, state.unlockedUnit)), { count: 60 });
+    if (mode === 'unit' && unit) return buildUnitPractice(unit, focus || 'mix', { count: 12, speak: true, only });
+    if (mode === 'unitbank' && unit) return buildUnitPractice(unit, 'mix', { count: 20, speak: false, only });
+    if (mode === 'marathon') return buildMarathon(UNITS.filter((u) => u.number <= Math.max(1, state.unlockedUnit)), { count: 60, only });
     if (mode === 'wordquiz') {
       const ph = DAILY_PHRASES[dayIdxNow() % DAILY_PHRASES.length];
       return buildWordQuiz({ fr: ph.fr, pt: ph.pt }, [...DAILY_PHRASES.map((d) => ({ fr: d.fr, pt: d.pt })), ...pool.filter((p) => !p.isWord)]);
@@ -99,7 +103,11 @@ export default function Practice() {
       const recent = Object.entries(state.srs || {}).map(([k, v]) => ({ ...v, key: k })).filter((x) => x.fr && Date.now() - (x.last || 0) < 7 * 86400000);
       const items = recent.length >= 6 ? recent : dueItems(state.srs, Date.now(), 20);
       const rv = buildReview(items.slice(0, 20), { pool, count: 15 });
-      return rv.length >= 6 ? rv : buildMarathon(UNITS.filter((u) => u.number <= Math.max(1, state.unlockedUnit)), { count: 15 });
+      return rv.length >= 6 ? rv : buildMarathon(UNITS.filter((u) => u.number <= Math.max(1, state.unlockedUnit)), { count: 15, only });
+    }
+    if (mode === 'song') {
+      const song = SONGS.find((x) => x.id === key);
+      return song ? buildSongPractice(song, SONGS.filter((x) => x.id !== key && x.level === song.level)) : [];
     }
     if (mode === 'bank') return buildBank(bankQuestions(key), 15);
     if (mode === 'verbs') {
@@ -135,7 +143,7 @@ export default function Practice() {
 
   if (phase === 'intro') {
     const pf = PRACTICE_FOCUS.find((f) => f.id === focus);
-    const title = mode === 'unit' && pf ? `${pf.emoji} ${pf.title}${round ? ' · rodada ' + round : ''}` : mode === 'verbs' && verbParam ? `Treino: ${verbParam}` : mode === 'test' ? `Teste · Unidade ${unit.number}` : mode === 'bank' ? bankTopic?.title : mode === 'pairs' && group ? `Sons: ${SOUND_GROUPS[group]?.title || group}` : cfg.title;
+    const title = mode === 'unit' && pf ? `${pf.emoji} ${pf.title}${round ? ' · rodada ' + round : ''}` : mode === 'verbs' && verbParam ? `Treino: ${verbParam}` : mode === 'test' ? `Teste · Unidade ${unit.number}` : mode === 'song' ? `🎵 ${SONGS.find((x) => x.id === key)?.title || ''}` : mode === 'bank' ? bankTopic?.title : mode === 'pairs' && group ? `Sons: ${SOUND_GROUPS[group]?.title || group}` : cfg.title;
     return (
       <View style={{ flex: 1, backgroundColor: t.bg, paddingTop: insets.top }}>
         <View style={{ paddingHorizontal: 16, paddingVertical: 12 }}>
@@ -150,7 +158,7 @@ export default function Practice() {
           <Appear delay={200} style={{ alignSelf: 'stretch' }}>
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 10, marginTop: 28 }}>
               <Duck mood={cfg.mood} size={110} />
-              <Bubble style={{ flex: 1, marginBottom: 24 }}><T v="bodyBold">{cfg.intro}</T></Bubble>
+              <Bubble style={{ flex: 1, marginBottom: 24 }}><T v="bodyBold">{mode === 'song' && SONGS.find((x) => x.id === key) ? `🎯 ${SONGS.find((x) => x.id === key).focus} ${cfg.intro}` : cfg.intro}</T></Bubble>
             </View>
           </Appear>
           {mode === 'verbs' ? (
@@ -254,6 +262,7 @@ export default function Practice() {
           });
           if (mode === 'daily') actions.set((s) => ({ daily: { ...s.daily, challengeDone: true } }));
           if (mode === 'unit' && unit) actions.set((s) => ({ unitPractice: { ...(s.unitPractice || {}), [`${unit.id}:${focus || 'mix'}:${round || 1}`]: Math.max(r.correct / r.total, (s.unitPractice || {})[`${unit.id}:${focus || 'mix'}:${round || 1}`] || 0) } }));
+          if (mode === 'song' && key) actions.set((s) => ({ songsTrained: { ...(s.songsTrained || {}), [key]: Math.max(Math.round((r.correct / r.total) * 100), (s.songsTrained || {})[key] || 0) } }));
           if (mode === 'marathon') actions.set((s) => ({ stats: { ...s.stats, marathonBest: Math.max(s.stats.marathonBest || 0, r.correct) } }));
           if (mode === 'wordquiz') actions.set((s) => ({ daily: { ...s.daily, wordQuiz: true } }));
           if (mode === 'weekly') actions.set((s) => (s.weeklyReview === s.week?.key ? {} : { weeklyReview: s.week?.key, coins: s.coins + 50 }));
