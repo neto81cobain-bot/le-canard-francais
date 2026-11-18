@@ -20,6 +20,7 @@ const MOODS = {
   sleep: { badge: '💤', anim: 'breathe' },
   offline: { badge: '📡', anim: 'sway' },
   sad: { badge: '🥺', anim: 'breathe' },
+  worried: { badge: '😟', anim: 'sway' },
   happy: { badge: null, anim: 'breathe' },
   proud: { badge: '🏆', anim: 'jump' },
 };
@@ -82,7 +83,11 @@ export function autoMood(mood, state) {
   const last = state.streak.lastDay;
   if (!last) return mood;
   const away = diffDays(last, dayKey());
-  return away >= 3 ? 'sad' : away >= 2 ? 'sleep' : mood;
+  if (away >= 3) return 'sad';
+  if (away >= 2) return 'sleep';
+  // evening and nothing done today → worried about the streak
+  if (away >= 1 && new Date().getHours() >= 20) return 'worried';
+  return mood;
 }
 
 export default function Duck({ size = 120, mood = 'happy', head = false, style, outfit, noBadge, scene = false, live = false }) {

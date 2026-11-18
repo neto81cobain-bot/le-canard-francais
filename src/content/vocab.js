@@ -56,6 +56,78 @@ export const VOCAB_THEMES = [
     'grand(e)|grande, alto|📏', 'petit(e)|pequeno|🐁', 'beau / belle|bonito|🌹', 'jeune|jovem|🧒', 'vieux / vieille|velho|👴',
     'chaud(e)|quente|🔥', 'froid(e)|frio|🧊', 'facile|fácil|👌', 'difficile|difícil|🧗', 'rapide|rápido|⚡',
   ]) },
+  { id: 'animais', title: 'Animais', emoji: '🐾', color: '#B87333', words: W([
+    'le chien|o cachorro|🐕', 'le chat|o gato|🐈', 'l\'oiseau (m)|o pássaro|🐦', 'le cheval|o cavalo|🐎', 'la vache|a vaca|🐄',
+    'le cochon|o porco|🐖', 'le mouton|a ovelha|🐑', 'la poule|a galinha|🐔', 'le canard|o pato|🦆', 'le lapin|o coelho|🐇',
+    'la souris|o rato|🐁', 'le poisson|o peixe|🐟', 'le serpent|a cobra|🐍', 'le singe|o macaco|🐒', 'le lion|o leão|🦁',
+    'l\'éléphant (m)|o elefante|🐘', 'la tortue|a tartaruga|🐢', 'le papillon|a borboleta|🦋', 'l\'abeille (f)|a abelha|🐝', 'la fourmi|a formiga|🐜',
+  ]) },
+  { id: 'familia', title: 'Família', emoji: '👨‍👩‍👧', color: '#E63946', words: W([
+    'la mère|a mãe|👩', 'le père|o pai|👨', 'les parents|os pais|👪', 'le frère|o irmão|👦', 'la sœur|a irmã|👧',
+    'le fils|o filho|👦', 'la fille|a filha|👧', 'le grand-père|o avô|👴', 'la grand-mère|a avó|👵', 'l\'oncle (m)|o tio|🧔',
+    'la tante|a tia|👩', 'le cousin|o primo|🧑', 'la cousine|a prima|👩', 'le neveu|o sobrinho|👦', 'la nièce|a sobrinha|👧',
+    'le mari|o marido|🤵', 'la femme|a esposa|👰', 'le bébé|o bebê|👶', 'le petit-fils|o neto|🧒', 'la belle-mère|a sogra|👵',
+  ]) },
+  { id: 'escola', title: 'Escola e estudos', emoji: '🎒', color: '#1E3A8A', words: W([
+    'l\'école (f)|a escola|🏫', 'le professeur|o professor|👩‍🏫', 'l\'élève (m)|o aluno|🧑‍🎓', 'le livre|o livro|📕', 'le cahier|o caderno|📓',
+    'le stylo|a caneta|🖊️', 'le crayon|o lápis|✏️', 'la gomme|a borracha|🧽', 'le sac|a mochila|🎒', 'la classe|a sala de aula|🏫',
+    'le tableau|o quadro|🧑‍🏫', 'la leçon|a lição|📖', 'l\'examen (m)|a prova|📝', 'la note|a nota|💯', 'les devoirs|o dever de casa|📚',
+    'la règle|a régua|📏', 'les ciseaux|a tesoura|✂️', 'la bibliothèque|a biblioteca|🏛️', 'l\'université (f)|a universidade|🎓', 'le diplôme|o diploma|📜',
+  ]) },
+  { id: 'esportes', title: 'Esportes e lazer', emoji: '⚽', color: '#2E9E5B', words: W([
+    'le football|o futebol|⚽', 'le basket|o basquete|🏀', 'le tennis|o tênis|🎾', 'la natation|a natação|🏊', 'le vélo|a bicicleta|🚲',
+    'la course|a corrida|🏃', 'le ballon|a bola|⚽', 'l\'équipe (f)|o time|👥', 'le match|a partida|🏟️', 'le but|o gol|🥅',
+    'le joueur|o jogador|🧍', 'l\'arbitre (m)|o juiz|🧑‍⚖️', 'la piscine|a piscina|🏊', 'le stade|o estádio|🏟️', 'la randonnée|a trilha, caminhada|🥾',
+    'la danse|a dança|💃', 'la musique|a música|🎵', 'le jeu|o jogo|🎲', 'la pêche|a pesca|🎣', 'le cinéma|o cinema|🎬',
+  ]) },
+  { id: 'tempo', title: 'Tempo e clima', emoji: '⛅', color: '#0EA5E9', words: W([
+    'le soleil|o sol|☀️', 'la pluie|a chuva|🌧️', 'la neige|a neve|❄️', 'le vent|o vento|🌬️', 'le nuage|a nuvem|☁️',
+    'l\'orage (m)|a tempestade|⛈️', 'l\'arc-en-ciel (m)|o arco-íris|🌈', 'la chaleur|o calor|🥵', 'le froid|o frio|🥶', 'le brouillard|a neblina|🌫️',
+    'le printemps|a primavera|🌸', 'l\'été (m)|o verão|🏖️', 'l\'automne (m)|o outono|🍂', 'l\'hiver (m)|o inverno|☃️', 'la saison|a estação|🗓️',
+    'la température|a temperatura|🌡️', 'le ciel|o céu|🌌', 'l\'éclair (m)|o relâmpago|⚡', 'la sécheresse|a seca|🏜️', 'le parapluie|o guarda-chuva|☂️',
+  ]) },
+  { id: 'tecnologia', title: 'Tecnologia', emoji: '💻', color: '#334155', words: W([
+    'l\'ordinateur (m)|o computador|💻', 'le téléphone|o telefone|📱', 'l\'écran (m)|a tela|🖥️', 'le clavier|o teclado|⌨️', 'la souris|o mouse|🖱️',
+    'le logiciel|o programa|💾', 'l\'application (f)|o aplicativo|📲', 'le site|o site|🌐', 'le courriel|o e-mail|📧', 'le mot de passe|a senha|🔑',
+    'le réseau|a rede|🕸️', 'la batterie|a bateria|🔋', 'le chargeur|o carregador|🔌', 'l\'imprimante (f)|a impressora|🖨️', 'le fichier|o arquivo|📄',
+    'télécharger|baixar|⬇️', 'envoyer|enviar|📤', 'la vidéo|o vídeo|📹', 'l\'appareil photo (m)|a câmera|📷', 'le drone|o drone|🛸',
+  ]) },
+  { id: 'ambiente', title: 'Meio ambiente', emoji: '♻️', color: '#16A34A', words: W([
+    'l\'environnement (m)|o meio ambiente|🌍', 'la pollution|a poluição|🏭', 'le recyclage|a reciclagem|♻️', 'les déchets|o lixo|🗑️', 'l\'énergie (f)|a energia|⚡',
+    'le réchauffement|o aquecimento|🌡️', 'la forêt|a floresta|🌳', 'la déforestation|o desmatamento|🪓', 'la biodiversité|a biodiversidade|🦜', 'l\'espèce (f)|a espécie|🐆',
+    'l\'eau potable (f)|a água potável|🚰', 'le fleuve|o rio|🏞️', 'la qualité de l\'eau|a qualidade da água|💧', 'l\'échantillon (m)|a amostra|🧪', 'la carte|o mapa|🗺️',
+    'le panneau solaire|o painel solar|🔆', 'l\'éolienne (f)|a turbina eólica|🌬️', 'protéger|proteger|🛡️', 'la communauté|a comunidade|👥', 'durable|sustentável|🌱',
+  ]) },
+  { id: 'viagem', title: 'Viagem', emoji: '🧳', color: '#0E7490', words: W([
+    'le voyage|a viagem|✈️', 'la valise|a mala|🧳', 'le passeport|o passaporte|🛂', 'le billet|a passagem|🎫', 'l\'avion (m)|o avião|✈️',
+    'l\'aéroport (m)|o aeroporto|🛫', 'la gare|a estação de trem|🚉', 'le train|o trem|🚆', 'l\'hôtel (m)|o hotel|🏨', 'la réservation|a reserva|📅',
+    'la plage|a praia|🏖️', 'la montagne|a montanha|🏔️', 'le musée|o museu|🖼️', 'le plan|o mapa (da cidade)|🗺️', 'le guide|o guia|🧑‍🏫',
+    'le souvenir|a lembrancinha|🎁', 'la douane|a alfândega|🛃', 'le vol|o voo|🛬', 'le départ|a partida|🛫', 'l\'arrivée (f)|a chegada|🛬',
+  ]) },
+  { id: 'tempo2', title: 'Dias, meses e horas', emoji: '📅', color: '#7C5CFC', words: W([
+    'lundi|segunda-feira|1️⃣', 'mardi|terça-feira|2️⃣', 'mercredi|quarta-feira|3️⃣', 'jeudi|quinta-feira|4️⃣', 'vendredi|sexta-feira|5️⃣',
+    'samedi|sábado|6️⃣', 'dimanche|domingo|7️⃣', 'janvier|janeiro|❄️', 'février|fevereiro|💘', 'mars|março|🌱',
+    'avril|abril|🐟', 'mai|maio|🌷', 'juin|junho|☀️', 'juillet|julho|🎆', 'août|agosto|🏖️',
+    'septembre|setembro|🍇', 'octobre|outubro|🎃', 'novembre|novembro|🍂', 'décembre|dezembro|🎄', 'aujourd\'hui|hoje|📍',
+  ]) },
+  { id: 'cozinha', title: 'Na cozinha', emoji: '🍳', color: '#D9822B', words: W([
+    'la poêle|a frigideira|🍳', 'la casserole|a panela|🍲', 'le four|o forno|🔥', 'le couteau|a faca|🔪', 'la fourchette|o garfo|🍴',
+    'la cuillère|a colher|🥄', 'l\'assiette (f)|o prato|🍽️', 'le verre|o copo|🥛', 'la tasse|a xícara|☕', 'la bouteille|a garrafa|🍾',
+    'couper|cortar|🔪', 'cuire|cozinhar|♨️', 'mélanger|misturar|🥣', 'la recette|a receita|📖', 'le repas|a refeição|🍽️',
+    'le petit-déjeuner|o café da manhã|🥐', 'le déjeuner|o almoço|🥗', 'le dîner|o jantar|🍝', 'la serviette|o guardanapo|🧻', 'le plat|o prato (comida)|🥘',
+  ]) },
+  { id: 'verbos1', title: 'Verbos do dia a dia', emoji: '🔁', color: '#C2417B', words: W([
+    'manger|comer|🍽️', 'boire|beber|🥤', 'dormir|dormir|😴', 'parler|falar|🗣️', 'écouter|ouvir|👂',
+    'regarder|olhar, assistir|👀', 'lire|ler|📖', 'écrire|escrever|✍️', 'marcher|andar|🚶', 'courir|correr|🏃',
+    'travailler|trabalhar|💼', 'acheter|comprar|🛒', 'payer|pagar|💳', 'ouvrir|abrir|🔓', 'fermer|fechar|🔒',
+    'chercher|procurar|🔍', 'trouver|encontrar|🎯', 'aider|ajudar|🤝', 'attendre|esperar|⏳', 'oublier|esquecer|🤦',
+  ]) },
+  { id: 'cores', title: 'Cores e formas', emoji: '🎨', color: '#E0A526', words: W([
+    'rouge|vermelho|🔴', 'bleu|azul|🔵', 'vert|verde|🟢', 'jaune|amarelo|🟡', 'noir|preto|⚫',
+    'blanc|branco|⚪', 'gris|cinza|🩶', 'rose|rosa|🌸', 'violet|roxo|🟣', 'orange|laranja|🟠',
+    'marron|marrom|🟤', 'clair|claro|🔆', 'foncé|escuro|🌑', 'le cercle|o círculo|⭕', 'le carré|o quadrado|⬜',
+    'le triangle|o triângulo|🔺', 'l\'étoile (f)|a estrela|⭐', 'le cœur|o coração|❤️', 'la ligne|a linha|➖', 'la couleur|a cor|🎨',
+  ]) },
 ];
 
 // Gender from the article (for colours): 'm' | 'f' | null

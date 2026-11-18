@@ -303,6 +303,10 @@ export default function Session({ exercises: initial, title, kind = 'lesson', ti
 
       {result && !result.flash ? (
         <View style={{ position: 'absolute', left: 0, right: 0, bottom: kb, padding: 20, paddingBottom: kb ? 12 : 20 + insets.bottom, backgroundColor: fbBg, borderTopLeftRadius: 24, borderTopRightRadius: 24, gap: 8 }}>
+          {/* the duck reacts: celebrates combos, comforts mistakes, gets sad when a heart is lost */}
+          <View pointerEvents="none" style={{ position: 'absolute', right: 14, top: -58 }}>
+            <Duck size={66} noBadge mood={result.ok ? (combo >= 5 ? 'celebrate' : combo >= 3 ? 'proud' : 'happy') : heartsOn ? 'sad' : 'comfort'} />
+          </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
             <View style={{ width: 36, height: 36, borderRadius: 18, backgroundColor: fbColor, alignItems: 'center', justifyContent: 'center' }}>
               <Icon name={result.ok ? 'check' : 'close'} size={20} color="#fff" stroke={3} />

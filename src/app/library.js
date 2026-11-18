@@ -81,7 +81,7 @@ export default function Library() {
 
       {tab === 'stories' ? (
         <View style={{ gap: 10 }}>
-          <T v="small">{storiesRead(state)}/{STORY_LIST.length} lidas · 2 histórias por unidade, liberadas junto com as lições.</T>
+          <T v="small">{storiesRead(state)}/{STORY_LIST.length} lidas · 3 histórias por unidade, liberadas junto com as lições.</T>
           {STORY_LIST.map((s) => {
             const locked = s.unit > state.unlockedUnit;
             const done = state.stories?.[s.id];

@@ -247,5 +247,115 @@ export const ADVENTURES = [
       end_best: { end: 'best', lines: ['Tout le monde rit et lève son verre. Quelle élégance !|Todos riem e erguem as taças. Que elegância!'] },
     },
   },
+  {
+    id: 'marche', title: 'Na feira de domingo', emoji: '🍅', level: 'A1', desc: 'Compre frutas e legumes para o almoço.',
+    start: 'a',
+    nodes: {
+      a: { lines: ['Le marchand : « Bonjour ! Qu\'est-ce que vous voulez ? »|O feirante: “Bom dia! O que o senhor quer?”'], choices: [
+        { fr: 'Bonjour ! Un kilo de tomates, s\'il vous plaît.', pt: 'Bom dia! Um quilo de tomates, por favor.', to: 'b' },
+        { fr: 'Tomates !', pt: 'Tomates!', to: 'b2', tip: 'Na França, sempre comece com “Bonjour” — faz toda a diferença no atendimento.' } ] },
+      b: { lines: ['« Voilà ! Et avec ceci ? »|“Aqui está! E o que mais?”'], choices: [
+        { fr: 'Des fraises, s\'il vous plaît. C\'est combien ?', pt: 'Morangos, por favor. Quanto é?', to: 'c' },
+        { fr: 'C\'est tout, merci.', pt: 'É só isso, obrigado.', to: 'c2' } ] },
+      b2: { lines: ['Le marchand sourit : « Bonjour d\'abord, non ? »|O feirante sorri: “Primeiro bom dia, não?”'], choices: [
+        { fr: 'Pardon ! Bonjour ! Un kilo de tomates, s\'il vous plaît.', pt: 'Desculpe! Bom dia! Um quilo de tomates, por favor.', to: 'b' } ] },
+      c: { lines: ['« Quatre euros la barquette. Ça fait six euros en tout. »|“Quatro euros a caixinha. Dá seis euros no total.”'], choices: [
+        { fr: 'Voilà dix euros.', pt: 'Aqui estão dez euros.', to: 'end_best' } ] },
+      c2: { lines: ['« Deux euros, s\'il vous plaît. »|“Dois euros, por favor.”'], choices: [
+        { fr: 'Voilà. Bonne journée !', pt: 'Aqui está. Bom dia!', to: 'end_ok' } ] },
+      end_ok: { end: 'good', lines: ['Tu rentres avec tes tomates. Simple et efficace !|Você volta com os tomates. Simples e eficiente!'] },
+      end_best: { end: 'best', lines: ['« Et voilà votre monnaie : quatre euros. Bon dimanche ! »|“Aqui está seu troco: quatro euros. Bom domingo!”'] },
+    },
+  },
+  {
+    id: 'medecin', title: 'Doente em Lyon', emoji: '🤒', level: 'A2', desc: 'Você acordou com febre durante a viagem. Explique ao médico.',
+    start: 'a',
+    nodes: {
+      a: { lines: ['Le médecin : « Bonjour. Qu\'est-ce qui ne va pas ? »|O médico: “Bom dia. O que está acontecendo?”'], choices: [
+        { fr: 'J\'ai de la fièvre et mal à la gorge depuis hier.', pt: 'Estou com febre e dor de garganta desde ontem.', to: 'b' },
+        { fr: 'Je suis malade.', pt: 'Estou doente.', to: 'b2', tip: 'Dê detalhes: o que sente e desde quando (“depuis hier”).' } ] },
+      b2: { lines: ['« D\'accord… Mais où avez-vous mal exactement ? »|“Certo… Mas onde exatamente dói?”'], choices: [
+        { fr: 'J\'ai mal à la gorge et j\'ai un peu de fièvre.', pt: 'Estou com dor de garganta e um pouco de febre.', to: 'b' } ] },
+      b: { lines: ['« Vous avez des allergies à des médicaments ? »|“O senhor tem alergia a algum remédio?”'], choices: [
+        { fr: 'Non, aucune allergie.', pt: 'Não, nenhuma alergia.', to: 'c' },
+        { fr: 'Oui, je suis allergique à la pénicilline.', pt: 'Sim, sou alérgico à penicilina.', to: 'c' } ] },
+      c: { lines: ['« C\'est une angine. Prenez ce médicament trois fois par jour. »|“É uma amigdalite. Tome este remédio três vezes ao dia.”'], choices: [
+        { fr: 'Pendant combien de jours ?', pt: 'Por quantos dias?', to: 'end_best' },
+        { fr: 'Merci, docteur.', pt: 'Obrigado, doutor.', to: 'end_ok' } ] },
+      end_ok: { end: 'good', lines: ['Tu vas à la pharmacie. Guéris vite !|Você vai à farmácia. Melhoras!'] },
+      end_best: { end: 'best', lines: ['« Cinq jours. Et beaucoup de repos ! » Excellente question !|“Cinco dias. E muito repouso!” Ótima pergunta!'] },
+    },
+  },
+  {
+    id: 'appart', title: 'Procurando apartamento', emoji: '🏢', level: 'A2', desc: 'Você visita um apartamento para alugar em Bordeaux.',
+    start: 'a',
+    nodes: {
+      a: { lines: ['La propriétaire : « Voici le salon. Qu\'en pensez-vous ? »|A proprietária: “Aqui é a sala. O que acha?”'], choices: [
+        { fr: 'Il est très lumineux ! C\'est combien par mois ?', pt: 'É bem iluminada! Quanto é por mês?', to: 'b' },
+        { fr: 'Il y a combien de chambres ?', pt: 'Quantos quartos tem?', to: 'b2' } ] },
+      b2: { lines: ['« Deux chambres et une petite cuisine. »|“Dois quartos e uma cozinha pequena.”'], choices: [
+        { fr: 'Parfait. Et le loyer, c\'est combien ?', pt: 'Perfeito. E o aluguel, quanto é?', to: 'b' } ] },
+      b: { lines: ['« Huit cents euros, charges comprises. »|“Oitocentos euros, com as taxas incluídas.”'], choices: [
+        { fr: 'Est-ce que l\'électricité est comprise aussi ?', pt: 'A eletricidade também está incluída?', to: 'c' },
+        { fr: 'Je le prends !', pt: 'Vou ficar com ele!', to: 'end_ok', tip: 'Antes de fechar, pergunte o que está incluído e quando pode se mudar.' } ] },
+      c: { lines: ['« Non, seulement l\'eau et le chauffage. »|“Não, só a água e o aquecimento.”'], choices: [
+        { fr: 'D\'accord. Je peux emménager quand ?', pt: 'Tudo bem. Quando posso me mudar?', to: 'end_best' } ] },
+      end_ok: { end: 'good', lines: ['Tu as un appartement ! Tu découvriras le reste plus tard…|Você tem um apartamento! O resto você descobre depois…'] },
+      end_best: { end: 'best', lines: ['« Dès le premier du mois. Bienvenue ! » Bien négocié !|“A partir do dia primeiro. Bem-vindo!” Bem negociado!'] },
+    },
+  },
+  {
+    id: 'objets', title: 'Achados e perdidos', emoji: '🎒', level: 'B1', desc: 'Você esqueceu a mochila no trem. Recupere-a.',
+    start: 'a',
+    nodes: {
+      a: { lines: ['L\'agent : « Bonjour, c\'est pour quoi ? »|O atendente: “Bom dia, é para quê?”'], choices: [
+        { fr: 'J\'ai oublié mon sac à dos dans le train de 14 h en provenance de Paris.', pt: 'Esqueci minha mochila no trem das 14h vindo de Paris.', to: 'b' },
+        { fr: 'Mon sac !', pt: 'Minha mochila!', to: 'b2', tip: 'Para achados e perdidos: diga o objeto, onde e quando você o perdeu.' } ] },
+      b2: { lines: ['« Quel sac ? Où ? Quand ? Il me faut plus d\'informations. »|“Que mochila? Onde? Quando? Preciso de mais informações.”'], choices: [
+        { fr: 'Pardon : un sac à dos bleu, dans le train de 14 h.', pt: 'Desculpe: uma mochila azul, no trem das 14h.', to: 'b' } ] },
+      b: { lines: ['« Pouvez-vous le décrire ? Qu\'est-ce qu\'il y avait dedans ? »|“Pode descrevê-la? O que havia dentro?”'], choices: [
+        { fr: 'Il est bleu, avec un ordinateur et un livre de français.', pt: 'É azul, com um computador e um livro de francês.', to: 'c' } ] },
+      c: { lines: ['L\'agent revient : « C\'est celui-ci ? »|O atendente volta: “É esta?”'], choices: [
+        { fr: 'Oui, c\'est le mien ! Merci infiniment !', pt: 'Sim, é a minha! Muitíssimo obrigado!', to: 'end_best' },
+        { fr: 'Oui. Je peux partir ?', pt: 'Sim. Posso ir?', to: 'end_ok' } ] },
+      end_ok: { end: 'good', lines: ['« Signez ici d\'abord. » Sac récupéré !|“Assine aqui primeiro.” Mochila recuperada!'] },
+      end_best: { end: 'best', lines: ['L\'agent sourit : « Avec plaisir. Bon voyage ! »|O atendente sorri: “Com prazer. Boa viagem!”'] },
+    },
+  },
+  {
+    id: 'colloque', title: 'Apresentação num congresso', emoji: '🎤', level: 'B2', desc: 'Você apresenta seu trabalho sobre a Amazônia num congresso em Paris.',
+    start: 'a',
+    nodes: {
+      a: { lines: ['La modératrice : « Je vous laisse la parole. »|A moderadora: “Passo a palavra ao senhor.”'], choices: [
+        { fr: 'Merci. Je vais vous présenter les résultats de trois ans de suivi de la qualité de l\'eau.', pt: 'Obrigado. Vou apresentar os resultados de três anos de monitoramento da qualidade da água.', to: 'b' },
+        { fr: 'Bon… alors… euh… voilà mes slides.', pt: 'Bom… então… é… aqui estão meus slides.', to: 'b2', tip: 'Anuncie o tema logo de cara: a plateia acompanha melhor.' } ] },
+      b2: { lines: ['Le public attend…|O público espera…'], choices: [
+        { fr: 'Pardon. Je vais vous parler de la qualité de l\'eau en Amazonie.', pt: 'Desculpem. Vou falar da qualidade da água na Amazônia.', to: 'b' } ] },
+      b: { lines: ['Une chercheuse demande : « Comment avez-vous impliqué les communautés locales ? »|Uma pesquisadora pergunta: “Como vocês envolveram as comunidades locais?”'], choices: [
+        { fr: 'Les habitants ont participé aux prélèvements après une formation.', pt: 'Os moradores participaram das coletas depois de um treinamento.', to: 'c' },
+        { fr: 'Bonne question ! Nous avons organisé des ateliers d\'éducation environnementale.', pt: 'Boa pergunta! Organizamos oficinas de educação ambiental.', to: 'c' } ] },
+      c: { lines: ['« Et quelles sont les limites de votre étude ? »|“E quais são os limites do seu estudo?”'], choices: [
+        { fr: 'Le nombre de points de mesure reste limité, mais nous comptons l\'élargir.', pt: 'O número de pontos de medição ainda é limitado, mas pretendemos ampliá-lo.', to: 'end_best' },
+        { fr: 'Il n\'y en a pas.', pt: 'Não há limites.', to: 'end_ok', tip: 'Reconhecer limites mostra rigor científico.' } ] },
+      end_ok: { end: 'good', lines: ['Applaudissements polis. Présentation terminée !|Aplausos educados. Apresentação concluída!'] },
+      end_best: { end: 'best', lines: ['La salle applaudit chaleureusement. Bravo !|A sala aplaude calorosamente. Parabéns!'] },
+    },
+  },
+  {
+    id: 'mediation', title: 'O conflito no condomínio', emoji: '🤝', level: 'C1', desc: 'Medie uma discussão entre dois vizinhos sobre a horta do prédio.',
+    start: 'a',
+    nodes: {
+      a: { lines: ['M. Martin : « Ses plantes envahissent tout le potager ! »|Sr. Martin: “As plantas dela invadem a horta toda!”', 'Mme Roux : « Et lui, il n\'arrose jamais les siennes ! »|Sra. Roux: “E ele nunca rega as dele!”'], choices: [
+        { fr: 'Je propose qu\'on écoute chacun à tour de rôle, sans s\'interrompre.', pt: 'Proponho que ouçamos cada um por vez, sem interromper.', to: 'b' },
+        { fr: 'Calmez-vous tous les deux !', pt: 'Calmem-se os dois!', to: 'b2', tip: 'Em mediação, proponha um método em vez de dar ordens.' } ] },
+      b2: { lines: ['Les deux voisins se taisent, vexés.|Os dois vizinhos se calam, ofendidos.'], choices: [
+        { fr: 'Pardonnez-moi. Et si chacun exposait son point de vue calmement ?', pt: 'Desculpem. E se cada um expusesse seu ponto de vista com calma?', to: 'b' } ] },
+      b: { lines: ['Après les avoir écoutés, tu remarques qu\'ils veulent tous les deux un potager bien entretenu.|Depois de ouvi-los, você percebe que os dois querem uma horta bem cuidada.'], choices: [
+        { fr: 'En somme, vous partagez le même objectif. Pourquoi ne pas répartir les parcelles et alterner l\'arrosage ?', pt: 'Em suma, vocês têm o mesmo objetivo. Por que não dividir os canteiros e alternar a rega?', to: 'end_best' },
+        { fr: 'Il faudrait peut-être supprimer le potager.', pt: 'Talvez fosse melhor acabar com a horta.', to: 'end_ok' } ] },
+      end_ok: { end: 'good', lines: ['Le conflit s\'arrête… mais personne n\'est vraiment content.|O conflito para… mas ninguém fica realmente contente.'] },
+      end_best: { end: 'best', lines: ['Ils se serrent la main. « On aurait dû y penser plus tôt ! »|Eles apertam as mãos. “Devíamos ter pensado nisso antes!”'] },
+    },
+  },
 ];
 export const getAdventure = (id) => ADVENTURES.find((a) => a.id === id);

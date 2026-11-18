@@ -84,24 +84,29 @@ export function hitGoal(streak, today = dayKey()) {
 export const STREAK_MILESTONES = [3, 7, 14, 30, 50, 100, 200, 365];
 
 // ─── DAILY MISSIONS ───────────────────────────────────────
-export const MISSION_POOL = [
-  { id: 'xp30', title: 'Ganhe 30 XP', icon: 'bolt', metric: 'xp', target: 30 },
-  { id: 'xp60', title: 'Ganhe 60 XP', icon: 'bolt', metric: 'xp', target: 60 },
-  { id: 'lesson1', title: 'Complete 1 lição', icon: 'book', metric: 'lessons', target: 1 },
-  { id: 'lesson2', title: 'Complete 2 lições', icon: 'book', metric: 'lessons', target: 2 },
-  { id: 'perfect', title: 'Faça uma lição sem erros', icon: 'star', metric: 'perfect', target: 1 },
-  { id: 'correct15', title: 'Acerte 15 exercícios', icon: 'target', metric: 'correct', target: 15 },
-  { id: 'correct25', title: 'Acerte 25 exercícios', icon: 'target', metric: 'correct', target: 25 },
-  { id: 'speak3', title: 'Fale 3 frases em voz alta', icon: 'mic', metric: 'spoken', target: 3 },
-  { id: 'review1', title: 'Faça 1 revisão inteligente', icon: 'refresh', metric: 'reviews', target: 1 },
-  { id: 'combo5', title: 'Acerte 5 seguidas', icon: 'flame', metric: 'combo', target: 5 },
-  { id: 'listen5', title: 'Acerte 5 exercícios de escuta', icon: 'headphones', metric: 'listen', target: 5 },
-  { id: 'verbs10', title: 'Acerte 10 conjugações', icon: 'edit', metric: 'verbs', target: 10 },
-  { id: 'minutes10', title: 'Estude 10 minutos', icon: 'clock', metric: 'minutes', target: 10 },
-  { id: 'story1', title: 'Leia 1 história', icon: 'book', metric: 'stories', target: 1 },
-  { id: 'write3', title: 'Escreva 3 frases em francês', icon: 'edit', metric: 'written', target: 3 },
-  { id: 'pairs5', title: 'Acerte 5 pares de sons', icon: 'headphones', metric: 'pairs', target: 5 },
+// 16 kinds × 5 levels = 80 missions; 5 are drawn per day (one per kind), harder as you advance.
+const MISSION_KINDS = [
+  { k: 'xp', icon: 'bolt', t: (n) => `Ganhe ${n} XP`, steps: [30, 50, 80, 120, 160] },
+  { k: 'lessons', icon: 'book', t: (n) => `Complete ${n} ${n > 1 ? 'lições' : 'lição'}`, steps: [1, 2, 3, 4, 5] },
+  { k: 'perfect', icon: 'star', t: (n) => (n > 1 ? `Faça ${n} sessões sem erros` : 'Faça uma sessão sem erros'), steps: [1, 1, 2, 2, 3] },
+  { k: 'correct', icon: 'target', t: (n) => `Acerte ${n} exercícios`, steps: [15, 25, 40, 60, 80] },
+  { k: 'spoken', icon: 'mic', t: (n) => `Fale ${n} frases em voz alta`, steps: [3, 5, 8, 12, 15] },
+  { k: 'reviews', icon: 'refresh', t: (n) => `Faça ${n} ${n > 1 ? 'revisões inteligentes' : 'revisão inteligente'}`, steps: [1, 1, 2, 2, 3] },
+  { k: 'combo', icon: 'flame', t: (n) => `Acerte ${n} seguidas`, steps: [5, 8, 10, 15, 20] },
+  { k: 'listen', icon: 'headphones', t: (n) => `Acerte ${n} exercícios de escuta`, steps: [5, 8, 12, 16, 20] },
+  { k: 'verbs', icon: 'edit', t: (n) => `Acerte ${n} conjugações`, steps: [5, 10, 15, 20, 30] },
+  { k: 'minutes', icon: 'clock', t: (n) => `Estude ${n} minutos`, steps: [5, 10, 15, 20, 30] },
+  { k: 'stories', icon: 'book', t: (n) => `Leia ${n} ${n > 1 ? 'textos' : 'texto'} da Biblioteca`, steps: [1, 1, 2, 2, 3] },
+  { k: 'written', icon: 'edit', t: (n) => `Escreva ${n} frases em francês`, steps: [3, 5, 8, 10, 15] },
+  { k: 'pairs', icon: 'headphones', t: (n) => `Acerte ${n} pares de sons`, steps: [5, 8, 10, 12, 15] },
+  { k: 'unitPractice', icon: 'target', t: (n) => `Faça ${n} ${n > 1 ? 'treinos' : 'treino'} de unidade`, steps: [1, 1, 2, 2, 3] },
+  { k: 'kindsCount', icon: 'sparkles', t: (n) => `Pratique ${n} tipos diferentes de atividade`, steps: [2, 3, 3, 4, 5] },
+  { k: 'saved', icon: 'bookmark', t: (n) => `Salve ${n} ${n > 1 ? 'frases' : 'frase'} nos favoritos`, steps: [1, 2, 3, 4, 5] },
 ];
+export const MISSION_POOL = MISSION_KINDS.flatMap((m) => m.steps.map((n, i) => ({ id: `${m.k}-${i}`, title: m.t(n), icon: m.icon, metric: m.k, target: n, level: i })));
+// old ids kept so saved days still show
+const LEGACY_MISSIONS = { xp30: 'xp-0', xp60: 'xp-2', lesson1: 'lessons-0', lesson2: 'lessons-1', perfect: 'perfect-0', correct15: 'correct-0', correct25: 'correct-1', speak3: 'spoken-0', review1: 'reviews-0', combo5: 'combo-0', listen5: 'listen-0', verbs10: 'verbs-1', minutes10: 'minutes-1', story1: 'stories-0', write3: 'written-0', pairs5: 'pairs-0' };
+
 
 function seeded(str) {
   let h = 2166136261;
@@ -115,22 +120,21 @@ function seeded(str) {
   };
 }
 
-export function missionsFor(date) {
+export const MISSIONS_PER_DAY = 5;
+export function missionsFor(date, unit = 1) {
   const rnd = seeded('missions-' + date);
-  const pool = [...MISSION_POOL];
+  const kinds = [...MISSION_KINDS];
   const picked = [];
-  const usedMetrics = new Set();
-  while (picked.length < 3 && pool.length) {
-    const i = Math.floor(rnd() * pool.length);
-    const m = pool.splice(i, 1)[0];
-    if (usedMetrics.has(m.metric)) continue;
-    usedMetrics.add(m.metric);
-    picked.push(m);
+  const maxLevel = Math.min(4, Math.floor((unit - 1) / 4) + 1); // unit 1-4: levels 0-1 … unit 13+: up to 4
+  while (picked.length < MISSIONS_PER_DAY && kinds.length) {
+    const k = kinds.splice(Math.floor(rnd() * kinds.length), 1)[0];
+    const lvl = Math.floor(rnd() * (maxLevel + 1));
+    picked.push(MISSION_POOL.find((m) => m.id === `${k.k}-${lvl}`));
   }
-  return picked;
+  return picked.filter(Boolean);
 }
 
-export function freshDaily(date = dayKey()) {
+export function freshDaily(date = dayKey(), unit = 1) {
   return {
     date,
     xp: 0,
@@ -148,14 +152,17 @@ export function freshDaily(date = dayKey()) {
     seconds: 0,
     goalHit: false,
     chestOpened: false,
-    missions: missionsFor(date).map((m) => m.id),
+    unitPractice: 0,
+    saved: 0,
+    kinds: [],
+    missions: missionsFor(date, unit).map((m) => m.id),
   };
 }
 
 export function missionProgress(daily) {
   return daily.missions.map((id) => {
-    const m = MISSION_POOL.find((x) => x.id === id) || MISSION_POOL[0];
-    const raw = m.metric === 'minutes' ? Math.floor((daily.seconds || 0) / 60) : daily[m.metric] || 0;
+    const m = MISSION_POOL.find((x) => x.id === (LEGACY_MISSIONS[id] || id)) || MISSION_POOL[0];
+    const raw = m.metric === 'minutes' ? Math.floor((daily.seconds || 0) / 60) : m.metric === 'kindsCount' ? (daily.kinds || []).length : daily[m.metric] || 0;
     return { ...m, value: Math.min(raw, m.target), done: raw >= m.target };
   });
 }
@@ -245,13 +252,14 @@ export const ACHIEVEMENTS = [
   { id: 'story1', title: 'Primeira leitura', desc: 'Leia uma história até o fim', emoji: '📗', test: (s) => Object.keys(s.stories || {}).filter((k) => /^s\d/.test(k)).length >= 1 },
   { id: 'story10', title: 'Leitor assíduo', desc: 'Leia 10 histórias', emoji: '📚', test: (s) => Object.keys(s.stories || {}).filter((k) => /^s\d/.test(k)).length >= 10 },
   { id: 'story20', title: 'Biblioteca completa', desc: 'Leia 20 histórias', emoji: '🏛️', test: (s) => Object.keys(s.stories || {}).filter((k) => /^s\d/.test(k)).length >= 20 },
+  { id: 'story60', title: 'Enciclopédia ambulante', desc: 'Leia todas as 60 histórias', emoji: '📚', test: (s) => Object.keys(s.stories || {}).filter((k) => /^s\d/.test(k)).length >= 60 },
   { id: 'adv1', title: 'Aventureiro', desc: 'Termine uma aventura interativa', emoji: '🎮', test: (s) => Object.keys(s.adventures || {}).length >= 1 },
   { id: 'advbest', title: 'Diplomata', desc: 'Final perfeito em 5 aventuras', emoji: '🕊️', test: (s) => Object.values(s.adventures || {}).filter((a) => a.best).length >= 5 },
   { id: 'stylist', title: 'Estilista', desc: 'Vista o Canard com 4 itens ao mesmo tempo', emoji: '👗', test: (s) => Object.keys((s.inventory && s.inventory.wear) || {}).length >= 4 },
   { id: 'medal1', title: 'Medalhista', desc: 'Complete um desafio semanal', emoji: '🏅', test: (s) => Object.keys(s.medals || {}).length >= 1 },
   { id: 'medal5', title: 'Colecionador de medalhas', desc: 'Complete 5 desafios semanais', emoji: '🎖️', test: (s) => Object.keys(s.medals || {}).length >= 5 },
   { id: 'placement', title: 'Raio-X do francês', desc: 'Faça o teste de nível', emoji: '🩻', test: (s) => !!s.placement },
-  { id: 'story40', title: 'Rato de biblioteca', desc: 'Leia todas as 40 histórias', emoji: '🐭', test: (s) => Object.keys(s.stories || {}).filter((k) => /^s\d/.test(k)).length >= 40 },
+  { id: 'story40', title: 'Rato de biblioteca', desc: 'Leia 40 histórias', emoji: '🐭', test: (s) => Object.keys(s.stories || {}).filter((k) => /^s\d/.test(k)).length >= 40 },
   { id: 'writer', title: 'Escritor', desc: 'Escreva 5 textos no diário', emoji: '✍️', test: (s) => (s.diary || []).length >= 5 },
   { id: 'duel', title: 'Duelista', desc: 'Vença um duelo contra um amigo', emoji: '⚔️', test: (s) => (s.stats.duelsWon || 0) >= 1 },
   { id: 'ear', title: 'Ouvido afiado', desc: 'Acerte 50 pares de sons', emoji: '👂', test: (s) => (s.stats.pairs || 0) >= 50 },

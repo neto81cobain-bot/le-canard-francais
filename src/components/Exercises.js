@@ -68,8 +68,11 @@ export function McqEx({ ex, value, onChange, locked }) {
     <View>
       <Prompt title={ex.title || 'Escolha a resposta certa'} mood="think">
         <View style={{ backgroundColor: t.surface, borderWidth: 2, borderColor: t.border, borderRadius: 18, padding: 14, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-          {isFr ? <AudioButton text={ex.prompt.replace(/\(.*?\)/g, '')} size={40} /> : null}
-          <Text style={{ flex: 1, fontFamily: isFr ? fonts.displayItalic : fonts.bodyBold, fontSize: isFr ? 21 : 18, lineHeight: isFr ? 29 : 25, color: t.text }}>{ex.prompt}</Text>
+          {ex.speakPrompt ? <AudioButton text={ex.speakPrompt} size={40} autoPlay /> : isFr ? <AudioButton text={ex.prompt.replace(/\(.*?\)/g, '')} size={40} /> : null}
+          <View style={{ flex: 1, gap: 4 }}>
+            <Text style={{ fontFamily: isFr || ex.frPrompt ? fonts.displayItalic : fonts.bodyBold, fontSize: isFr || ex.frPrompt ? 21 : 18, lineHeight: isFr || ex.frPrompt ? 29 : 25, color: t.text }}>{ex.prompt}</Text>
+            {ex.sub ? <T v="small">{ex.sub}</T> : null}
+          </View>
         </View>
       </Prompt>
       <View style={short ? { flexDirection: 'row', flexWrap: 'wrap', gap: 12 } : { gap: 12 }}>
@@ -210,8 +213,14 @@ export function FillEx({ ex, value, onChange, locked }) {
   const [before, after] = ex.prompt.split('___');
   return (
     <View>
-      <Prompt title="Complete a frase" mood="think">
-        <View style={{ backgroundColor: t.surface, borderWidth: 2, borderColor: t.border, borderRadius: 18, padding: 14, gap: 6 }}>
+      <Prompt title={ex.audio ? 'Ouça e complete a palavra que falta' : 'Complete a frase'} mood={ex.audio ? 'listen' : 'think'}>
+        <View style={{ backgroundColor: t.surface, borderWidth: 2, borderColor: ex.audio ? t.sky : t.border, borderRadius: 18, padding: 14, gap: 6 }}>
+          {ex.audio ? (
+            <View style={{ flexDirection: 'row', gap: 10, marginBottom: 4 }}>
+              <AudioButton text={ex.audio} size={46} autoPlay />
+              <AudioButton text={ex.audio} size={38} slow />
+            </View>
+          ) : null}
           <Text style={{ fontFamily: fonts.displayItalic, fontSize: 21, lineHeight: 30, color: t.text }}>
             {before}
             <Text style={{ color: t.sky, textDecorationLine: 'underline' }}>{value ? ' ' + value + ' ' : ' ______ '}</Text>

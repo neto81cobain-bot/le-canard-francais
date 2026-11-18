@@ -268,6 +268,9 @@ export function buildLesson(lesson, { allSentences = [], speak = true, unitNumbe
     if (sp) add(mkSpeak(sp));
   }
   add(mkDialogue(lesson.dialogue));
+  // variety: hear-and-complete, spot the error, answer in a conversation
+  if (unitNumber >= 2 && lesson.fill[2]) add((Math.random() < 0.5 && mkFixError(lesson.fill[2], [...lesson.fill.map((f) => f.a), ...allSentences.flatMap((x) => tokenize(x.fr)).slice(0, 60)])) || mkListenFill(lesson.fill[2]));
+  if ((lesson.dialogue || []).length >= 3 && Math.random() < 0.6) add(mkReply(lesson.dialogue, 1 + Math.floor(Math.random() * (lesson.dialogue.length - 1)), [...lesson.dialogue, ...allSentences]));
   if (lesson.quiz[3]) add(mkQuiz(lesson.quiz[3], lesson.id));
   return out;
 }
@@ -499,4 +502,115 @@ export function mistakeGroupOf(m) {
   const ex = m?.exercise || m;
   const ty = ex?.type === 'mcq' && ex?.kind === 'vocab' ? 'mcq-vocab' : ex?.type;
   return (MISTAKE_GROUPS.find((g) => g.types.includes(ty)) || MISTAKE_GROUPS[2]).id;
+}
+
+// ─── 2.8: new exercise kinds ─────────────────────────────
+// Pick the right reply in a conversation (previous line → next line)
+export function mkReply(lines, i, pool = []) {
+  const prev = lines[i - 1];
+  const cur = lines[i];
+  if (!prev || !cur || !cur.fr || !prev.fr) return null;
+  const others = pick(uniq(pool.filter((l) => l.fr && l.fr !== cur.fr && l.fr !== prev.fr), (l) => l.fr), 3).map((l) => l.fr);
+  if (others.length < 2) return null;
+  return { type: 'mcq', title: 'Qual é a resposta certa na conversa?', prompt: prev.fr, frPrompt: true, speakPrompt: prev.fr, sub: prev.pt, answer: cur.fr, options: shuffle([cur.fr, ...others]), audioOptions: true, item: { fr: cur.fr, pt: cur.pt, key: 's:' + cur.fr } };
+}
+
+// Hear the full sentence, type the missing word
+export function mkListenFill(f) {
+  if (!f || !f.s || !f.s.includes('___') || !f.a) return null;
+  return { type: 'fill', audio: f.s.replace('___', f.a), prompt: f.s, answer: f.a, pt: f.pt, why: f.why };
+}
+
+// Find the wrong word (built from a fill-in sentence with a plausible wrong answer)
+export function mkFixError(f, wrongPool = []) {
+  if (!f || !f.s || !f.a) return null;
+  // the gap must be a whole word (not "quatre-___") and the answer a single word
+  if (!/(^|\s)___([\s.,!?;:]|$)/.test(f.s) || /[\s()]/.test(f.a)) return null;
+  const clean = (w) => String(w).replace(/^[«“"(]+|[.,!?;:»”")]+$/g, '');
+  const wrongs = uniq(wrongPool.map(clean).filter((w) => w && !/[\s()0-9]/.test(w) && normalize(w) !== normalize(f.a)));
+  const wrong = pick(wrongs, 1)[0];
+  if (!wrong) return null;
+  const bad = f.s.replace('___', wrong);
+  const toks = uniq(bad.replace(/\(.*?\)/g, ' ').split(/\s+/).map(clean).filter((w) => w.length > 1 && !/[0-9]/.test(w)));
+  const others = pick(toks.filter((w) => normalize(w) !== normalize(wrong)), 3);
+  if (others.length < 2) return null;
+  return { type: 'mcq', title: 'Encontre a palavra errada', prompt: bad, frPrompt: true, sub: f.pt, answer: wrong, options: shuffle([wrong, ...others]), why: `O certo é: ${f.s.replace('___', f.a)}${f.why ? ' — ' + f.why : ''}` };
+}
+
+// ─── Unit practice: 7 focuses × 5 rounds + a big bank ─────
+export const PRACTICE_FOCUS = [
+  { id: 'vocab', title: 'Vocabulário', emoji: '🔤', color: '#D9822B' },
+  { id: 'listen', title: 'Escuta', emoji: '👂', color: '#0E7490' },
+  { id: 'write', title: 'Escrita', emoji: '✍️', color: '#2A9D8F' },
+  { id: 'grammar', title: 'Gramática', emoji: '📐', color: '#1E3A8A' },
+  { id: 'speak', title: 'Fala', emoji: '🗣️', color: '#E63946' },
+  { id: 'dialog', title: 'Conversa', emoji: '💬', color: '#7C5CFC' },
+  { id: 'mix', title: 'Mistão', emoji: '🎲', color: '#C2417B' },
+];
+export const PRACTICE_ROUNDS = 5;
+
+function unitMaterial(unit) {
+  const lessons = (unit?.lessons || []).filter((l) => !l.story);
+  const vocab = lessons.flatMap((l) => l.vocab || []);
+  const sentences = lessons.flatMap((l) => l.sentences || []);
+  const fills = lessons.flatMap((l) => l.fill || []);
+  const quiz = lessons.flatMap((l) => (l.quiz || []).map((q) => ({ ...q, lessonId: l.id })));
+  const dialogues = lessons.map((l) => l.dialogue || []).filter((d) => d.length >= 2);
+  const lines = dialogues.flat();
+  const wrongPool = fills.map((f) => f.a).filter((w) => w && w.length < 16);
+  return { lessons, vocab, sentences, fills, quiz, dialogues, lines, wrongPool };
+}
+
+// Every exercise the unit can produce (the "banco da unidade")
+export function unitBank(unit, { speak = true } = {}) {
+  const m = unitMaterial(unit);
+  const out = [];
+  const add = (x) => x && out.push(x);
+  const withEmoji = m.vocab.filter((v) => v.emoji);
+  m.vocab.forEach((v) => { add(v.emoji ? mkImage(v, withEmoji) : null); add(mkImagePt(v, m.vocab)); add(mkListenType(v)); });
+  m.sentences.forEach((s) => { add(mkTranslate(s, m.sentences)); add(mkBuild(s, m.sentences)); add(mkBuild(s, m.sentences, { listen: true })); add(mkWrite(s)); add(mkListenType(s)); if (speak && tokenize(s.fr).length <= 8) add(mkSpeak(s)); });
+  m.fills.forEach((f) => { add(mkFill(f)); add(mkListenFill(f)); add(mkFixError(f, m.wrongPool)); if (speak) add(mkSpeakFill(f)); });
+  m.quiz.forEach((q) => add(mkQuiz(q, q.lessonId)));
+  m.dialogues.forEach((d) => { add(mkDialogue(d)); for (let i = 1; i < d.length; i++) add(mkReply(d, i, m.lines)); });
+  if (unit.verbs?.length) buildConjugation({ verbs: unit.verbs, tenses: unit.tenses || ['present'], count: 24, choiceRatio: 0.3 }).forEach(add);
+  return out;
+}
+
+const FOCUS_TYPES = {
+  vocab: (e) => ['image', 'match'].includes(e.type) || (e.type === 'mcq' && e.kind === 'vocab') || (e.type === 'listen' && !(e.item?.fr || '').includes(' ')),
+  listen: (e) => e.type === 'listen' || e.type === 'pairs' || (e.type === 'build' && e.listen) || (e.type === 'fill' && e.audio),
+  write: (e) => e.type === 'write' || (e.type === 'build' && !e.listen) || (e.type === 'fill' && !e.audio),
+  grammar: (e) => (e.type === 'mcq' && !e.kind && !e.speakPrompt) || e.type === 'conjugate' || (e.type === 'fill' && !e.audio),
+  speak: (e) => e.type === 'speak',
+  dialog: (e) => e.type === 'dialogue' || !!e.speakPrompt || e.type === 'translate',
+  mix: () => true,
+};
+
+export function buildUnitPractice(unit, focus = 'mix', { count = 12, speak = true } = {}) {
+  const bank = unitBank(unit, { speak });
+  let list = bank.filter(FOCUS_TYPES[focus] || FOCUS_TYPES.mix);
+  if (focus === 'listen' && (unit.number || 1) <= 12) list = [...list, ...pick(MINIMAL_PAIRS, 4).map((p) => mkPairs(p))];
+  if (focus === 'vocab') list = [...list, mkMatch(unitMaterial(unit).vocab), mkMatch(unitMaterial(unit).vocab)].filter(Boolean);
+  if (list.length < 4) list = bank;
+  return pick(list, Math.min(count, list.length));
+}
+
+// Marathon: endless-feeling mix from everything unlocked
+export function buildMarathon(units, { count = 60, speak = false } = {}) {
+  const bank = units.flatMap((u) => unitBank(u, { speak }));
+  return pick(bank.filter((e) => e.type !== 'speak'), count);
+}
+
+// Word of the day mini-quiz (3 quick questions)
+export function buildWordQuiz(phrase, pool = []) {
+  const others = pick(pool.filter((p) => p.fr !== phrase.fr && p.pt), 3);
+  const out = [];
+  if (others.length >= 2) {
+    out.push({ type: 'mcq', title: 'O que significa?', prompt: phrase.fr, frPrompt: true, speakPrompt: phrase.fr, answer: phrase.pt, options: shuffle([phrase.pt, ...others.map((o) => o.pt)]) });
+    out.push({ type: 'mcq', kind: 'vocab', title: 'Como se diz em francês?', prompt: '“' + phrase.pt + '”', answer: phrase.fr, options: shuffle([phrase.fr, ...others.map((o) => o.fr)]), audioOptions: true });
+  }
+  const b = mkBuild({ fr: phrase.fr, pt: phrase.pt, key: 's:' + phrase.fr }, pool);
+  if (b) out.push(b);
+  else out.push(mkListenType({ fr: phrase.fr, pt: phrase.pt, key: 's:' + phrase.fr }));
+  return out;
 }

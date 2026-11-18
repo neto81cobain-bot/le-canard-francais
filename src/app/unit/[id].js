@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useStore } from '../../store';
-import { useTheme, fonts, radius, unitColors } from '../../theme';
+import { useTheme, fonts, radius, unitColors, palette } from '../../theme';
 import { Screen, T, Button, Card } from '../../components/ui';
 import Icon from '../../components/Icon';
 import { TeachCard } from '../../components/Rich';
 import { getUnit, lessonState, unitProgress, LEVEL_INFO } from '../../content';
+import { PRACTICE_FOCUS, PRACTICE_ROUNDS, unitBank } from '../../engine/exercises';
+import { useMemo } from 'react';
 
 export default function UnitGuide() {
   const { id } = useLocalSearchParams();
@@ -14,9 +16,11 @@ export default function UnitGuide() {
   const t = useTheme();
   const unit = getUnit(id);
   const [open, setOpen] = useState(null);
+  const bankSize = useMemo(() => (unit ? unitBank(unit).length : 0), [id]);
   if (!unit) return null;
   const color = unitColors[(unit.number - 1) % unitColors.length];
   const prog = unitProgress(state, unit);
+  const unitLocked = unit.number > state.unlockedUnit;
 
   return (
     <Screen title={`Unidade ${unit.number}`}>
@@ -45,6 +49,35 @@ export default function UnitGuide() {
           );
         })}
       </View>
+
+      <T v="h3" style={{ marginTop: 28, marginBottom: 4 }}>Treinos da unidade</T>
+      <T v="small" style={{ marginBottom: 12 }}>{PRACTICE_FOCUS.length * PRACTICE_ROUNDS} treinos extras · cada rodada sorteia exercícios diferentes do banco de {bankSize} questões.</T>
+      {unitLocked ? (
+        <Card style={{ alignItems: 'center', gap: 6 }}><Icon name="lock" size={22} color={t.text3} /><T v="small" center>Os treinos liberam junto com a unidade.</T></Card>
+      ) : (
+        <View style={{ gap: 10 }}>
+          {PRACTICE_FOCUS.map((f) => (
+            <View key={f.id} style={{ flexDirection: 'row', alignItems: 'center', gap: 10, padding: 10, borderRadius: radius.lg, backgroundColor: t.surface, borderWidth: 1, borderColor: t.border }}>
+              <View style={{ width: 40, height: 40, borderRadius: 12, backgroundColor: f.color, alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 20 }}>{f.emoji}</Text>
+              </View>
+              <T v="bodyBold" style={{ width: 82 }} numberOfLines={1}>{f.title}</T>
+              <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                {Array.from({ length: PRACTICE_ROUNDS }).map((_, i) => {
+                  const score = state.unitPractice?.[`${unit.id}:${f.id}:${i + 1}`];
+                  const done = score != null;
+                  return (
+                    <Pressable key={i} onPress={() => router.push({ pathname: '/practice/[mode]', params: { mode: 'unit', unit: unit.id, focus: f.id, round: String(i + 1) } })} hitSlop={4} style={{ width: 34, height: 34, borderRadius: 17, alignItems: 'center', justifyContent: 'center', backgroundColor: done ? (score >= 0.8 ? t.success : t.goldSoft) : t.surface2, borderWidth: 2, borderColor: done ? (score >= 0.8 ? t.success : palette.gold) : t.border }}>
+                      <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 13, color: done && score >= 0.8 ? '#fff' : t.text2 }}>{done && score >= 0.8 ? '✓' : i + 1}</Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
+            </View>
+          ))}
+          <Button title={`Banco da unidade · 20 de ${bankSize} questões`} icon="refresh" variant="secondary" onPress={() => router.push({ pathname: '/practice/[mode]', params: { mode: 'unitbank', unit: unit.id } })} />
+        </View>
+      )}
 
       <T v="h3" style={{ marginTop: 28, marginBottom: 6 }}>Resumo da gramática</T>
       <T v="small" style={{ marginBottom: 12 }}>Consulte as explicações a qualquer momento — toque para abrir.</T>

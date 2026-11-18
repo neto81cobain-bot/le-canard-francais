@@ -82,6 +82,15 @@ export default function Reminders() {
         })}
       </View>
 
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14, marginTop: 10, borderRadius: radius.lg, backgroundColor: t.mode === 'dark' ? '#3B2A12' : '#FFF4DC', borderWidth: 1, borderColor: palette.gold }}>
+        <Duck size={54} mood="worried" noBadge />
+        <View style={{ flex: 1 }}>
+          <T v="bodyBold">Canard preocupado · 23h</T>
+          <T v="small">Se o dia estiver acabando sem prática, ele fica aflito e te avisa.</T>
+        </View>
+        <Switch value={state.settings.worriedPing !== false} onValueChange={(v) => actions.setSettings({ worriedPing: v })} trackColor={{ true: palette.gold }} />
+      </View>
+
       <Button title="Novo lembrete" icon="plus" style={{ marginTop: 16 }} onPress={openNew} />
       <T v="caption" center style={{ marginTop: 10 }}>Dica: o “Proteger o streak” só toca nos dias em que você ainda não estudou.</T>
 

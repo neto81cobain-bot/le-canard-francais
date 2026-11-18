@@ -35,7 +35,7 @@ export default function HandsFree() {
 
   const run = (k) => {
     const my = ++token.current;
-    if (k >= items.length) { setPhase('done'); actions.addXP(Math.min(20, items.length)); return; }
+    if (k >= items.length) { setPhase('done'); actions.addXP(Math.min(20, items.length)); actions.markKind('handsfree'); return; }
     setI(k);
     setPhase('pt');
     const it = items[k];

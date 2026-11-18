@@ -93,8 +93,9 @@ function Effects() {
       practicedToday: state.streak.lastDay === dayKey(),
       streakCount: state.streak.count,
       due: dueItems(state.srs, Date.now(), 999).length,
+      worried: state.settings.worriedPing !== false,
     });
-  }, [state.onboarded, state.profile.reminder, state.settings.notifStreak, state.settings.nightly, state.settings.reminders, state.studyHours, state.streak.lastDay, state.streak.count, state.daily?.date]);
+  }, [state.onboarded, state.profile.reminder, state.settings.notifStreak, state.settings.nightly, state.settings.reminders, state.settings.worriedPing, state.studyHours, state.streak.lastDay, state.streak.count, state.daily?.date]);
 
   // Cloud sync: on open, when progress changes (throttled) and on background
   const sync = async (force) => {

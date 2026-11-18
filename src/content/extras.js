@@ -1,3 +1,4 @@
+import { SCENARIOS_2 } from './scenarios2';
 // Pronúncia, frases do dia, notas culturais, falsos cognatos, cenários de conversa e nivelamento.
 
 export const SOUNDS = [
@@ -154,7 +155,7 @@ export const FALSE_FRIENDS = [
   { fr: 'exquis', looks: 'esquisito', means: 'delicioso, requintado', ex: 'Ce dessert est exquis !|Esta sobremesa é deliciosa!' },
 ];
 
-export const SCENARIOS = [
+const SCENARIOS_1 = [
   { id: 'boulangerie', title: 'Na padaria', emoji: '🥐', level: 'A1', role: 'boulangère (padeira) simpática numa boulangerie em Paris', goal: 'Compre uma baguete e dois croissants e pague.', opener: 'Bonjour ! Qu\'est-ce que je vous sers aujourd\'hui ?' },
   { id: 'cafe', title: 'No café', emoji: '☕', level: 'A1', role: 'serveur (garçom) de um café parisiense', goal: 'Peça uma bebida e algo para comer, depois peça a conta.', opener: 'Bonjour ! Vous désirez ?' },
   { id: 'hotel', title: 'No hotel', emoji: '🏨', level: 'A2', role: 'réceptionniste (recepcionista) de um hotel em Lyon', goal: 'Faça o check-in: diga seu nome, quantas noites e pergunte o horário do café da manhã.', opener: 'Bonsoir et bienvenue ! Vous avez une réservation ?' },
@@ -196,3 +197,5 @@ export const PLACEMENT = [
   { q: 'Forma formal de "Est-ce qu\'il parle ?":', a: 'Parle-t-il ?', o: ['Parle-t-il ?', 'Parle-il ?', 'Il parle-t-il ?', 'Parle il ?'], unit: 19 },
   { q: '"Ce n\'est pas terrible" significa…', a: 'Não é muito bom', o: ['Não é muito bom', 'É ótimo', 'É assustador', 'É incrível'], unit: 20 },
 ];
+
+export const SCENARIOS = [...SCENARIOS_1, ...SCENARIOS_2];

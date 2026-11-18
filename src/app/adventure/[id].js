@@ -30,6 +30,7 @@ export default function Adventure() {
       const best = node.end === 'best';
       const first = !state.adventures?.[adv.id];
       actions.addXP(first ? (best ? 30 : 20) : 5);
+      actions.markKind('adventure');
       actions.set((s) => ({ adventures: { ...(s.adventures || {}), [adv.id]: { best: best || !!s.adventures?.[adv.id]?.best, at: Date.now() } } }));
     }
   }, [cur?.node]);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -11,6 +11,11 @@ import { Appear } from '../../components/extras';
 import { SOUNDS, SCENARIOS } from '../../content/extras';
 import { aiAvailable } from '../../services/ai';
 import { useOnline } from '../../services/net';
+import TierTabs from '../../components/TierTabs';
+import { TIERS, CEFR, tierOf, userLevel, levelOpen, unlockAt } from '../../content/levels';
+import { toast } from '../../services/dialog';
+
+const SC_TIERS = TIERS.map((x) => ({ ...x, level: x.levels[0] }));
 
 export default function Speak() {
   const { state } = useStore();
@@ -18,6 +23,8 @@ export default function Speak() {
   const insets = useSafeAreaInsets();
   const ai = aiAvailable();
   const online = useOnline();
+  const [scTier, setScTier] = useState(() => tierOf(userLevel(state)).id);
+  const scList = SCENARIOS.filter((s) => tierOf(s.level).id === scTier).sort((a, b) => CEFR.indexOf(a.level) - CEFR.indexOf(b.level));
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: t.bg }} contentContainerStyle={{ padding: 20, paddingTop: insets.top + 16, paddingBottom: 50 }}>
@@ -96,9 +103,11 @@ export default function Speak() {
 
       <Section title="Conversa com o Canard" />
       <T v="small" style={{ marginTop: -6, marginBottom: 12 }}>Situações reais: você fala, o Canard responde e corrige com gentileza.</T>
+      <TierTabs tiers={SC_TIERS} value={scTier} onChange={setScTier} counts={Object.fromEntries(SC_TIERS.map((x) => [x.id, SCENARIOS.filter((s) => tierOf(s.level).id === x.id).length]))} />
+      <View style={{ height: 10 }} />
       <Card padded={false}>
-        {SCENARIOS.map((s, i) => (
-          <Tap key={s.id} scaleTo={0.99} onPress={() => router.push({ pathname: '/conversation/[id]', params: { id: s.id } })} style={{ flexDirection: 'row', alignItems: 'center', gap: 14, padding: 14, borderBottomWidth: i === SCENARIOS.length - 1 ? 0 : 1, borderBottomColor: t.border }}>
+        {scList.map((s, i) => (
+          <Tap key={s.id} scaleTo={0.99} onPress={() => (levelOpen(s.level, state) ? router.push({ pathname: '/conversation/[id]', params: { id: s.id } }) : toast(`🔒 Libera no nível ${unlockAt(s.level)}`))} style={{ flexDirection: 'row', alignItems: 'center', gap: 14, padding: 14, borderBottomWidth: i === scList.length - 1 ? 0 : 1, borderBottomColor: t.border, opacity: levelOpen(s.level, state) ? 1 : 0.5 }}>
             <Text style={{ fontSize: 30 }}>{s.emoji}</Text>
             <View style={{ flex: 1 }}>
               <T v="bodyBold">{s.title}</T>

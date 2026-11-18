@@ -89,7 +89,7 @@ function bumpWeek(w, patch) {
 function rollover(s) {
   const today = dayKey();
   let next = s;
-  if (s.daily?.date !== today) next = { ...next, daily: freshDaily(today) };
+  if (s.daily?.date !== today) next = { ...next, daily: freshDaily(today, s.unlockedUnit || 1) };
   const wk = weekKey();
   if (s.week?.key !== wk) {
     next = { ...next, week: { key: wk, xp: 0 }, lastWeek: s.week?.key ? s.week : next.lastWeek || null, weeks: s.week?.key ? [...(s.weeks || []), s.week].slice(-12) : s.weeks || [], league: { ...next.league, needsResult: s.week?.key || null } };
@@ -194,6 +194,7 @@ export function StoreProvider({ children }) {
       })),
 
     addXP: (amount) => update((s) => applyXP(s, amount)),
+    markKind: (kind) => update((s) => ((s.daily.kinds || []).includes(kind) ? s : { ...s, daily: { ...s.daily, kinds: [...(s.daily.kinds || []), kind] } })),
 
     // Called after every answered exercise.
     recordAnswer: ({ item, correct, combo, kind }) =>
@@ -277,6 +278,8 @@ export function StoreProvider({ children }) {
           perfect: next.daily.perfect + (perfect ? 1 : 0),
           reviews: next.daily.reviews + (kind === 'review' ? 1 : 0),
           seconds: next.daily.seconds + seconds,
+          unitPractice: (next.daily.unitPractice || 0) + (kind === 'unit' || kind === 'unitbank' ? 1 : 0),
+          kinds: kind && !(next.daily.kinds || []).includes(kind) ? [...(next.daily.kinds || []), kind] : next.daily.kinds || [],
         };
         if (lessonId) {
           const prev = s.lessons[lessonId] || {};
@@ -392,7 +395,7 @@ export function StoreProvider({ children }) {
     toggleSaved: (card) =>
       update((s) => {
         const exists = s.saved.find((c) => c.fr === card.fr);
-        return { ...s, saved: exists ? s.saved.filter((c) => c.fr !== card.fr) : [{ ...card, at: Date.now() }, ...s.saved] };
+        return { ...s, saved: exists ? s.saved.filter((c) => c.fr !== card.fr) : [{ ...card, at: Date.now() }, ...s.saved], daily: exists ? s.daily : { ...s.daily, saved: (s.daily.saved || 0) + 1 } };
       }),
 
     addTranslation: (entry) => update((s) => ({ ...s, translateHistory: [entry, ...s.translateHistory].slice(0, 50) })),

@@ -59,6 +59,15 @@ const EYES = {
     ['path', { d: 'M108 60 Q116 61 124 56', fill: 'none', ...st, strokeWidth: 2.6 }],
     ['path', { d: 'M141 55 Q149 60 157 60', fill: 'none', ...st, strokeWidth: 2.6 }],
   ],
+  worried: [
+    ['ellipse', { cx: 117, cy: 73, rx: 6.2, ry: 8.4, fill: O }],
+    ['circle', { cx: 119.3, cy: 69.5, r: 2.4, fill: '#FFFFFF' }],
+    ['ellipse', { cx: 148, cy: 71, rx: 5.8, ry: 8, fill: O }],
+    ['circle', { cx: 150.1, cy: 67.5, r: 2.2, fill: '#FFFFFF' }],
+    ['path', { d: 'M108 59 Q115 55 123 51', fill: 'none', ...st, strokeWidth: 2.8 }],
+    ['path', { d: 'M141 50 Q149 53 157 58', fill: 'none', ...st, strokeWidth: 2.8 }],
+    ['path', { d: 'M96 52 Q90 62 93 67 Q97 71 101 66 Q103 60 96 52 Z', fill: '#7DD3FC', stroke: '#0284C7', strokeWidth: 1.6 }],
+  ],
   up: [
     ['ellipse', { cx: 118, cy: 70, rx: 6.5, ry: 9, fill: O }],
     ['circle', { cx: 120.5, cy: 64, r: 2.6, fill: '#FFFFFF' }],
@@ -87,7 +96,7 @@ const BEAKS = {
 export const MOOD_FACE = {
   happy: ['open', 'closed'], wave: ['happy', 'closed'], teach: ['open', 'open'], celebrate: ['happy', 'open'],
   think: ['up', 'closed'], comfort: ['happy', 'closed'], listen: ['open', 'closed'], speak: ['open', 'open'],
-  sleep: ['closed', 'closed'], proud: ['happy', 'closed'], offline: ['sad', 'closed'], sad: ['sad', 'closed'],
+  sleep: ['closed', 'closed'], proud: ['happy', 'closed'], offline: ['sad', 'closed'], sad: ['sad', 'closed'], worried: ['worried', 'closed'],
 };
 
 // ─── WEARABLES (drawn) ────────────────────────────────────

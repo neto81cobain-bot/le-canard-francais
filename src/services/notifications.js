@@ -54,6 +54,11 @@ function contentFor(r, night, { practicedToday, streakCount, due }) {
   const ph = DAILY_PHRASES[dayIdx(d) % DAILY_PHRASES.length];
   const today = night === 0;
   switch (r.kind) {
+    case 'worried': {
+      if (today && practicedToday) return null;
+      const [title, body] = WORRIED[dayIdx(d) % WORRIED.length];
+      return { title, body: streakCount > 0 ? `${body} Seu streak de ${streakCount} dias agradece. 🔥` : body };
+    }
     case 'custom':
       return { title: r.label || 'Le canard français 🦆', body: r.text || 'Hora do francês!' };
     case 'phrase':
@@ -75,10 +80,18 @@ function contentFor(r, night, { practicedToday, streakCount, due }) {
   }
 }
 
-export async function scheduleReminders({ reminders = [], practicedToday, streakCount, due = 0 }) {
+const WORRIED = [
+  ['😟 O Canard está preocupado…', 'Já é tarde e você ainda não praticou hoje. Bora salvar o dia com 5 minutinhos?'],
+  ['😟 Psiu… ainda dá tempo!', 'O Canard não consegue dormir sem a sua lição de hoje. 🦆💤'],
+  ['😰 Alerta de pato aflito!', 'Faltam poucas horas para o dia acabar. Uma lição rápida resolve!'],
+];
+
+export async function scheduleReminders({ reminders = [], practicedToday, streakCount, due = 0, worried = true }) {
   try {
     await Notifications.cancelAllScheduledNotificationsAsync();
     const on = reminders.filter((r) => r.enabled && (r.days || []).length);
+    // the worried duck at 23h (only on days you haven't practised — it is re-planned whenever you study)
+    if (worried) on.push({ id: 'worried', hour: 23, minute: 0, days: [0, 1, 2, 3, 4, 5, 6], kind: 'worried' });
     if (!on.length) return;
     const ok = await ensurePermission();
     if (!ok) return;

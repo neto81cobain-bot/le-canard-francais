@@ -2,7 +2,7 @@
   "expo": {
     "name": "Le canard français",
     "slug": "le-canard-francais",
-    "version": "2.7.0",
+    "version": "2.8.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "scheme": "com.raimundo.lecanardfrancais",

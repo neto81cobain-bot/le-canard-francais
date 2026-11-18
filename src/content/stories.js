@@ -464,8 +464,9 @@ export function parseStory(s) {
 }
 
 import { STORIES_2 } from './stories2';
+import { STORIES_3 } from './stories3';
 
-export const STORY_LIST = [...STORIES, ...STORIES_2].sort((a, b) => a.unit - b.unit).map(parseStory);
+export const STORY_LIST = [...STORIES, ...STORIES_2, ...STORIES_3].sort((a, b) => a.unit - b.unit).map(parseStory);
 import { NEWS } from './news';
 
 export const NEWS_LIST = NEWS.map(parseStory);

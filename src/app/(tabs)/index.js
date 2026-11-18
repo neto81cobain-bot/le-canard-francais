@@ -10,6 +10,7 @@ import Icon from '../../components/Icon';
 import Duck, { DuckAvatar, autoMood } from '../../components/Duck';
 import { AudioButton, Appear } from '../../components/extras';
 import { WeeklyChallengeCard, WeeklySummaryCard, WeeklyChestCard, WeeklyPlanCard } from '../../components/Weekly';
+import { HomeTabs, Shortcuts, DailyPlanCard, MilestoneCard, NightCard, SundayCard, ExploreTab } from '../../components/Home';
 import { avatarOf } from '../../services/photo';
 import { UNITS, lessonState, unitProgress, nextLesson, LEVEL_INFO } from '../../content';
 import { DAILY_PHRASES, CULTURE } from '../../content/extras';
@@ -91,6 +92,7 @@ export default function Learn() {
   const unitY = useRef({});
   const [reveal, setReveal] = useState(false);
   const [chest, setChest] = useState(null);
+  const [homeTab, setHomeTab] = useState('hoje');
   const [lockedInfo, setLockedInfo] = useState(null);
 
   const next = useMemo(() => nextLesson(state), [state.lessons, state.unitTests, state.unlockedUnit]);
@@ -111,13 +113,13 @@ export default function Learn() {
 
   useEffect(() => {
     const cur = next?.unit?.id;
-    if (!cur) return;
+    if (!cur || homeTab !== 'trilha') return;
     const id = setTimeout(() => {
       const y = unitY.current[cur];
       if (y && y > 400) scrollRef.current?.scrollTo({ y: y - 120, animated: true });
     }, 500);
     return () => clearTimeout(id);
-  }, []);
+  }, [homeTab]);
 
   const startNext = () => {
     if (!next) return;
@@ -142,7 +144,7 @@ export default function Learn() {
           <DuckAvatar size={42} photo={avatarOf(state)} mood={duckMood} />
         </Pressable>
         <View style={{ flex: 1 }}>
-          <T v="caption">{duckMood === 'sad' ? 'O Canard sentiu sua falta 🥺' : duckMood === 'sleep' ? 'O Canard cochilou esperando… 💤' : greet + ','}</T>
+          <T v="caption">{duckMood === 'worried' ? 'O Canard está preocupado… 😟' : duckMood === 'sad' ? 'O Canard sentiu sua falta 🥺' : duckMood === 'sleep' ? 'O Canard cochilou esperando… 💤' : greet + ','}</T>
           <T v="title" numberOfLines={1}>{firstName}!</T>
         </View>
         <Chip icon="flame" label={String(state.streak.count)} color={state.streak.lastDay === dayKey() ? palette.red : t.text3} bg={state.streak.lastDay === dayKey() ? palette.redSoft : t.surface2} big />
@@ -151,6 +153,10 @@ export default function Learn() {
       </View>
 
       <ScrollView ref={scrollRef} contentContainerStyle={{ padding: 20, paddingBottom: 60 }} showsVerticalScrollIndicator={false}>
+        <HomeTabs value={homeTab} onChange={setHomeTab} />
+        <View style={{ height: 14 }} />
+        {homeTab === 'hoje' ? (
+          <>
         {/* CHEERS & DUEL INVITES */}
         {(state.cheers || []).length ? (() => {
           const duelsIn = state.cheers.filter((c) => c.kind === 'duel');
@@ -173,9 +179,52 @@ export default function Learn() {
           );
         })() : null}
 
+        {/* CONTINUE */}
+        {next ? (
+          <Appear delay={80}>
+            <Tap onPress={startNext} style={[{ marginTop: 14, borderRadius: radius.xl, backgroundColor: unitColors[(next.unit.number - 1) % unitColors.length].main, padding: 20, flexDirection: 'row', alignItems: 'center', gap: 14, overflow: 'hidden' }, shadow(t, 2)]}>
+              <View style={{ flex: 1 }}>
+                <Text style={{ fontFamily: fonts.bodyHeavy, color: 'rgba(255,255,255,0.75)', fontSize: 12, letterSpacing: 1 }}>UNIDADE {next.unit.number} · {next.unit.level}</Text>
+                <Text style={{ fontFamily: fonts.display, color: '#fff', fontSize: 24, marginTop: 2 }}>{next.test ? 'Teste da unidade' : next.lesson.title}</Text>
+                <Text style={{ fontFamily: fonts.bodySemi, color: 'rgba(255,255,255,0.9)', fontSize: 14, marginTop: 2 }}>{next.test ? 'Passe com 80% para liberar a próxima unidade' : next.lesson.goal}</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 14, alignSelf: 'flex-start', backgroundColor: '#fff', borderRadius: 14, paddingHorizontal: 14, paddingVertical: 8 }}>
+                  <Icon name="play" size={14} color={unitColors[(next.unit.number - 1) % unitColors.length].main} fill={unitColors[(next.unit.number - 1) % unitColors.length].main} />
+                  <Text style={{ fontFamily: fonts.bodyHeavy, color: unitColors[(next.unit.number - 1) % unitColors.length].main, fontSize: 15 }}>{state.lastLessonId ? 'Continuar' : 'Começar'}</Text>
+                </View>
+              </View>
+              <Text style={{ fontSize: 64 }}>{next.test ? '🏆' : next.lesson.emoji}</Text>
+            </Tap>
+          </Appear>
+        ) : (
+          <Card style={{ marginTop: 16, alignItems: 'center', gap: 6 }}>
+            <Duck mood="proud" size={100} />
+            <T v="h3" center>Você completou todo o curso! 🎓</T>
+            <T v="small" center>Continue revisando na aba Praticar para não esquecer.</T>
+          </Card>
+        )}
+
+        <Shortcuts />
+        {duckMood === 'worried' ? (
+          <Appear delay={60}>
+            <Tap onPress={() => router.push({ pathname: '/practice/[mode]', params: { mode: 'quick' } })} style={{ marginTop: 16, flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14, borderRadius: radius.xl, backgroundColor: t.mode === 'dark' ? '#3B2A12' : '#FFF4DC', borderWidth: 2, borderColor: palette.gold }}>
+              <Duck size={74} mood="worried" />
+              <View style={{ flex: 1, gap: 2 }}>
+                <T v="bodyBold">Ei… você ainda não praticou hoje!</T>
+                <T v="small" color={t.text}>{state.streak.count > 0 ? `Seu streak de ${state.streak.count} dias está em risco. ` : ''}5 minutinhos e o Canard dorme tranquilo. 🙏</T>
+                <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 13, color: palette.goldDark, marginTop: 2 }}>Fazer o treino de 5 min →</Text>
+              </View>
+            </Tap>
+          </Appear>
+        ) : null}
+
+        {duckMood !== 'worried' && new Date().getHours() >= 21 && state.streak.lastDay === dayKey() ? <NightCard style={{ marginTop: 16 }} /> : null}
+        <Appear delay={90}>
+          <DailyPlanCard style={{ marginTop: 16 }} />
+        </Appear>
+        <SundayCard style={{ marginTop: 12 }} />
         {/* DAILY GOAL + MISSIONS */}
-        <Appear>
-          <Card style={{ padding: 18 }}>
+        <Appear delay={100}>
+          <Card style={{ padding: 18, marginTop: 16 }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
               <Ring value={state.daily.xp / goal} size={74} stroke={9} color={state.daily.goalHit ? t.success : palette.gold}>
                 <Text style={{ fontSize: 26 }}>{state.daily.goalHit ? '✅' : '🎯'}</Text>
@@ -192,7 +241,7 @@ export default function Learn() {
               <Tap
                 onPress={() => {
                   if (state.daily.chestOpened) return;
-                  if (!allMissions) return Alert.alert('Baú das missões', 'Complete as 3 missões de hoje para abrir o baú! 🎁');
+                  if (!allMissions) return Alert.alert('Baú das missões', 'Complete as missões de hoje para abrir o baú! 🎁');
                   const r = actions.openDailyChest();
                   fx.chest();
                   setChest(r);
@@ -218,54 +267,7 @@ export default function Learn() {
           </Card>
         </Appear>
 
-        {/* CONTINUE */}
-        {next ? (
-          <Appear delay={80}>
-            <Tap onPress={startNext} style={[{ marginTop: 16, borderRadius: radius.xl, backgroundColor: unitColors[(next.unit.number - 1) % unitColors.length].main, padding: 20, flexDirection: 'row', alignItems: 'center', gap: 14, overflow: 'hidden' }, shadow(t, 2)]}>
-              <View style={{ flex: 1 }}>
-                <Text style={{ fontFamily: fonts.bodyHeavy, color: 'rgba(255,255,255,0.75)', fontSize: 12, letterSpacing: 1 }}>UNIDADE {next.unit.number} · {next.unit.level}</Text>
-                <Text style={{ fontFamily: fonts.display, color: '#fff', fontSize: 24, marginTop: 2 }}>{next.test ? 'Teste da unidade' : next.lesson.title}</Text>
-                <Text style={{ fontFamily: fonts.bodySemi, color: 'rgba(255,255,255,0.9)', fontSize: 14, marginTop: 2 }}>{next.test ? 'Passe com 80% para liberar a próxima unidade' : next.lesson.goal}</Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 14, alignSelf: 'flex-start', backgroundColor: '#fff', borderRadius: 14, paddingHorizontal: 14, paddingVertical: 8 }}>
-                  <Icon name="play" size={14} color={unitColors[(next.unit.number - 1) % unitColors.length].main} fill={unitColors[(next.unit.number - 1) % unitColors.length].main} />
-                  <Text style={{ fontFamily: fonts.bodyHeavy, color: unitColors[(next.unit.number - 1) % unitColors.length].main, fontSize: 15 }}>{state.lastLessonId ? 'Continuar' : 'Começar'}</Text>
-                </View>
-              </View>
-              <Text style={{ fontSize: 64 }}>{next.test ? '🏆' : next.lesson.emoji}</Text>
-            </Tap>
-          </Appear>
-        ) : (
-          <Card style={{ marginTop: 16, alignItems: 'center', gap: 6 }}>
-            <Duck mood="proud" size={100} />
-            <T v="h3" center>Você completou todo o curso! 🎓</T>
-            <T v="small" center>Continue revisando na aba Praticar para não esquecer.</T>
-          </Card>
-        )}
-
-        {/* QUICK PRACTICE: 5-min workout + review + story */}
-        <Appear delay={110}>
-          <Tap onPress={() => router.push({ pathname: '/practice/[mode]', params: { mode: 'quick' } })} style={[{ marginTop: 16, borderRadius: radius.lg, padding: 16, backgroundColor: palette.gold, flexDirection: 'row', alignItems: 'center', gap: 14 }, shadow(t, 1)]}>
-            <Text style={{ fontSize: 34 }}>⚡</Text>
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontFamily: fonts.display, fontSize: 19, color: '#fff' }}>Treino de 5 minutos</Text>
-              <Text style={{ fontFamily: fonts.bodySemi, fontSize: 13, color: 'rgba(255,255,255,0.92)' }}>Revisão + escuta + escrita + fala, num só</Text>
-            </View>
-            <Icon name="play" size={20} color="#fff" fill="#fff" />
-          </Tap>
-          <View style={{ flexDirection: 'row', gap: 12, marginTop: 12 }}>
-            <Tap onPress={() => router.push({ pathname: '/practice/[mode]', params: { mode: 'review' } })} style={[{ flex: 1, borderRadius: radius.lg, padding: 14, backgroundColor: t.surface, borderWidth: 2, borderColor: due.length ? palette.gold : t.border, gap: 4 }]}>
-              <Text style={{ fontSize: 26 }}>🧠</Text>
-              <T v="bodyBold">{due.length ? `${Math.min(due.length, 99)} para revisar` : 'Revisão em dia'}</T>
-              <T v="caption">{due.length ? 'Leva ~2 minutos' : 'Treinar os mais fracos'}</T>
-            </Tap>
-            <Tap onPress={() => router.push(nextStory ? { pathname: '/story/[id]', params: { id: nextStory.id } } : '/library')} style={[{ flex: 1, borderRadius: radius.lg, padding: 14, backgroundColor: t.surface, borderWidth: 2, borderColor: t.border, gap: 4 }]}>
-              <Text style={{ fontSize: 26 }}>{nextStory ? nextStory.emoji : '📚'}</Text>
-              <T v="bodyBold" numberOfLines={1}>{nextStory ? nextStory.title : 'Histórias'}</T>
-              <T v="caption">{nextStory ? `História ${nextStory.level} para ler` : 'Releia suas favoritas'}</T>
-            </Tap>
-          </View>
-        </Appear>
-
+        <MilestoneCard style={{ marginTop: 16 }} />
         {/* WEEKLY CHALLENGE + LAST WEEK */}
         <Appear delay={125}>
           <WeeklyChallengeCard style={{ marginTop: 16 }} />
@@ -302,11 +304,21 @@ export default function Learn() {
               </View>
               <AudioButton text={phrase.fr} size={48} />
             </View>
+            <Pressable onPress={() => router.push({ pathname: '/practice/[mode]', params: { mode: 'wordquiz' } })} style={{ marginHorizontal: 18, marginBottom: 16, paddingVertical: 10, borderRadius: 12, alignItems: 'center', backgroundColor: state.daily.wordQuiz ? t.successSoft : t.skySoft }}>
+              <Text style={{ fontFamily: fonts.bodyHeavy, color: state.daily.wordQuiz ? t.success : t.sky }}>{state.daily.wordQuiz ? '✓ Mini-quiz feito' : '🎯 Fazer o mini-quiz (3 perguntas)'}</Text>
+            </Pressable>
           </Card>
         </Appear>
           </>
         ) : null}
 
+          </>
+        ) : null}
+
+        {homeTab === 'explorar' ? <ExploreTab /> : null}
+
+        {homeTab === 'trilha' ? (
+          <>
         {/* TRAIL */}
         {UNITS.map((unit, ui) => {
           const color = unitColors[ui % unitColors.length];
@@ -385,6 +397,8 @@ export default function Learn() {
             </View>
           );
         })}
+          </>
+        ) : null}
       </ScrollView>
 
       <Sheet visible={!!lockedInfo} onClose={() => setLockedInfo(null)}>

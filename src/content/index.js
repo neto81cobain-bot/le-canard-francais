@@ -132,7 +132,31 @@ export const BANK_TOPICS = [
   ...EXTRA_TOPICS.map(({ q, ...t }) => t),
 ];
 
+// One extra topic per lesson: its quiz + fill-in questions, reshuffled (≈100 topics)
+const UCOLORS = ['#1E3A8A', '#E63946', '#2A9D8F', '#D9822B', '#7C5CFC', '#0E7490', '#C2417B', '#B87333'];
+export const LESSON_TOPICS = UNITS.flatMap((u) => u.lessons.filter((l) => !l.story && (l.vocab || []).length + (l.quiz || []).length >= 5).map((l) => ({
+  key: 'l:' + l.id, title: l.title, emoji: l.emoji, sub: `Unidade ${u.number} · ${l.goal}`, color: UCOLORS[(u.number - 1) % UCOLORS.length], level: u.level, unit: u.number,
+})));
+
+function lessonTopicQuestions(id) {
+  const l = getLesson(id);
+  if (!l) return [];
+  const fills = l.fill || [];
+  const answers = fills.map((f) => f.a);
+  const fq = fills.map((f) => {
+    const wrong = Array.from(new Set(answers.filter((a) => a !== f.a))).slice(0, 3);
+    return wrong.length >= 2 ? { q: f.s + (f.pt ? ` (${f.pt})` : ''), a: f.a, o: [f.a, ...wrong], why: f.why || '' } : null;
+  }).filter(Boolean);
+  const vocab = l.vocab || [];
+  const vq = vocab.map((v, i) => {
+    const wrong = vocab.filter((x) => x.pt !== v.pt).map((x) => x.pt).sort(() => Math.random() - 0.5).slice(0, 3);
+    return wrong.length >= 2 ? (i % 2 ? { q: `Como se diz “${v.pt}”?`, a: v.fr, o: [v.fr, ...vocab.filter((x) => x.fr !== v.fr).map((x) => x.fr).sort(() => Math.random() - 0.5).slice(0, 3)], why: '' } : { q: `“${v.fr}” significa…`, a: v.pt, o: [v.pt, ...wrong], why: '' }) : null;
+  }).filter(Boolean);
+  return [...(l.quiz || []).map((q) => ({ q: q.q, a: q.a, o: Array.from(new Set(q.o)), why: q.why || '' })), ...fq, ...vq];
+}
+
 export function bankQuestions(key) {
+  if (String(key).startsWith('l:')) return lessonTopicQuestions(key.slice(2));
   const extra = EXTRA_TOPICS.find((t) => t.key === key);
   if (extra) return extra.q;
   return (legacyBank[key] || []).map((x) => ({

@@ -10,7 +10,7 @@ import Icon from '../../components/Icon';
 import Duck from '../../components/Duck';
 import { Appear } from '../../components/extras';
 import { dueItems } from '../../store/logic';
-import { BANK_TOPICS } from '../../content';
+import { BANK_TOPICS, LESSON_TOPICS } from '../../content';
 import { VERBS } from '../../content/verbs';
 import { STORY_LIST, NEWS_LIST, storiesRead } from '../../content/stories';
 import { SONGS } from '../../content/music';
@@ -148,8 +148,9 @@ export default function Practice() {
         <Tile emoji="🩻" title="Teste de nível" sub={state.placement ? `Unidade ${state.placement.unit} · refazer` : 'Descubra seu nível'} color="#EDE9FE" onPress={() => router.push('/placement')} />
       </Drawer>
 
-      <Drawer id="topics" emoji="🧩" title="Treino por tema" sub={`${BANK_TOPICS.length} temas de gramática`} color="#E0E7FF">
-        {BANK_TOPICS.map((b) => (
+      <Drawer id="topics" emoji="🧩" title="Treino por tema" sub={`${BANK_TOPICS.length + LESSON_TOPICS.length} temas · gramática e lições`} color="#E0E7FF">
+        <Tile emoji="📚" title="Ver todos os temas" sub={`${BANK_TOPICS.length} temas + ${LESSON_TOPICS.length} por lição`} color="#E0E7FF" onPress={() => router.push('/topics')} />
+        {BANK_TOPICS.slice(0, 9).map((b) => (
           <Tile key={b.key} emoji={b.emoji} title={b.title} sub={state.bankBest[b.key] ? `Melhor: ${state.bankBest[b.key]}%` : b.level || b.sub} color={b.color + '33'} onPress={() => go('bank', { key: b.key })} />
         ))}
       </Drawer>
