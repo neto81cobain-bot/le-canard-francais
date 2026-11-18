@@ -1,0 +1,38 @@
+# Publica a atualização OTA pelos servidores do GitHub (não gasta minutos do Expo).
+# Roda sozinho a cada push na main. Também dá pra rodar à mão: Actions → "Publicar OTA (GitHub)" → Run workflow.
+# Usa o mesmo segredo EXPO_TOKEN do "Gerar APK (GitHub)".
+name: Publicar OTA (GitHub)
+
+on:
+  push:
+    branches: ['main']
+  workflow_dispatch: {}
+
+concurrency:
+  group: publicar-ota
+  cancel-in-progress: true
+
+jobs:
+  ota:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Publicar no canal production
+        run: npx --yes eas-cli@latest update --channel production --platform android --environment preview --message "${{ github.event.head_commit.message || 'manual' }}" --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Publicar no canal preview
+        run: npx --yes eas-cli@latest update --channel preview --platform android --environment preview --message "${{ github.event.head_commit.message || 'manual' }}" --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}

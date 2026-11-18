@@ -6,9 +6,10 @@
 # "Gerar APK" (gerar-apk.yml) manualmente no expo.dev e instale o APK novo.
 name: Atualizar app (OTA)
 
+# Desligado do push: agora quem publica é o GitHub (.github/workflows/publicar-ota.yml),
+# porque o plano grátis do Expo só dá 60 min/mês de workflow. Ainda dá pra rodar à mão no expo.dev.
 on:
-  push:
-    branches: ['main']
+  workflow_dispatch: {}
 
 jobs:
   publish_preview:
