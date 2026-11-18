@@ -8,10 +8,20 @@ import { genderColor } from '../content/vocab';
 import { AudioButton } from '../components/extras';
 import { strength } from '../store/logic';
 import { router } from 'expo-router';
+import { exportWords } from '../services/export';
+import { toast, Alert } from '../services/dialog';
 
 export default function Dictionary() {
   const { state } = useStore();
   const t = useTheme();
+  const doExport = async () => {
+    try {
+      const n = await exportWords(state);
+      if (!n) toast('Ainda não há palavras para exportar.');
+    } catch (e) {
+      Alert.alert('Não deu para exportar', e.message);
+    }
+  };
   const [q, setQ] = useState('');
   const list = useMemo(() => {
     const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
@@ -21,7 +31,7 @@ export default function Dictionary() {
   }, [q, state.words]);
 
   return (
-    <Screen title="Meu dicionário" scroll={false} padded={false}>
+    <Screen title="Meu dicionário" scroll={false} padded={false} right={<Pressable onPress={doExport} hitSlop={10} accessibilityLabel="Exportar"><Icon name="upload" size={22} color={t.text2} /></Pressable>}>
       <View style={{ paddingHorizontal: 20, paddingBottom: 12 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: t.surface, borderRadius: radius.md, borderWidth: 1, borderColor: t.border, paddingHorizontal: 14 }}>
           <Icon name="search" size={20} color={t.text3} />

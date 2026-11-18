@@ -1,18 +1,22 @@
 // Sound map: every tricky French sound contrast, with a mouth tip and its own training.
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Pressable } from 'react-native';
 import { router } from 'expo-router';
 import { useTheme, fonts, radius, palette } from '../theme';
 import { T, Screen, Tap, Chip } from '../components/ui';
 import Icon from '../components/Icon';
 import Duck from '../components/Duck';
 import { AudioButton } from '../components/extras';
+import Mouth from '../components/Mouth';
+
+const MOUTH = { 'u-ou': 'rounded', 'in-an': 'nasal', 'in-on': 'nasal', 'an-on': 'nasal', 'o-on': 'nasal', 'e-é': 'spread', 'é-è': 'spread', 'eu-é': 'rounded', 'eu-è': 'rounded', 'eu-u': 'rounded', 'ch-j': 'rounded', 's-z': 'spread' };
 import { SOUND_GROUPS, MINIMAL_PAIRS } from '../content/skills';
 
 const COLORS = ['#7C5CFC', '#0E7490', '#D9822B', '#C2417B', '#1E3A8A', '#4D7C0F', '#E63946', '#0F766E'];
 
 export default function Sounds() {
   const t = useTheme();
+  const [mouth, setMouth] = useState(null);
   const groups = Object.entries(SOUND_GROUPS).map(([id, g]) => ({ id, ...g, pairs: MINIMAL_PAIRS.filter((p) => p.group === id) })).filter((g) => g.pairs.length);
   return (
     <Screen title="Mapa de sons">
@@ -34,6 +38,10 @@ export default function Sounds() {
                 <Chip label={`${g.pairs.length} pares`} />
               </View>
               <T v="small" color={t.text}>👄 {g.tip}</T>
+              <Pressable onPress={() => setMouth(mouth === g.id ? null : g.id)} hitSlop={6}>
+                <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 13, color: c }}>{mouth === g.id ? 'Esconder a boca' : 'Ver a posição da boca 👄'}</Text>
+              </Pressable>
+              {mouth === g.id ? <Mouth shape={MOUTH[g.id] || 'neutral'} color={c} /> : null}
               <View style={{ flexDirection: 'row', gap: 10 }}>
                 {[[ex.a, ex.pa], [ex.b, ex.pb]].map(([w, pt]) => (
                   <View key={w} style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8, padding: 8, borderRadius: 12, backgroundColor: t.bg }}>

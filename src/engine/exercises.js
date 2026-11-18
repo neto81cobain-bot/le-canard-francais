@@ -400,9 +400,18 @@ export function buildWriting(pool, fills = [], count = 12) {
   return shuffle(out.filter(Boolean)).slice(0, count);
 }
 
-export function buildSpeaking(pool, count = 8) {
+// Speak to fill the gap: see "Je ___ brésilien", say the whole sentence.
+export function mkSpeakFill(f) {
+  if (!f || !f.s || !f.a || !f.s.includes('___')) return null;
+  const fr = f.s.replace('___', f.a);
+  if (tokenize(fr).length > 10) return null;
+  return { type: 'speak', fr, pt: f.pt || '', gap: f.s, item: { fr, pt: f.pt || '', key: 's:' + fr } };
+}
+
+export function buildSpeaking(pool, count = 8, fills = []) {
   const sents = pool.filter((p) => !p.isWord && tokenize(p.fr).length <= 8);
-  const out = pick(sents, count).map(mkSpeak);
+  const out = pick(sents, count - Math.min(2, fills.length)).map(mkSpeak);
+  pick(fills, 2).forEach((f) => out.push(mkSpeakFill(f)));
   pick(MINIMAL_PAIRS, 3).forEach((p) => out.splice(Math.floor(Math.random() * out.length), 0, mkPairs(p)));
   return out.filter(Boolean);
 }

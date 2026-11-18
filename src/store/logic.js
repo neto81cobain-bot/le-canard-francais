@@ -242,13 +242,16 @@ export const ACHIEVEMENTS = [
   { id: 'shopper', title: 'Fashion canard', desc: 'Compre um item na loja', emoji: '🛍️', test: (s) => (s.inventory?.owned || []).length >= 1 },
   { id: 'friend', title: 'Mon ami', desc: 'Adicione um amigo', emoji: '🤝', test: (s) => (s.friends || []).length >= 1 },
   { id: 'league_up', title: 'Subindo!', desc: 'Suba de divisão no Clube', emoji: '📈', test: (s) => (s.league?.tier || 0) >= 1 },
-  { id: 'story1', title: 'Primeira leitura', desc: 'Leia uma história até o fim', emoji: '📗', test: (s) => Object.keys(s.stories || {}).length >= 1 },
-  { id: 'story10', title: 'Leitor assíduo', desc: 'Leia 10 histórias', emoji: '📚', test: (s) => Object.keys(s.stories || {}).length >= 10 },
-  { id: 'story20', title: 'Biblioteca completa', desc: 'Leia 20 histórias', emoji: '🏛️', test: (s) => Object.keys(s.stories || {}).length >= 20 },
+  { id: 'story1', title: 'Primeira leitura', desc: 'Leia uma história até o fim', emoji: '📗', test: (s) => Object.keys(s.stories || {}).filter((k) => /^s\d/.test(k)).length >= 1 },
+  { id: 'story10', title: 'Leitor assíduo', desc: 'Leia 10 histórias', emoji: '📚', test: (s) => Object.keys(s.stories || {}).filter((k) => /^s\d/.test(k)).length >= 10 },
+  { id: 'story20', title: 'Biblioteca completa', desc: 'Leia 20 histórias', emoji: '🏛️', test: (s) => Object.keys(s.stories || {}).filter((k) => /^s\d/.test(k)).length >= 20 },
+  { id: 'adv1', title: 'Aventureiro', desc: 'Termine uma aventura interativa', emoji: '🎮', test: (s) => Object.keys(s.adventures || {}).length >= 1 },
+  { id: 'advbest', title: 'Diplomata', desc: 'Final perfeito em 5 aventuras', emoji: '🕊️', test: (s) => Object.values(s.adventures || {}).filter((a) => a.best).length >= 5 },
+  { id: 'stylist', title: 'Estilista', desc: 'Vista o Canard com 4 itens ao mesmo tempo', emoji: '👗', test: (s) => Object.keys((s.inventory && s.inventory.wear) || {}).length >= 4 },
   { id: 'medal1', title: 'Medalhista', desc: 'Complete um desafio semanal', emoji: '🏅', test: (s) => Object.keys(s.medals || {}).length >= 1 },
   { id: 'medal5', title: 'Colecionador de medalhas', desc: 'Complete 5 desafios semanais', emoji: '🎖️', test: (s) => Object.keys(s.medals || {}).length >= 5 },
   { id: 'placement', title: 'Raio-X do francês', desc: 'Faça o teste de nível', emoji: '🩻', test: (s) => !!s.placement },
-  { id: 'story40', title: 'Rato de biblioteca', desc: 'Leia todas as 40 histórias', emoji: '🐭', test: (s) => Object.keys(s.stories || {}).length >= 40 },
+  { id: 'story40', title: 'Rato de biblioteca', desc: 'Leia todas as 40 histórias', emoji: '🐭', test: (s) => Object.keys(s.stories || {}).filter((k) => /^s\d/.test(k)).length >= 40 },
   { id: 'writer', title: 'Escritor', desc: 'Escreva 5 textos no diário', emoji: '✍️', test: (s) => (s.diary || []).length >= 5 },
   { id: 'duel', title: 'Duelista', desc: 'Vença um duelo contra um amigo', emoji: '⚔️', test: (s) => (s.stats.duelsWon || 0) >= 1 },
   { id: 'ear', title: 'Ouvido afiado', desc: 'Acerte 50 pares de sons', emoji: '👂', test: (s) => (s.stats.pairs || 0) >= 50 },
@@ -279,29 +282,66 @@ export function chestReward(seedStr) {
   return { coins: 25, xp: 10 };
 }
 
+// slot = where it goes on the duck (drawn in components/duckArt.js; held/ground are emoji).
+// unlock = can't be bought: it is earned (test receives the whole state).
 export const SHOP = [
   { id: 'freeze', title: 'Croissant de reserva', desc: 'Protege seu streak por 1 dia perdido', price: 60, emoji: '🥐', kind: 'freeze' },
-  { id: 'scarf', title: 'Cachecol listrado', desc: 'Para o inverno parisiense', price: 120, emoji: '🧣', kind: 'outfit' },
-  { id: 'glasses', title: 'Óculos de sol', desc: 'Estilo Riviera', price: 150, emoji: '🕶️', kind: 'outfit' },
-  { id: 'chef', title: 'Chapéu de chef', desc: 'Pronto para o bistrô', price: 200, emoji: '👨‍🍳', kind: 'outfit' },
-  { id: 'rose', title: 'Rosa', desc: 'Très romantique', price: 90, emoji: '🌹', kind: 'outfit' },
-  { id: 'grad', title: 'Capelo', desc: 'Para quem passou no B1', price: 300, emoji: '🎓', kind: 'outfit' },
-  { id: 'crown', title: 'Coroa', desc: 'Roi des canards', price: 500, emoji: '👑', kind: 'outfit' },
-  { id: 'beret', title: 'Boina', desc: 'O clássico parisiense', price: 100, emoji: '🧢', kind: 'outfit' },
-  { id: 'baguette', title: 'Baguete', desc: 'Sempre fresquinha', price: 80, emoji: '🥖', kind: 'outfit' },
-  { id: 'croissant', title: 'Croissant', desc: 'Café da manhã garantido', price: 80, emoji: '🥐', kind: 'outfit' },
-  { id: 'wine', title: 'Taça de vinho', desc: 'Santé !', price: 140, emoji: '🍷', kind: 'outfit' },
-  { id: 'tower', title: 'Torre Eiffel', desc: 'Lembrancinha de Paris', price: 180, emoji: '🗼', kind: 'outfit' },
-  { id: 'palette', title: 'Paleta de pintor', desc: 'Inspirado em Monet', price: 160, emoji: '🎨', kind: 'outfit' },
-  { id: 'guitar', title: 'Violão', desc: 'Pour chanter en français', price: 220, emoji: '🎸', kind: 'outfit' },
-  { id: 'bike', title: 'Bicicleta', desc: 'Tour de France', price: 240, emoji: '🚲', kind: 'outfit' },
-  { id: 'camera', title: 'Câmera', desc: 'Turista profissional', price: 160, emoji: '📸', kind: 'outfit' },
-  { id: 'book', title: 'Livro', desc: 'Le Petit Prince na mochila', price: 120, emoji: '📚', kind: 'outfit' },
-  { id: 'leaf', title: 'Folha da Amazônia', desc: 'Do Pará para a França', price: 90, emoji: '🌿', kind: 'outfit' },
-  { id: 'medal', title: 'Medalha de ouro', desc: 'Para campeões semanais', price: 400, emoji: '🥇', kind: 'outfit' },
-  { id: 'rocket', title: 'Foguete', desc: 'Rumo ao C1', price: 600, emoji: '🚀', kind: 'outfit' },
+  // the classic Parisian look
+  { id: 'boina', title: 'Boina francesa', desc: 'O clássico de Paris', price: 60, emoji: '🎨', icon: 'boina', kind: 'outfit', slot: 'head' },
+  { id: 'mustache', title: 'Bigode de mosqueteiro', desc: 'Très distingué', price: 40, emoji: '🥸', icon: 'mustache', kind: 'outfit', slot: 'face' },
+  { id: 'lenco', title: 'Lenço bleu-blanc-rouge', desc: 'As cores da França', price: 60, emoji: '🇫🇷', icon: 'lenco', kind: 'outfit', slot: 'neck' },
+  // head
+  { id: 'beret', title: 'Boné', desc: 'Estilo turista', price: 100, emoji: '🧢', kind: 'outfit', slot: 'head' },
+  { id: 'chef', title: 'Cartola', desc: 'Para a ópera de Paris', price: 200, emoji: '🎩', kind: 'outfit', slot: 'head' },
+  { id: 'toque', title: 'Chapéu de chef', desc: 'Pronto para o bistrô', price: 160, emoji: '👨‍🍳', icon: 'toque', kind: 'outfit', slot: 'head' },
+  { id: 'bow', title: 'Lacinho', desc: 'Très chic', price: 90, emoji: '🎀', kind: 'outfit', slot: 'head' },
+  { id: 'grad', title: 'Capelo', desc: 'Exclusivo de quem chega ao B1', price: 0, emoji: '🎓', kind: 'outfit', slot: 'head', unlock: { label: 'Libere a unidade 10 (B1)', test: (s) => (s.unlockedUnit || 1) >= 10 } },
+  { id: 'crown', title: 'Coroa', desc: 'Roi des canards', price: 0, emoji: '👑', kind: 'outfit', slot: 'head', unlock: { label: 'Chegue a 30 dias de streak', test: (s) => (s.streak?.best || 0) >= 30 } },
+  // eyes
+  { id: 'glasses', title: 'Óculos de sol', desc: 'Estilo Riviera', price: 150, emoji: '🕶️', kind: 'outfit', slot: 'eyes' },
+  { id: 'specs', title: 'Óculos de leitura', desc: 'Para ler Victor Hugo', price: 120, emoji: '👓', kind: 'outfit', slot: 'eyes' },
+  { id: 'monocle', title: 'Monóculo', desc: 'Exclusivo dos leitores', price: 0, emoji: '🧐', icon: 'monocle', kind: 'outfit', slot: 'eyes', unlock: { label: 'Leia 10 histórias', test: (s) => Object.keys(s.stories || {}).filter((k) => /^s\d/.test(k)).length >= 10 } },
+  // neck
+  { id: 'scarf', title: 'Cachecol listrado', desc: 'Para o inverno parisiense', price: 120, emoji: '🧣', kind: 'outfit', slot: 'neck' },
+  { id: 'bowtie', title: 'Gravata-borboleta', desc: 'Para o jantar de gala', price: 110, emoji: '🎀', icon: 'bowtie', kind: 'outfit', slot: 'neck' },
+  { id: 'tie', title: 'Gravata', desc: 'Pronto para a entrevista', price: 130, emoji: '👔', kind: 'outfit', slot: 'neck' },
+  { id: 'pearls', title: 'Colar de pérolas', desc: 'Elegância à la Chanel', price: 180, emoji: '📿', icon: 'pearls', kind: 'outfit', slot: 'neck' },
+  { id: 'medal', title: 'Medalha de ouro', desc: 'Exclusiva de campeões', price: 0, emoji: '🥇', kind: 'outfit', slot: 'neck', unlock: { label: 'Complete um desafio semanal', test: (s) => Object.keys(s.medals || {}).length >= 1 } },
+  // in the wing
+  { id: 'rose', title: 'Rosa', desc: 'Très romantique', price: 90, emoji: '🌹', kind: 'outfit', slot: 'held' },
+  { id: 'baguette', title: 'Baguete', desc: 'Sempre fresquinha', price: 50, emoji: '🥖', kind: 'outfit', slot: 'held' },
+  { id: 'croissant', title: 'Croissant', desc: 'Café da manhã garantido', price: 80, emoji: '🥐', kind: 'outfit', slot: 'held' },
+  { id: 'wine', title: 'Taça de vinho', desc: 'Santé !', price: 140, emoji: '🍷', kind: 'outfit', slot: 'held' },
+  { id: 'palette', title: 'Paleta de pintor', desc: 'Inspirado em Monet', price: 160, emoji: '🎨', kind: 'outfit', slot: 'held' },
+  { id: 'guitar', title: 'Violão', desc: 'Pour chanter en français', price: 220, emoji: '🎸', kind: 'outfit', slot: 'held' },
+  { id: 'camera', title: 'Câmera', desc: 'Turista profissional', price: 160, emoji: '📸', kind: 'outfit', slot: 'held' },
+  { id: 'book', title: 'Livro', desc: 'Le Petit Prince debaixo da asa', price: 120, emoji: '📚', kind: 'outfit', slot: 'held' },
+  { id: 'flag', title: 'Bandeirinha', desc: 'Allez les Bleus !', price: 100, emoji: '🇫🇷', kind: 'outfit', slot: 'held' },
+  { id: 'leaf', title: 'Folha da Amazônia', desc: 'Do Pará para a França', price: 90, emoji: '🌿', kind: 'outfit', slot: 'held' },
+  // next to the duck
+  { id: 'tower', title: 'Torre Eiffel', desc: 'Lembrancinha de Paris', price: 180, emoji: '🗼', kind: 'outfit', slot: 'ground' },
+  { id: 'bike', title: 'Bicicleta', desc: 'Tour de France', price: 240, emoji: '🚲', kind: 'outfit', slot: 'ground' },
+  { id: 'luggage', title: 'Mala de viagem', desc: 'Próxima parada: Lyon', price: 150, emoji: '🧳', kind: 'outfit', slot: 'ground' },
+  { id: 'rocket', title: 'Foguete', desc: 'Rumo ao C1', price: 600, emoji: '🚀', kind: 'outfit', slot: 'ground' },
+  // scenery (behind the duck)
+  { id: 'paris', title: 'Paris', desc: 'Céu azul e Torre Eiffel', price: 200, emoji: '🗼', icon: 'scene', kind: 'outfit', slot: 'scene' },
+  { id: 'nice', title: 'Praia de Nice', desc: 'Sol da Côte d\'Azur', price: 200, emoji: '🏖️', icon: 'scene', kind: 'outfit', slot: 'scene' },
+  { id: 'alpes', title: 'Alpes', desc: 'Neve e montanhas', price: 220, emoji: '🏔️', icon: 'scene', kind: 'outfit', slot: 'scene' },
+  { id: 'amazonia', title: 'Amazônia', desc: 'Exclusivo: casa é casa', price: 0, emoji: '🌳', icon: 'scene', kind: 'outfit', slot: 'scene', unlock: { label: 'Faça o teste de nível', test: (s) => !!s.placement } },
+  { id: 'noite', title: 'Noite estrelada', desc: 'Exclusivo de quem não falha', price: 0, emoji: '🌙', icon: 'scene', kind: 'outfit', slot: 'scene', unlock: { label: 'Chegue a 7 dias de streak', test: (s) => (s.streak?.best || 0) >= 7 } },
   { id: 'theme_dark', title: 'Tema noturno', desc: 'Já incluso! Ative em Aparência', price: 0, emoji: '🌙', kind: 'info' },
 ];
+export const isOwned = (s, item) => !!item && ((s.inventory?.owned || []).includes(item.id) || (item.unlock ? !!item.unlock.test(s) : false));
+export const SLOT_NAMES = { head: 'Chapéus', eyes: 'Óculos', face: 'Rosto', neck: 'Pescoço', held: 'Na asa', ground: 'Ao lado', scene: 'Cenários' };
+export const SLOT_ORDER = ['head', 'eyes', 'face', 'neck', 'held', 'ground', 'scene'];
+// what the duck is wearing: { head: id, eyes: id, ... } (older saves had one "equipped" id)
+export function wornOf(inv) {
+  if (!inv) return {};
+  if (inv.wear) return inv.wear;
+  const it = inv.equipped && SHOP.find((x) => x.id === inv.equipped);
+  return it?.slot ? { [it.slot]: it.id } : {};
+}
+
 
 // Weekly themed challenge — rotates every week; finishing it gives a medal + coins.
 export const WEEKLY_CHALLENGES = [
@@ -320,6 +360,26 @@ export function weeklyProgress(week) {
   const c = weeklyChallenge(week?.key);
   const v = week?.[c.field] || 0;
   return { ...c, value: v, pct: Math.min(1, v / c.target), done: v >= c.target };
+}
+
+// Weekly surprise chest: opens after 3 study days in the week. 40% chance of a free item.
+export function weeklyChestReward(s, wk = weekKey()) {
+  const r = seeded('wchest-' + wk + (s.profile?.joinedAt || ''))();
+  const pool = SHOP.filter((i) => i.kind === 'outfit' && !i.unlock && i.price > 0 && i.price <= 240 && !(s.inventory?.owned || []).includes(i.id));
+  if (r < 0.4 && pool.length) {
+    const item = pool[Math.floor(seeded('wchest-item-' + wk)() * pool.length)];
+    return { item: item.id, coins: 20, xp: 20 };
+  }
+  return { coins: 60 + Math.floor(r * 80), xp: 25 };
+}
+
+// The hour the user usually studies (needs a few sessions to be sure).
+export function usualHour(hours) {
+  const e = Object.entries(hours || {});
+  const total = e.reduce((a, [, n]) => a + n, 0);
+  if (total < 4) return null;
+  e.sort((a, b) => b[1] - a[1]);
+  return parseInt(e[0][0], 10);
 }
 
 export { weekKey, dayKey };

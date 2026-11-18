@@ -375,13 +375,23 @@ export function SpeakEx({ ex, onComplete, onSkip, onSpoken }) {
   const score = result?.score ?? null;
   return (
     <View>
-      <Prompt title="Fale esta frase" mood="speak">
-        <View style={{ backgroundColor: t.surface, borderWidth: 2, borderColor: t.border, borderRadius: 18, padding: 14, gap: 6 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-            <AudioButton text={ex.fr} size={40} />
-            <View style={{ flex: 1 }}><SpeakableText text={ex.fr} /></View>
-          </View>
-          <T v="small">{ex.pt}</T>
+      <Prompt title={ex.gap ? 'Complete falando: diga a frase inteira' : 'Fale esta frase'} mood="speak">
+        <View style={{ backgroundColor: t.surface, borderWidth: 2, borderColor: ex.gap ? palette.gold : t.border, borderRadius: 18, padding: 14, gap: 6 }}>
+          {ex.gap && !result ? (
+            <>
+              <Text style={{ fontFamily: fonts.displayItalic, fontSize: 22, lineHeight: 31, color: t.text }}>{ex.gap.replace('___', '_____')}</Text>
+              <T v="small">{ex.pt}</T>
+              {ex.hint ? <T v="caption">💡 {ex.hint}</T> : null}
+            </>
+          ) : (
+            <>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                <AudioButton text={ex.fr} size={40} />
+                <View style={{ flex: 1 }}><SpeakableText text={ex.fr} /></View>
+              </View>
+              <T v="small">{ex.pt}</T>
+            </>
+          )}
         </View>
       </Prompt>
 

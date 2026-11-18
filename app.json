@@ -2,7 +2,7 @@
   "expo": {
     "name": "Le canard français",
     "slug": "le-canard-francais",
-    "version": "2.0.0",
+    "version": "2.7.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "scheme": "com.raimundo.lecanardfrancais",
@@ -82,7 +82,15 @@
       ],
       "expo-font",
       "expo-web-browser",
-      "expo-image"
+      "expo-image",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "O Le canard français usa suas fotos só para você escolher a foto do perfil.",
+          "cameraPermission": false
+        }
+      ],
+      "expo-sharing"
     ],
     "extra": {
       "githubRepo": "neto81cobain-bot/le-canard-francais",

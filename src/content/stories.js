@@ -466,4 +466,8 @@ export function parseStory(s) {
 import { STORIES_2 } from './stories2';
 
 export const STORY_LIST = [...STORIES, ...STORIES_2].sort((a, b) => a.unit - b.unit).map(parseStory);
-export const getStory = (id) => STORY_LIST.find((s) => s.id === id);
+import { NEWS } from './news';
+
+export const NEWS_LIST = NEWS.map(parseStory);
+export const getStory = (id) => STORY_LIST.find((s) => s.id === id) || NEWS_LIST.find((s) => s.id === id);
+export const storiesRead = (state) => Object.keys(state.stories || {}).filter((k) => /^s\d/.test(k)).length;

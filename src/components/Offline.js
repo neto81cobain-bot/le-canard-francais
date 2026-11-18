@@ -11,12 +11,14 @@ import { useOnline, checkOnline } from '../services/net';
 const WORKS = [
   ['📘', 'Lições', '/(tabs)'],
   ['🧠', 'Revisão', { pathname: '/practice/[mode]', params: { mode: 'review' } }],
-  ['📖', 'Histórias', '/stories'],
+  ['📖', 'Biblioteca', '/library'],
   ['🃏', 'Flashcards', '/flashcards'],
   ['📝', 'Ditado', { pathname: '/practice/[mode]', params: { mode: 'dictation' } }],
   ['🎧', 'Sons', '/sounds'],
   ['🗂️', 'Vocabulário', '/vocab'],
   ['📐', 'Gramática', '/grammar'],
+  ['🎧', 'Mãos-livres', '/handsfree'],
+  ['✈️', 'Viagem', '/travel'],
 ];
 
 export function OfflineCard({ title = 'Sem internet por aqui', text, note, style, compact }) {

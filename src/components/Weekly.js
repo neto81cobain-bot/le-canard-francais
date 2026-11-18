@@ -4,7 +4,9 @@ import { View, Text, Share } from 'react-native';
 import { useStore } from '../store';
 import { useTheme, fonts, radius, palette } from '../theme';
 import { T, Card, ProgressBar, Button, Chip } from './ui';
-import { weeklyProgress, weeklyChallenge } from '../store/logic';
+import { weeklyProgress, weeklyChallenge, SHOP } from '../store/logic';
+import { mondayKey, addDays, dayKey } from '../store/dates';
+import { Alert } from '../services/dialog';
 import { toast } from '../services/dialog';
 import { fx } from '../services/feedback';
 
@@ -79,6 +81,86 @@ export function WeeklySummaryCard({ week, title = 'Resumo da semana passada', st
         ))}
       </View>
       <Button title="Compartilhar" icon="send" small variant="secondary" onPress={share} />
+    </Card>
+  );
+}
+
+export function activeDaysThisWeek(history) {
+  const mon = mondayKey(dayKey());
+  let n = 0;
+  for (let i = 0; i < 7; i++) if ((history || {})[addDays(mon, i)] > 0) n++;
+  return n;
+}
+
+// Surprise chest: unlocked by studying on 3 different days of the week.
+export function WeeklyChestCard({ style }) {
+  const { state, actions } = useStore();
+  const t = useTheme();
+  const days = activeDaysThisWeek(state.history);
+  const opened = state.weekChest === state.week?.key;
+  const ready = days >= 3 && !opened;
+  if (opened) return null;
+  const open = () => {
+    const r = actions.openWeeklyChest();
+    if (!r) return;
+    fx.complete();
+    const item = r.item && SHOP.find((x) => x.id === r.item);
+    Alert.alert(item ? `${item.emoji} Item raro!` : '🎁 Baú da semana!', item ? `Você ganhou: ${item.title}! Vista o Canard na Loja. (+${r.coins} 💶, +${r.xp} XP)` : `+${r.coins} 💶 e +${r.xp} XP. Semana que vem tem mais!`);
+  };
+  return (
+    <Card style={[{ flexDirection: 'row', alignItems: 'center', gap: 12 }, style]} tone={ready ? palette.goldSoft : undefined}>
+      <Text style={{ fontSize: 34, opacity: ready ? 1 : 0.5 }}>🎁</Text>
+      <View style={{ flex: 1, gap: 4 }}>
+        <T v="bodyBold">Baú surpresa da semana</T>
+        <T v="small">{ready ? 'Pronto para abrir! Pode ter um item raro.' : `Estude em 3 dias diferentes da semana · ${days}/3`}</T>
+        {!ready ? <ProgressBar value={days / 3} color={palette.gold} height={8} /> : null}
+      </View>
+      {ready ? <Button title="Abrir" small variant="gold" onPress={open} /> : null}
+    </Card>
+  );
+}
+
+// Study plan for the week: four goals, with extra weight on the weakest skill (placement test).
+const PLAN = {
+  lessons: { emoji: '📘', label: 'lições', base: 4 },
+  listen: { emoji: '👂', label: 'acertos de escuta', base: 30, skill: 'listening' },
+  written: { emoji: '✍️', label: 'frases escritas', base: 10, skill: 'grammar' },
+  spoken: { emoji: '🗣️', label: 'frases faladas', base: 15, skill: 'speaking' },
+  stories: { emoji: '📖', label: 'histórias', base: 2, skill: 'vocab' },
+};
+export function weeklyPlan(state) {
+  const sk = state.placement?.skills || {};
+  const weakest = Object.entries(sk).sort((a, b) => a[1] - b[1])[0]?.[0];
+  return Object.entries(PLAN).map(([field, p]) => {
+    const boost = p.skill && p.skill === weakest;
+    const target = Math.round(p.base * (boost ? 1.6 : 1));
+    const value = state.week?.[field] || 0;
+    return { field, ...p, target, value, boost, done: value >= target };
+  });
+}
+
+export function WeeklyPlanCard({ style }) {
+  const { state } = useStore();
+  const t = useTheme();
+  const plan = weeklyPlan(state);
+  const done = plan.filter((p) => p.done).length;
+  return (
+    <Card style={[{ gap: 8 }, style]}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+        <Text style={{ fontSize: 20 }}>🗓️</Text>
+        <T v="bodyBold" style={{ flex: 1 }}>Seu plano da semana</T>
+        <Chip label={`${done}/${plan.length}`} color={done === plan.length ? t.success : t.text2} bg={done === plan.length ? t.successSoft : t.surface2} />
+      </View>
+      {plan.map((p) => (
+        <View key={p.field} style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+          <Text style={{ fontSize: 16, width: 22 }}>{p.done ? '✅' : p.emoji}</Text>
+          <View style={{ flex: 1, gap: 3 }}>
+            <T v="small" color={t.text}>{Math.min(p.value, p.target)}/{p.target} {p.label}{p.boost ? ' · foco 🎯' : ''}</T>
+            <ProgressBar value={Math.min(1, p.value / p.target)} color={p.done ? t.success : p.boost ? palette.red : t.sky} height={6} />
+          </View>
+        </View>
+      ))}
+      {!state.placement ? <T v="caption">Faça o teste de nível para o plano focar no seu ponto fraco.</T> : null}
     </Card>
   );
 }

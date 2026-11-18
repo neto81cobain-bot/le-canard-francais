@@ -78,7 +78,7 @@ export default function Practice() {
       return buildQuick(items, pool);
     }
     if (mode === 'writing') return buildWriting(pool, (learned.length ? learned : UNITS[0].lessons).flatMap((l) => l.fill || []), 12);
-    if (mode === 'speaking') return buildSpeaking(pool, 8);
+    if (mode === 'speaking') return buildSpeaking(pool, 8, (learned.length ? learned : UNITS[0].lessons).flatMap((l) => l.fill || []));
     if (mode === 'test' && unit) return buildUnitTest(unit, { speak: false });
     if (mode === 'bank') return buildBank(bankQuestions(key), 15);
     if (mode === 'verbs') {

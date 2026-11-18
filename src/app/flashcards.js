@@ -4,7 +4,19 @@ import { useStore } from '../store';
 import { useTheme, fonts, radius, palette, shadow } from '../theme';
 import { Screen, T, Button, Empty, Chip } from '../components/ui';
 import { AudioButton, SpeedChip } from '../components/extras';
-import { genderColor } from '../content/vocab';
+import { genderColor, VOCAB_THEMES } from '../content/vocab';
+import { LESSONS } from '../content';
+
+// emoji for every known word (lessons + vocab trails), so every card has a picture
+let EMOJI = null;
+function emojiOf(fr) {
+  if (!EMOJI) {
+    EMOJI = {};
+    LESSONS.forEach((l) => (l.vocab || []).forEach((v) => { if (v.emoji) EMOJI[v.fr] = v.emoji; }));
+    VOCAB_THEMES.forEach((th) => th.words.forEach((w) => { if (w.emoji) EMOJI[w.fr] = w.emoji; }));
+  }
+  return EMOJI[fr] || null;
+}
 import { shuffle } from '../engine/exercises';
 import { strength } from '../store/logic';
 import { router } from 'expo-router';
@@ -16,8 +28,8 @@ export default function Flashcards() {
   const [filter, setFilter] = useState('weak');
   const [audioOnly, setAudioOnly] = useState(false);
   const deck = useMemo(() => {
-    const words = Object.entries(state.words).map(([fr, v]) => ({ fr, pt: v.pt, emoji: v.emoji, key: 'w:' + fr }));
-    const saved = state.saved.map((s) => ({ ...s, key: 's:' + s.fr }));
+    const words = Object.entries(state.words).map(([fr, v]) => ({ fr, pt: v.pt, emoji: v.emoji || emojiOf(fr), key: 'w:' + fr }));
+    const saved = state.saved.map((s) => ({ ...s, emoji: s.emoji || emojiOf(s.fr), key: 's:' + s.fr }));
     let all = [...saved, ...words];
     if (filter === 'saved') all = saved;
     if (filter === 'weak') all = [...all].sort((a, b) => strength(state.srs[a.key]) - strength(state.srs[b.key])).slice(0, 20);

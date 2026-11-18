@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppState } from 'react-native';
 import { dayKey, weekKey } from './dates';
 import {
-  freshDaily, refreshStreak, hitGoal, goalXP, srsReview, newAchievements, chestReward, SHOP, missionProgress,
+  freshDaily, refreshStreak, hitGoal, goalXP, srsReview, newAchievements, chestReward, SHOP, missionProgress, wornOf, isOwned, weeklyChestReward,
 } from './logic';
 
 const KEY = 'lcf2_state_v1';
@@ -92,7 +92,7 @@ function rollover(s) {
   if (s.daily?.date !== today) next = { ...next, daily: freshDaily(today) };
   const wk = weekKey();
   if (s.week?.key !== wk) {
-    next = { ...next, week: { key: wk, xp: 0 }, lastWeek: s.week?.key ? s.week : next.lastWeek || null, league: { ...next.league, needsResult: s.week?.key || null } };
+    next = { ...next, week: { key: wk, xp: 0 }, lastWeek: s.week?.key ? s.week : next.lastWeek || null, weeks: s.week?.key ? [...(s.weeks || []), s.week].slice(-12) : s.weeks || [], league: { ...next.league, needsResult: s.week?.key || null } };
   }
   const streak = refreshStreak(next.streak, today);
   if (streak !== next.streak) next = { ...next, streak };
@@ -228,7 +228,7 @@ export function StoreProvider({ children }) {
           const prev = s.srs[key] || { fr: item.fr, pt: item.pt, lessonId: item.lessonId };
           next.srs = { ...s.srs, [key]: srsReview({ ...prev, fr: item.fr, pt: item.pt }, correct) };
           if (correct && !s.words[item.fr] && item.isWord) {
-            next.words = { ...s.words, [item.fr]: { pt: item.pt, at: Date.now(), lessonId: item.lessonId } };
+            next.words = { ...s.words, [item.fr]: { pt: item.pt, at: Date.now(), lessonId: item.lessonId, emoji: item.emoji || null } };
           }
         }
         if (!correct && s.settings.hearts) {
@@ -268,6 +268,8 @@ export function StoreProvider({ children }) {
           reviews: next.stats.reviews + (kind === 'review' ? 1 : 0),
           timedBest: kind === 'timed' ? Math.max(next.stats.timedBest, correct) : next.stats.timedBest,
         };
+        const hr = String(new Date().getHours());
+        next.studyHours = { ...(s.studyHours || {}), [hr]: ((s.studyHours || {})[hr] || 0) + 1 };
         next.week = bumpWeek(next.week, { lessons: lessonId || unitTestId ? 1 : 0, minutes: Math.round(seconds / 60), stories: kind === 'story' ? 1 : 0, sessions: 1 });
         next.daily = {
           ...next.daily,
@@ -345,18 +347,45 @@ export function StoreProvider({ children }) {
     buy: (itemId) => {
       const item = SHOP.find((i) => i.id === itemId);
       const s0 = stateRef.current;
-      if (!item || !s0 || s0.coins < item.price) return false;
+      if (!item || !s0 || item.unlock || s0.coins < item.price) return false;
       update((s) => {
         if (s.coins < item.price) return s;
         if (item.kind === 'freeze') {
           return { ...s, coins: s.coins - item.price, streak: { ...s.streak, freezes: (s.streak.freezes || 0) + 1 } };
         }
         if (s.inventory.owned.includes(item.id)) return s;
-        return { ...s, coins: s.coins - item.price, inventory: { owned: [...s.inventory.owned, item.id], equipped: item.id } };
+        return { ...s, coins: s.coins - item.price, inventory: { ...s.inventory, owned: [...s.inventory.owned, item.id], equipped: null, wear: { ...wornOf(s.inventory), [item.slot]: item.id } } };
       });
       return true;
     },
-    equip: (id) => update((s) => ({ ...s, inventory: { ...s.inventory, equipped: s.inventory.equipped === id ? null : id } })),
+    equip: (id) =>
+      update((s) => {
+        const item = SHOP.find((i) => i.id === id);
+        if (!item?.slot || !isOwned(s, item)) return s;
+        const wear = { ...wornOf(s.inventory) };
+        if (wear[item.slot] === id) delete wear[item.slot];
+        else wear[item.slot] = id;
+        return { ...s, inventory: { ...s.inventory, equipped: null, wear } };
+      }),
+    openWeeklyChest: () => {
+      const s0 = stateRef.current;
+      const wk = s0?.week?.key;
+      if (!wk || s0.weekChest === wk) return null;
+      const r = weeklyChestReward(s0, wk);
+      update((s) => {
+        if (s.weekChest === wk) return s;
+        let next = applyXP(s, r.xp);
+        const owned = s.inventory.owned || [];
+        return {
+          ...next,
+          weekChest: wk,
+          coins: next.coins + r.coins,
+          inventory: r.item && !owned.includes(r.item) ? { ...s.inventory, owned: [...owned, r.item] } : s.inventory,
+        };
+      });
+      return r;
+    },
+    undressAll: () => update((s) => ({ ...s, inventory: { ...s.inventory, equipped: null, wear: {} } })),
 
     refillHearts: () => update((s) => ({ ...s, hearts: { count: 5, refillAt: null } })),
 

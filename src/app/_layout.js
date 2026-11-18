@@ -24,12 +24,19 @@ import { RootErrorScreen } from '../components/ErrorBoundary';
 import { installGlobalHandler, logError } from '../services/diagnostics';
 import { setFeedbackPrefs } from '../services/feedback';
 import { setSpeechRate } from '../services/speech';
+import { setA11y } from '../services/a11y';
 import { setAiOverride } from '../services/ai';
-import { scheduleReminders } from '../services/notifications';
+import { scheduleReminders, defaultReminders } from '../services/notifications';
 import { OfflineBanner } from '../components/Offline';
 import { useOnline, isNetworkError, markOffline } from '../services/net';
 import { processOutbox } from '../services/outbox';
-import { dueItems } from '../store/logic';
+import { dueItems, usualHour } from '../store/logic';
+
+function smartNightly(n, hours) {
+  if (!n?.auto) return n;
+  const h = usualHour(hours);
+  return h == null ? { ...n, hour: 21, minute: 30 } : { ...n, hour: h, minute: 0, usual: true };
+}
 import { pushProgress, takeCheers } from '../services/cloud';
 import { dayKey, weekKey, mondayKey } from '../store/dates';
 
@@ -61,6 +68,7 @@ function Effects() {
   useEffect(() => {
     setFeedbackPrefs({ sounds: state.settings.sounds, haptics: state.settings.haptics, pack: state.settings.soundPack || 'canard', tapSound: state.settings.tapSound !== false });
     setSpeechRate(state.settings.speechRate);
+    setA11y({ textScale: state.settings.textScale, reduceMotion: state.settings.reduceMotion });
     setAiOverride({ apiUrl: state.settings.apiUrl, key: state.settings.ownGroqKey });
   }, [state.settings]);
 
@@ -79,15 +87,14 @@ function Effects() {
   // Reminders follow the streak state
   useEffect(() => {
     if (!state.onboarded) return;
+    const reminders = (state.settings.reminders || defaultReminders(state.profile.reminder, state.settings.nightly)).map((r) => smartNightly(r, state.studyHours));
     scheduleReminders({
-      reminder: state.profile.reminder,
-      notifStreak: state.settings.notifStreak,
+      reminders,
       practicedToday: state.streak.lastDay === dayKey(),
       streakCount: state.streak.count,
-      nightly: state.settings.nightly,
       due: dueItems(state.srs, Date.now(), 999).length,
     });
-  }, [state.onboarded, state.profile.reminder, state.settings.notifStreak, state.settings.nightly, state.streak.lastDay, state.streak.count, state.daily?.date]);
+  }, [state.onboarded, state.profile.reminder, state.settings.notifStreak, state.settings.nightly, state.settings.reminders, state.studyHours, state.streak.lastDay, state.streak.count, state.daily?.date]);
 
   // Cloud sync: on open, when progress changes (throttled) and on background
   const sync = async (force) => {
@@ -110,7 +117,7 @@ function Effects() {
           return {
             cheers: [...(s.cheers || []), ...cheers].slice(-10),
             friends,
-            duels: [...(s.duels || []), ...duelsIn.map((d) => ({ uid: d.from, name: d.name, week: wk, mon: mondayKey(), theirXP: 0, status: 'active', invitedBy: 'them' }))],
+            duels: [...(s.duels || []), ...duelsIn.map((d) => ({ uid: d.from, name: d.name, week: wk, mon: mondayKey(), theme: d.theme || 'xp', theirXP: 0, status: 'active', invitedBy: 'them' }))],
           };
         });
       }
@@ -129,6 +136,7 @@ function Effects() {
 
 function Shell() {
   const { state } = useStore();
+  setA11y({ textScale: state.settings.textScale, reduceMotion: state.settings.reduceMotion });
   const t = useTheme();
   useEffect(() => {
     SystemUI.setBackgroundColorAsync(t.bg).catch(() => {});

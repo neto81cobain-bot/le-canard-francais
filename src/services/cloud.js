@@ -1,3 +1,4 @@
+import { wornOf } from '../store/logic';
 // Cloud sync with Firebase Realtime Database (REST).
 // Paths: profiles/{uid}, codes/{CODE}, backups/{uid}, cheers/{uid}/{from}
 import { CONFIG } from './config';
@@ -45,8 +46,10 @@ export async function pushProgress(auth, state, snapshot) {
   const wk = weekKey();
   const profile = {
     name: state.profile.name || a.name || 'Aluno',
-    photo: state.profile.photo || a.photo || '',
+    photo: state.profile.photo === 'none' ? '' : state.profile.photo || a.photo || '',
     xp: state.xp,
+    wear: wornOf(state.inventory),
+    wk: state.week?.key === wk ? { listen: state.week.listen || 0, written: state.week.written || 0, verbs: state.week.verbs || 0, spoken: state.week.spoken || 0, stories: state.week.stories || 0, correct: state.week.correct || 0 } : {},
     streak: state.streak.count,
     weekXP: state.week.key === wk ? state.week.xp : 0,
     week: wk,
@@ -117,7 +120,7 @@ export async function takeCheers(auth) {
 }
 
 // A duel is a weekly XP race between two friends. The invite travels through the cheers inbox.
-export async function sendDuel(auth, toUid, name, week) {
+export async function sendDuel(auth, toUid, name, week, theme = 'xp') {
   const a = await withAuth(auth);
-  await req(db(`cheers/${toUid}/${a.uid}`, a.idToken), { method: 'PUT', body: JSON.stringify({ name, ts: Date.now(), kind: 'duel', week }) });
+  await req(db(`cheers/${toUid}/${a.uid}`, a.idToken), { method: 'PUT', body: JSON.stringify({ name, ts: Date.now(), kind: 'duel', week, theme }) });
 }

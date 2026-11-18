@@ -11,9 +11,12 @@ import { signInWithGoogle } from '../services/auth';
 import { pushProgress, fetchBackup, fetchLegacy } from '../services/cloud';
 import { checkForUpdates, applyOta, openApk, updateInfo } from '../services/updates';
 import { CONFIG } from '../services/config';
-import { scheduleReminders } from '../services/notifications';
+import { defaultReminders } from '../services/notifications';
 import { fx } from '../services/feedback';
 import { voiceStatus } from '../services/speech';
+import { usualHour } from '../store/logic';
+import { avatarOf } from '../services/photo';
+import PhotoSheet from '../components/PhotoSheet';
 import { isNetworkError, markOffline } from '../services/net';
 import { diagnosticsReport, clearErrors } from '../services/diagnostics';
 import * as Clipboard from 'expo-clipboard';
@@ -120,6 +123,7 @@ export default function Settings() {
   };
 
   const [voice, setVoice] = useState(null);
+  const [photoOpen, setPhotoOpen] = useState(false);
   const checkVoice = async () => setVoice(await voiceStatus());
   const openTts = async () => {
     try {
@@ -141,7 +145,7 @@ export default function Settings() {
         {state.auth ? (
           <>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, padding: 16 }}>
-              <DuckAvatar size={48} photo={state.auth.photo} />
+              <Pressable onPress={() => setPhotoOpen(true)}><DuckAvatar size={48} photo={avatarOf(state)} /></Pressable>
               <View style={{ flex: 1 }}>
                 <T v="bodyBold">{state.auth.name}</T>
                 <T v="small" numberOfLines={1}>{state.auth.email}</T>
@@ -168,6 +172,7 @@ export default function Settings() {
             <Button title="Salvar" small onPress={() => { actions.setProfile({ name: name.trim() }); Alert.alert('Salvo!'); }} disabled={!name.trim() || name === p.name} />
           </View>
         </View>
+        <Row icon="user" title="Foto do perfil" subtitle="Galeria, Google ou o Canard" onPress={() => setPhotoOpen(true)} last />
       </Group>
 
       {/* GOAL */}
@@ -179,19 +184,7 @@ export default function Settings() {
 
       {/* REMINDERS */}
       <Group title="Lembretes">
-        <Toggle icon="bell" title="Lembrete diário" subtitle={p.reminder?.enabled ? `Todo dia às ${String(p.reminder.hour).padStart(2, '0')}:${String(p.reminder.minute).padStart(2, '0')}` : 'Desligado'} value={p.reminder?.enabled} onChange={(v) => setReminder({ enabled: v })} />
-        {p.reminder?.enabled ? (
-          <View style={{ paddingTop: 12 }}>
-            <Choice options={[['8:0', '08:00'], ['12:30', '12:30'], ['19:0', '19:00'], ['21:30', '21:30']]} value={`${p.reminder.hour}:${p.reminder.minute}`} onChange={(v) => { const [h, m] = v.split(':').map(Number); setReminder({ hour: h, minute: m }); }} />
-          </View>
-        ) : null}
-        <Toggle icon="moon" title="Lembrete noturno inteligente" subtitle={s.nightly?.enabled ? `Toda noite às ${String(s.nightly.hour).padStart(2, '0')}:${String(s.nightly.minute).padStart(2, '0')} · revisões, streak e frase do dia` : 'Desligado'} value={!!s.nightly?.enabled} onChange={(v) => actions.setSettings({ nightly: { hour: 21, minute: 30, ...(s.nightly || {}), enabled: v } })} />
-        {s.nightly?.enabled ? (
-          <View style={{ paddingTop: 12 }}>
-            <Choice options={[['20:0', '20:00'], ['21:0', '21:00'], ['21:30', '21:30'], ['22:30', '22:30']]} value={`${s.nightly.hour}:${s.nightly.minute}`} onChange={(v) => { const [h, m] = v.split(':').map(Number); actions.setSettings({ nightly: { ...s.nightly, hour: h, minute: m } }); }} />
-          </View>
-        ) : null}
-        <Toggle icon="flame" title="Alerta de streak em risco" subtitle={s.nightly?.enabled ? 'Já incluído no lembrete noturno' : 'Às 21h, se você ainda não estudou'} value={s.notifStreak} onChange={(v) => actions.setSettings({ notifStreak: v })} last />
+        <Row icon="bell" title="Meus lembretes" subtitle={(() => { const rs = (s.reminders || defaultReminders(p.reminder, s.nightly)).filter((r) => r.enabled); return rs.length ? `${rs.length} ativo${rs.length > 1 ? 's' : ''} · ${rs.map((r) => (r.auto ? 'auto' : `${String(r.hour).padStart(2, '0')}:${String(r.minute).padStart(2, '0')}`)).join(', ')}` : 'Nenhum ativo'; })()} onPress={() => router.push('/reminders')} last />
       </Group>
 
       {/* LEARNING */}
@@ -223,11 +216,15 @@ export default function Settings() {
         <Toggle icon="sparkles" title="Vibração" value={s.haptics} onChange={(v) => actions.setSettings({ haptics: v })} last />
       </Group>
 
-      {/* APPEARANCE */}
-      <Group title="Aparência">
+      {/* APPEARANCE & ACCESSIBILITY */}
+      <Group title="Aparência e acessibilidade">
         <View style={{ paddingTop: 14 }}>
           <Choice options={[['light', '☀️ Claro'], ['dark', '🌙 Escuro'], ['system', '📱 Sistema']]} value={s.theme} onChange={(v) => actions.setSettings({ theme: v })} />
         </View>
+        <Row icon="edit" title="Tamanho do texto" subtitle="Vale para os textos do app" />
+        <Choice options={[[1, 'A'], [1.15, 'A+'], [1.3, 'A++']]} value={s.textScale || 1} onChange={(v) => actions.setSettings({ textScale: v })} />
+        <Toggle icon="sparkles" title="Reduzir animações" subtitle="Menos movimento, confete e pulos do pato" value={!!s.reduceMotion} onChange={(v) => actions.setSettings({ reduceMotion: v })} />
+        <Toggle icon="home" title="Tela inicial compacta" subtitle="Esconde frase do dia, plano e resumos" value={!!s.compactHome} onChange={(v) => actions.setSettings({ compactHome: v })} last />
       </Group>
 
       {/* UPDATES */}
@@ -341,6 +338,7 @@ export default function Settings() {
           }}
         />
       </Sheet>
+      <PhotoSheet visible={photoOpen} onClose={() => setPhotoOpen(false)} />
     </Screen>
   );
 }

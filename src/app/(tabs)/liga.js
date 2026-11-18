@@ -3,6 +3,7 @@ import { useKeyboardOverlap, scrollFocusedIntoView } from '../../components/keyb
 import { View, Text, ScrollView, Pressable, TextInput, ActivityIndicator, Share, RefreshControl } from 'react-native';
 import { Alert } from '../../services/dialog';
 import { isNetworkError, markOffline } from '../../services/net';
+import { avatarOf } from '../../services/photo';
 import * as Clipboard from 'expo-clipboard';
 import { Image } from 'expo-image';
 import { useFocusEffect } from 'expo-router';
@@ -17,9 +18,20 @@ import { msUntilWeekEnd, dayKey, addDays, weekKey, mondayKey } from '../../store
 import { friendCode, findFriend, fetchFriends, sendCheer, sendDuel } from '../../services/cloud';
 import { signInWithGoogle } from '../../services/auth';
 
-function Avatar({ photo, size = 40 }) {
+const DUEL_THEMES = {
+  xp: { label: 'XP', emoji: '⚡', unit: 'XP' },
+  listen: { label: 'Escuta', emoji: '👂', unit: 'acertos' },
+  written: { label: 'Escrita', emoji: '✍️', unit: 'frases' },
+  verbs: { label: 'Verbos', emoji: '🔁', unit: 'verbos' },
+  spoken: { label: 'Fala', emoji: '🗣️', unit: 'frases' },
+  stories: { label: 'Leitura', emoji: '📖', unit: 'histórias' },
+};
+const myScore = (state, theme, weekXP) => (theme && theme !== 'xp' ? state.week?.[theme] || 0 : weekXP);
+const theirScore = (f, theme, wk) => (f.week !== wk ? 0 : theme && theme !== 'xp' ? f.wk?.[theme] || 0 : f.weekXP || 0);
+
+function Avatar({ photo, wear, size = 40, me }) {
   if (photo) return <Image source={{ uri: photo }} style={{ width: size, height: size, borderRadius: size / 2 }} />;
-  return <DuckAvatar size={size} />;
+  return <DuckAvatar size={size} outfit={me ? undefined : wear || null} />;
 }
 
 
@@ -98,7 +110,7 @@ export default function League() {
       actions.set((s) => ({
         duels: (s.duels || []).map((d) => {
           const f = fs.find((x) => x.uid === d.uid);
-          return f && d.week === wk && f.week === wk ? { ...d, theirXP: Math.max(d.theirXP || 0, f.weekXP || 0), name: f.name || d.name } : d;
+          return f && d.week === wk && f.week === wk ? { ...d, theirXP: Math.max(d.theirXP || 0, theirScore(f, d.theme, wk)), name: f.name || d.name } : d;
         }),
       }));
     } catch (e) {
@@ -117,7 +129,8 @@ export default function League() {
     if (!old.length) return;
     let won = 0;
     const lines = old.map((d) => {
-      const mine = sumDays(state.history || {}, weekDaysFrom(d.mon || addDays(thisMon, -7)));
+      const pastWeek = [...(state.weeks || []), state.lastWeek].find((w) => w && w.key === d.week);
+      const mine = d.theme && d.theme !== 'xp' ? pastWeek?.[d.theme] || 0 : sumDays(state.history || {}, weekDaysFrom(d.mon || addDays(thisMon, -7)));
       const win = mine > (d.theirXP || 0);
       if (win) won++;
       return `${win ? '🏆' : mine === (d.theirXP || 0) ? '🤝' : '💪'} Você ${mine} × ${d.theirXP || 0} ${d.name}`;
@@ -130,13 +143,21 @@ export default function League() {
     Alert.alert('Resultado dos duelos ⚔️', lines.join('\n') + (won ? `\n\n+${won * 50} 💶 pelas vitórias!` : '\n\nEssa semana tem revanche!'));
   }, []);
 
-  const challenge = async (f) => {
+  const challenge = (f) => {
     const wk = weekKey();
     if ((state.duels || []).find((d) => d.uid === f.uid && d.week === wk)) return Alert.alert('Duelo em andamento', `Você já está duelando com ${f.name} esta semana.`);
+    Alert.alert(`Desafiar ${f.name} ⚔️`, 'Escolha o tema do duelo desta semana:', [
+      ...['xp', 'listen', 'written', 'spoken'].map((k) => ({ text: `${DUEL_THEMES[k].emoji} ${DUEL_THEMES[k].label}`, onPress: () => sendChallenge(f, k) })),
+      { text: 'Cancelar', style: 'cancel' },
+    ]);
+  };
+  const sendChallenge = async (f, theme) => {
+    const wk = weekKey();
     try {
-      await sendDuel(auth, f.uid, state.profile.name || auth.name, wk);
-      actions.set((s) => ({ duels: [...(s.duels || []), { uid: f.uid, name: f.name, week: wk, mon: thisMon, theirXP: f.week === wk ? f.weekXP || 0 : 0, status: 'active', invitedBy: 'me' }] }));
-      Alert.alert('Desafio enviado! ⚔️', `Quem fizer mais XP até domingo vence e ganha 50 💶. Boa sorte contra ${f.name}!`);
+      await sendDuel(auth, f.uid, state.profile.name || auth.name, wk, theme);
+      actions.set((s) => ({ duels: [...(s.duels || []), { uid: f.uid, name: f.name, week: wk, mon: thisMon, theme, theirXP: theirScore(f, theme, wk), status: 'active', invitedBy: 'me' }] }));
+      const th = DUEL_THEMES[theme];
+      Alert.alert('Desafio enviado! ⚔️', `Duelo de ${th.label}: quem fizer mais ${th.unit} até domingo vence e ganha 50 💶. Boa sorte contra ${f.name}!`);
     } catch (e) {
       Alert.alert('Erro', e.message);
     }
@@ -300,7 +321,7 @@ export default function League() {
     }
     const wk = weekKey();
     const duels = (state.duels || []).filter((d) => d.week === wk);
-    const me = { uid: auth.uid, name: state.profile.name || auth.name, photo: state.profile.photo || auth.photo, weekXP, streak: state.streak.count, me: true };
+    const me = { uid: auth.uid, name: state.profile.name || auth.name, photo: avatarOf(state), weekXP, streak: state.streak.count, me: true };
     const ranking = [me, ...friends.map((f) => ({ ...f, weekXP: f.week === wk ? f.weekXP || 0 : 0 }))].sort((a, b) => (b.weekXP || 0) - (a.weekXP || 0));
     const podium = ranking.slice(0, 3);
     return (
@@ -313,7 +334,7 @@ export default function League() {
               const h = [110, 80, 60][pi];
               return (
                 <View key={p.uid} style={{ flex: 1, alignItems: 'center', gap: 6 }}>
-                  <Avatar photo={p.photo} size={pi === 0 ? 62 : 50} />
+                  <Avatar photo={p.photo} wear={p.wear} me={p.me} size={pi === 0 ? 62 : 50} />
                   <T v="caption" numberOfLines={1} center>{p.me ? 'Você' : (p.name || '').split(' ')[0]}</T>
                   <View style={{ alignSelf: 'stretch', height: h, borderTopLeftRadius: 14, borderTopRightRadius: 14, backgroundColor: pi === 0 ? palette.gold : pi === 1 ? '#B8C0CC' : '#D59A6A', alignItems: 'center', paddingTop: 8 }}>
                     <Text style={{ fontSize: 22 }}>{['🥇', '🥈', '🥉'][pi]}</Text>
@@ -328,24 +349,26 @@ export default function League() {
         {duels.length ? (
           <View style={{ gap: 10 }}>
             {duels.map((d) => {
-              const total = Math.max(1, weekXP + (d.theirXP || 0));
-              const ahead = weekXP >= (d.theirXP || 0);
+              const th = DUEL_THEMES[d.theme || 'xp'] || DUEL_THEMES.xp;
+              const mine = myScore(state, d.theme, weekXP);
+              const total = Math.max(1, mine + (d.theirXP || 0));
+              const ahead = mine >= (d.theirXP || 0);
               return (
                 <Card key={d.uid} style={{ gap: 8 }} tone={ahead ? t.successSoft : palette.coralSoft}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
                     <Text style={{ fontSize: 22 }}>⚔️</Text>
-                    <T v="bodyBold" style={{ flex: 1 }}>Duelo com {d.name}</T>
+                    <T v="bodyBold" style={{ flex: 1 }}>Duelo de {th.emoji} {th.label} com {d.name}</T>
                     <T v="caption">até domingo</T>
                   </View>
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 18, color: t.success }}>Você {weekXP}</Text>
+                    <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 18, color: t.success }}>Você {mine}</Text>
                     <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 18, color: palette.coralDark }}>{d.theirXP || 0} {(d.name || '').split(' ')[0]}</Text>
                   </View>
                   <View style={{ flexDirection: 'row', height: 12, borderRadius: 6, overflow: 'hidden', backgroundColor: t.surface2 }}>
-                    <View style={{ flex: weekXP / total || 0.5, backgroundColor: t.success }} />
+                    <View style={{ flex: mine / total || 0.5, backgroundColor: t.success }} />
                     <View style={{ flex: (d.theirXP || 0) / total || 0.5, backgroundColor: palette.coral }} />
                   </View>
-                  <T v="small">{ahead ? 'Você está na frente! Não deixe virar. 🔥' : `Faltam ${(d.theirXP || 0) - weekXP + 1} XP para virar o jogo!`}</T>
+                  <T v="small">{ahead ? 'Você está na frente! Não deixe virar. 🔥' : `Faltam ${(d.theirXP || 0) - mine + 1} ${th.unit} para virar o jogo!`}</T>
                 </Card>
               );
             })}
@@ -357,7 +380,7 @@ export default function League() {
             {ranking.map((f, i) => (
               <View key={f.uid} style={{ flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14, backgroundColor: f.me ? t.skySoft : 'transparent', borderBottomWidth: i === ranking.length - 1 ? 0 : 1, borderBottomColor: t.border }}>
                 <Text style={{ width: 22, fontFamily: fonts.bodyHeavy, fontSize: 15, color: t.text3, textAlign: 'center' }}>{i + 1}</Text>
-                <Avatar photo={f.photo} size={42} />
+                <Avatar photo={f.photo} wear={f.wear} me={f.me} size={42} />
                 <View style={{ flex: 1 }}>
                   <T v="bodyBold" numberOfLines={1}>{f.me ? `${f.name} (você)` : f.name}</T>
                   <T v="caption">{f.weekXP || 0} XP na semana · 🔥 {f.streak || 0}{!f.me && f.tier != null ? ` · ${LEAGUES[f.tier || 0].emoji}` : ''}</T>

@@ -30,67 +30,81 @@ export async function ensurePermission() {
   return req.granted;
 }
 
-// Smart nightly reminder (like a journal app): every night at the chosen hour,
-// with the phrase of the next day, what is due for review and the streak status.
-// Scheduled 7 nights ahead with DATE triggers so each one has its own text;
-// it is rebuilt every time the app opens or progress changes.
-function nightlyContent(night, { practicedToday, streakCount, due }) {
+// ─── Custom reminders ─────────────────────────────────────
+// reminder: { id, enabled, hour, minute, auto, days: [0..6] (0 = domingo), kind, text, label }
+// kind: smart | phrase | review | streak | custom
+export const REMINDER_KINDS = [
+  { id: 'smart', emoji: '🧠', label: 'Inteligente', desc: 'Muda conforme o dia: streak, revisões ou frase do dia' },
+  { id: 'phrase', emoji: '💬', label: 'Frase do dia', desc: 'Uma expressão francesa nova' },
+  { id: 'review', emoji: '🔁', label: 'Revisão', desc: 'Quantas palavras estão esperando' },
+  { id: 'streak', emoji: '🔥', label: 'Proteger o streak', desc: 'Só avisa se você ainda não estudou' },
+  { id: 'custom', emoji: '✏️', label: 'Minha mensagem', desc: 'Você escreve o texto' },
+];
+
+export function defaultReminders(profileReminder, nightly) {
+  return [
+    { id: 'r-dia', enabled: profileReminder?.enabled !== false, hour: profileReminder?.hour ?? 19, minute: profileReminder?.minute ?? 0, days: [0, 1, 2, 3, 4, 5, 6], kind: 'phrase', label: 'Lembrete do dia' },
+    { id: 'r-noite', enabled: nightly?.enabled !== false, hour: nightly?.hour ?? 21, minute: nightly?.minute ?? 30, auto: !!nightly?.auto, days: [0, 1, 2, 3, 4, 5, 6], kind: 'smart', label: 'Lembrete da noite' },
+  ];
+}
+
+function contentFor(r, night, { practicedToday, streakCount, due }) {
   const d = new Date();
   d.setDate(d.getDate() + night);
   const ph = DAILY_PHRASES[dayIdx(d) % DAILY_PHRASES.length];
-  if (night === 0 && !practicedToday) {
-    return {
-      title: streakCount > 0 ? `🔥 ${streakCount} dias seguidos — falta o de hoje!` : '🌙 Ainda dá tempo de estudar hoje',
-      body: `${due ? `${due} palavras esperando revisão. ` : ''}5 minutinhos antes de dormir e pronto. 🦆`,
-    };
+  const today = night === 0;
+  switch (r.kind) {
+    case 'custom':
+      return { title: r.label || 'Le canard français 🦆', body: r.text || 'Hora do francês!' };
+    case 'phrase':
+      return { title: `${ph.emoji || '💬'} Frase do dia`, body: `“${ph.fr}” — ${ph.meaning}` };
+    case 'review':
+      return { title: '🔁 Hora de revisar', body: due ? `${due} palavras estão quase esquecidas. 2 minutinhos resolvem!` : 'Uma revisão rápida mantém tudo fresquinho na memória.' };
+    case 'streak':
+      if (today && practicedToday) return null;
+      return { title: streakCount > 0 ? `🔥 Não perca seus ${streakCount} dias!` : '🔥 Comece um streak hoje!', body: 'Uma lição rápida já conta. Bora? 🦆' };
+    default: // smart
+      if (today && !practicedToday) {
+        return {
+          title: r.usual ? '⏰ Seu horário de francês!' : streakCount > 0 ? `🔥 ${streakCount} dias seguidos — falta o de hoje!` : '🌙 Ainda dá tempo de estudar hoje',
+          body: `${due ? `${due} palavras esperando revisão. ` : ''}5 minutinhos e pronto. 🦆`,
+        };
+      }
+      if (today) return { title: '🌙 Mandou bem hoje!', body: `Frase para dormir pensando: “${ph.fr}” — ${ph.meaning}` };
+      return { title: streakCount > 0 ? '🦆 Bora manter o streak? 🔥' : '🦆 Um pouquinho de francês?', body: `“${ph.fr}” = ${ph.pt}` };
   }
-  if (night === 0) {
-    return { title: '🌙 Mandou bem hoje!', body: `Frase para dormir pensando: “${ph.fr}” — ${ph.meaning}` };
-  }
-  return {
-    title: streakCount > 0 ? `🌙 Bora manter o streak? 🔥` : '🌙 Boa noite! Um pouquinho de francês?',
-    body: `“${ph.fr}” = ${ph.pt}${due ? ` · revise o que está quase esquecendo` : ''}`,
-  };
 }
 
-export async function scheduleReminders({ reminder, notifStreak, practicedToday, streakCount, nightly, due = 0 }) {
+export async function scheduleReminders({ reminders = [], practicedToday, streakCount, due = 0 }) {
   try {
     await Notifications.cancelAllScheduledNotificationsAsync();
-    const anyOn = reminder?.enabled || nightly?.enabled || (notifStreak && streakCount > 0);
-    if (!anyOn) return;
+    const on = reminders.filter((r) => r.enabled && (r.days || []).length);
+    if (!on.length) return;
     const ok = await ensurePermission();
     if (!ok) return;
-    if (reminder?.enabled) {
-      await Notifications.scheduleNotificationAsync({
-        content: { title: 'Le canard français', body: MSGS[Math.floor(Math.random() * MSGS.length)] },
-        trigger: { type: Notifications.SchedulableTriggerInputTypes.DAILY, hour: reminder.hour, minute: reminder.minute, channelId: 'default' },
-      });
-    }
-    if (nightly?.enabled) {
-      for (let n = 0; n < 7; n++) {
+    let count = 0;
+    for (let n = 0; n < 7; n++) {
+      for (const r of on) {
         const d = new Date();
         d.setDate(d.getDate() + n);
-        d.setHours(nightly.hour ?? 21, nightly.minute ?? 0, 0, 0);
+        if (!(r.days || []).includes(d.getDay())) continue;
+        d.setHours(r.hour ?? 21, r.minute ?? 0, 0, 0);
         if (d.getTime() <= Date.now() + 30000) continue;
-        await Notifications.scheduleNotificationAsync({
-          content: nightlyContent(n, { practicedToday, streakCount, due }),
-          trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: d, channelId: 'default' },
-        });
-      }
-      return; // the nightly one already covers the streak warning
-    }
-    if (notifStreak && streakCount > 0) {
-      const d = new Date();
-      if (practicedToday) d.setDate(d.getDate() + 1);
-      d.setHours(21, 0, 0, 0);
-      if (d.getTime() > Date.now()) {
-        await Notifications.scheduleNotificationAsync({
-          content: { title: '🔥 Seu streak está em risco!', body: `Não perca seus ${streakCount} dias seguidos. Uma lição rápida resolve! 💤🦆` },
-          trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: d, channelId: 'default' },
-        });
+        const content = contentFor(r, n, { practicedToday, streakCount, due });
+        if (!content) continue;
+        if (++count > 60) return;
+        await Notifications.scheduleNotificationAsync({ content, trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: d, channelId: 'default' } });
       }
     }
   } catch (e) {
     // notifications are best-effort
   }
+}
+
+export async function testReminder(r, ctx) {
+  const ok = await ensurePermission();
+  if (!ok) return false;
+  const content = contentFor({ ...r, kind: r.kind === 'streak' ? 'smart' : r.kind }, 0, { ...ctx, practicedToday: false });
+  await Notifications.scheduleNotificationAsync({ content, trigger: { type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL, seconds: 3, channelId: 'default' } });
+  return true;
 }

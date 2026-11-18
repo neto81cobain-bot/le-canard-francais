@@ -5,6 +5,7 @@ import Icon from './Icon';
 import { Tap } from './ui';
 import { speak, setSpeechRate } from '../services/speech';
 import { useStore } from '../store';
+import { a11y } from '../services/a11y';
 
 // Voice speed pill (cycles; saved in settings, applies everywhere)
 const SPEEDS = [[0.6, '🐢 0.6×'], [0.75, '0.75×'], [0.9, '1×'], [1.05, '1.15×'], [1.2, '🐇 1.3×']];
@@ -101,7 +102,8 @@ export function SpeakableText({ text, style, color }) {
 
 // ─── CONFETTI ─────────────────────────────────────────────
 const COLORS = [palette.red, palette.navy, palette.gold, palette.green, palette.sky, '#fff'];
-export function Confetti({ count = 40, run = true }) {
+export function Confetti({ count = 40, run: runProp = true }) {
+  const run = runProp && !a11y.reduceMotion;
   const { width, height } = Dimensions.get('window');
   const pieces = useMemo(
     () => Array.from({ length: count }, (_, i) => ({
@@ -167,8 +169,9 @@ export function CountUp({ to, duration = 900, style, prefix = '', suffix = '' })
 
 // ─── FADE IN ON MOUNT ─────────────────────────────────────
 export function Appear({ delay = 0, children, style, from = 16 }) {
-  const a = useRef(new Animated.Value(0)).current;
+  const a = useRef(new Animated.Value(a11y.reduceMotion ? 1 : 0)).current;
   useEffect(() => {
+    if (a11y.reduceMotion) return;
     Animated.timing(a, { toValue: 1, duration: 380, delay, easing: Easing.out(Easing.cubic), useNativeDriver: true }).start();
   }, []);
   return (

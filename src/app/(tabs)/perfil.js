@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { View, Text, ScrollView, Pressable } from 'react-native';
 import { router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -6,10 +6,14 @@ import { useStore } from '../../store';
 import { useTheme, fonts, radius, palette } from '../../theme';
 import { T, Card, Stat, ProgressBar, Section, Row, Chip, Button } from '../../components/ui';
 import { WeeklySummaryCard } from '../../components/Weekly';
+import PhotoSheet from '../../components/PhotoSheet';
+import SkillHistory from '../../components/SkillHistory';
+import Certificates from '../../components/Certificates';
+import { avatarOf } from '../../services/photo';
 import { weeklyChallenge } from '../../store/logic';
 import { toast } from '../../services/dialog';
 import Icon from '../../components/Icon';
-import Duck, { DuckAvatar } from '../../components/Duck';
+import Duck, { DuckAvatar, autoMood } from '../../components/Duck';
 import { levelInfo, ACHIEVEMENTS, LEAGUES, goalXP } from '../../store/logic';
 import { lastNDays, weekdayOf, weekdayShort, dayKey } from '../../store/dates';
 import { UNITS } from '../../content';
@@ -24,6 +28,7 @@ export default function Profile() {
   const days84 = useMemo(() => lastNDays(84), [state.history]);
   const active84 = days84.filter((d) => (state.history[d] || 0) > 0).length;
   const { actions } = useStore();
+  const [photoOpen, setPhotoOpen] = useState(false);
   const days7 = useMemo(() => lastNDays(7), [state.history]);
   const maxXP = Math.max(20, ...days7.map((d) => state.history[d] || 0));
   const goal = goalXP(state.profile.dailyMinutes);
@@ -42,9 +47,12 @@ export default function Profile() {
           </Pressable>
         </View>
         <View style={{ alignItems: 'center', gap: 6 }}>
-          <View style={{ borderWidth: 4, borderColor: 'rgba(255,255,255,0.35)', borderRadius: 60 }}>
-            <DuckAvatar size={96} photo={state.profile.photo || state.auth?.photo} />
-          </View>
+          <Pressable onPress={() => setPhotoOpen(true)} accessibilityLabel="Trocar foto" style={{ borderWidth: 4, borderColor: 'rgba(255,255,255,0.35)', borderRadius: 60 }}>
+            <DuckAvatar size={96} photo={avatarOf(state)} mood={autoMood('happy', state)} />
+            <View style={{ position: 'absolute', right: -4, bottom: -4, width: 32, height: 32, borderRadius: 16, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: t.primary }}>
+              <Text style={{ fontSize: 15 }}>📷</Text>
+            </View>
+          </Pressable>
           <Text style={{ fontFamily: fonts.display, fontSize: 26, color: '#fff' }}>{state.profile.name || 'Aluno'}</Text>
           <View style={{ flexDirection: 'row', gap: 8 }}>
             <Chip label={`Nível ${cefr}`} bg="rgba(255,255,255,0.18)" color="#fff" />
@@ -131,8 +139,12 @@ export default function Profile() {
         </Card>
 
         {/* THIS WEEK + MEDALS */}
-        <Section title="Esta semana" />
-        <WeeklySummaryCard week={state.week} title="Sua semana até agora" />
+        {state.week?.xp || state.week?.correct ? (
+          <>
+            <Section title="Esta semana" />
+            <WeeklySummaryCard week={state.week} title="Sua semana até agora" />
+          </>
+        ) : null}
         {Object.keys(state.medals || {}).length ? (
           <Card style={{ marginTop: 12 }}>
             <T v="label">Medalhas semanais</T>
@@ -150,6 +162,12 @@ export default function Profile() {
             </View>
           </Card>
         ) : null}
+
+        <Section title="Certificados" />
+        <Certificates />
+
+        <Section title="Evolução por habilidade" />
+        <SkillHistory />
 
         {/* WEEK CHART */}
         <Section title="XP nos últimos 7 dias" />
@@ -195,6 +213,7 @@ export default function Profile() {
           <Row icon="heart" iconBg={palette.redSoft} iconColor={palette.red} title="Apoiar o projeto" subtitle="Ajude com um PIX de qualquer valor" onPress={() => router.push('/support')} last />
         </Card>
       </View>
+      <PhotoSheet visible={photoOpen} onClose={() => setPhotoOpen(false)} />
     </ScrollView>
   );
 }

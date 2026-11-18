@@ -1,3 +1,4 @@
+import { a11y } from '../services/a11y';
 import React, { useRef, useEffect } from 'react';
 import { View, Text, Pressable, Animated, StyleSheet, ScrollView, Modal, ActivityIndicator, Easing } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -25,8 +26,10 @@ export function T({ v = 'body', color, style, children, center, ...rest }) {
     frBig: { fontFamily: fonts.displayItalic, fontSize: 28, lineHeight: 36, color: t.text },
     num: { fontFamily: fonts.bodyHeavy, fontSize: 22, lineHeight: 26, color: t.text },
   }[v];
+  const k = a11y.textScale;
+  const scaled = k !== 1 ? { fontSize: base.fontSize * k, lineHeight: base.lineHeight * k } : null;
   return (
-    <Text style={[base, color && { color }, center && { textAlign: 'center' }, style]} {...rest}>
+    <Text style={[base, scaled, color && { color }, center && { textAlign: 'center' }, style]} {...rest}>
       {children}
     </Text>
   );

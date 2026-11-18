@@ -7,9 +7,10 @@ import { useStore } from '../../store';
 import { useTheme, fonts, radius, unitColors, palette, shadow } from '../../theme';
 import { T, Card, Chip, Ring, Button, Tap, Sheet, ProgressBar } from '../../components/ui';
 import Icon from '../../components/Icon';
-import Duck, { DuckAvatar } from '../../components/Duck';
+import Duck, { DuckAvatar, autoMood } from '../../components/Duck';
 import { AudioButton, Appear } from '../../components/extras';
-import { WeeklyChallengeCard, WeeklySummaryCard } from '../../components/Weekly';
+import { WeeklyChallengeCard, WeeklySummaryCard, WeeklyChestCard, WeeklyPlanCard } from '../../components/Weekly';
+import { avatarOf } from '../../services/photo';
 import { UNITS, lessonState, unitProgress, nextLesson, LEVEL_INFO } from '../../content';
 import { DAILY_PHRASES, CULTURE } from '../../content/extras';
 import { STORY_LIST } from '../../content/stories';
@@ -132,15 +133,16 @@ export default function Learn() {
 
   const offsets = [0, 60, 85, 60, 0, -60, -85, -60];
 
+  const duckMood = autoMood('happy', state);
   return (
     <View style={{ flex: 1, backgroundColor: t.bg }}>
       {/* HEADER */}
       <View style={{ paddingTop: insets.top + 8, paddingHorizontal: 20, paddingBottom: 12, backgroundColor: t.bg, flexDirection: 'row', alignItems: 'center', gap: 10, borderBottomWidth: 1, borderBottomColor: t.border }}>
         <Pressable onPress={() => router.push('/(tabs)/perfil')}>
-          <DuckAvatar size={42} photo={state.profile.photo || state.auth?.photo} />
+          <DuckAvatar size={42} photo={avatarOf(state)} mood={duckMood} />
         </Pressable>
         <View style={{ flex: 1 }}>
-          <T v="caption">{greet},</T>
+          <T v="caption">{duckMood === 'sad' ? 'O Canard sentiu sua falta 🥺' : duckMood === 'sleep' ? 'O Canard cochilou esperando… 💤' : greet + ','}</T>
           <T v="title" numberOfLines={1}>{firstName}!</T>
         </View>
         <Chip icon="flame" label={String(state.streak.count)} color={state.streak.lastDay === dayKey() ? palette.red : t.text3} bg={state.streak.lastDay === dayKey() ? palette.redSoft : t.surface2} big />
@@ -164,7 +166,7 @@ export default function Learn() {
               {duelsIn.length ? (
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
                   <Text style={{ fontSize: 28 }}>⚔️</Text>
-                  <T v="bodyBold" style={{ flex: 1 }}>{[...new Set(duelsIn.map((c) => c.name))].join(', ')} te desafiou para um duelo de XP esta semana! Toque para ver.</T>
+                  <T v="bodyBold" style={{ flex: 1 }}>{[...new Set(duelsIn.map((c) => c.name))].join(', ')} te desafiou para um duelo esta semana! Toque para ver.</T>
                 </View>
               ) : null}
             </Card>
@@ -256,7 +258,7 @@ export default function Learn() {
               <T v="bodyBold">{due.length ? `${Math.min(due.length, 99)} para revisar` : 'Revisão em dia'}</T>
               <T v="caption">{due.length ? 'Leva ~2 minutos' : 'Treinar os mais fracos'}</T>
             </Tap>
-            <Tap onPress={() => router.push(nextStory ? { pathname: '/story/[id]', params: { id: nextStory.id } } : '/stories')} style={[{ flex: 1, borderRadius: radius.lg, padding: 14, backgroundColor: t.surface, borderWidth: 2, borderColor: t.border, gap: 4 }]}>
+            <Tap onPress={() => router.push(nextStory ? { pathname: '/story/[id]', params: { id: nextStory.id } } : '/library')} style={[{ flex: 1, borderRadius: radius.lg, padding: 14, backgroundColor: t.surface, borderWidth: 2, borderColor: t.border, gap: 4 }]}>
               <Text style={{ fontSize: 26 }}>{nextStory ? nextStory.emoji : '📚'}</Text>
               <T v="bodyBold" numberOfLines={1}>{nextStory ? nextStory.title : 'Histórias'}</T>
               <T v="caption">{nextStory ? `História ${nextStory.level} para ler` : 'Releia suas favoritas'}</T>
@@ -267,9 +269,13 @@ export default function Learn() {
         {/* WEEKLY CHALLENGE + LAST WEEK */}
         <Appear delay={125}>
           <WeeklyChallengeCard style={{ marginTop: 16 }} />
-          {state.lastWeek && new Date().getDay() >= 1 && new Date().getDay() <= 2 ? <WeeklySummaryCard week={state.lastWeek} style={{ marginTop: 12 }} /> : null}
+          <WeeklyChestCard style={{ marginTop: 12 }} />
+          {!state.settings.compactHome ? <WeeklyPlanCard style={{ marginTop: 12 }} /> : null}
+          {!state.settings.compactHome && state.lastWeek && new Date().getDay() >= 1 && new Date().getDay() <= 2 ? <WeeklySummaryCard week={state.lastWeek} style={{ marginTop: 12 }} /> : null}
         </Appear>
 
+        {!state.settings.compactHome ? (
+          <>
         {/* PHRASE OF THE DAY */}
         <Appear delay={140}>
           <Card style={{ marginTop: 16, padding: 0, overflow: 'hidden' }}>
@@ -298,6 +304,8 @@ export default function Learn() {
             </View>
           </Card>
         </Appear>
+          </>
+        ) : null}
 
         {/* TRAIL */}
         {UNITS.map((unit, ui) => {

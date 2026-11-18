@@ -43,9 +43,9 @@ export async function speak(text, { slow = false, onDone } = {}) {
   });
 }
 
-export function speakPt(text) {
+export function speakPt(text, { onDone } = {}) {
   Speech.stop();
-  Speech.speak(text, { language: 'pt-BR', rate: 1.0 });
+  Speech.speak(text, { language: 'pt-BR', rate: 1.0, onDone, onStopped: onDone, onError: onDone });
 }
 
 export function stopSpeaking() {
