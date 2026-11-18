@@ -197,6 +197,12 @@ export function StoreProvider({ children }) {
     markKind: (kind) => update((s) => ((s.daily.kinds || []).includes(kind) ? s : { ...s, daily: { ...s.daily, kinds: [...(s.daily.kinds || []), kind] } })),
 
     // Called after every answered exercise.
+    // Estatística por regra de gramática (acertos/erros)
+    ruleTally: (rule, ok) =>
+      update((s) => {
+        const cur = (s.ruleStats || {})[rule] || { ok: 0, wrong: 0 };
+        return { ...s, ruleStats: { ...(s.ruleStats || {}), [rule]: { ok: cur.ok + (ok ? 1 : 0), wrong: cur.wrong + (ok ? 0 : 1), last: Date.now() } } };
+      }),
     recordAnswer: ({ item, correct, combo, kind }) =>
       update((s) => {
         let next = {
@@ -265,13 +271,16 @@ export function StoreProvider({ children }) {
           ...next.stats,
           lessons: next.stats.lessons + (lessonId ? 1 : 0),
           perfect: next.stats.perfect + (perfect ? 1 : 0),
-          minutes: next.stats.minutes + Math.round(seconds / 60),
+          // tempo guardado em segundos: sessões curtas não “somem” no arredondamento
+          seconds: (next.stats.seconds ?? next.stats.minutes * 60) + (seconds || 0),
+          minutes: Math.floor(((next.stats.seconds ?? next.stats.minutes * 60) + (seconds || 0)) / 60),
           reviews: next.stats.reviews + (kind === 'review' ? 1 : 0),
           timedBest: kind === 'timed' ? Math.max(next.stats.timedBest, correct) : next.stats.timedBest,
         };
         const hr = String(new Date().getHours());
         next.studyHours = { ...(s.studyHours || {}), [hr]: ((s.studyHours || {})[hr] || 0) + 1 };
-        next.week = bumpWeek(next.week, { lessons: lessonId || unitTestId ? 1 : 0, minutes: Math.round(seconds / 60), stories: kind === 'story' ? 1 : 0, sessions: 1 });
+        next.week = bumpWeek(next.week, { lessons: lessonId || unitTestId ? 1 : 0, seconds: seconds || 0, stories: kind === 'story' ? 1 : 0, sessions: 1 });
+        next.week.minutes = Math.max(next.week.minutes || 0, Math.floor((next.week.seconds || 0) / 60));
         next.daily = {
           ...next.daily,
           lessons: next.daily.lessons + (lessonId || unitTestId ? 1 : 0),
@@ -312,7 +321,13 @@ export function StoreProvider({ children }) {
         return { ...s, coins: s.coins - price, streak: { ...s.streak, freezes: (s.streak.freezes || 0) + 1 } };
       }),
     addConversation: () => update((s) => ({ ...s, stats: { ...s.stats, conversations: s.stats.conversations + 1 } })),
-    addSeconds: (sec) => update((s) => ({ ...s, daily: { ...s.daily, seconds: s.daily.seconds + sec } })),
+    addSeconds: (sec) =>
+      update((s) => {
+        const week = bumpWeek(s.week, { seconds: sec });
+        week.minutes = Math.max(week.minutes || 0, Math.floor((week.seconds || 0) / 60));
+        const total = (s.stats.seconds ?? s.stats.minutes * 60) + sec;
+        return { ...s, daily: { ...s.daily, seconds: s.daily.seconds + sec }, stats: { ...s.stats, seconds: total, minutes: Math.floor(total / 60) }, week };
+      }),
 
     openChest: (chestId) => {
       const r = chestReward(chestId + (stateRef.current?.profile?.joinedAt || ''));

@@ -129,3 +129,7 @@ export const GRAMMAR = [
     tip: '“On” substitui “nous” quase sempre na fala: “on mange ?” = “vamos comer?”.',
   },
 ];
+
+// Regra principal de cada unidade (para “Revisar a regra” e para a estatística de erros por regra)
+export const UNIT_GRAMMAR = { 2: 'etre-avoir', 3: 'possessifs', 4: 'partitifs', 6: 'present', 7: 'prepositions', 8: 'passe', 9: 'negation', 10: 'imparfait', 11: 'futur', 12: 'questions', 13: 'conditionnel', 14: 'imparfait', 15: 'pronoms', 16: 'relatifs', 17: 'subjonctif', 20: 'oral' };
+export const grammarForBank = (bankKey) => GRAMMAR.find((g) => g.bank === bankKey)?.id || null;

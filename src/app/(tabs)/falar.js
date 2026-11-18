@@ -12,7 +12,9 @@ import { SOUNDS, SCENARIOS } from '../../content/extras';
 import { aiAvailable } from '../../services/ai';
 import { useOnline } from '../../services/net';
 import TierTabs from '../../components/TierTabs';
+import { GUIDED } from '../../content/guided';
 import { TIERS, CEFR, tierOf, userLevel, levelOpen, unlockAt } from '../../content/levels';
+import AiSetup from '../../components/AiSetup';
 import { toast } from '../../services/dialog';
 
 const SC_TIERS = TIERS.map((x) => ({ ...x, level: x.levels[0] }));
@@ -37,9 +39,8 @@ export default function Speak() {
       </View>
 
       {!ai ? (
-        <Card style={{ marginTop: 14, flexDirection: 'row', gap: 10, alignItems: 'center' }} tone={t.goldSoft}>
-          <Text style={{ fontSize: 22 }}>⚙️</Text>
-          <T v="small" color={t.text} style={{ flex: 1 }}>A avaliação por IA ainda não está ativa. Você ainda pode treinar ouvindo e repetindo. Para ativar: Perfil → Configurações → Avançado.</T>
+        <Card style={{ marginTop: 14 }} tone={t.goldSoft}>
+          <AiSetup compact feature="A nota de pronúncia, a conversa e o tradutor" />
         </Card>
       ) : !online ? (
         <Card style={{ marginTop: 14, flexDirection: 'row', gap: 12, alignItems: 'center' }} tone={t.surface2}>
@@ -100,6 +101,15 @@ export default function Speak() {
           );
         })}
       </View>
+
+      <Tap onPress={() => router.push('/guided')} style={{ marginTop: 22, flexDirection: 'row', alignItems: 'center', gap: 14, padding: 16, borderRadius: radius.lg, backgroundColor: '#7C5CFC' }}>
+        <Text style={{ fontSize: 32 }}>💬</Text>
+        <View style={{ flex: 1 }}>
+          <Text style={{ fontFamily: fonts.display, fontSize: 19, color: '#fff' }}>Conversas guiadas</Text>
+          <Text style={{ fontFamily: fonts.bodySemi, fontSize: 13, color: 'rgba(255,255,255,0.9)' }}>{GUIDED.length} diálogos — você responde em francês. Sem IA, funciona offline.</Text>
+        </View>
+        <Icon name="chevron" size={20} color="#fff" />
+      </Tap>
 
       <Section title="Conversa com o Canard" />
       <T v="small" style={{ marginTop: -6, marginBottom: 12 }}>Situações reais: você fala, o Canard responde e corrige com gentileza.</T>

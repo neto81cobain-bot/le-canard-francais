@@ -1,7 +1,7 @@
 // Pocket grammar: quick cards with a table, examples, a tip and a practice button.
 import React, { useState } from 'react';
 import { View, Text, Pressable } from 'react-native';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useTheme, fonts, radius, palette } from '../theme';
 import { T, Screen, Chip, Button } from '../components/ui';
 import Icon from '../components/Icon';
@@ -14,8 +14,9 @@ const LV = ['A1', 'A2', 'B1', 'B2'];
 
 export default function Grammar() {
   const t = useTheme();
-  const [open, setOpen] = useState(null);
-  const [lv, setLv] = useState('all');
+  const { open: openParam } = useLocalSearchParams();
+  const [open, setOpen] = useState(openParam || null);
+  const [lv, setLv] = useState(openParam ? GRAMMAR.find((g) => g.id === openParam)?.level || 'all' : 'all');
   const list = GRAMMAR.filter((g) => lv === 'all' || g.level === lv);
   return (
     <Screen title="Gramática de bolso">

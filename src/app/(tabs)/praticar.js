@@ -23,13 +23,14 @@ if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental
 function Tile({ emoji, title, sub, color, onPress, badge }) {
   const t = useTheme();
   return (
-    <Tap onPress={onPress} style={{ width: '48%', flexGrow: 1, flexDirection: 'row', alignItems: 'center', gap: 10, padding: 12, borderRadius: radius.lg, backgroundColor: t.surface, borderWidth: 1, borderColor: t.border }}>
-      <View style={{ width: 42, height: 42, borderRadius: 13, backgroundColor: color, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ fontSize: 21 }}>{emoji}</Text>
+    <Tap onPress={onPress} style={{ width: '48%', flexGrow: 1, flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 11, paddingHorizontal: 10, borderRadius: radius.lg, backgroundColor: t.surface, borderWidth: 1, borderColor: t.border }}>
+      <View style={{ width: 38, height: 38, borderRadius: 12, backgroundColor: color, alignItems: 'center', justifyContent: 'center' }}>
+        <Text style={{ fontSize: 19 }}>{emoji}</Text>
       </View>
-      <View style={{ flex: 1 }}>
-        <Text numberOfLines={1} style={{ fontFamily: fonts.bodyHeavy, fontSize: 14, color: t.text }}>{title}</Text>
-        {sub ? <Text numberOfLines={1} style={{ fontFamily: fonts.bodySemi, fontSize: 12, color: t.text2 }}>{sub}</Text> : null}
+      <View style={{ flex: 1, minWidth: 0 }}>
+        {/* até 2 linhas: nada de “Teste de n…” cortado */}
+        <Text numberOfLines={2} style={{ fontFamily: fonts.bodyHeavy, fontSize: 13.5, lineHeight: 17, color: t.text }}>{title}</Text>
+        {sub ? <Text numberOfLines={2} style={{ fontFamily: fonts.bodySemi, fontSize: 11.5, lineHeight: 15, color: t.text2 }}>{sub}</Text> : null}
       </View>
       {badge ? (
         <View style={{ position: 'absolute', top: -6, right: -4, minWidth: 22, height: 22, paddingHorizontal: 6, borderRadius: 11, backgroundColor: palette.red, alignItems: 'center', justifyContent: 'center' }}>
@@ -141,11 +142,18 @@ export default function Practice() {
         <Tile emoji="🔥" title="Desafio diário" sub={state.daily.challengeDone ? 'Feito hoje ✓' : 'XP em dobro'} color="#FFE4E6" onPress={() => go('daily')} />
       </Drawer>
 
+      <Drawer id="exams" emoji="🎓" title="Provas e simulados" sub="Teste de nível e treino no estilo TCF" color="#E0E7FF">
+        <Tile emoji="🩻" title="Teste de nível" sub={state.placement?.v === 3 ? `Nível ${state.placement.level || 'A1'} · refazer` : 'Estilo TCF, por blocos'} color="#EDE9FE" onPress={() => router.push('/placement')} />
+        {['A1', 'A2', 'B1', 'B2', 'C1'].map((l) => (
+          <Tile key={l} emoji="🎓" title={`Simulado ${l}`} sub={state.tcfBest?.[l] != null ? `Melhor: ${state.tcfBest[l]}%` : '15 questões comentadas'} color="#E0E7FF" onPress={() => go('tcf', { key: l })} />
+        ))}
+      </Drawer>
+
       <Drawer id="real" emoji="🌍" title="Vida real" sub="Viagem, cultura e conversa" color="#DCFCE7">
         <Tile emoji="✈️" title="Modo viagem" sub="Frases por situação" color="#E0F2FE" onPress={() => router.push('/travel')} />
         <Tile emoji="🥖" title="Cultura" sub="Costumes da França" color="#FEF3C7" onPress={() => router.push('/culture')} />
         <Tile emoji="💬" title="Conversa" sub="Fale com o Canard" color="#FFE4E6" onPress={() => router.push('/(tabs)/falar')} />
-        <Tile emoji="🩻" title="Teste de nível" sub={state.placement ? `Unidade ${state.placement.unit} · refazer` : 'Descubra seu nível'} color="#EDE9FE" onPress={() => router.push('/placement')} />
+        <Tile emoji="🗨️" title="Conversas guiadas" sub="Sem IA, offline" color="#EDE9FE" onPress={() => router.push('/guided')} />
       </Drawer>
 
       <Drawer id="topics" emoji="🧩" title="Treino por tema" sub={`${BANK_TOPICS.length + LESSON_TOPICS.length} temas · gramática e lições`} color="#E0E7FF">

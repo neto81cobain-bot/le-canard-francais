@@ -8,6 +8,7 @@ import { T, Card, Stat, ProgressBar, Section, Row, Chip, Button } from '../../co
 import { WeeklySummaryCard } from '../../components/Weekly';
 import PhotoSheet from '../../components/PhotoSheet';
 import SkillHistory from '../../components/SkillHistory';
+import RuleStats from '../../components/RuleStats';
 import Certificates from '../../components/Certificates';
 import { avatarOf } from '../../services/photo';
 import { weeklyChallenge } from '../../store/logic';
@@ -168,6 +169,7 @@ export default function Profile() {
 
         <Section title="Evolução por habilidade" />
         <SkillHistory />
+        <RuleStats style={{ marginTop: 14 }} />
 
         {/* WEEK CHART */}
         <Section title="XP nos últimos 7 dias" />

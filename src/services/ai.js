@@ -192,3 +192,10 @@ No máximo 6 erros, os mais importantes. Se o texto estiver em português, tradu
     tip: res.tip || '',
   };
 }
+
+// Teste rápido: a IA responde? (usado no botão “Testar” das configurações)
+export async function testAi() {
+  const r = await translateText('bom dia', 'pt-fr');
+  if (!r.translation) throw new Error('Sem resposta da IA');
+  return r.translation;
+}

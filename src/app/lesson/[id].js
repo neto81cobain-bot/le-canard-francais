@@ -12,6 +12,7 @@ import { TeachCard, Rich } from '../../components/Rich';
 import Session from '../../components/Session';
 import ResultView from '../../components/ResultView';
 import { getLesson, getUnit, LESSONS } from '../../content';
+import { UNIT_GRAMMAR } from '../../content/grammar';
 import { buildLesson } from '../../engine/exercises';
 import { lessonXP } from '../../store/logic';
 import { speak } from '../../services/speech';
@@ -202,6 +203,7 @@ export default function LessonScreen() {
         key={round + (retry ? 'r' : '')}
         exercises={exercises}
         color={color.main}
+        grammarId={UNIT_GRAMMAR[unit?.number]}
         kind={retry ? 'retry' : 'lesson'}
         onFinish={(r) => {
           const xp = retry ? Math.max(3, r.correct) : lessonXP({ correct: r.correct, total: r.total, perfect: r.perfect, comboBest: r.bestCombo });

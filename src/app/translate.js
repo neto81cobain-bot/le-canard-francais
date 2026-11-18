@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import React, { useState } from 'react';
 import { View, Text, Pressable, TextInput, ActivityIndicator, FlatList, Platform } from 'react-native';
 import { KeyboardAwareView } from '../components/keyboard';
@@ -12,6 +13,7 @@ import { Waveform } from '../components/Exercises';
 import { useRecorder } from '../services/recorder';
 import { translateAudio, translateText, aiAvailable } from '../services/ai';
 import { useOnline } from '../services/net';
+import AiSetup from '../components/AiSetup';
 import { toast } from '../services/dialog';
 
 export default function Translate() {
@@ -96,7 +98,7 @@ export default function Translate() {
       </View>
 
       {!ai ? (
-        <Empty emoji="⚙️" title="Tradutor por IA desativado" text="Configure o servidor de IA em Perfil → Configurações → Avançado para usar o tradutor." />
+        <AiSetup feature="O tradutor por voz" alt={{ title: 'Enquanto isso: modo viagem (frases prontas) →', onPress: () => router.push('/travel') }} />
       ) : !history.length && !pending.length ? (
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <Empty emoji="🗣️" title="Fale ou digite algo" text="Ex.: “Onde fica a estação de trem?” — o Canard traduz e você ouve a pronúncia." />

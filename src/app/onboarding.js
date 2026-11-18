@@ -70,6 +70,7 @@ export default function Onboarding() {
   const [remind, setRemind] = useState(true);
   const [unlocked, setUnlocked] = useState(1);
   const [placing, setPlacing] = useState(false);
+  const [goPlacement, setGoPlacement] = useState(false);
   const [pi, setPi] = useState(0);
   const [pScore, setPScore] = useState([]);
   const [chosen, setChosen] = useState(null);
@@ -93,6 +94,7 @@ export default function Onboarding() {
       unlocked
     );
     router.replace('/(tabs)');
+    if (goPlacement) setTimeout(() => router.push('/placement'), 400);
   };
 
   const login = async () => {
@@ -248,7 +250,7 @@ export default function Onboarding() {
       <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: 20, paddingBottom: 20 + insets.bottom, backgroundColor: t.bg, borderTopWidth: 1, borderTopColor: t.border, gap: 10 }}>
         {step === 2 && (level === 'some' || level === 'talk' || level === 'adv') && unlocked === 1 ? (
           <>
-            <Button title="Fazer teste de 2 minutos" icon="target" onPress={() => { setPi(0); setPScore([]); setPlacing(true); }} />
+            <Button title="Fazer o teste de nível (estilo TCF)" icon="target" onPress={() => { setGoPlacement(true); setStep(3); }} />
             <Button title="Começar do zero" variant="ghost" onPress={() => setStep(3)} small />
           </>
         ) : (

@@ -17,6 +17,7 @@ import { SCENARIOS } from '../../content/extras';
 import { useRecorder } from '../../services/recorder';
 import { conversationTurn, transcribeFrench, aiAvailable } from '../../services/ai';
 import { speak } from '../../services/speech';
+import AiSetup from '../../components/AiSetup';
 import { fx } from '../../services/feedback';
 
 export default function Conversation() {
@@ -93,7 +94,7 @@ export default function Conversation() {
     return (
       <View style={{ flex: 1, backgroundColor: t.bg, paddingTop: insets.top }}>
         <Header title={sc.title} />
-        <Empty emoji="⚙️" title="Conversa por IA desativada" text="Configure o servidor de IA em Perfil → Configurações → Avançado." />
+        <ScrollView><AiSetup feature="A conversa com o Canard" alt={{ title: 'Enquanto isso: conversas guiadas (sem IA) →', onPress: () => router.push('/guided') }} /></ScrollView>
       </View>
     );
   }

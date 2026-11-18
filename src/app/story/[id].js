@@ -134,7 +134,7 @@ export default function StoryScreen() {
           <View style={{ width: 84, height: 84, borderRadius: 26, backgroundColor: color.main, alignItems: 'center', justifyContent: 'center' }}>
             <Text style={{ fontSize: 44 }}>{story.emoji}</Text>
           </View>
-          <Chip label={`${story.level} · Unidade ${story.unit}`} color={color.main} />
+          <Chip label={`${story.level} · Unidade ${story.unit}`} color="#fff" bg={color.main} />
           <Text style={{ fontFamily: fonts.display, fontSize: 28, color: t.text, textAlign: 'center' }}>{story.title}</Text>
           <T v="small">{story.pt}</T>
         </View>

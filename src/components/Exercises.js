@@ -68,10 +68,10 @@ export function McqEx({ ex, value, onChange, locked }) {
     <View>
       <Prompt title={ex.title || 'Escolha a resposta certa'} mood="think">
         <View style={{ backgroundColor: t.surface, borderWidth: 2, borderColor: t.border, borderRadius: 18, padding: 14, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-          {ex.speakPrompt ? <AudioButton text={ex.speakPrompt} size={40} autoPlay /> : isFr ? <AudioButton text={ex.prompt.replace(/\(.*?\)/g, '')} size={40} /> : null}
+          {ex.speakPrompt ? <AudioButton text={ex.speakPrompt} size={40} autoPlay /> : isFr ? <AudioButton text={ex.prompt.replace(/\(.*?\)/g, '').replace(/_{2,}/g, ', ')} size={40} /> : null}
           <View style={{ flex: 1, gap: 4 }}>
             {isFr || ex.frPrompt ? (
-              <SpeakableText text={ex.prompt} style={{ fontSize: 21, lineHeight: 29 }} />
+              <SpeakableText text={ex.prompt} style={ex.prompt.length > 90 ? { fontSize: 16, lineHeight: 24, fontFamily: fonts.bodySemi } : { fontSize: 21, lineHeight: 29 }} />
             ) : (
               <Text style={{ fontFamily: fonts.bodyBold, fontSize: 18, lineHeight: 25, color: t.text }}>{ex.prompt}</Text>
             )}

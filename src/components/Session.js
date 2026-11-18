@@ -14,6 +14,11 @@ import { ImageEx, McqEx, TranslateEx, BuildEx, ListenEx, FillEx, MatchEx, Dialog
 import { checkTyped, checkSentence, normalize, snapshot } from '../engine/exercises';
 import { fx } from '../services/feedback';
 import { speak, stopSpeaking } from '../services/speech';
+import { GRAMMAR } from '../content/grammar';
+
+const GRAMMAR_BY_ID = Object.fromEntries(GRAMMAR.map((g) => [g.id, g]));
+// Tipos de exercício em que o erro costuma ser de gramática (não de vocabulário)
+const RULE_TYPES = ['fill', 'build', 'translate', 'write', 'fixerror', 'listenfill', 'conjugate'];
 import { ExerciseBoundary } from './ErrorBoundary';
 import { useKeyboardOverlap, scrollFocusedIntoView } from './keyboard';
 
@@ -97,7 +102,7 @@ function audioFor(ex) {
   return null;
 }
 
-export default function Session({ exercises: initial, title, kind = 'lesson', timed = false, onFinish, color }) {
+export default function Session({ exercises: initial, title, kind = 'lesson', timed = false, onFinish, color, grammarId }) {
   const { state, actions } = useStore();
   const t = useTheme();
   const insets = useSafeAreaInsets();
@@ -185,6 +190,8 @@ export default function Session({ exercises: initial, title, kind = 'lesson', ti
     setCombo(newCombo);
     s.bestCombo = Math.max(s.bestCombo, newCombo);
     actions.recordAnswer({ item: ex.item, correct: ok, combo: newCombo, kind: ex.type === 'listen' || ex.listen ? 'listen' : ex.type });
+    const rule = ex.rule || (grammarId && RULE_TYPES.includes(ex.type) ? grammarId : null);
+    if (rule) actions.ruleTally(rule, ok);
     if (!ok) {
       if (!isRetry) s.wrongList.push(ex);
       if (ex.type !== 'match' && ex.type !== 'speak') actions.addMistake(snapshot(ex));
@@ -347,6 +354,12 @@ export default function Session({ exercises: initial, title, kind = 'lesson', ti
               <Text style={{ fontSize: 18 }}>💡</Text>
               <T v="small" color={t.text} style={{ flex: 1 }}>{explanation(ex).replace(/\*/g, '')}</T>
             </View>
+          ) : null}
+          {!result.ok && grammarId && GRAMMAR_BY_ID[grammarId] && RULE_TYPES.includes(ex.type) ? (
+            <Pressable onPress={() => router.push({ pathname: '/grammar', params: { open: grammarId } })} hitSlop={6} style={{ flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'flex-start', paddingHorizontal: 12, paddingVertical: 7, borderRadius: 12, backgroundColor: t.surface }}>
+              <Text style={{ fontSize: 15 }}>{GRAMMAR_BY_ID[grammarId].emoji}</Text>
+              <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 13, color: t.primary }}>Revisar a regra: {GRAMMAR_BY_ID[grammarId].title} →</Text>
+            </Pressable>
           ) : null}
           <Button title={result.ok ? 'Continuar' : 'Entendi'} variant={result.ok ? 'success' : 'error'} onPress={advance} style={{ marginTop: 4 }} />
         </View>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Switch, Pressable, TextInput, Share, ActivityIndicator, Linking } from 'react-native';
 import { Alert, toast } from '../services/dialog';
 import { router } from 'expo-router';
+import { setAiOverride, testAi } from '../services/ai';
 import { useStore, getStateSnapshotForCloud } from '../store';
 import { useTheme, fonts, radius, palette } from '../theme';
 import { Screen, T, Card, Button, Row, Sheet, Chip } from '../components/ui';
@@ -199,7 +200,7 @@ export default function Settings() {
             <Button title="Abrir configurações de voz" small variant="secondary" onPress={openTts} />
           </View>
         ) : null}
-        <Row icon="target" title="Teste de nível" subtitle={state.placement ? `Último: unidade ${state.placement.unit} · refazer` : 'Descubra seu nível por habilidade'} onPress={() => router.push('/placement')} />
+        <Row icon="target" title="Teste de nível" subtitle={state.placement ? `Último: ${state.placement.v === 3 ? (state.placement.level || 'iniciante') : 'unidade ' + state.placement.unit} · refazer` : 'Descubra seu nível por habilidade'} onPress={() => router.push('/placement')} />
         <Toggle icon="heart" title="Modo vidas" subtitle="5 vidas: perde uma a cada erro (desafio extra)" value={s.hearts} onChange={(v) => actions.setSettings({ hearts: v })} last />
       </Group>
 
@@ -282,7 +283,7 @@ export default function Settings() {
 
       {/* ADVANCED */}
       <Group title="Avançado">
-        <Row icon="sparkles" title="Servidor de IA" subtitle={CONFIG.apiUrl || s.apiUrl ? 'Configurado ✓' : 'Não configurado'} onPress={() => setAdv(!adv)} right={<Icon name={adv ? 'down' : 'chevron'} size={20} color={t.text3} />} last={!adv} />
+        <Row icon="sparkles" title="Servidor de IA" subtitle={CONFIG.apiUrl || s.apiUrl ? 'Servidor configurado ✓' : s.ownGroqKey ? 'Chave Groq configurada ✓' : 'Não configurado — toque para ativar'} onPress={() => setAdv(!adv)} right={<Icon name={adv ? 'down' : 'chevron'} size={20} color={t.text3} />} last={!adv} />
         {adv ? (
           <View style={{ padding: 16, gap: 10 }}>
             <T v="small">A pronúncia, o tradutor e a conversa usam IA (Groq). O jeito seguro é o servidor (pasta <Text style={{ fontFamily: fonts.bodyHeavy }}>worker/</Text> do projeto) — a chave fica só nele. Para testes, dá para usar sua própria chave Groq neste aparelho.</T>
@@ -294,6 +295,11 @@ export default function Settings() {
               <Button title="Salvar" small style={{ flex: 1 }} onPress={() => { actions.setSettings({ apiUrl: apiUrl.trim(), ownGroqKey: groq.trim() }); Alert.alert('Salvo!'); }} />
               <Button title="Pegar chave grátis" small variant="secondary" style={{ flex: 1 }} onPress={() => Linking.openURL('https://console.groq.com/keys')} />
             </View>
+            <Button title="Testar IA" icon="sparkles" small variant="ghost" onPress={async () => {
+              actions.setSettings({ apiUrl: apiUrl.trim(), ownGroqKey: groq.trim() });
+              setAiOverride({ apiUrl: apiUrl.trim(), key: groq.trim() });
+              try { const r = await testAi(); Alert.alert('Funcionando! 🎉', `“bom dia” → ${r}`); } catch (e) { Alert.alert('Não funcionou', 'Confira a chave/URL e a internet. ' + (e?.message || '')); }
+            }} />
           </View>
         ) : null}
       </Group>

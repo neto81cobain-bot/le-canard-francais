@@ -11,7 +11,9 @@ import { Appear } from '../../components/extras';
 import Session from '../../components/Session';
 import ResultView from '../../components/ResultView';
 import { UNITS, LESSONS, getUnit, bankQuestions, BANK_TOPICS, LESSON_TOPICS } from '../../content';
-import { buildReview, buildFromMistakes, buildUnitTest, buildBank, buildLesson, buildConjugation, shuffle, buildListening, buildWriting, buildSpeaking, buildQuick, buildVocab, buildPairsGroup, buildDictation, mistakeGroupOf, MISTAKE_GROUPS, buildUnitPractice, buildMarathon, buildWordQuiz, PRACTICE_FOCUS, buildSongPractice } from '../../engine/exercises';
+import { buildReview, buildFromMistakes, buildUnitTest, buildBank, buildLesson, buildConjugation, shuffle, buildListening, buildWriting, buildSpeaking, buildQuick, buildVocab, buildPairsGroup, buildDictation, mistakeGroupOf, MISTAKE_GROUPS, buildUnitPractice, buildMarathon, buildWordQuiz, PRACTICE_FOCUS, buildSongPractice, buildTcfPractice } from '../../engine/exercises';
+import { PLACEMENT_BANK } from '../../content/placement2';
+import { UNIT_GRAMMAR, grammarForBank } from '../../content/grammar';
 import { SONGS } from '../../content/music';
 import { DAILY_PHRASES } from '../../content/extras';
 
@@ -42,6 +44,7 @@ const MODES = {
   marathon: { title: 'Maratona', emoji: '🏃', mood: 'celebrate', intro: 'Tudo misturado, de todas as unidades que você já liberou. Vá até onde aguentar — o placar conta seus acertos seguidos!' },
   wordquiz: { title: 'Frase do dia', emoji: '💬', mood: 'teach', intro: 'Três perguntas rápidas para a frase de hoje grudar na memória.' },
   weekly: { title: 'Revisão da semana', emoji: '🗓️', mood: 'proud', intro: 'Domingo é dia de revisar tudo o que você viu na semana. Vale um baú no final!' },
+  tcf: { title: 'Simulado TCF', emoji: '🎓', mood: 'think', intro: 'Questões no estilo do TCF: estruturas, leitura e escuta — tudo em francês. Depois de cada resposta você vê a correção comentada (e a transcrição do áudio).' },
   song: { title: 'Palavras da música', emoji: '🎵', mood: 'listen', intro: 'Treine as palavras-chave da música antes (ou depois) de ouvir. Quando elas aparecerem na canção, você vai reconhecer na hora!' },
   bank: { title: 'Treino por tema', emoji: '✍️', mood: 'teach', intro: 'Questões rápidas para fixar o conteúdo, com explicação em cada erro.' },
 };
@@ -105,11 +108,15 @@ export default function Practice() {
       const rv = buildReview(items.slice(0, 20), { pool, count: 15 });
       return rv.length >= 6 ? rv : buildMarathon(UNITS.filter((u) => u.number <= Math.max(1, state.unlockedUnit)), { count: 15, only });
     }
+    if (mode === 'tcf') return buildTcfPractice(PLACEMENT_BANK, key || 'A1');
     if (mode === 'song') {
       const song = SONGS.find((x) => x.id === key);
       return song ? buildSongPractice(song, SONGS.filter((x) => x.id !== key && x.level === song.level)) : [];
     }
-    if (mode === 'bank') return buildBank(bankQuestions(key), 15);
+    if (mode === 'bank') {
+      const rule = grammarForBank(key);
+      return buildBank(bankQuestions(key), 15).map((e) => (rule ? { ...e, rule } : e));
+    }
     if (mode === 'verbs') {
       const lvlIdx = (l) => VERB_LEVELS.indexOf(l);
       const verbs = vSet === 'one' ? [verbParam] : vSet === 'top' ? VERBS.filter((v) => v.top).map((v) => v.inf) : vSet === 'all' ? null : VERBS.filter((v) => lvlIdx(v.level) <= lvlIdx(vSet)).map((v) => v.inf);
@@ -143,7 +150,7 @@ export default function Practice() {
 
   if (phase === 'intro') {
     const pf = PRACTICE_FOCUS.find((f) => f.id === focus);
-    const title = mode === 'unit' && pf ? `${pf.emoji} ${pf.title}${round ? ' · rodada ' + round : ''}` : mode === 'verbs' && verbParam ? `Treino: ${verbParam}` : mode === 'test' ? `Teste · Unidade ${unit.number}` : mode === 'song' ? `🎵 ${SONGS.find((x) => x.id === key)?.title || ''}` : mode === 'bank' ? bankTopic?.title : mode === 'pairs' && group ? `Sons: ${SOUND_GROUPS[group]?.title || group}` : cfg.title;
+    const title = mode === 'unit' && pf ? `${pf.emoji} ${pf.title}${round ? ' · rodada ' + round : ''}` : mode === 'verbs' && verbParam ? `Treino: ${verbParam}` : mode === 'test' ? `Teste · Unidade ${unit.number}` : mode === 'tcf' ? `🎓 Simulado TCF · ${key || 'A1'}` : mode === 'song' ? `🎵 ${SONGS.find((x) => x.id === key)?.title || ''}` : mode === 'bank' ? bankTopic?.title : mode === 'pairs' && group ? `Sons: ${SOUND_GROUPS[group]?.title || group}` : cfg.title;
     return (
       <View style={{ flex: 1, backgroundColor: t.bg, paddingTop: insets.top }}>
         <View style={{ paddingHorizontal: 16, paddingVertical: 12 }}>
@@ -240,6 +247,7 @@ export default function Practice() {
     return (
       <Session
         exercises={exercises}
+        grammarId={mode === 'bank' ? grammarForBank(key) : mode === 'unit' && unit && (focus === 'grammar' || focus === 'write') ? UNIT_GRAMMAR[unit.number] : null}
         timed={mode === 'timed'}
         kind={mode === 'review' || mode === 'mistakes' ? 'review' : mode}
         color={color}
@@ -262,6 +270,7 @@ export default function Practice() {
           });
           if (mode === 'daily') actions.set((s) => ({ daily: { ...s.daily, challengeDone: true } }));
           if (mode === 'unit' && unit) actions.set((s) => ({ unitPractice: { ...(s.unitPractice || {}), [`${unit.id}:${focus || 'mix'}:${round || 1}`]: Math.max(r.correct / r.total, (s.unitPractice || {})[`${unit.id}:${focus || 'mix'}:${round || 1}`] || 0) } }));
+          if (mode === 'tcf' && key) actions.set((s) => ({ tcfBest: { ...(s.tcfBest || {}), [key]: Math.max(Math.round((r.correct / r.total) * 100), (s.tcfBest || {})[key] || 0) } }));
           if (mode === 'song' && key) actions.set((s) => ({ songsTrained: { ...(s.songsTrained || {}), [key]: Math.max(Math.round((r.correct / r.total) * 100), (s.songsTrained || {})[key] || 0) } }));
           if (mode === 'marathon') actions.set((s) => ({ stats: { ...s.stats, marathonBest: Math.max(s.stats.marathonBest || 0, r.correct) } }));
           if (mode === 'wordquiz') actions.set((s) => ({ daily: { ...s.daily, wordQuiz: true } }));

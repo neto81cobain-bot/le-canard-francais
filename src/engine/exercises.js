@@ -642,3 +642,20 @@ export function buildSongPractice(song, otherSongs = []) {
   shuffle(words).slice(0, 3).forEach((it) => out.push(mkListenType(it)));
   return out;
 }
+
+// Simulado no estilo TCF (mesmo banco do teste de nível), com correção comentada.
+export function buildTcfPractice(bank, level, count = 15) {
+  // 15 por rodada: 6 estruturas, 5 leitura, 4 escuta (sorteadas de 30)
+  const per = { structure: Math.round(count * 0.4), reading: Math.round(count * 0.33) };
+  per.listening = count - per.structure - per.reading;
+  const items = Object.entries(per).flatMap(([sk, n]) => shuffle(bank.filter((q) => q.level === level && q.skill === sk)).slice(0, n));
+  const order = ['structure', 'reading', 'listening'];
+  items.sort((a, b) => order.indexOf(a.skill) - order.indexOf(b.skill));
+  return items.map((q) => {
+    const base = { type: 'mcq', answer: q.a, options: shuffle([q.a, ...q.o]), frPrompt: true };
+    const full = `Frase completa: ${q.q.replace('___', q.a).replace("' ", "'")}`;
+    if (q.skill === 'structure') return { ...base, title: 'Estruturas da língua', prompt: q.q, why: q.why ? `${q.why} ${full}` : full };
+    if (q.skill === 'reading') return { ...base, title: 'Compreensão escrita', prompt: `${q.text}\n\n❓ ${q.q}`, why: q.why || 'Releia o texto: a resposta está nele, às vezes com outras palavras.' };
+    return { ...base, title: 'Compreensão oral — ouça', prompt: q.q, speakPrompt: q.text, why: `${q.why ? q.why + ' ' : ''}Transcrição: “${q.text}”` };
+  });
+}

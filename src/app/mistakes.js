@@ -8,6 +8,7 @@ import { T, Screen, Button, Chip, Empty } from '../components/ui';
 import Icon from '../components/Icon';
 import Duck from '../components/Duck';
 import { Alert } from '../services/dialog';
+import RuleStats from '../components/RuleStats';
 import { MISTAKE_GROUPS, mistakeGroupOf } from '../engine/exercises';
 
 const ago = (ts) => {
@@ -26,6 +27,7 @@ export default function Mistakes() {
     return (
       <Screen title="Caderno de erros">
         <Empty emoji="🎉" title="Nenhum erro guardado!" text="Quando você errar algo, ele entra aqui, separado por tipo, para você treinar depois." action="Voltar" onAction={() => router.back()} />
+        <RuleStats style={{ marginTop: 10 }} limit={3} />
       </Screen>
     );
   }
@@ -40,6 +42,7 @@ export default function Mistakes() {
         </View>
       </View>
       <Button title="Treinar todos" icon="target" onPress={() => train(null)} />
+      <RuleStats style={{ marginTop: 14 }} limit={3} />
       <View style={{ gap: 10, marginTop: 14 }}>
         {groups.map((g) => {
           const isOpen = open === g.id;
