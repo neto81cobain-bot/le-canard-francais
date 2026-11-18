@@ -10,6 +10,7 @@ import Icon from '../../components/Icon';
 import Duck, { DuckAvatar, autoMood } from '../../components/Duck';
 import { AudioButton, Appear } from '../../components/extras';
 import { WeeklyChallengeCard, WeeklySummaryCard, WeeklyChestCard, WeeklyPlanCard } from '../../components/Weekly';
+import { ShareSheet } from '../../components/ShareCard';
 import { HomeTabs, Shortcuts, DailyPlanCard, MilestoneCard, NightCard, SundayCard, ExploreTab } from '../../components/Home';
 import { avatarOf } from '../../services/photo';
 import { UNITS, lessonState, unitProgress, nextLesson, LEVEL_INFO } from '../../content';
@@ -92,6 +93,7 @@ export default function Learn() {
   const unitY = useRef({});
   const [reveal, setReveal] = useState(false);
   const [chest, setChest] = useState(null);
+  const [shareOpen, setShareOpen] = useState(false);
   const [homeTab, setHomeTab] = useState('hoje');
   const [lockedInfo, setLockedInfo] = useState(null);
 
@@ -235,6 +237,12 @@ export default function Learn() {
                 <T v="small">{state.daily.goalHit ? 'Meta cumprida! Streak garantido 🔥' : `Faltam ${goal - state.daily.xp} XP para o streak de hoje`}</T>
               </View>
             </View>
+            {state.daily.xp > 0 ? (
+              <Pressable onPress={() => setShareOpen(true)} hitSlop={6} style={{ flexDirection: 'row', alignItems: 'center', gap: 6, alignSelf: 'flex-start', marginTop: 12, paddingHorizontal: 12, paddingVertical: 7, borderRadius: 14, backgroundColor: t.skySoft }}>
+                <Icon name="send" size={14} color={palette.navy} />
+                <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 13, color: palette.navy }}>Compartilhar meu dia</Text>
+              </Pressable>
+            ) : null}
             <View style={{ height: 1, backgroundColor: t.border, marginVertical: 14 }} />
             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
               <T v="bodyBold" style={{ flex: 1 }}>Missões do dia</T>
@@ -399,6 +407,7 @@ export default function Learn() {
         })}
           </>
         ) : null}
+      <ShareSheet visible={shareOpen} onClose={() => setShareOpen(false)} initial="dia" />
       </ScrollView>
 
       <Sheet visible={!!lockedInfo} onClose={() => setLockedInfo(null)}>

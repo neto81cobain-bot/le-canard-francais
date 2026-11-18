@@ -47,14 +47,20 @@ export const DEFAULT_SHORTCUTS = ['quick', 'review', 'marathon', 'library'];
 
 export function HomeTabs({ value, onChange }) {
   const t = useTheme();
-  const tabs = [['hoje', '☀️ Hoje'], ['trilha', '🗺️ Trilha'], ['explorar', '🧭 Explorar']];
+  const tabs = [['hoje', '☀️', 'Hoje'], ['trilha', '🗺️', 'Trilha'], ['explorar', '🧭', 'Explorar']];
+  // Emoji e nome em Texts separados, numa linha só: evita o bug do Android que
+  // cortava o nome ("Explorar" sumia) quando o estilo da aba mudava.
   return (
     <View style={{ flexDirection: 'row', gap: 4, padding: 4, borderRadius: radius.lg, backgroundColor: t.surface2 }}>
-      {tabs.map(([id, l]) => (
-        <Pressable key={id} onPress={() => onChange(id)} style={{ flex: 1, alignItems: 'center', paddingVertical: 9, borderRadius: radius.md || 12, backgroundColor: value === id ? t.surface : 'transparent' }}>
-          <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 14, color: value === id ? t.text : t.text2 }}>{l}</Text>
-        </Pressable>
-      ))}
+      {tabs.map(([id, e, l]) => {
+        const on = value === id;
+        return (
+          <Pressable key={id} onPress={() => onChange(id)} style={{ flex: 1, minWidth: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5, paddingVertical: 9, paddingHorizontal: 4, borderRadius: radius.md || 12, backgroundColor: on ? t.surface : 'transparent' }}>
+            <Text style={{ fontSize: 14, lineHeight: 20 }}>{e}</Text>
+            <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={{ flexShrink: 1, fontFamily: fonts.bodyHeavy, fontSize: 14, lineHeight: 20, color: on ? t.text : t.text2 }}>{l}</Text>
+          </Pressable>
+        );
+      })}
     </View>
   );
 }

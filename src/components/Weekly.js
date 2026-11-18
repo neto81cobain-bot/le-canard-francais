@@ -1,5 +1,5 @@
 // Weekly themed challenge (with medal) + last week's summary (shareable).
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Share } from 'react-native';
 import { useStore } from '../store';
 import { useTheme, fonts, radius, palette } from '../theme';
@@ -9,6 +9,7 @@ import { mondayKey, addDays, dayKey } from '../store/dates';
 import { Alert } from '../services/dialog';
 import { toast } from '../services/dialog';
 import { fx } from '../services/feedback';
+import { ShareSheet } from './ShareCard';
 
 export function WeeklyChallengeCard({ style }) {
   const { state, actions } = useStore();
@@ -56,11 +57,14 @@ export function summarize(w) {
 export function WeeklySummaryCard({ week, title = 'Resumo da semana passada', style }) {
   const { state } = useStore();
   const t = useTheme();
+  const [open, setOpen] = useState(false);
   if (!week || !(week.xp || week.correct)) return null;
   const rows = summarize(week);
   const medal = state.medals?.[week.key];
   const ch = weeklyChallenge(week.key);
+  const isNow = week.key === state.week?.key;
   const share = () => {
+    if (isNow) return setOpen(true);
     const text = `🦆 Minha semana no Le canard français (${week.key}):\n` + rows.filter((r) => r[2]).map((r) => `${r[0]} ${r[1]}: ${r[2]}`).join('\n') + (medal ? `\n🏅 Medalha: ${ch.title}` : '') + `\n🔥 Streak: ${state.streak.count} dias\nBora aprender francês junto?`;
     Share.share({ message: text }).catch(() => {});
   };
@@ -80,7 +84,8 @@ export function WeeklySummaryCard({ week, title = 'Resumo da semana passada', st
           </View>
         ))}
       </View>
-      <Button title="Compartilhar" icon="send" small variant="secondary" onPress={share} />
+      <Button title={isNow ? 'Compartilhar imagem' : 'Compartilhar'} icon="send" small variant="secondary" onPress={share} />
+      {isNow ? <ShareSheet visible={open} onClose={() => setOpen(false)} initial="semana" /> : null}
     </Card>
   );
 }

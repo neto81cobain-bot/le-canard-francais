@@ -339,3 +339,6 @@ export const EXTRA_TOPICS = [
     '“Avoir le coup de foudre” significa…|se apaixonar à primeira vista|levar um choque;ficar com raiva;ter medo|Coup de foudre = paixão fulminante.',
   ]) },
 ];
+
+import { EXTRA_TOPICS_2 } from './topics2';
+EXTRA_TOPICS.push(...EXTRA_TOPICS_2);

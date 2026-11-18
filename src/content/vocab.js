@@ -130,6 +130,9 @@ export const VOCAB_THEMES = [
   ]) },
 ];
 
+import { VOCAB_THEMES_2_RAW } from './vocab2';
+VOCAB_THEMES.push(...VOCAB_THEMES_2_RAW.map((t) => ({ ...t, words: W(t.words) })));
+
 // Gender from the article (for colours): 'm' | 'f' | null
 export function genderOf(fr = '') {
   if (!fr) return null;

@@ -358,4 +358,6 @@ export const ADVENTURES = [
     },
   },
 ];
+import { ADVENTURES_2 } from './adventures2';
+ADVENTURES.push(...ADVENTURES_2);
 export const getAdventure = (id) => ADVENTURES.find((a) => a.id === id);
