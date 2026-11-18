@@ -1,27 +1,31 @@
 // Teste de nível 3.0 — no estilo do TCF: tudo em francês, por blocos de nível.
-// Começa no A1; cada bloco tem 8 questões (3 estruturas, 3 leitura, 2 escuta).
-// Só passa de nível com 6/8 ou mais. Errou mais que isso, o teste para ali.
+// Começa no A1; cada bloco tem 9 questões (3 estruturas, 3 leitura, 3 escuta).
+// Só passa de nível com 7/9 ou mais. Errou mais que isso, o teste para ali.
+// Escuta como no DELF: no máximo 2 audições e o texto nunca aparece.
 import React, { useState } from 'react';
 import { View, Text } from 'react-native';
 import { router } from 'expo-router';
 import { useStore } from '../store';
 import { useTheme, fonts, radius, palette } from '../theme';
-import { T, Screen, Button, ProgressBar, Card } from '../components/ui';
+import { T, Screen, Button, ProgressBar, Card, Tap } from '../components/ui';
 import Duck from '../components/Duck';
-import { AudioButton } from '../components/extras';
-import { OptionCard } from '../components/Exercises';
 import { PLACEMENT_BANK, PLACEMENT_LEVELS } from '../content/placement2';
 import { UNITS } from '../content';
 import { shuffle } from '../engine/exercises';
 import { fx } from '../services/feedback';
+import { speak, stopSpeaking } from '../services/speech';
+import { PlacementShareSheet } from '../components/ShareCard';
+import Icon from '../components/Icon';
 import { toast } from '../services/dialog';
 
-const PER_LEVEL = { structure: 3, reading: 3, listening: 2 };
-const PASS = 6; // de 8
+const PER_LEVEL = { structure: 3, reading: 3, listening: 3 };
+const BLOCK = 9;
+const PASS = 7; // de 9
+const MAX_PLAYS = 2;
 const SKILLS = {
-  structure: { label: 'Estruturas da língua', emoji: '📐', key: 'grammar' },
-  reading: { label: 'Compreensão escrita', emoji: '📖', key: 'vocab' },
-  listening: { label: 'Compreensão oral', emoji: '👂', key: 'listening' },
+  structure: { label: 'Estruturas', long: 'Estruturas da língua', emoji: '📐', key: 'grammar' },
+  reading: { label: 'Leitura', long: 'Compreensão escrita', emoji: '📖', key: 'vocab' },
+  listening: { label: 'Escuta', long: 'Compreensão oral', emoji: '👂', key: 'listening' },
 };
 const LEVEL_NAME = { A1: 'Iniciante', A2: 'Básico', B1: 'Intermediário', B2: 'Intermediário avançado', C1: 'Avançado' };
 
@@ -45,6 +49,8 @@ export default function Placement() {
   const [sel, setSel] = useState(null);
   const [answers, setAnswers] = useState([]);
   const [levelScores, setLevelScores] = useState({});
+  const [share, setShare] = useState(false);
+  const [plays, setPlays] = useState(0);
   const q = block[i];
 
   const start = () => {
@@ -80,6 +86,8 @@ export default function Placement() {
     const a = [...answers, { level: q.level, skill: q.skill, ok }];
     setAnswers(a);
     setSel(null);
+    setPlays(0);
+    stopSpeaking();
     if (i + 1 < block.length) return setI(i + 1);
     // fim do bloco
     const level = PLACEMENT_LEVELS[lv];
@@ -88,7 +96,7 @@ export default function Placement() {
     setLevelScores(scores);
     if (score >= PASS && lv + 1 < PLACEMENT_LEVELS.length) {
       fx.complete();
-      toast(`${level} concluído (${score}/8)! Indo para o ${PLACEMENT_LEVELS[lv + 1]}…`);
+      toast(`${level} concluído (${score}/${BLOCK})! Indo para o ${PLACEMENT_LEVELS[lv + 1]}…`);
       setLv(lv + 1);
       setBlock(blockFor(PLACEMENT_LEVELS[lv + 1]));
       setI(0);
@@ -102,13 +110,13 @@ export default function Placement() {
         <View style={{ alignItems: 'center', gap: 10, marginTop: 10 }}>
           <Duck mood="think" size={120} />
           <T v="h2" center>Descubra seu nível real</T>
-          <T v="body" center color={t.text2}>No estilo do TCF: tudo em francês, do A1 ao C1. Cada nível tem 8 questões, e você só sobe se acertar pelo menos 6.</T>
+          <T v="body" center color={t.text2}>No estilo do TCF: tudo em francês, do A1 ao C1. Cada nível tem 9 questões, e você só sobe se acertar pelo menos 7. Na escuta, o texto não aparece e você pode ouvir no máximo 2 vezes — como no DELF.</T>
         </View>
         <View style={{ gap: 8, marginTop: 18 }}>
           {Object.values(SKILLS).map((s) => (
             <View key={s.label} style={{ flexDirection: 'row', alignItems: 'center', gap: 12, padding: 12, borderRadius: radius.lg, backgroundColor: t.surface, borderWidth: 1, borderColor: t.border }}>
               <Text style={{ fontSize: 24 }}>{s.emoji}</Text>
-              <T v="bodyBold">{s.label}</T>
+              <T v="bodyBold">{s.long}</T>
             </View>
           ))}
         </View>
@@ -149,9 +157,9 @@ export default function Placement() {
               <View key={l} style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
                 <Text style={{ width: 30, fontFamily: fonts.bodyHeavy, color: t.text }}>{l}</Text>
                 <View style={{ flex: 1 }}>
-                  <ProgressBar value={sc != null ? sc / 8 : 0} color={ok ? t.success : sc != null ? palette.gold : t.surface2} height={10} />
+                  <ProgressBar value={sc != null ? sc / BLOCK : 0} color={ok ? t.success : sc != null ? palette.gold : t.surface2} height={10} />
                 </View>
-                <Text style={{ width: 70, textAlign: 'right', fontFamily: fonts.bodyBold, fontSize: 13, color: sc == null ? t.text3 : ok ? t.success : t.text2 }}>{sc == null ? 'não feito' : `${sc}/8 ${ok ? '✓' : ''}`}</Text>
+                <Text style={{ width: 70, textAlign: 'right', fontFamily: fonts.bodyBold, fontSize: 13, color: sc == null ? t.text3 : ok ? t.success : t.text2 }}>{sc == null ? 'não feito' : `${sc}/${BLOCK} ${ok ? '✓' : ''}`}</Text>
               </View>
             );
           })}
@@ -176,7 +184,7 @@ export default function Placement() {
 
         {weakest ? (
           <Card style={{ marginTop: 16 }} tone={t.goldSoft}>
-            <T v="small" color={t.text}>💡 Seu ponto mais fraco: <T v="small" color={t.text} style={{ fontFamily: fonts.bodyHeavy }}>{weakest[0].label.toLowerCase()}</T>. O plano da semana vai dar mais peso a isso.</T>
+            <T v="small" color={t.text}>💡 Seu ponto mais fraco: <T v="small" color={t.text} style={{ fontFamily: fonts.bodyHeavy }}>{weakest[0].long.toLowerCase()}</T>. O plano da semana vai dar mais peso a isso.</T>
           </Card>
         ) : null}
         {canUnlock ? (
@@ -184,8 +192,9 @@ export default function Placement() {
         ) : (
           <T v="small" center style={{ marginTop: 16 }}>Você já está na unidade {state.unlockedUnit} — continue de onde parou!</T>
         )}
-        <Button title="Refazer o teste" variant="secondary" style={{ marginTop: 10 }} onPress={start} />
-        <Button title="Voltar" variant="ghost" style={{ marginTop: 4 }} onPress={() => router.back()} />
+        <Button title="Compartilhar resultado" icon="send" variant="secondary" style={{ marginTop: 10 }} onPress={() => setShare(true)} />
+        <Button title="Refazer o teste" variant="ghost" style={{ marginTop: 4 }} onPress={start} />
+        <PlacementShareSheet visible={share} onClose={() => setShare(false)} />
       </Screen>
     );
   }
@@ -193,32 +202,66 @@ export default function Placement() {
   if (!q) return null;
   const level = PLACEMENT_LEVELS[lv];
   const sk = SKILLS[q.skill];
+  const letters = ['A', 'B', 'C', 'D'];
+  const play = () => {
+    if (plays >= MAX_PLAYS) return;
+    setPlays(plays + 1);
+    speak(q.text);
+  };
   return (
-    <Screen title={`Nível ${level} · ${sk.emoji}`}>
+    <Screen title={`Nível ${level}`}>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-        <View style={{ flex: 1 }}><ProgressBar value={(lv * 8 + i) / (PLACEMENT_LEVELS.length * 8)} color={t.sky} height={10} /></View>
-        <T v="caption">{level} · {i + 1}/8</T>
+        <View style={{ flex: 1 }}><ProgressBar value={(lv * BLOCK + i) / (PLACEMENT_LEVELS.length * BLOCK)} color={t.sky} height={10} /></View>
+        <T v="caption">{level} · {i + 1}/{BLOCK}</T>
       </View>
-      <T v="label" style={{ marginTop: 14 }}>{sk.label}</T>
-      <View style={{ marginTop: 8, gap: 12 }}>
-        {q.skill === 'reading' && q.text ? (
-          <View style={{ backgroundColor: t.surface2, borderRadius: 16, padding: 14, borderLeftWidth: 4, borderLeftColor: t.primary }}>
-            <Text style={{ fontFamily: fonts.bodySemi, fontSize: 16, lineHeight: 24, color: t.text }}>{q.text}</Text>
-          </View>
-        ) : null}
-        {q.skill === 'listening' ? (
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: t.surface2, borderRadius: 16, padding: 14 }}>
-            <AudioButton key={'a' + lv + i} text={q.text} size={56} autoPlay />
-            <AudioButton text={q.text} size={40} slow />
-            <T v="small" style={{ flex: 1 }}>Ouça (pode repetir). O texto não aparece — como no TCF.</T>
-          </View>
-        ) : null}
-        <View style={{ backgroundColor: t.surface, borderWidth: 2, borderColor: t.border, borderRadius: 18, padding: 14 }}>
-          <Text style={{ fontFamily: q.skill === 'structure' ? fonts.displayItalic : fonts.bodyBold, fontSize: q.skill === 'structure' ? 21 : 17, lineHeight: q.skill === 'structure' ? 29 : 24, color: t.text }}>{q.q}</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 14 }}>
+        <Text style={{ fontSize: 15 }}>{sk.emoji}</Text>
+        <T v="label">{sk.long}</T>
+      </View>
+
+      {/* documento */}
+      {q.skill === 'reading' && q.text ? (
+        <View style={{ marginTop: 10, backgroundColor: t.surface2, borderRadius: 16, padding: 14, borderLeftWidth: 4, borderLeftColor: t.primary }}>
+          <Text style={{ fontFamily: fonts.bodySemi, fontSize: 15.5, lineHeight: 23, color: t.text }}>{q.text}</Text>
         </View>
-        {q.options.map((o) => (
-          <OptionCard key={o} label={o} selected={sel === o} onPress={() => { setSel(o); fx.select(); }} />
-        ))}
+      ) : null}
+      {q.skill === 'listening' ? (
+        <View style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center', gap: 14, backgroundColor: t.surface2, borderRadius: 16, padding: 14 }}>
+          <Tap onPress={play} disabled={plays >= MAX_PLAYS} style={{ width: 60, height: 60, borderRadius: 30, backgroundColor: plays >= MAX_PLAYS ? t.border : t.sky, alignItems: 'center', justifyContent: 'center' }}>
+            <Icon name="volume" size={28} color="#fff" />
+          </Tap>
+          <View style={{ flex: 1 }}>
+            <T v="bodyBold">{plays === 0 ? 'Toque para ouvir' : plays < MAX_PLAYS ? 'Pode ouvir mais 1 vez' : 'Audições esgotadas'}</T>
+            <T v="caption">Máximo de {MAX_PLAYS} audições · o texto não aparece</T>
+          </View>
+        </View>
+      ) : null}
+
+      {/* pergunta: sem caixa, tipografia de título — não se confunde com as alternativas */}
+      {q.skill === 'structure' ? (
+        <View style={{ marginTop: 16, marginBottom: 4 }}>
+          <T v="caption" style={{ marginBottom: 6 }}>Complete a frase:</T>
+          <Text style={{ fontFamily: fonts.displayItalic, fontSize: 23, lineHeight: 32, color: t.text }}>{q.q}</Text>
+        </View>
+      ) : (
+        <View style={{ marginTop: 16, marginBottom: 4, flexDirection: 'row', gap: 8 }}>
+          <Text style={{ fontFamily: fonts.display, fontSize: 22, color: t.primary }}>?</Text>
+          <Text style={{ flex: 1, fontFamily: fonts.display, fontSize: 19, lineHeight: 26, color: t.text }}>{q.q}</Text>
+        </View>
+      )}
+
+      <View style={{ marginTop: 10, gap: 10 }}>
+        {q.options.map((o, k) => {
+          const on = sel === o;
+          return (
+            <Tap key={o} onPress={() => { setSel(o); fx.select(); }} style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 12, paddingHorizontal: 12, borderRadius: radius.lg, borderWidth: 2, borderBottomWidth: 4, borderColor: on ? t.sky : t.border, backgroundColor: on ? t.skySoft : t.surface }}>
+              <View style={{ width: 30, height: 30, borderRadius: 9, backgroundColor: on ? t.sky : t.surface2, alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 14, color: on ? '#fff' : t.text2 }}>{letters[k]}</Text>
+              </View>
+              <Text style={{ flex: 1, fontFamily: fonts.bodySemi, fontSize: 15.5, lineHeight: 21, color: on && t.mode !== 'dark' ? palette.navy : t.text }}>{o}</Text>
+            </Tap>
+          );
+        })}
         <Button title="Confirmar" disabled={!sel} onPress={() => next(sel === q.a)} />
         <Button title="Não sei" variant="secondary" small onPress={() => next(false)} />
       </View>

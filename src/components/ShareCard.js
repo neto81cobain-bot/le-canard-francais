@@ -260,3 +260,119 @@ export function ShareSheet({ visible, onClose, initial = 'semana' }) {
     </Sheet>
   );
 }
+
+// ─── Resultado do teste de nível ────────────────────────────────────────────
+const LEVEL_NAMES = { A1: 'Iniciante', A2: 'Básico', B1: 'Intermediário', B2: 'Intermediário avançado', C1: 'Avançado' };
+const P_LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1'];
+
+export function PlacementShareArt({ r, name, wear, size, svgRef }) {
+  const level = r.level || 'A1';
+  const block = 9;
+  const duckScale = 1.55;
+  const duckX = (W - 240 * duckScale) / 2;
+  const skills = [['Estruturas', r.skills?.grammar], ['Leitura', r.skills?.vocab], ['Escuta', r.skills?.listening]].filter(([, v]) => v != null);
+  const barX = 150;
+  const barW = W - 2 * barX - 120;
+  return (
+    <Svg ref={svgRef} width={size.w} height={size.h} viewBox={`0 0 ${W} ${H}`}>
+      <Defs>
+        <LinearGradient id="pbg" x1="0" y1="0" x2="0.4" y2="1">
+          <Stop offset="0" stopColor="#0E1E52" />
+          <Stop offset="0.6" stopColor={NAVY} />
+          <Stop offset="1" stopColor="#2453C9" />
+        </LinearGradient>
+        <RadialGradient id="pglow" cx="0.5" cy="0.5" r="0.5">
+          <Stop offset="0" stopColor="#FFFFFF" stopOpacity="0.22" />
+          <Stop offset="1" stopColor="#FFFFFF" stopOpacity="0" />
+        </RadialGradient>
+      </Defs>
+      <Rect x="0" y="0" width={W} height={H} fill="url(#pbg)" />
+      <Rect x="0" y="0" width={W / 3} height="22" fill="#2453C9" />
+      <Rect x={W / 3} y="0" width={W / 3} height="22" fill="#FFFFFF" />
+      <Rect x={(2 * W) / 3} y="0" width={W / 3} height="22" fill={RED} />
+      <SvgText x={W / 2} y="128" textAnchor="middle" fill="#FFFFFF" opacity={0.75} fontFamily={HEAVY} fontSize="34" letterSpacing="8">LE CANARD FRANÇAIS</SvgText>
+      {name ? <SvgText x={W / 2} y="196" textAnchor="middle" fill="#C7D6FF" fontFamily={BOLD} fontSize="46">{`${name.split(' ')[0].slice(0, 18)}, este é o meu`}</SvgText> : null}
+      <SvgText x={W / 2} y={name ? '262' : '230'} textAnchor="middle" fill="#FFFFFF" fontFamily={DISPLAY} fontSize="64">nível de francês</SvgText>
+
+      <Circle cx={W / 2} cy="470" r="250" fill="url(#pglow)" />
+      <Circle cx={W / 2} cy="470" r="185" fill={CREAM} />
+      <G transform={`translate(${duckX} ${470 - 120 * duckScale - 10}) scale(${duckScale})`}>
+        <G transform={DUCK_TRANSFORM}>{nodes(duckLayers({ mood: 'proud', wear }))}</G>
+      </G>
+
+      <SvgText x={W / 2} y="890" textAnchor="middle" fill={GOLD} fontFamily={DISPLAY} fontSize="210">{level}</SvgText>
+      <SvgText x={W / 2} y="965" textAnchor="middle" fill="#FFFFFF" fontFamily={HEAVY} fontSize="42">{LEVEL_NAMES[level].toUpperCase()}</SvgText>
+      {!r.passedAll && r.working ? <SvgText x={W / 2} y="1020" textAnchor="middle" fill="#C7D6FF" fontFamily={BOLD} fontSize="34">{`Agora rumo ao ${r.working}`}</SvgText> : null}
+
+      {P_LEVELS.map((l, i) => {
+        const sc = r.levels?.[l];
+        const ok = sc != null && sc >= 7;
+        const y = 1100 + i * 74;
+        return (
+          <G key={l}>
+            <SvgText x={barX - 30} y={y + 22} textAnchor="end" fill="#FFFFFF" fontFamily={HEAVY} fontSize="34">{l}</SvgText>
+            <Rect x={barX} y={y} width={barW} height="28" rx="14" fill="#FFFFFF" opacity={0.14} />
+            {sc ? <Rect x={barX} y={y} width={Math.max(28, (barW * sc) / block)} height="28" rx="14" fill={ok ? '#2EC4A6' : GOLD} /> : null}
+            <SvgText x={barX + barW + 24} y={y + 24} fill={sc == null ? '#8FA3D6' : '#FFFFFF'} fontFamily={BOLD} fontSize="30">{sc == null ? '—' : `${sc}/${block}`}</SvgText>
+          </G>
+        );
+      })}
+
+      {skills.map(([lab, v], i) => {
+        const cw = 280;
+        const gap = 30;
+        const x0 = (W - (skills.length * cw + (skills.length - 1) * gap)) / 2 + i * (cw + gap);
+        return (
+          <G key={lab}>
+            <Rect x={x0} y="1500" width={cw} height="170" rx="30" fill="#FFFFFF" opacity={0.1} />
+            <SvgText x={x0 + cw / 2} y="1590" textAnchor="middle" fill="#FFFFFF" fontFamily={DISPLAY} fontSize="70">{`${v}%`}</SvgText>
+            <SvgText x={x0 + cw / 2} y="1640" textAnchor="middle" fill="#C7D6FF" fontFamily={BOLD} fontSize="30">{lab}</SvgText>
+          </G>
+        );
+      })}
+
+      <SvgText x={W / 2} y="1790" textAnchor="middle" fill="#FFFFFF" fontFamily={DISPLAY} fontSize="40">Teste no estilo TCF · A1 → C1</SvgText>
+      <SvgText x={W / 2} y="1850" textAnchor="middle" fill="#C7D6FF" fontFamily={BOLD} fontSize="32">E você, qual é o seu nível?</SvgText>
+    </Svg>
+  );
+}
+
+export function PlacementShareSheet({ visible, onClose }) {
+  const { state } = useStore();
+  const t = useTheme();
+  const { width, height } = useWindowDimensions();
+  const [busy, setBusy] = useState(false);
+  const ref = useRef(null);
+  const r = state.placement || {};
+  const name = (state.profile?.name || '').trim().split(' ')[0];
+  const wear = wornOf(state.inventory);
+  const ph = Math.min(height * 0.58, 560);
+  const size = { w: Math.min((ph * W) / H, width - 80), h: ph };
+  size.h = (size.w * H) / W;
+  const data = { title: 'Meu nível de francês' };
+  const text = `🦆 Fiz o teste de nível (estilo TCF) no Le canard français: ${r.level || 'A1'}! ${Object.entries(r.levels || {}).map(([l, s]) => `${l} ${s}/9`).join(' · ')}\nE você, qual é o seu nível?`;
+  const go = async () => {
+    setBusy(true);
+    try {
+      await sharePng(ref.current, data);
+    } catch (e) {
+      if (e?.message === 'sem-imagem') Share.share({ message: text }).catch(() => {});
+      else toast('Não deu para gerar a imagem. Tente de novo.');
+    }
+    setBusy(false);
+  };
+  return (
+    <Sheet visible={visible} onClose={onClose}>
+      <View style={{ gap: 14, alignItems: 'center' }}>
+        <T v="h3">Compartilhar resultado</T>
+        <View style={{ borderRadius: 18, overflow: 'hidden' }}>
+          <PlacementShareArt r={r} name={name} wear={wear} size={size} svgRef={ref} />
+        </View>
+        <Button title={busy ? 'Gerando imagem…' : 'Compartilhar imagem'} icon="send" onPress={go} disabled={busy} style={{ alignSelf: 'stretch' }} />
+        <Pressable onPress={() => Share.share({ message: text }).catch(() => {})} hitSlop={8}>
+          <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 13, color: t.text2 }}>Enviar só o texto</Text>
+        </Pressable>
+      </View>
+    </Sheet>
+  );
+}

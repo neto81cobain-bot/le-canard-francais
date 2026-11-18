@@ -124,6 +124,31 @@ export function compareWords(target, heard) {
   return { score, words: words.map((w, i) => ({ ...w, display: original[i] || w.word })) };
 }
 
+// ─── DISTRATORES PARECIDOS ────────────────────────────────
+// Em vez de alternativas aleatórias (fáceis de eliminar), prefere as mais parecidas com a
+// resposta: palavras em comum, mesmo começo/artigo e tamanho próximo — como nas provas oficiais.
+const normW = (x) => String(x || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z' ]/g, ' ');
+function similarity(a, b) {
+  const wa = normW(a).split(/\s+/).filter((w) => w.length > 2);
+  const wb = new Set(normW(b).split(/\s+/).filter((w) => w.length > 2));
+  const shared = wa.filter((w) => wb.has(w)).length;
+  const la = String(a).length;
+  const lb = String(b).length;
+  const lenScore = 1 - Math.min(1, Math.abs(la - lb) / Math.max(la, lb, 1));
+  const first = normW(a).split(' ')[0] === normW(b).split(' ')[0] ? 1 : 0;
+  // palavras soltas: mesmo começo (ex.: “mange” × “manges” × “mangé”) confunde mais
+  const na = normW(a).trim();
+  const nb = normW(b).trim();
+  const prefix = !na.includes(' ') && !nb.includes(' ') && na.slice(0, 3) === nb.slice(0, 3) ? 1.5 : 0;
+  return shared * 2 + lenScore * 1.5 + first + prefix;
+}
+export function nearest(pool, target, n, key = (x) => x) {
+  const scored = pool.map((x) => ({ x, s: similarity(key(x), target) + Math.random() * 0.8 }));
+  scored.sort((a, b) => b.s - a.s);
+  // sorteia entre os mais parecidos (para variar sem ficar óbvio)
+  return shuffle(scored.slice(0, Math.max(n, Math.ceil(n * 1.8)))).slice(0, n).map((o) => o.x);
+}
+
 // ─── BUILDERS ─────────────────────────────────────────────
 function mkImage(item, pool) {
   const others = pick(pool.filter((v) => v.emoji && v.fr !== item.fr), 3);
@@ -133,7 +158,7 @@ function mkImage(item, pool) {
 
 function mkImagePt(item, pool) {
   // see PT word, pick the French
-  const others = pick(pool.filter((v) => v.fr !== item.fr), 3);
+  const others = nearest(pool.filter((v) => v.fr !== item.fr && v.pt !== item.pt), item.fr, 3, (v) => v.fr);
   if (others.length < 3) return null;
   return { type: 'mcq', item, kind: 'vocab', title: 'Como se diz em francês?', prompt: '“' + item.pt + '”', answer: item.fr, options: shuffle([item.fr, ...others.map((o) => o.fr)]), audioOptions: true };
 }
@@ -149,7 +174,7 @@ function mkQuiz(q, lessonId) {
 }
 
 function mkTranslate(item, pool) {
-  const others = pick(pool.filter((s) => s.pt !== item.pt), 3).map((s) => s.pt);
+  const others = nearest(uniq(pool.filter((s) => s.pt !== item.pt), (s) => s.pt), item.pt, 3, (s) => s.pt).map((s) => s.pt);
   if (others.length < 2) return null;
   return { type: 'translate', item, prompt: item.fr, answer: item.pt, options: shuffle([item.pt, ...others]) };
 }
@@ -158,7 +183,13 @@ function mkBuild(item, allSentences, { listen = false } = {}) {
   const tokens = tokenize(item.fr);
   if (tokens.length < 2 || tokens.length > 10) return null;
   const extraPool = uniq(allSentences.filter((s) => s.fr !== item.fr).flatMap((s) => tokenize(s.fr))).filter((w) => !tokens.includes(w));
-  const distractors = pick(extraPool, Math.min(3, Math.max(2, 9 - tokens.length)));
+  // palavras-isca parecidas com as da frase (mesmo começo / tamanho), não aleatórias
+  const k = Math.min(3, Math.max(2, 9 - tokens.length));
+  const distractors = [];
+  shuffle(tokens).slice(0, k).forEach((tok) => {
+    const d = nearest(extraPool.filter((w) => !distractors.includes(w)), tok, 1)[0];
+    if (d) distractors.push(d);
+  });
   return { type: 'build', item, listen, prompt: item.pt, answerTokens: tokens, answer: tokens.join(' '), tokens: shuffle([...tokens, ...distractors]).map((w, i) => ({ id: i, w })) };
 }
 
@@ -427,7 +458,7 @@ export function buildStoryQuiz(story) {
   const lines = story.lines.filter((l) => l.pt && tokenize(l.fr).length <= 12);
   const tr = pick(lines, 1)[0];
   if (tr) {
-    const others = pick(story.lines.filter((l) => l !== tr && l.pt), 3).map((l) => l.pt);
+    const others = nearest(story.lines.filter((l) => l !== tr && l.pt), tr.pt, 3, (l) => l.pt).map((l) => l.pt);
     if (others.length >= 2) out.push({ type: 'translate', item: { fr: tr.fr, pt: tr.pt, key: 's:' + tr.fr }, prompt: tr.fr, answer: tr.pt, options: shuffle([tr.pt, ...others]) });
   }
   const wordItems = story.words.map((w) => ({ fr: w.fr, pt: w.pt, isWord: true }));
@@ -645,8 +676,8 @@ export function buildSongPractice(song, otherSongs = []) {
 
 // Simulado no estilo TCF (mesmo banco do teste de nível), com correção comentada.
 export function buildTcfPractice(bank, level, count = 15) {
-  // 15 por rodada: 6 estruturas, 5 leitura, 4 escuta (sorteadas de 30)
-  const per = { structure: Math.round(count * 0.4), reading: Math.round(count * 0.33) };
+  // 15 por rodada: 5 estruturas, 5 leitura, 5 escuta (sorteadas de 30)
+  const per = { structure: Math.round(count / 3), reading: Math.round(count / 3) };
   per.listening = count - per.structure - per.reading;
   const items = Object.entries(per).flatMap(([sk, n]) => shuffle(bank.filter((q) => q.level === level && q.skill === sk)).slice(0, n));
   const order = ['structure', 'reading', 'listening'];
