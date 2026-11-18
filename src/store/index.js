@@ -28,6 +28,7 @@ export const initialState = {
     autoAudio: true,
     speechRate: 0.9,
     notifStreak: true,
+    nightly: { enabled: true, hour: 21, minute: 30 },
     apiUrl: '',
     ownGroqKey: '',
   },
@@ -51,6 +52,9 @@ export const initialState = {
   },
   bankBest: {},
   week: { key: weekKey(), xp: 0 },
+  lastWeek: null, // previous week's counters (weekly summary)
+  medals: {}, // weekKey -> { id, at }
+  speakBest: {},
   league: { tier: 0, lastWeek: null, lastResult: null },
   hearts: { count: 5, refillAt: null },
   inventory: { owned: [], equipped: null },
@@ -59,6 +63,7 @@ export const initialState = {
   diary: [], // { at, prompt, text, corrected, score }
   duels: [], // { uid, name, week, theirXP, status }
   translateHistory: [],
+  outbox: [], // offline queue: { id, kind: 'translate' | 'diary', ... }
   lastLessonId: null,
   auth: null,
   pendingCelebrations: [],
@@ -75,13 +80,19 @@ function deepMerge(base, saved) {
 }
 
 // Roll daily / weekly counters when the date changes.
+function bumpWeek(w, patch) {
+  const out = { ...(w || { key: weekKey(), xp: 0 }) };
+  Object.entries(patch).forEach(([k, v]) => { if (v) out[k] = (out[k] || 0) + v; });
+  return out;
+}
+
 function rollover(s) {
   const today = dayKey();
   let next = s;
   if (s.daily?.date !== today) next = { ...next, daily: freshDaily(today) };
   const wk = weekKey();
   if (s.week?.key !== wk) {
-    next = { ...next, week: { key: wk, xp: 0 }, league: { ...next.league, needsResult: s.week?.key || null } };
+    next = { ...next, week: { key: wk, xp: 0 }, lastWeek: s.week?.key ? s.week : next.lastWeek || null, league: { ...next.league, needsResult: s.week?.key || null } };
   }
   const streak = refreshStreak(next.streak, today);
   if (streak !== next.streak) next = { ...next, streak };
@@ -205,6 +216,12 @@ export function StoreProvider({ children }) {
             written: (s.daily.written || 0) + (correct && kind === 'write' ? 1 : 0),
             pairs: (s.daily.pairs || 0) + (correct && kind === 'pairs' ? 1 : 0),
           },
+          week: correct ? bumpWeek(s.week, {
+            correct: 1,
+            listen: kind === 'listen' || kind === 'pairs' ? 1 : 0,
+            written: kind === 'write' ? 1 : 0,
+            verbs: kind === 'conjugate' ? 1 : 0,
+          }) : s.week,
         };
         if (item && item.fr) {
           const key = item.key || item.fr;
@@ -251,6 +268,7 @@ export function StoreProvider({ children }) {
           reviews: next.stats.reviews + (kind === 'review' ? 1 : 0),
           timedBest: kind === 'timed' ? Math.max(next.stats.timedBest, correct) : next.stats.timedBest,
         };
+        next.week = bumpWeek(next.week, { lessons: lessonId || unitTestId ? 1 : 0, minutes: Math.round(seconds / 60), stories: kind === 'story' ? 1 : 0, sessions: 1 });
         next.daily = {
           ...next.daily,
           lessons: next.daily.lessons + (lessonId || unitTestId ? 1 : 0),
@@ -276,7 +294,18 @@ export function StoreProvider({ children }) {
       }),
 
     addSpoken: (n = 1) =>
-      update((s) => ({ ...s, stats: { ...s.stats, spoken: s.stats.spoken + n }, daily: { ...s.daily, spoken: s.daily.spoken + n } })),
+      update((s) => ({ ...s, stats: { ...s.stats, spoken: s.stats.spoken + n }, daily: { ...s.daily, spoken: s.daily.spoken + n }, week: bumpWeek(s.week, { spoken: n }) })),
+    claimMedal: (challenge) =>
+      update((s) => {
+        const wk = s.week?.key;
+        if (!wk || s.medals?.[wk]) return s;
+        return { ...s, coins: s.coins + (challenge.coins || 100), medals: { ...(s.medals || {}), [wk]: { id: challenge.id, at: Date.now() } }, pendingCelebrations: [...(s.pendingCelebrations || [])] };
+      }),
+    buyFreeze: (price = 120) =>
+      update((s) => {
+        if (s.coins < price || (s.streak.freezes || 0) >= 3) return s;
+        return { ...s, coins: s.coins - price, streak: { ...s.streak, freezes: (s.streak.freezes || 0) + 1 } };
+      }),
     addConversation: () => update((s) => ({ ...s, stats: { ...s.stats, conversations: s.stats.conversations + 1 } })),
     addSeconds: (sec) => update((s) => ({ ...s, daily: { ...s.daily, seconds: s.daily.seconds + sec } })),
 

@@ -9,7 +9,7 @@ import { useTheme, fonts, palette } from '../theme';
 import { T, Button, ProgressBar, Chip, Sheet } from './ui';
 import Icon from './Icon';
 import Duck from './Duck';
-import { AudioButton, useShake } from './extras';
+import { AudioButton, useShake, SpeedChip } from './extras';
 import { ImageEx, McqEx, TranslateEx, BuildEx, ListenEx, FillEx, MatchEx, DialogueEx, SpeakEx, ConjugateEx, WriteEx, PairsEx, TrueFalseEx } from './Exercises';
 import { checkTyped, checkSentence, normalize, snapshot } from '../engine/exercises';
 import { fx } from '../services/feedback';
@@ -32,6 +32,7 @@ function grade(ex, value) {
       return { ok: normalize(got) === normalize(ex.answer) };
     }
     case 'listen':
+      return ex.long ? checkSentence(value, ex.answer) : checkTyped(value, ex.answer);
     case 'fill':
       return checkTyped(value, ex.answer);
     case 'write':
@@ -278,6 +279,7 @@ export default function Session({ exercises: initial, title, kind = 'lesson', ti
         {timed ? <Chip icon="clock" label={`${Math.max(0, timeLeft)}s`} big color={timeLeft > 15 ? t.text : t.error} /> : null}
         {heartsOn ? <Chip icon="heart" label={String(state.hearts.count)} big color={palette.coralDark} bg={palette.coralSoft} /> : null}
         {combo >= 3 ? <Chip icon="flame" label={`x${combo}`} big color={palette.red} bg={palette.redSoft} /> : null}
+        {!timed && ['listen', 'pairs', 'speak', 'image', 'build', 'dialogue'].includes(ex.type) ? <SpeedChip /> : null}
       </View>
 
       <ScrollView ref={sv} onScroll={(e) => { svOffset.current = e.nativeEvent.contentOffset.y; }} scrollEventThrottle={32} contentContainerStyle={{ padding: 20, paddingBottom: 200 + kb }} keyboardShouldPersistTaps="handled">

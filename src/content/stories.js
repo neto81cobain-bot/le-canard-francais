@@ -454,7 +454,7 @@ export function parseStory(s) {
     ...s,
     lines: s.lines.map((l) => {
       const [fr, pt] = split(l);
-      const m = fr.match(/^((?:Le|La) [a-zà-ÿ]+|(?:Madame|Monsieur) [A-ZÀ-Ý][a-zà-ÿ]+|[A-ZÀ-Ý][a-zà-ÿ]+) : (.*)$/);
+      const m = fr.match(/^((?:Les|Le|La) [a-zà-ÿ]+|(?:Madame|Monsieur) [A-ZÀ-Ý][a-zà-ÿ]+|[A-ZÀ-Ý][a-zà-ÿ]+) : (.*)$/);
       return m ? { who: m[1], fr: m[2], pt: (pt || '').replace(/^[^:]{1,30}: /, ''), full: fr } : { who: null, fr, pt: pt || '', full: fr };
     }),
     words: s.words.map((w) => { const [fr, pt] = split(w); return { fr, pt }; }),
@@ -463,5 +463,7 @@ export function parseStory(s) {
   };
 }
 
-export const STORY_LIST = STORIES.map(parseStory);
+import { STORIES_2 } from './stories2';
+
+export const STORY_LIST = [...STORIES, ...STORIES_2].sort((a, b) => a.unit - b.unit).map(parseStory);
 export const getStory = (id) => STORY_LIST.find((s) => s.id === id);

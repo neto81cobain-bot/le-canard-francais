@@ -17,6 +17,7 @@ const MOODS = {
   listen: { badge: '🎧', anim: 'nod' },
   speak: { badge: '🎤', anim: 'nod' },
   sleep: { badge: '💤', anim: 'breathe' },
+  offline: { badge: '📡', anim: 'sway' },
   happy: { badge: null, anim: 'breathe' },
   proud: { badge: '🏆', anim: 'jump' },
 };

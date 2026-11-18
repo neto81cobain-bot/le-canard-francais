@@ -4,6 +4,7 @@ import { useStore } from '../store';
 import { useTheme, fonts, radius } from '../theme';
 import { Screen, T, Empty, ProgressBar } from '../components/ui';
 import Icon from '../components/Icon';
+import { genderColor } from '../content/vocab';
 import { AudioButton } from '../components/extras';
 import { strength } from '../store/logic';
 import { router } from 'expo-router';
@@ -40,7 +41,7 @@ export default function Dictionary() {
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: t.surface, borderRadius: radius.md, borderWidth: 1, borderColor: t.border, padding: 12 }}>
               <Text style={{ fontSize: 26, width: 34, textAlign: 'center' }}>{w.emoji || '🔹'}</Text>
               <View style={{ flex: 1, gap: 3 }}>
-                <Text style={{ fontFamily: fonts.displayItalic, fontSize: 17, color: t.text }}>{w.fr}</Text>
+                <Text style={{ fontFamily: fonts.displayItalic, fontSize: 17, color: genderColor(w.fr, t.text) }}>{w.fr}</Text>
                 <T v="small">{w.pt}</T>
                 <ProgressBar value={Math.max(0.05, w.s)} height={5} color={w.s > 0.6 ? t.success : w.s > 0.3 ? t.gold : t.error} />
               </View>

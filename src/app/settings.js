@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Switch, Pressable, TextInput, Share, ActivityIndicator, Linking } from 'react-native';
-import { Alert } from '../services/dialog';
+import { Alert, toast } from '../services/dialog';
 import { router } from 'expo-router';
 import { useStore, getStateSnapshotForCloud } from '../store';
 import { useTheme, fonts, radius, palette } from '../theme';
@@ -13,6 +13,8 @@ import { checkForUpdates, applyOta, openApk, updateInfo } from '../services/upda
 import { CONFIG } from '../services/config';
 import { scheduleReminders } from '../services/notifications';
 import { fx } from '../services/feedback';
+import { voiceStatus } from '../services/speech';
+import { isNetworkError, markOffline } from '../services/net';
 import { diagnosticsReport, clearErrors } from '../services/diagnostics';
 import * as Clipboard from 'expo-clipboard';
 
@@ -95,6 +97,11 @@ export default function Settings() {
       actions.set({ lastSyncAt: Date.now(), lastSyncError: null });
       Alert.alert('Sincronizado! ☁️');
     } catch (e) {
+      if (e?.code !== 'rules' && isNetworkError(e)) {
+        markOffline();
+        toast('📡 Sem internet agora. Seu progresso está salvo no celular e sobe sozinho quando a conexão voltar.');
+        return;
+      }
       actions.set({ lastSyncError: e.message });
       Alert.alert('Não deu para sincronizar', e.message);
     } finally {
@@ -109,6 +116,16 @@ export default function Settings() {
       setUpdate(r);
     } finally {
       setBusy(null);
+    }
+  };
+
+  const [voice, setVoice] = useState(null);
+  const checkVoice = async () => setVoice(await voiceStatus());
+  const openTts = async () => {
+    try {
+      await Linking.sendIntent('com.android.settings.TTS_SETTINGS');
+    } catch {
+      Linking.openSettings().catch(() => {});
     }
   };
 
@@ -168,14 +185,28 @@ export default function Settings() {
             <Choice options={[['8:0', '08:00'], ['12:30', '12:30'], ['19:0', '19:00'], ['21:30', '21:30']]} value={`${p.reminder.hour}:${p.reminder.minute}`} onChange={(v) => { const [h, m] = v.split(':').map(Number); setReminder({ hour: h, minute: m }); }} />
           </View>
         ) : null}
-        <Toggle icon="flame" title="Alerta de streak em risco" subtitle="Às 21h, se você ainda não estudou" value={s.notifStreak} onChange={(v) => actions.setSettings({ notifStreak: v })} last />
+        <Toggle icon="moon" title="Lembrete noturno inteligente" subtitle={s.nightly?.enabled ? `Toda noite às ${String(s.nightly.hour).padStart(2, '0')}:${String(s.nightly.minute).padStart(2, '0')} · revisões, streak e frase do dia` : 'Desligado'} value={!!s.nightly?.enabled} onChange={(v) => actions.setSettings({ nightly: { hour: 21, minute: 30, ...(s.nightly || {}), enabled: v } })} />
+        {s.nightly?.enabled ? (
+          <View style={{ paddingTop: 12 }}>
+            <Choice options={[['20:0', '20:00'], ['21:0', '21:00'], ['21:30', '21:30'], ['22:30', '22:30']]} value={`${s.nightly.hour}:${s.nightly.minute}`} onChange={(v) => { const [h, m] = v.split(':').map(Number); actions.setSettings({ nightly: { ...s.nightly, hour: h, minute: m } }); }} />
+          </View>
+        ) : null}
+        <Toggle icon="flame" title="Alerta de streak em risco" subtitle={s.nightly?.enabled ? 'Já incluído no lembrete noturno' : 'Às 21h, se você ainda não estudou'} value={s.notifStreak} onChange={(v) => actions.setSettings({ notifStreak: v })} last />
       </Group>
 
       {/* LEARNING */}
       <Group title="Aprendizado">
         <Toggle icon="volume" title="Áudio automático" subtitle="Toca a frase em francês sozinho" value={s.autoAudio} onChange={(v) => actions.setSettings({ autoAudio: v })} />
-        <Row icon="turtle" title="Velocidade da voz" subtitle="Velocidade normal do áudio" />
-        <Choice options={[[0.75, 'Devagar'], [0.9, 'Normal'], [1.05, 'Rápida']]} value={s.speechRate} onChange={(v) => actions.setSettings({ speechRate: v })} />
+        <Row icon="turtle" title="Velocidade da voz" subtitle="Também dá para trocar no botão 🔊 durante os exercícios" />
+        <Choice options={[[0.6, '🐢'], [0.75, '0.75×'], [0.9, '1×'], [1.05, '1.15×'], [1.2, '🐇']]} value={s.speechRate} onChange={(v) => actions.setSettings({ speechRate: v })} />
+        <Row icon="volume" title="Voz francesa do celular" subtitle={voice ? (voice.error ? 'Não consegui verificar' : voice.fr ? `${voice.fr} voz(es) em francês${voice.local ? ' · funciona offline ✓' : ' · baixe a voz para usar offline'}` : '⚠️ Nenhuma voz francesa instalada') : 'Toque para verificar'} onPress={checkVoice} />
+        {voice && (!voice.fr || !voice.local) ? (
+          <View style={{ padding: 16, paddingTop: 0, gap: 8 }}>
+            <T v="small">O áudio do app usa a voz do próprio celular e funciona sem internet. Instale a voz “Francês (França)” em Configurações → Conversão de texto em voz → Mecanismo do Google → Instalar dados de voz.</T>
+            <Button title="Abrir configurações de voz" small variant="secondary" onPress={openTts} />
+          </View>
+        ) : null}
+        <Row icon="target" title="Teste de nível" subtitle={state.placement ? `Último: unidade ${state.placement.unit} · refazer` : 'Descubra seu nível por habilidade'} onPress={() => router.push('/placement')} />
         <Toggle icon="heart" title="Modo vidas" subtitle="5 vidas: perde uma a cada erro (desafio extra)" value={s.hearts} onChange={(v) => actions.setSettings({ hearts: v })} last />
       </Group>
 

@@ -439,3 +439,55 @@ export function buildQuick(items, pool) {
   if (sp) body.push(mkSpeak(sp));
   return body;
 }
+
+// ─── 2.4: themed vocab, sound groups, long dictation, shadowing ──────────
+export function buildVocab(words, count = 14) {
+  const list = (words || []).filter((w) => w && w.fr);
+  if (list.length < 4) return [];
+  const out = [];
+  pick(list, Math.min(list.length, 10)).forEach((w, i) => {
+    const r = i % 4;
+    if (r === 0 && w.emoji) out.push(mkImage(w, list));
+    else if (r === 1) out.push(mkImagePt(w, list));
+    else if (r === 2) out.push(mkListenType(w));
+    else out.push(mkImagePt(w, list) || mkListenType(w));
+  });
+  out.push(mkMatch(list));
+  out.push(mkMatch(list));
+  return shuffle(out.filter(Boolean)).slice(0, count);
+}
+
+export function buildPairsGroup(group, count = 12) {
+  const src = group ? MINIMAL_PAIRS.filter((p) => p.group === group) : MINIMAL_PAIRS;
+  if (!src.length) return [];
+  const out = [];
+  while (out.length < count) out.push(...shuffle(src).map((p) => mkPairs(p)));
+  return out.filter(Boolean).slice(0, count);
+}
+
+export function mkDictation(item) {
+  return { type: 'listen', long: true, title: 'Ditado longo', item, answer: item.fr, pt: item.pt };
+}
+
+export function buildDictation(sentences, count = 8) {
+  const long = (sentences || []).filter((s) => s && s.fr && s.pt && tokenize(s.fr).length >= 5 && tokenize(s.fr).length <= 16);
+  return pick(long, count).map(mkDictation);
+}
+
+export function buildShadowing(lines) {
+  return (lines || []).filter((l) => l && l.fr && tokenize(l.fr).length <= 14).slice(0, 10).map((l) => ({ ...mkSpeak({ fr: l.fr, pt: l.pt, key: 's:' + l.fr }), shadow: true }));
+}
+
+// group a mistakes list by what kind of exercise it was
+export const MISTAKE_GROUPS = [
+  { id: 'vocab', title: 'Vocabulário', emoji: '🔤', types: ['image', 'translate', 'mcq-vocab', 'match'] },
+  { id: 'listen', title: 'Escuta e ditado', emoji: '👂', types: ['listen', 'pairs'] },
+  { id: 'grammar', title: 'Gramática', emoji: '📐', types: ['fill', 'mcq', 'truefalse'] },
+  { id: 'write', title: 'Escrita e frases', emoji: '✍️', types: ['write', 'build', 'dialogue'] },
+  { id: 'verbs', title: 'Verbos', emoji: '🔁', types: ['conjugate'] },
+];
+export function mistakeGroupOf(m) {
+  const ex = m?.exercise || m;
+  const ty = ex?.type === 'mcq' && ex?.kind === 'vocab' ? 'mcq-vocab' : ex?.type;
+  return (MISTAKE_GROUPS.find((g) => g.types.includes(ty)) || MISTAKE_GROUPS[2]).id;
+}

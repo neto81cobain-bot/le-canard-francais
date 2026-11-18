@@ -11,7 +11,10 @@ import { Appear } from '../../components/extras';
 import Session from '../../components/Session';
 import ResultView from '../../components/ResultView';
 import { UNITS, LESSONS, getUnit, bankQuestions, BANK_TOPICS } from '../../content';
-import { buildReview, buildFromMistakes, buildUnitTest, buildBank, buildLesson, buildConjugation, shuffle, buildListening, buildWriting, buildSpeaking, buildQuick } from '../../engine/exercises';
+import { buildReview, buildFromMistakes, buildUnitTest, buildBank, buildLesson, buildConjugation, shuffle, buildListening, buildWriting, buildSpeaking, buildQuick, buildVocab, buildPairsGroup, buildDictation, mistakeGroupOf, MISTAKE_GROUPS } from '../../engine/exercises';
+import { VOCAB_THEMES } from '../../content/vocab';
+import { SOUND_GROUPS } from '../../content/skills';
+import { STORY_LIST } from '../../content/stories';
 import { TENSES, VERBS, VERB_LEVELS, getVerb } from '../../content/verbs';
 import { Chip } from '../../components/ui';
 import { dueItems, weakestItems } from '../../store/logic';
@@ -27,6 +30,9 @@ const MODES = {
   listening: { title: 'Treino de escuta', emoji: '👂', mood: 'listen', intro: 'Sons parecidos, ditados e frases para montar de ouvido. Use fones se puder — e repita em voz alta o que ouvir!' },
   writing: { title: 'Treino de escrita', emoji: '✍️', mood: 'teach', intro: 'Agora é você quem escreve! Traduza frases para o francês, complete lacunas e escreva ditados. Use a dica 💡 se travar.' },
   speaking: { title: 'Treino de pronúncia', emoji: '🗣️', mood: 'speak', intro: 'Ouça o modelo, grave sua voz e veja palavra por palavra o que saiu bem. No meio, alguns pares de sons para afinar o ouvido.' },
+  vocab: { title: 'Trilha de vocabulário', emoji: '🗂️', mood: 'teach', intro: 'Imagem, som e escrita das palavras do tema. As cores ajudam: azul = masculino (le), vermelho = feminino (la).' },
+  pairs: { title: 'Treino de sons', emoji: '🎧', mood: 'listen', intro: 'Ouça e escolha qual palavra foi dita. Treinar o ouvido é o primeiro passo para pronunciar bem!' },
+  dictation: { title: 'Ditado longo', emoji: '📝', mood: 'listen', intro: 'Ouça a frase inteira e escreva tudo. Use o botão 🐢 para ouvir devagar e compare palavra por palavra no final.' },
   bank: { title: 'Treino por tema', emoji: '✍️', mood: 'teach', intro: 'Questões rápidas para fixar o conteúdo, com explicação em cada erro.' },
 };
 
@@ -35,11 +41,11 @@ function learnedLessons(state) {
 }
 
 export default function Practice() {
-  const { mode, unit: unitId, key, verb: verbParam, tense: tenseParam, level: levelParam } = useLocalSearchParams();
+  const { mode, unit: unitId, key, verb: verbParam, tense: tenseParam, level: levelParam, group } = useLocalSearchParams();
   const { state, actions } = useStore();
   const t = useTheme();
   const insets = useSafeAreaInsets();
-  const [phase, setPhase] = useState(mode === 'review' || mode === 'mistakes' || mode === 'bank' || mode === 'quick' ? 'practice' : 'intro');
+  const [phase, setPhase] = useState(mode === 'review' || mode === 'mistakes' || mode === 'bank' || mode === 'quick' || mode === 'vocab' ? 'practice' : 'intro');
   const [result, setResult] = useState(null);
   const myLevel = UNITS[Math.min(UNITS.length, state.unlockedUnit) - 1]?.level || 'A1';
   const [vSet, setVSet] = useState(verbParam ? 'one' : levelParam ? levelParam : 'top');
@@ -58,7 +64,13 @@ export default function Practice() {
       if (!items.length) return [];
       return buildReview(items, { pool, count: 12 });
     }
-    if (mode === 'mistakes') return buildFromMistakes(state.mistakes, 12);
+    if (mode === 'mistakes') return buildFromMistakes(group ? state.mistakes.filter((m) => mistakeGroupOf(m) === group) : state.mistakes, 12);
+    if (mode === 'vocab') return buildVocab(VOCAB_THEMES.find((v) => v.id === key)?.words || [], 14);
+    if (mode === 'pairs') return buildPairsGroup(group, 12);
+    if (mode === 'dictation') {
+      const storyLines = STORY_LIST.filter((st) => st.unit <= Math.max(1, state.unlockedUnit)).flatMap((st) => st.lines.map((l) => ({ fr: l.fr, pt: l.pt, key: 's:' + l.fr })));
+      return buildDictation([...pool.filter((p) => !p.isWord), ...storyLines], 8);
+    }
     if (mode === 'listening') return buildListening(pool, 12);
     if (mode === 'quick') {
       let items = dueItems(state.srs, Date.now(), 5);
@@ -101,7 +113,7 @@ export default function Practice() {
   }
 
   if (phase === 'intro') {
-    const title = mode === 'verbs' && verbParam ? `Treino: ${verbParam}` : mode === 'test' ? `Teste · Unidade ${unit.number}` : mode === 'bank' ? bankTopic?.title : cfg.title;
+    const title = mode === 'verbs' && verbParam ? `Treino: ${verbParam}` : mode === 'test' ? `Teste · Unidade ${unit.number}` : mode === 'bank' ? bankTopic?.title : mode === 'pairs' && group ? `Sons: ${SOUND_GROUPS[group]?.title || group}` : cfg.title;
     return (
       <View style={{ flex: 1, backgroundColor: t.bg, paddingTop: insets.top }}>
         <View style={{ paddingHorizontal: 16, paddingVertical: 12 }}>
@@ -157,6 +169,10 @@ export default function Practice() {
                 ? [{ e: '⏱️', l: '90 segundos' }, { e: '🔥', l: 'Combo x2' }, { e: '🏅', l: `Recorde: ${state.stats.timedBest}` }]
                 : mode === 'quick'
                 ? [{ e: '🧠', l: 'Revisão' }, { e: '👂', l: 'Escuta' }, { e: '✍️', l: 'Escrita' }]
+                : mode === 'pairs'
+                ? [{ e: '🎧', l: `${exercises.length} pares` }, { e: '🐢', l: 'Ouça devagar' }, { e: '💡', l: 'Dica de boca' }]
+                : mode === 'dictation'
+                ? [{ e: '📝', l: `${exercises.length} frases` }, { e: '🐢', l: 'Modo devagar' }, { e: '🔍', l: 'Correção por palavra' }]
                 : mode === 'listening'
                 ? [{ e: '🎧', l: 'Pares de sons' }, { e: '📝', l: 'Ditado' }, { e: '🧩', l: 'Montar de ouvido' }]
                 : mode === 'writing'

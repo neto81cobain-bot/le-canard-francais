@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useKeyboardOverlap, scrollFocusedIntoView } from '../../components/keyboard';
 import { View, Text, ScrollView, Pressable, TextInput, ActivityIndicator, Share, RefreshControl } from 'react-native';
 import { Alert } from '../../services/dialog';
+import { isNetworkError, markOffline } from '../../services/net';
 import * as Clipboard from 'expo-clipboard';
 import { Image } from 'expo-image';
 import { useFocusEffect } from 'expo-router';
@@ -62,7 +63,7 @@ export default function League() {
   const [tab, setTab] = useState('semana');
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(null);
-  const [friends, setFriends] = useState([]);
+  const [friends, setFriends] = useState(() => state.friendsCache || []);
   const [code, setCode] = useState('');
   const [settle, setSettle] = useState(null);
   const wrapRef = useRef(null);
@@ -91,6 +92,7 @@ export default function League() {
     setErr(null);
     try {
       const fs = await fetchFriends(auth, state.friends.map((f) => f.uid));
+      actions.set({ friendsCache: fs });
       setFriends(fs);
       const wk = weekKey();
       actions.set((s) => ({
@@ -100,7 +102,7 @@ export default function League() {
         }),
       }));
     } catch (e) {
-      setErr(e.message);
+      if (isNetworkError(e)) { markOffline(); setErr('offline'); } else setErr(e.message);
     } finally {
       setLoading(false);
     }
@@ -386,7 +388,12 @@ export default function League() {
         ) : (
           <Empty emoji="🤝" title="Seu clube está vazio" text="Mande seu código para alguém que também quer aprender francês. Vocês vão ver o XP um do outro, trocar incentivos e se desafiar em duelos semanais ⚔️." />
         )}
-        {err ? <T v="small" center color={t.error}>Não deu para atualizar os amigos: {err}</T> : null}
+        {err === 'offline' ? (
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'center', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 99, backgroundColor: t.surface2 }}>
+            <Text>📡</Text>
+            <T v="caption">Offline · mostrando o último placar salvo</T>
+          </View>
+        ) : err ? <T v="small" center color={t.error}>Não deu para atualizar os amigos: {err}</T> : null}
 
         <Card style={{ gap: 10 }}>
           <T v="label">Seu código de amigo</T>

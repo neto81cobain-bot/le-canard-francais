@@ -26,6 +26,10 @@ import { setFeedbackPrefs } from '../services/feedback';
 import { setSpeechRate } from '../services/speech';
 import { setAiOverride } from '../services/ai';
 import { scheduleReminders } from '../services/notifications';
+import { OfflineBanner } from '../components/Offline';
+import { useOnline, isNetworkError, markOffline } from '../services/net';
+import { processOutbox } from '../services/outbox';
+import { dueItems } from '../store/logic';
 import { pushProgress, takeCheers } from '../services/cloud';
 import { dayKey, weekKey, mondayKey } from '../store/dates';
 
@@ -40,6 +44,19 @@ function Effects() {
   const { state, actions } = useStore();
   const lastSync = useRef(0);
   const lastBackup = useRef(0);
+  const online = useOnline();
+  const stateRef = useRef(state);
+  stateRef.current = state;
+
+  // Back online: send what was queued (translations, diary) and sync right away
+  useEffect(() => {
+    if (!online) return;
+    processOutbox(() => stateRef.current, actions);
+    if (state.auth) { lastSync.current = 0; sync(true); }
+  }, [online]);
+  useEffect(() => {
+    if (online && (state.outbox || []).length) processOutbox(() => stateRef.current, actions);
+  }, [(state.outbox || []).length]);
 
   useEffect(() => {
     setFeedbackPrefs({ sounds: state.settings.sounds, haptics: state.settings.haptics, pack: state.settings.soundPack || 'canard', tapSound: state.settings.tapSound !== false });
@@ -67,12 +84,14 @@ function Effects() {
       notifStreak: state.settings.notifStreak,
       practicedToday: state.streak.lastDay === dayKey(),
       streakCount: state.streak.count,
+      nightly: state.settings.nightly,
+      due: dueItems(state.srs, Date.now(), 999).length,
     });
-  }, [state.onboarded, state.profile.reminder, state.settings.notifStreak, state.streak.lastDay, state.streak.count]);
+  }, [state.onboarded, state.profile.reminder, state.settings.notifStreak, state.settings.nightly, state.streak.lastDay, state.streak.count, state.daily?.date]);
 
   // Cloud sync: on open, when progress changes (throttled) and on background
   const sync = async (force) => {
-    if (!state.auth) return;
+    if (!state.auth || !online) return;
     if (!force && Date.now() - lastSync.current < 60 * 1000) return;
     lastSync.current = Date.now();
     try {
@@ -96,6 +115,7 @@ function Effects() {
         });
       }
     } catch (e) {
+      if (e?.code !== 'rules' && isNetworkError(e)) markOffline();
       if (e?.code === 'rules' && state.lastSyncError !== e.message) actions.set({ lastSyncError: e.message });
     }
   };
@@ -125,6 +145,7 @@ function Shell() {
       </Stack>
       <Effects />
       <Celebration />
+      <OfflineBanner />
       <DialogHost />
     </View>
   );

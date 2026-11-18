@@ -9,6 +9,7 @@ import { T, Card, Chip, Ring, Button, Tap, Sheet, ProgressBar } from '../../comp
 import Icon from '../../components/Icon';
 import Duck, { DuckAvatar } from '../../components/Duck';
 import { AudioButton, Appear } from '../../components/extras';
+import { WeeklyChallengeCard, WeeklySummaryCard } from '../../components/Weekly';
 import { UNITS, lessonState, unitProgress, nextLesson, LEVEL_INFO } from '../../content';
 import { DAILY_PHRASES, CULTURE } from '../../content/extras';
 import { STORY_LIST } from '../../content/stories';
@@ -261,6 +262,12 @@ export default function Learn() {
               <T v="caption">{nextStory ? `História ${nextStory.level} para ler` : 'Releia suas favoritas'}</T>
             </Tap>
           </View>
+        </Appear>
+
+        {/* WEEKLY CHALLENGE + LAST WEEK */}
+        <Appear delay={125}>
+          <WeeklyChallengeCard style={{ marginTop: 16 }} />
+          {state.lastWeek && new Date().getDay() >= 1 && new Date().getDay() <= 2 ? <WeeklySummaryCard week={state.lastWeek} style={{ marginTop: 12 }} /> : null}
         </Appear>
 
         {/* PHRASE OF THE DAY */}

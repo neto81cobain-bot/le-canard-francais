@@ -9,6 +9,8 @@ import { speak } from '../services/speech';
 import { fx } from '../services/feedback';
 import { useRecorder } from '../services/recorder';
 import { aiAvailable, evaluatePronunciation } from '../services/ai';
+import { isOnline } from '../services/net';
+import { createAudioPlayer } from 'expo-audio';
 import { shuffle } from '../engine/exercises';
 
 // Shared option card
@@ -195,7 +197,7 @@ function TypeBox({ value, onChange, locked, placeholder }) {
 export function ListenEx({ ex, value, onChange, locked, autoAudio }) {
   return (
     <View>
-      <Prompt title="Escreva o que você ouviu" mood="listen">
+      <Prompt title={ex.long ? 'Ditado: escreva a frase inteira' : 'Escreva o que você ouviu'} mood="listen">
         <AudioPair text={ex.answer} size={64} autoPlay={autoAudio} />
       </Prompt>
       <TypeBox value={value} onChange={onChange} locked={locked} placeholder="Digite em francês…" />
@@ -331,11 +333,21 @@ export function SpeakEx({ ex, onComplete, onSkip, onSpoken }) {
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState(null);
   const ai = aiAvailable();
+  const player = useRef(null);
+  useEffect(() => () => { try { player.current?.remove(); } catch {} }, []);
+  const playMine = (uri) => {
+    try {
+      player.current?.remove();
+      player.current = createAudioPlayer({ uri });
+      player.current.play();
+    } catch {}
+  };
   const rec = useRecorder({
     onDone: async ({ uri, spoke }) => {
       onSpoken && onSpoken();
-      if (!ai) {
-        setResult({ selfCheck: true });
+      // No AI or no internet → "listen and compare" mode: model vs. your own voice.
+      if (!ai || !isOnline()) {
+        setResult({ selfCheck: true, offline: ai, uri });
         return;
       }
       setBusy(true);
@@ -343,7 +355,7 @@ export function SpeakEx({ ex, onComplete, onSkip, onSpoken }) {
         const r = await evaluatePronunciation(uri, { fr: ex.fr, pt: ex.pt });
         setResult(r);
       } catch (e) {
-        setResult({ error: e.message });
+        setResult(e?.offline ? { selfCheck: true, offline: true, uri } : { error: e.message });
       } finally {
         setBusy(false);
       }
@@ -394,7 +406,27 @@ export function SpeakEx({ ex, onComplete, onSkip, onSpoken }) {
             {result.error ? (
               <T v="bodyBold" center color={t.error}>{result.error}</T>
             ) : result.selfCheck ? (
-              <T v="body" center color={t.text2}>Ouça o modelo de novo e compare com o que você disse. Ficou parecido?</T>
+              <View style={{ alignSelf: 'stretch', gap: 10 }}>
+                {result.offline ? (
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'center', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 99, backgroundColor: t.surface2 }}>
+                    <Text>📡</Text>
+                    <T v="caption">Sem internet — modo comparar</T>
+                  </View>
+                ) : null}
+                <T v="body" center color={t.text2}>Ouça o modelo e depois a sua voz. Ficou parecido?</T>
+                <View style={{ flexDirection: 'row', gap: 10 }}>
+                  <Pressable onPress={() => speak(ex.fr)} style={{ flex: 1, alignItems: 'center', gap: 6, padding: 12, borderRadius: radius.lg, backgroundColor: t.skySoft, borderWidth: 2, borderColor: t.sky }}>
+                    <Text style={{ fontSize: 26 }}>🦆</Text>
+                    <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 13, color: t.sky }}>Modelo</Text>
+                  </Pressable>
+                  {result.uri ? (
+                    <Pressable onPress={() => playMine(result.uri)} style={{ flex: 1, alignItems: 'center', gap: 6, padding: 12, borderRadius: radius.lg, backgroundColor: palette.redSoft, borderWidth: 2, borderColor: palette.red }}>
+                      <Text style={{ fontSize: 26 }}>🙋</Text>
+                      <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 13, color: palette.red }}>Minha voz</Text>
+                    </Pressable>
+                  ) : null}
+                </View>
+              </View>
             ) : result.silent ? (
               <T v="bodyBold" center color={t.error}>{result.tip}</T>
             ) : (
@@ -405,9 +437,9 @@ export function SpeakEx({ ex, onComplete, onSkip, onSpoken }) {
               </>
             )}
             <View style={{ flexDirection: 'row', gap: 10, alignSelf: 'stretch' }}>
-              <Button title="Tentar de novo" variant="secondary" icon="refresh" small style={{ flex: 1 }} onPress={() => { setResult(null); rec.setPhase('idle'); }} />
+              <Button title={result.selfCheck ? 'Gravar de novo' : 'Tentar de novo'} variant="secondary" icon="refresh" small style={{ flex: 1 }} onPress={() => { setResult(null); rec.setPhase('idle'); }} />
               <Button
-                title={result.selfCheck ? 'Ficou bom!' : 'Continuar'}
+                title={result.selfCheck ? 'Ficou parecido!' : 'Continuar'}
                 small
                 style={{ flex: 1 }}
                 onPress={() => {

@@ -11,6 +11,8 @@ import { AudioButton } from '../components/extras';
 import { Waveform } from '../components/Exercises';
 import { useRecorder } from '../services/recorder';
 import { translateAudio, translateText, aiAvailable } from '../services/ai';
+import { useOnline } from '../services/net';
+import { toast } from '../services/dialog';
 
 export default function Translate() {
   const { state, actions } = useStore();
@@ -20,6 +22,8 @@ export default function Translate() {
   const [text, setText] = useState('');
   const [busy, setBusy] = useState(false);
   const ai = aiAvailable();
+  const online = useOnline();
+  const pending = (state.outbox || []).filter((o) => o.kind === 'translate');
   // older versions could save { translation, note } objects here — flatten them
   const str = (v) => (v && typeof v === 'object' ? String(v.translation || '') : String(v || ''));
   const history = (state.translateHistory || []).map((h) => ({ ...h, translation: str(h.translation), fr: str(h.fr), pt: str(h.pt), note: typeof h.note === 'string' ? h.note : (h.translation && h.translation.note) || '' })).filter((h) => h.translation);
@@ -39,7 +43,8 @@ export default function Translate() {
         if (!r.heard) Alert.alert('Não ouvi nada', 'Tente falar mais perto do microfone.');
         else add(r.heard, r);
       } catch (e) {
-        Alert.alert('Erro', e.message);
+        if (e?.offline) toast('📡 Sem internet — digite a frase que eu traduzo assim que a conexão voltar.');
+        else Alert.alert('Erro', e.message);
       } finally {
         setBusy(false);
         rec.setPhase('idle');
@@ -47,16 +52,24 @@ export default function Translate() {
     },
   });
 
+  const queue = (s) => {
+    actions.set((st) => ({ outbox: [...(st.outbox || []), { id: Date.now(), kind: 'translate', text: s, dir, at: Date.now() }] }));
+    setText('');
+    toast('⏳ Guardei! Traduzo assim que a internet voltar.');
+  };
+
   const sendText = async () => {
     const s = text.trim();
     if (!s) return;
+    if (!online) return queue(s);
     setBusy(true);
     try {
       const r = await translateText(s, dir);
       add(s, r);
       setText('');
     } catch (e) {
-      Alert.alert('Erro', e.message);
+      if (e?.offline) queue(s);
+      else Alert.alert('Erro', e.message);
     } finally {
       setBusy(false);
     }
@@ -84,17 +97,31 @@ export default function Translate() {
 
       {!ai ? (
         <Empty emoji="⚙️" title="Tradutor por IA desativado" text="Configure o servidor de IA em Perfil → Configurações → Avançado para usar o tradutor." />
-      ) : !history.length ? (
+      ) : !history.length && !pending.length ? (
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <Empty emoji="🗣️" title="Fale ou digite algo" text="Ex.: “Onde fica a estação de trem?” — o Canard traduz e você ouve a pronúncia." />
         </View>
       ) : (
         <FlatList
-          data={history}
+          data={[...pending.slice().reverse().map((p) => ({ ...p, pending: true })), ...history]}
           inverted
-          keyExtractor={(x) => String(x.id)}
+          keyExtractor={(x) => (x.pending ? 'p' : '') + String(x.id)}
           contentContainerStyle={{ padding: 20, gap: 14 }}
           renderItem={({ item }) => {
+            if (item.pending) {
+              return (
+                <View style={{ gap: 6 }}>
+                  <View style={{ alignSelf: 'flex-end', maxWidth: '85%', backgroundColor: t.surface2, borderRadius: 18, borderBottomRightRadius: 4, padding: 12 }}>
+                    <Text style={{ fontFamily: fonts.bodySemi, fontSize: 16, color: t.text }}>{item.text}</Text>
+                  </View>
+                  <View style={{ alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: t.surface, borderWidth: 1, borderStyle: 'dashed', borderColor: t.border, borderRadius: 18, borderBottomLeftRadius: 4, paddingHorizontal: 14, paddingVertical: 10 }}>
+                    <Text>⏳</Text>
+                    <T v="small">{online ? 'Traduzindo…' : 'Traduzo quando a internet voltar'}</T>
+                    <Pressable hitSlop={8} onPress={() => actions.set((st) => ({ outbox: (st.outbox || []).filter((o) => o.id !== item.id) }))}><Icon name="close" size={14} color={t.text3} /></Pressable>
+                  </View>
+                </View>
+              );
+            }
             const saved = state.saved.find((c) => c.fr === item.fr);
             return (
               <View style={{ gap: 6 }}>
@@ -121,6 +148,12 @@ export default function Translate() {
 
       {ai ? (
         <View style={{ padding: 14, paddingBottom: 14 + insets.bottom, borderTopWidth: 1, borderTopColor: t.border, backgroundColor: t.surface, gap: 10 }}>
+          {!online ? (
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'center', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 99, backgroundColor: t.surface2 }}>
+              <Text>📡</Text>
+              <T v="caption">Offline · digite que eu traduzo quando a conexão voltar</T>
+            </View>
+          ) : null}
           {rec.recording ? (
             <View style={{ alignItems: 'center' }}><Waveform level={rec.level} active color={t.accent} /></View>
           ) : null}
@@ -140,7 +173,7 @@ export default function Translate() {
                 <Icon name="send" size={22} color="#fff" />
               </Pressable>
             ) : (
-              <Pressable onPress={() => (rec.recording ? rec.stop() : rec.start())} style={{ width: 52, height: 52, borderRadius: 26, backgroundColor: rec.recording ? t.accent : palette.red, alignItems: 'center', justifyContent: 'center' }}>
+              <Pressable onPress={() => (!online && !rec.recording ? toast('📡 A tradução por voz precisa de internet. Digite a frase que eu guardo para depois!') : rec.recording ? rec.stop() : rec.start())} style={{ width: 52, height: 52, borderRadius: 26, opacity: online ? 1 : 0.5, backgroundColor: rec.recording ? t.accent : palette.red, alignItems: 'center', justifyContent: 'center' }}>
                 <Icon name={rec.recording ? 'stop' : 'mic'} size={24} color="#fff" fill={rec.recording ? '#fff' : 'none'} />
               </Pressable>
             )}

@@ -244,7 +244,11 @@ export const ACHIEVEMENTS = [
   { id: 'league_up', title: 'Subindo!', desc: 'Suba de divisão no Clube', emoji: '📈', test: (s) => (s.league?.tier || 0) >= 1 },
   { id: 'story1', title: 'Primeira leitura', desc: 'Leia uma história até o fim', emoji: '📗', test: (s) => Object.keys(s.stories || {}).length >= 1 },
   { id: 'story10', title: 'Leitor assíduo', desc: 'Leia 10 histórias', emoji: '📚', test: (s) => Object.keys(s.stories || {}).length >= 10 },
-  { id: 'story20', title: 'Biblioteca completa', desc: 'Leia todas as 20 histórias', emoji: '🏛️', test: (s) => Object.keys(s.stories || {}).length >= 20 },
+  { id: 'story20', title: 'Biblioteca completa', desc: 'Leia 20 histórias', emoji: '🏛️', test: (s) => Object.keys(s.stories || {}).length >= 20 },
+  { id: 'medal1', title: 'Medalhista', desc: 'Complete um desafio semanal', emoji: '🏅', test: (s) => Object.keys(s.medals || {}).length >= 1 },
+  { id: 'medal5', title: 'Colecionador de medalhas', desc: 'Complete 5 desafios semanais', emoji: '🎖️', test: (s) => Object.keys(s.medals || {}).length >= 5 },
+  { id: 'placement', title: 'Raio-X do francês', desc: 'Faça o teste de nível', emoji: '🩻', test: (s) => !!s.placement },
+  { id: 'story40', title: 'Rato de biblioteca', desc: 'Leia todas as 40 histórias', emoji: '🐭', test: (s) => Object.keys(s.stories || {}).length >= 40 },
   { id: 'writer', title: 'Escritor', desc: 'Escreva 5 textos no diário', emoji: '✍️', test: (s) => (s.diary || []).length >= 5 },
   { id: 'duel', title: 'Duelista', desc: 'Vença um duelo contra um amigo', emoji: '⚔️', test: (s) => (s.stats.duelsWon || 0) >= 1 },
   { id: 'ear', title: 'Ouvido afiado', desc: 'Acerte 50 pares de sons', emoji: '👂', test: (s) => (s.stats.pairs || 0) >= 50 },
@@ -283,7 +287,39 @@ export const SHOP = [
   { id: 'rose', title: 'Rosa', desc: 'Très romantique', price: 90, emoji: '🌹', kind: 'outfit' },
   { id: 'grad', title: 'Capelo', desc: 'Para quem passou no B1', price: 300, emoji: '🎓', kind: 'outfit' },
   { id: 'crown', title: 'Coroa', desc: 'Roi des canards', price: 500, emoji: '👑', kind: 'outfit' },
+  { id: 'beret', title: 'Boina', desc: 'O clássico parisiense', price: 100, emoji: '🧢', kind: 'outfit' },
+  { id: 'baguette', title: 'Baguete', desc: 'Sempre fresquinha', price: 80, emoji: '🥖', kind: 'outfit' },
+  { id: 'croissant', title: 'Croissant', desc: 'Café da manhã garantido', price: 80, emoji: '🥐', kind: 'outfit' },
+  { id: 'wine', title: 'Taça de vinho', desc: 'Santé !', price: 140, emoji: '🍷', kind: 'outfit' },
+  { id: 'tower', title: 'Torre Eiffel', desc: 'Lembrancinha de Paris', price: 180, emoji: '🗼', kind: 'outfit' },
+  { id: 'palette', title: 'Paleta de pintor', desc: 'Inspirado em Monet', price: 160, emoji: '🎨', kind: 'outfit' },
+  { id: 'guitar', title: 'Violão', desc: 'Pour chanter en français', price: 220, emoji: '🎸', kind: 'outfit' },
+  { id: 'bike', title: 'Bicicleta', desc: 'Tour de France', price: 240, emoji: '🚲', kind: 'outfit' },
+  { id: 'camera', title: 'Câmera', desc: 'Turista profissional', price: 160, emoji: '📸', kind: 'outfit' },
+  { id: 'book', title: 'Livro', desc: 'Le Petit Prince na mochila', price: 120, emoji: '📚', kind: 'outfit' },
+  { id: 'leaf', title: 'Folha da Amazônia', desc: 'Do Pará para a França', price: 90, emoji: '🌿', kind: 'outfit' },
+  { id: 'medal', title: 'Medalha de ouro', desc: 'Para campeões semanais', price: 400, emoji: '🥇', kind: 'outfit' },
+  { id: 'rocket', title: 'Foguete', desc: 'Rumo ao C1', price: 600, emoji: '🚀', kind: 'outfit' },
   { id: 'theme_dark', title: 'Tema noturno', desc: 'Já incluso! Ative em Aparência', price: 0, emoji: '🌙', kind: 'info' },
 ];
+
+// Weekly themed challenge — rotates every week; finishing it gives a medal + coins.
+export const WEEKLY_CHALLENGES = [
+  { id: 'ouvido', title: 'Semana do ouvido', emoji: '👂', desc: 'Acerte 60 exercícios de escuta', field: 'listen', target: 60, coins: 120 },
+  { id: 'escrita', title: 'Semana da escrita', emoji: '✍️', desc: 'Escreva 25 frases corretas', field: 'written', target: 25, coins: 120 },
+  { id: 'leitura', title: 'Semana da leitura', emoji: '📖', desc: 'Leia 4 histórias', field: 'stories', target: 4, coins: 120 },
+  { id: 'fala', title: 'Semana da fala', emoji: '🗣️', desc: 'Fale 40 frases em voz alta', field: 'spoken', target: 40, coins: 120 },
+  { id: 'verbos', title: 'Semana dos verbos', emoji: '🔁', desc: 'Conjugue 60 verbos certos', field: 'verbs', target: 60, coins: 120 },
+  { id: 'maratona', title: 'Maratona de XP', emoji: '🏃', desc: 'Ganhe 600 XP na semana', field: 'xp', target: 600, coins: 150 },
+];
+export function weeklyChallenge(wk = weekKey()) {
+  const n = parseInt(String(wk).split('W')[1] || '0', 10) + parseInt(String(wk).slice(0, 4), 10);
+  return WEEKLY_CHALLENGES[n % WEEKLY_CHALLENGES.length];
+}
+export function weeklyProgress(week) {
+  const c = weeklyChallenge(week?.key);
+  const v = week?.[c.field] || 0;
+  return { ...c, value: v, pct: Math.min(1, v / c.target), done: v >= c.target };
+}
 
 export { weekKey, dayKey };

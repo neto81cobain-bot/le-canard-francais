@@ -67,6 +67,14 @@ export default function Practice() {
         <BigTile emoji="✍️" title="Escrita" sub="Escreva frases em francês" color={palette.green} onPress={() => go('writing')} />
         <BigTile emoji="🗣️" title="Pronúncia" sub="Grave e receba nota" color={palette.red} onPress={() => go('speaking')} />
       </View>
+      <View style={{ flexDirection: 'row', gap: 12, marginTop: 12 }}>
+        <BigTile emoji="🗂️" title="Vocabulário" sub="8 trilhas por assunto" color="#D9822B" onPress={() => router.push('/vocab')} />
+        <BigTile emoji="📐" title="Gramática" sub="Regras de bolso" color="#1E3A8A" onPress={() => router.push('/grammar')} />
+      </View>
+      <View style={{ flexDirection: 'row', gap: 12, marginTop: 12 }}>
+        <BigTile emoji="📝" title="Ditado longo" sub="Frases inteiras de ouvido" color="#0F766E" onPress={() => go('dictation')} />
+        <BigTile emoji="🎧" title="Mapa de sons" sub="Treine som por som" color="#C2417B" onPress={() => router.push('/sounds')} />
+      </View>
       <Tap onPress={() => router.push('/diary')} style={[{ marginTop: 12, borderRadius: radius.lg, backgroundColor: t.surface, borderWidth: 2, borderColor: t.border, padding: 16, flexDirection: 'row', alignItems: 'center', gap: 14 }]}>
         <Text style={{ fontSize: 34 }}>📓</Text>
         <View style={{ flex: 1 }}>
@@ -78,7 +86,7 @@ export default function Practice() {
 
       <Section title="Revisar e desafiar" />
       <View style={{ flexDirection: 'row', gap: 12 }}>
-        <BigTile emoji="🎯" title="Meus erros" sub="Treine o que você errou" color={palette.coral} badge={state.mistakes.length ? String(state.mistakes.length) : null} onPress={() => go('mistakes')} />
+        <BigTile emoji="🎯" title="Caderno de erros" sub="Separado por tipo" color={palette.coral} badge={state.mistakes.length ? String(state.mistakes.length) : null} onPress={() => router.push('/mistakes')} />
         <BigTile emoji="⏱️" title="Contra o relógio" sub={`Recorde: ${state.stats.timedBest}`} color={palette.goldDark} onPress={() => go('timed')} />
       </View>
       <View style={{ flexDirection: 'row', gap: 12, marginTop: 12 }}>
@@ -96,6 +104,7 @@ export default function Practice() {
           { icon: 'book', bg: t.skySoft, color: t.sky, title: 'Meu dicionário', sub: `${words} palavras aprendidas`, to: '/dictionary' },
           { icon: 'swap', bg: palette.coralSoft, color: palette.coralDark, title: 'Falsos cognatos', sub: 'Palavras que enganam brasileiros', to: '/false-friends' },
           { icon: 'globe', bg: palette.goldSoft, color: palette.goldDark, title: 'Notas culturais', sub: 'Costumes e curiosidades da França', to: '/culture' },
+          { icon: 'target', bg: t.primarySoft, color: t.primary, title: 'Teste de nível', sub: state.placement ? `Último: unidade ${state.placement.unit} · refazer` : 'Gramática, vocabulário, escuta e fala', to: '/placement' },
         ].map((r, i, a) => (
           <Tap key={r.title} onPress={() => router.push(r.to)} scaleTo={0.99} style={{ flexDirection: 'row', alignItems: 'center', gap: 14, padding: 16, borderBottomWidth: i === a.length - 1 ? 0 : 1, borderBottomColor: t.border }}>
             <View style={{ width: 44, height: 44, borderRadius: 14, backgroundColor: r.bg, alignItems: 'center', justifyContent: 'center' }}>

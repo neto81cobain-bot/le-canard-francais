@@ -1,3 +1,4 @@
+import { EXTRA_TOPICS } from './topics';
 import A1 from './a1';
 import A2 from './a2';
 import B1 from './b1';
@@ -128,9 +129,12 @@ export const BANK_TOPICS = [
   { key: 'fill_in', title: 'Completar frases', emoji: '✍️', sub: 'Preencha o verbo certo', color: '#7C5CFC' },
   { key: 'numbers', title: 'Nombres', emoji: '🔢', sub: 'Números em francês', color: '#2A9D8F' },
   { key: 'pronon', title: 'Pronúncia', emoji: '🗣️', sub: 'Regras de leitura', color: '#C2417B' },
+  ...EXTRA_TOPICS.map(({ q, ...t }) => t),
 ];
 
 export function bankQuestions(key) {
+  const extra = EXTRA_TOPICS.find((t) => t.key === key);
+  if (extra) return extra.q;
   return (legacyBank[key] || []).map((x) => ({
     q: x.q,
     a: x.a,

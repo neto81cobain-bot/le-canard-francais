@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Pressable, TextInput, ActivityIndicator, ScrollView, Platform } from 'react-native';
 import { KeyboardAwareView } from '../../components/keyboard';
-import { Alert } from '../../services/dialog';
+import { Alert, toast } from '../../services/dialog';
+import { useOnline } from '../../services/net';
+import { OfflineCard } from '../../components/Offline';
 import { useLocalSearchParams, router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useStore } from '../../store';
@@ -31,6 +33,7 @@ export default function Conversation() {
   const [kb, setKb] = useState(false);
   const scroll = useRef(null);
   const ai = aiAvailable();
+  const online = useOnline();
 
   useEffect(() => {
     if (sc && state.settings.autoAudio) setTimeout(() => speak(sc.opener), 400);
@@ -56,8 +59,11 @@ export default function Conversation() {
         actions.addConversation();
       }
     } catch (e) {
-      Alert.alert('Ops', e.message);
       setMsgs(msgs);
+      if (e?.offline) {
+        setText(s);
+        toast('📡 Sem internet — sua frase ficou guardada no campo. Envie quando a conexão voltar.');
+      } else Alert.alert('Ops', e.message);
     } finally {
       setBusy(false);
       setTimeout(() => scroll.current?.scrollToEnd({ animated: true }), 100);
@@ -74,7 +80,8 @@ export default function Conversation() {
         else Alert.alert('Não ouvi nada', 'Fale um pouco mais alto e perto do microfone.');
       } catch (e) {
         setBusy(false);
-        Alert.alert('Erro', e.message);
+        if (e?.offline) toast('📡 Sem internet — para falar com o Canard é preciso conexão.');
+        else Alert.alert('Erro', e.message);
       } finally {
         rec.setPhase('idle');
       }
@@ -87,6 +94,21 @@ export default function Conversation() {
       <View style={{ flex: 1, backgroundColor: t.bg, paddingTop: insets.top }}>
         <Header title={sc.title} />
         <Empty emoji="⚙️" title="Conversa por IA desativada" text="Configure o servidor de IA em Perfil → Configurações → Avançado." />
+      </View>
+    );
+  }
+
+  if (!online && msgs.length <= 1) {
+    return (
+      <View style={{ flex: 1, backgroundColor: t.bg, paddingTop: insets.top }}>
+        <Header title={`${sc.emoji} ${sc.title}`} />
+        <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 40 }}>
+          <OfflineCard
+            title="O Canard precisa de internet para conversar"
+            text="A conversa usa IA para entender e responder você. Assim que a conexão voltar, esta tela abre sozinha."
+            note={`Enquanto isso: leia em voz alta a abertura — “${sc.opener}” — e ensaie sua resposta imaginando a cena. 🎭`}
+          />
+        </ScrollView>
       </View>
     );
   }

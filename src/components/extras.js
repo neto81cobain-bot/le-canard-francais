@@ -3,7 +3,27 @@ import { View, Animated, Easing, Dimensions, Text, Pressable } from 'react-nativ
 import { useTheme, fonts, palette } from '../theme';
 import Icon from './Icon';
 import { Tap } from './ui';
-import { speak } from '../services/speech';
+import { speak, setSpeechRate } from '../services/speech';
+import { useStore } from '../store';
+
+// Voice speed pill (cycles; saved in settings, applies everywhere)
+const SPEEDS = [[0.6, '🐢 0.6×'], [0.75, '0.75×'], [0.9, '1×'], [1.05, '1.15×'], [1.2, '🐇 1.3×']];
+export function SpeedChip({ style }) {
+  const t = useTheme();
+  const { state, actions } = useStore();
+  const cur = state.settings.speechRate || 0.9;
+  const i = Math.max(0, SPEEDS.findIndex(([v]) => Math.abs(v - cur) < 0.01));
+  const next = () => {
+    const [v] = SPEEDS[(i + 1) % SPEEDS.length];
+    setSpeechRate(v);
+    actions.setSettings({ speechRate: v });
+  };
+  return (
+    <Pressable onPress={next} hitSlop={8} style={[{ paddingHorizontal: 10, paddingVertical: 5, borderRadius: 99, backgroundColor: t.surface2, borderWidth: 1, borderColor: t.border }, style]}>
+      <Text style={{ fontFamily: fonts.bodyBold, fontSize: 12, color: t.text2 }}>🔊 {SPEEDS[i][1]}</Text>
+    </Pressable>
+  );
+}
 
 // ─── AUDIO BUTTONS ────────────────────────────────────────
 export function AudioButton({ text, size = 52, slow, autoPlay, color, style }) {

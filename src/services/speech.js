@@ -51,3 +51,16 @@ export function speakPt(text) {
 export function stopSpeaking() {
   Speech.stop();
 }
+
+// Which French voices does this phone have? (for the offline-voice check in Settings)
+export async function voiceStatus() {
+  try {
+    const voices = await Speech.getAvailableVoicesAsync();
+    const fr = voices.filter((v) => (v.language || '').toLowerCase().replace('_', '-').startsWith('fr'));
+    const local = fr.filter((v) => !/network/i.test(v.identifier || ''));
+    const best = await pickVoice();
+    return { total: voices.length, fr: fr.length, local: local.length, best: fr.find((v) => v.identifier === best)?.name || best };
+  } catch (e) {
+    return { error: String(e?.message || e) };
+  }
+}

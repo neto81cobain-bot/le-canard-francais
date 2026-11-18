@@ -1,7 +1,8 @@
 // Writing diary: a prompt per level, free writing, AI correction (or model answer to compare).
 import React, { useMemo, useRef, useState } from 'react';
 import { View, Text, TextInput, Pressable, ActivityIndicator } from 'react-native';
-import { Alert } from '../services/dialog';
+import { Alert, toast } from '../services/dialog';
+import { useOnline } from '../services/net';
 import { useStore } from '../store';
 import { useTheme, fonts, radius, palette } from '../theme';
 import { T, Screen, Card, Button, Chip } from '../components/ui';
@@ -28,6 +29,8 @@ export default function Diary() {
   const [busy, setBusy] = useState(false);
   const [res, setRes] = useState(null);
   const [showModel, setShowModel] = useState(false);
+  const [openEntry, setOpenEntry] = useState(null);
+  const online = useOnline();
   const started = useRef(Date.now());
   const ai = aiAvailable();
   const words = text.trim() ? text.trim().split(/\s+/).length : 0;
@@ -50,8 +53,17 @@ export default function Diary() {
     return xp;
   };
 
+  const queueForLater = () => {
+    const at = Date.now();
+    setShowModel(true);
+    const xp = save({ text, corrected: null, score: null, pending: true, at });
+    actions.set((st) => ({ outbox: [...(st.outbox || []), { id: at, kind: 'diary', at, text, prompt: prompt.pt, level }] }));
+    setRes({ self: true, queued: true, xp });
+  };
+
   const submit = async () => {
     if (words < 3) return Alert.alert('Escreva um pouco mais', 'Tente pelo menos uma ou duas frases completas. 🙂');
+    if (ai && !online) return queueForLater();
     if (!ai) {
       setShowModel(true);
       const xp = save({ text, corrected: null, score: null });
@@ -61,9 +73,10 @@ export default function Diary() {
     setBusy(true);
     try {
       const r = await correctWriting(text, prompt.pt, level);
-      const xp = save({ text, corrected: r.corrected, score: r.score });
+      const xp = save({ text, ...r });
       setRes({ ...r, xp });
     } catch (e) {
+      if (e?.offline) return queueForLater();
       Alert.alert('Não deu para corrigir', e.message + '\n\nVou mostrar um exemplo para você comparar.');
       setShowModel(true);
       const xp = save({ text, corrected: null, score: null });
@@ -126,7 +139,13 @@ export default function Diary() {
           />
           <AccentBar onInsert={insert} />
           <T v="caption" style={{ marginTop: 6 }}>{words} palavra{words === 1 ? '' : 's'} · meta: {level === 'A1' ? 15 : level === 'A2' ? 25 : 40}+</T>
-          <Button title={busy ? 'Corrigindo…' : ai ? 'Corrigir meu texto' : 'Terminei — comparar'} icon="check" loading={busy} disabled={busy} style={{ marginTop: 14 }} onPress={submit} />
+          {ai && !online ? (
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 12, padding: 10, borderRadius: 12, backgroundColor: t.surface2 }}>
+              <Text>📡</Text>
+              <T v="small" style={{ flex: 1 }}>Sem internet: pode escrever normalmente! Eu guardo o texto e corrijo assim que a conexão voltar.</T>
+            </View>
+          ) : null}
+          <Button title={busy ? 'Corrigindo…' : ai && !online ? 'Guardar e corrigir depois' : ai ? 'Corrigir meu texto' : 'Terminei — comparar'} icon="check" loading={busy} disabled={busy} style={{ marginTop: 14 }} onPress={submit} />
           <Pressable onPress={() => setShowModel((x) => !x)} style={{ alignSelf: 'center', marginTop: 12 }}>
             <Text style={{ fontFamily: fonts.bodyHeavy, color: t.text3 }}>{showModel ? 'Esconder exemplo' : 'Travou? Ver um exemplo'}</Text>
           </Pressable>
@@ -138,12 +157,21 @@ export default function Diary() {
             <T v="label">Seu texto</T>
             <T v="body">{text}</T>
           </Card>
+          {res.queued ? (
+            <Card style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }} tone={t.skySoft}>
+              <Duck mood="offline" size={64} />
+              <View style={{ flex: 1, gap: 2 }}>
+                <T v="bodyBold">Texto guardado! ⏳</T>
+                <T v="small" color={t.text}>Assim que a internet voltar, o Canard corrige e te avisa. A correção aparece em “Seus textos”, aqui embaixo.</T>
+              </View>
+            </Card>
+          ) : null}
           {res.self ? (
             <>
               <ModelCard prompt={prompt} />
               <Card style={{ gap: 6 }}>
                 <T v="bodyBold">Compare com calma:</T>
-                <T v="small">• Os verbos estão conjugados com o sujeito certo?{'\n'}• Usou os artigos (le, la, un, une, du…)?{'\n'}• Os adjetivos concordam (grand / grande)?{'\n'}Para correção automática, configure o servidor de IA em Configurações → Avançado.</T>
+                <T v="small">• Os verbos estão conjugados com o sujeito certo?{'\n'}• Usou os artigos (le, la, un, une, du…)?{'\n'}• Os adjetivos concordam (grand / grande)?{res.queued ? '' : '\nPara correção automática, configure o servidor de IA em Configurações → Avançado.'}</T>
               </Card>
             </>
           ) : (
@@ -186,16 +214,35 @@ export default function Diary() {
       {(state.diary || []).length ? (
         <View style={{ marginTop: 26, gap: 10 }}>
           <T v="label">Seus textos ({state.diary.length})</T>
-          {state.diary.slice(0, 8).map((d) => (
-            <Card key={d.at} style={{ gap: 4 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-                <T v="caption" style={{ flex: 1 }}>{new Date(d.at).toLocaleDateString('pt-BR')} · {d.level}</T>
-                {d.score != null ? <Chip label={`${d.score}`} color={d.score >= 80 ? t.success : palette.goldDark} /> : null}
-              </View>
-              <T v="small" color={t.text2}>{d.prompt}</T>
-              <T v="body" numberOfLines={3}>{d.corrected || d.text}</T>
-            </Card>
-          ))}
+          {state.diary.slice(0, 8).map((d) => {
+            const isOpen = openEntry === d.at;
+            return (
+              <Pressable key={d.at} onPress={() => setOpenEntry(isOpen ? null : d.at)}>
+                <Card style={{ gap: 4 }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                    <T v="caption" style={{ flex: 1 }}>{new Date(d.at).toLocaleDateString('pt-BR')} · {d.level}</T>
+                    {d.pending ? <Chip label="⏳ correção pendente" color={t.text2} bg={t.surface2} /> : null}
+                    {d.score != null ? <Chip label={`${d.score}`} color={d.score >= 80 ? t.success : palette.goldDark} /> : null}
+                  </View>
+                  <T v="small" color={t.text2}>{d.prompt}</T>
+                  <T v="body" numberOfLines={isOpen ? undefined : 3}>{d.corrected || d.text}</T>
+                  {isOpen && d.corrected ? (
+                    <View style={{ gap: 6, marginTop: 6 }}>
+                      <T v="label">Você escreveu</T>
+                      <T v="small" color={t.text2}>{d.text}</T>
+                      {(d.errors || []).map((e, i) => (
+                        <View key={i} style={{ padding: 8, borderRadius: 10, backgroundColor: t.bg, gap: 2 }}>
+                          <T v="small"><Text style={{ color: t.error, textDecorationLine: 'line-through' }}>{e.wrong}</Text>  →  <Text style={{ color: t.success, fontFamily: fonts.bodyHeavy }}>{e.right}</Text></T>
+                          {e.why ? <T v="caption">{e.why}</T> : null}
+                        </View>
+                      ))}
+                      {d.tip ? <T v="small" color={palette.goldDark}>💡 {d.tip}</T> : null}
+                    </View>
+                  ) : null}
+                </Card>
+              </Pressable>
+            );
+          })}
         </View>
       ) : null}
     </Screen>

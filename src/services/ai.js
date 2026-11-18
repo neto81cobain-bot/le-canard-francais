@@ -3,6 +3,7 @@
 // For testing, a personal Groq key can be set in Configurações → Avançado.
 import { CONFIG } from './config';
 import { compareWords } from '../engine/exercises';
+import { markOffline, markOnline, isNetworkError } from './net';
 
 const STT_MODEL = 'whisper-large-v3-turbo';
 const CHAT_MODELS = ['openai/gpt-oss-120b', 'openai/gpt-oss-20b'];
@@ -23,7 +24,17 @@ export function aiAvailable() {
   return !!endpoint();
 }
 
-class AiError extends Error {}
+class AiError extends Error {
+  constructor(msg, { offline = false } = {}) {
+    super(msg);
+    this.offline = offline;
+  }
+}
+const OFFLINE_MSG = 'Sem internet agora. Assim que a conexão voltar, isso funciona de novo.';
+function offlineError() {
+  markOffline();
+  return new AiError(OFFLINE_MSG, { offline: true });
+}
 
 async function transcribe(uri, language = 'fr', prompt) {
   const ep = endpoint();
@@ -45,10 +56,11 @@ async function transcribe(uri, language = 'fr', prompt) {
     xhr.onload = () => {
       let body = {};
       try { body = JSON.parse(xhr.responseText || '{}'); } catch {}
+      markOnline();
       if (xhr.status >= 200 && xhr.status < 300) resolve(body);
       else reject(new AiError(body?.error?.message || 'Falha na transcrição (' + xhr.status + ')'));
     };
-    xhr.onerror = () => reject(new AiError('Sem conexão com o servidor de IA.'));
+    xhr.onerror = () => reject(offlineError());
     xhr.ontimeout = () => reject(new AiError('O servidor de IA demorou demais. Tente de novo.'));
     xhr.send(fd);
   });
@@ -76,11 +88,13 @@ async function chat(messages, { json = false, maxTokens = 500 } = {}) {
         headers: { ...ep.headers, 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
+      markOnline();
       const d = await r.json().catch(() => ({}));
       if (!r.ok) throw new AiError(d?.error?.message || 'Erro ' + r.status);
       const content = d.choices?.[0]?.message?.content || '';
       return json ? parseJson(content) : content.trim();
     } catch (e) {
+      if (!(e instanceof AiError) && (e instanceof TypeError || isNetworkError(e))) throw offlineError();
       lastErr = e;
     }
   }

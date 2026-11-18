@@ -10,9 +10,10 @@ import Icon from '../../components/Icon';
 import Duck from '../../components/Duck';
 import Session from '../../components/Session';
 import ResultView from '../../components/ResultView';
-import { AudioButton } from '../../components/extras';
+import { AudioButton, SpeedChip } from '../../components/extras';
+import { genderColor } from '../../content/vocab';
 import { getStory } from '../../content/stories';
-import { buildStoryQuiz } from '../../engine/exercises';
+import { buildStoryQuiz, buildShadowing } from '../../engine/exercises';
 import { speak, stopSpeaking } from '../../services/speech';
 
 export default function StoryScreen() {
@@ -58,6 +59,20 @@ export default function StoryScreen() {
     };
     run(0);
   };
+
+  if (phase === 'shadow') {
+    return (
+      <Session
+        exercises={buildShadowing(story.lines)}
+        kind="speaking"
+        color={palette.red}
+        onFinish={(r) => {
+          actions.finishSession({ correct: r.correct, total: r.total, seconds: r.seconds, xp: r.correct * 2 + 5, perfect: r.perfect, kind: 'speaking' });
+          setPhase('read');
+        }}
+      />
+    );
+  }
 
   if (phase === 'quiz') {
     return (
@@ -108,6 +123,7 @@ export default function StoryScreen() {
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 16, paddingVertical: 10 }}>
         <Pressable onPress={() => router.back()} hitSlop={12}><Icon name="close" size={26} color={t.text3} stroke={2.6} /></Pressable>
         <View style={{ flex: 1 }} />
+        <SpeedChip />
         <Pressable onPress={() => setGloss(true)} hitSlop={8} style={{ flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 12, paddingVertical: 8, borderRadius: 12, backgroundColor: t.surface2 }}>
           <Text style={{ fontSize: 16 }}>📖</Text>
           <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 13, color: t.text }}>Vocabulário</Text>
@@ -127,6 +143,7 @@ export default function StoryScreen() {
           <Button title={playing >= 0 ? 'Parar' : 'Ouvir tudo'} icon={playing >= 0 ? 'close' : 'volume'} small variant="secondary" style={{ flex: 1 }} onPress={playAll} />
           <Button title={showAll ? 'Esconder tradução' : 'Ver tradução'} icon="swap" small variant="secondary" style={{ flex: 1 }} onPress={() => setShowAll((x) => !x)} />
         </View>
+        <Button title="Repita comigo (shadowing)" icon="mic" small variant="secondary" style={{ marginBottom: 12 }} onPress={() => { playToken.current++; stopSpeaking(); setPlaying(-1); setPhase('shadow'); }} />
         <T v="caption" style={{ marginBottom: 10 }}>Toque numa frase para ouvir · toque em 🇧🇷 para traduzir só ela</T>
 
         <View style={{ gap: 10 }}>
@@ -165,7 +182,7 @@ export default function StoryScreen() {
             <View key={w.fr} style={{ flexDirection: 'row', alignItems: 'center', gap: 10, padding: 10, borderRadius: 12, backgroundColor: t.bg }}>
               <AudioButton text={w.fr.replace(/\(.*?\)/g, '')} size={34} />
               <View style={{ flex: 1 }}>
-                <T v="bodyBold">{w.fr}</T>
+                <T v="bodyBold" color={genderColor(w.fr, t.text)}>{w.fr}</T>
                 <T v="small">{w.pt}</T>
               </View>
               <Pressable onPress={() => actions.toggleSaved({ fr: w.fr, pt: w.pt })} hitSlop={8}>

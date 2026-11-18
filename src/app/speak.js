@@ -7,24 +7,30 @@ import { useTheme, fonts, radius, palette } from '../theme';
 import { Screen, T, Button, Chip, Card, Ring } from '../components/ui';
 import Icon from '../components/Icon';
 import Duck from '../components/Duck';
-import { AudioButton, SpeakableText } from '../components/extras';
+import { AudioButton, SpeakableText, SpeedChip } from '../components/extras';
 import { Waveform } from '../components/Exercises';
 import { SPEAK_PHRASES, SOUNDS } from '../content/extras';
+import { SPEAK_CATEGORIES } from '../content/speakbank';
+import { ScrollView } from 'react-native';
 import { useRecorder } from '../services/recorder';
 import { evaluatePronunciation, aiAvailable } from '../services/ai';
 import { speak } from '../services/speech';
+import { isOnline } from '../services/net';
 import { fx } from '../services/feedback';
 
 export default function SpeakScreen() {
-  const { sound } = useLocalSearchParams();
+  const { sound, cat: catParam } = useLocalSearchParams();
   const { state, actions } = useStore();
   const t = useTheme();
-  const [level, setLevel] = useState('fácil');
+  const [cat, setCat] = useState(catParam || 'mots1');
   const pool = useMemo(() => {
     const s = SOUNDS.find((x) => x.id === sound);
     if (s) return s.examples.map((e) => ({ fr: e.w, read: e.r, pt: s.title, level: 'som' }));
-    return SPEAK_PHRASES.filter((p) => p.level === level);
-  }, [sound, level]);
+    if (cat === 'classic') return SPEAK_PHRASES;
+    return SPEAK_CATEGORIES.find((c) => c.id === cat)?.items || SPEAK_PHRASES;
+  }, [sound, cat]);
+  const best = state.speakBest || {};
+  const mastered = pool.filter((p) => (best[p.fr] || 0) >= 80).length;
   const [i, setI] = useState(0);
   const phrase = pool[i % pool.length];
   const [busy, setBusy] = useState(false);
@@ -37,15 +43,16 @@ export default function SpeakScreen() {
     onDone: async ({ uri }) => {
       setMyUri(uri);
       actions.addSpoken(1);
-      if (!ai) { setRes({ selfCheck: true }); return; }
+      if (!ai || !isOnline()) { setRes({ selfCheck: true, offline: ai }); return; }
       setBusy(true);
       try {
         const r = await evaluatePronunciation(uri, phrase);
         setRes(r);
         if (!r.silent) (r.score >= 70 ? fx.correct : fx.wrong)();
         if (!r.silent) actions.addXP(r.score >= 80 ? 5 : r.score >= 50 ? 3 : 1);
+        if (!r.silent) actions.set((s0) => ({ speakBest: { ...(s0.speakBest || {}), [phrase.fr]: Math.max(r.score, (s0.speakBest || {})[phrase.fr] || 0) } }));
       } catch (e) {
-        setRes({ error: e.message });
+        setRes(e?.offline ? { selfCheck: true, offline: true } : { error: e.message });
       } finally {
         setBusy(false);
       }
@@ -61,18 +68,31 @@ export default function SpeakScreen() {
       player.current.play();
     } catch {}
   };
-  const nextPhrase = () => { setRes(null); setMyUri(null); rec.setPhase('idle'); setI(i + 1); };
+  const nextPhrase = () => {
+    setRes(null); setMyUri(null); rec.setPhase('idle');
+    // skip phrases already mastered most of the time
+    let n = i + 1;
+    for (let k = 0; k < pool.length; k++) {
+      const p = pool[n % pool.length];
+      if ((best[p.fr] || 0) < 80 || Math.random() < 0.2) break;
+      n++;
+    }
+    setI(n);
+  };
 
   const score = res?.score;
   return (
-    <Screen title="Avaliação de fala">
+    <Screen title="Avaliação de fala" right={<SpeedChip />}>
       {!sound ? (
-        <View style={{ flexDirection: 'row', gap: 8, marginBottom: 16 }}>
-          {['fácil', 'médio', 'difícil'].map((l) => (
-            <Pressable key={l} onPress={() => { setLevel(l); setI(0); setRes(null); }}>
-              <Chip label={l[0].toUpperCase() + l.slice(1)} big bg={level === l ? t.primary : t.surface2} color={level === l ? '#fff' : t.text2} />
-            </Pressable>
-          ))}
+        <View style={{ marginBottom: 14, marginHorizontal: -20 }}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 20, gap: 8 }}>
+            {[...SPEAK_CATEGORIES.map((c) => [c.id, `${c.emoji} ${c.title}`, c.level]), ['classic', '⭐ Clássicas', '']].map(([id, label, lv]) => (
+              <Pressable key={id} onPress={() => { setCat(id); setI(0); setRes(null); setMyUri(null); }}>
+                <Chip label={lv ? `${label} · ${lv}` : label} big bg={cat === id ? t.primary : t.surface2} color={cat === id ? '#fff' : t.text2} />
+              </Pressable>
+            ))}
+          </ScrollView>
+          <T v="caption" style={{ marginTop: 8, marginHorizontal: 20 }}>{mastered}/{pool.length} dominadas (nota 80+) · as que você erra voltam mais vezes</T>
         </View>
       ) : null}
 
@@ -108,8 +128,10 @@ export default function SpeakScreen() {
               </>
             ) : res.selfCheck ? (
               <>
-                <Duck mood="listen" size={80} />
-                <T v="body" center>Ouça sua gravação e o modelo. Compare o ritmo e os sons — e repita até ficar parecido!</T>
+                <Duck mood={res.offline ? 'offline' : 'listen'} size={80} />
+                {res.offline ? <Chip label="📡 Sem internet — modo comparar" /> : null}
+                <T v="body" center>Ouça o modelo e depois a sua voz. Compare o ritmo e os sons — e repita até ficar parecido!</T>
+                <Button title="Ouvir o modelo" icon="volume" small variant="secondary" onPress={() => speak(phrase.fr)} style={{ alignSelf: 'stretch' }} />
               </>
             ) : (
               <>

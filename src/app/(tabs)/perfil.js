@@ -4,7 +4,10 @@ import { router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useStore } from '../../store';
 import { useTheme, fonts, radius, palette } from '../../theme';
-import { T, Card, Stat, ProgressBar, Section, Row, Chip } from '../../components/ui';
+import { T, Card, Stat, ProgressBar, Section, Row, Chip, Button } from '../../components/ui';
+import { WeeklySummaryCard } from '../../components/Weekly';
+import { weeklyChallenge } from '../../store/logic';
+import { toast } from '../../services/dialog';
 import Icon from '../../components/Icon';
 import Duck, { DuckAvatar } from '../../components/Duck';
 import { levelInfo, ACHIEVEMENTS, LEAGUES, goalXP } from '../../store/logic';
@@ -18,6 +21,9 @@ export default function Profile() {
   const lvl = levelInfo(state.xp);
   const cefr = UNITS[Math.min(UNITS.length, state.unlockedUnit) - 1]?.level || 'A1';
   const days35 = useMemo(() => lastNDays(35), [state.history]);
+  const days84 = useMemo(() => lastNDays(84), [state.history]);
+  const active84 = days84.filter((d) => (state.history[d] || 0) > 0).length;
+  const { actions } = useStore();
   const days7 = useMemo(() => lastNDays(7), [state.history]);
   const maxXP = Math.max(20, ...days7.map((d) => state.history[d] || 0));
   const goal = goalXP(state.profile.dailyMinutes);
@@ -99,7 +105,51 @@ export default function Profile() {
             <T v="caption">🔥 meta cumprida</T>
             <T v="caption">🥐 protegido ({state.streak.freezes || 0} de reserva)</T>
           </View>
+          <View style={{ height: 1, backgroundColor: t.border, marginVertical: 12 }} />
+          <T v="label">Últimas 12 semanas · {active84} dias ativos</T>
+          <View style={{ flexDirection: 'row', gap: 3, marginTop: 8 }}>
+            {Array.from({ length: 12 }).map((_, w) => (
+              <View key={w} style={{ flex: 1, gap: 3 }}>
+                {days84.slice(w * 7, w * 7 + 7).map((d) => {
+                  const xp = state.history[d] || 0;
+                  const lv = xp <= 0 ? 0 : xp < goal / 2 ? 1 : xp < goal ? 2 : xp < goal * 2 ? 3 : 4;
+                  const bg = [t.surface2, palette.redSoft, '#F59E9E', palette.red, '#9B1C1C'][lv];
+                  return <View key={d} style={{ aspectRatio: 1, borderRadius: 3, backgroundColor: bg }} />;
+                })}
+              </View>
+            ))}
+          </View>
+          <Button
+            title={`Comprar croissant de reserva · 60 💶 (você tem ${state.coins})`}
+            small
+            variant="secondary"
+            style={{ marginTop: 12 }}
+            disabled={state.coins < 60 || (state.streak.freezes || 0) >= 3}
+            onPress={() => { actions.buyFreeze(60); toast('🥐 Croissant guardado! Seu streak está protegido por 1 dia.'); }}
+          />
+          {(state.streak.freezes || 0) >= 3 ? <T v="caption" style={{ marginTop: 4 }}>Máximo de 3 croissants guardados.</T> : null}
         </Card>
+
+        {/* THIS WEEK + MEDALS */}
+        <Section title="Esta semana" />
+        <WeeklySummaryCard week={state.week} title="Sua semana até agora" />
+        {Object.keys(state.medals || {}).length ? (
+          <Card style={{ marginTop: 12 }}>
+            <T v="label">Medalhas semanais</T>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 8 }}>
+              {Object.entries(state.medals).sort((a, b) => (a[0] < b[0] ? 1 : -1)).map(([wk, m]) => {
+                const c = weeklyChallenge(wk);
+                return (
+                  <View key={wk} style={{ alignItems: 'center', width: 72 }}>
+                    <Text style={{ fontSize: 30 }}>🏅</Text>
+                    <T v="caption" center numberOfLines={2}>{c.emoji} {c.title.replace('Semana d', '').replace(/^[oa]s? /, '')}</T>
+                    <T v="caption" center color={t.text3}>{wk.split('-')[1]}</T>
+                  </View>
+                );
+              })}
+            </View>
+          </Card>
+        ) : null}
 
         {/* WEEK CHART */}
         <Section title="XP nos últimos 7 dias" />

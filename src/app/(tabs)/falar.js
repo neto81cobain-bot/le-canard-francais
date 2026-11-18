@@ -10,12 +10,14 @@ import Duck from '../../components/Duck';
 import { Appear } from '../../components/extras';
 import { SOUNDS, SCENARIOS } from '../../content/extras';
 import { aiAvailable } from '../../services/ai';
+import { useOnline } from '../../services/net';
 
 export default function Speak() {
   const { state } = useStore();
   const t = useTheme();
   const insets = useSafeAreaInsets();
   const ai = aiAvailable();
+  const online = useOnline();
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: t.bg }} contentContainerStyle={{ padding: 20, paddingTop: insets.top + 16, paddingBottom: 50 }}>
@@ -31,6 +33,14 @@ export default function Speak() {
         <Card style={{ marginTop: 14, flexDirection: 'row', gap: 10, alignItems: 'center' }} tone={t.goldSoft}>
           <Text style={{ fontSize: 22 }}>⚙️</Text>
           <T v="small" color={t.text} style={{ flex: 1 }}>A avaliação por IA ainda não está ativa. Você ainda pode treinar ouvindo e repetindo. Para ativar: Perfil → Configurações → Avançado.</T>
+        </Card>
+      ) : !online ? (
+        <Card style={{ marginTop: 14, flexDirection: 'row', gap: 12, alignItems: 'center' }} tone={t.surface2}>
+          <Duck mood="offline" size={56} />
+          <View style={{ flex: 1, gap: 2 }}>
+            <T v="bodyBold">Você está offline</T>
+            <T v="small" color={t.text}>A pronúncia vira modo “comparar” (modelo × sua voz). Conversa e tradução por voz voltam com a internet; texto digitado eu traduzo depois.</T>
+          </View>
         </Card>
       ) : null}
 
@@ -54,6 +64,15 @@ export default function Speak() {
           </View>
         </Tap>
       </View>
+
+      <Tap onPress={() => router.push('/sounds')} style={{ marginTop: 14, flexDirection: 'row', alignItems: 'center', gap: 14, padding: 14, borderRadius: radius.lg, backgroundColor: t.surface, borderWidth: 2, borderColor: t.border }}>
+        <Text style={{ fontSize: 30 }}>🎧</Text>
+        <View style={{ flex: 1 }}>
+          <T v="bodyBold">Mapa de sons</T>
+          <T v="small">U × OU, nasais, É × È… com dica de boca e treino de cada par</T>
+        </View>
+        <Icon name="chevron" size={20} color={t.text3} />
+      </Tap>
 
       <Section title="Sons do francês" />
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12 }}>
