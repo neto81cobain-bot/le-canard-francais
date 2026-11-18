@@ -1,0 +1,40 @@
+# Gera o APK de graça nos servidores do GitHub (não gasta builds do Expo).
+# GitHub → Actions → "Gerar APK (GitHub)" → Run workflow. No fim, baixe o APK em "Artifacts".
+# Precisa do segredo EXPO_TOKEN (Settings → Secrets and variables → Actions).
+name: Gerar APK (GitHub)
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: android-actions/setup-android@v3
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Gerar APK (mesma assinatura do Expo)
+        run: npx --yes eas-cli@latest build --local --platform android --profile preview --non-interactive --output ./le-canard-francais.apk
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: le-canard-francais-apk
+          path: le-canard-francais.apk
+          retention-days: 14
