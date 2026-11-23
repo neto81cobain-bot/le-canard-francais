@@ -78,7 +78,7 @@ export default function ResultView({ title, subtitle, xp, correct, total, second
           </Appear>
         ) : null}
         <View style={{ alignSelf: 'stretch', gap: 10, marginTop: 28 }}>
-          {actions.map((a, i) => <Button key={a.title} title={a.title} icon={a.icon} variant={a.variant || (i === 0 ? 'primary' : 'secondary')} onPress={a.onPress} />)}
+          {actions.map((a, i) => <Button key={a.title} testID={i === 0 ? 'kb-primary' : undefined} title={a.title} icon={a.icon} variant={a.variant || (i === 0 ? 'primary' : 'secondary')} onPress={a.onPress} />)}
         </View>
       </ScrollView>
     </View>

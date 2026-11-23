@@ -1,6 +1,6 @@
 // Offline UI: a friendly card for features that need internet, and a slim global banner.
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, Animated, Easing, Pressable } from 'react-native';
+import { View, Text, Animated, Easing, Pressable, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { useTheme, fonts, radius, palette } from '../theme';
@@ -99,7 +99,7 @@ export function OfflineBanner() {
     <Animated.View pointerEvents="box-none" style={{ position: 'absolute', top: insets.top + 6, left: 0, right: 0, alignItems: 'center', transform: [{ translateY: y }], zIndex: 50, elevation: 50 }}>
       <Pressable onPress={() => off && checkOnline({ force: true })} style={{ flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 14, paddingVertical: 8, borderRadius: 99, backgroundColor: off ? (t.mode === 'dark' ? '#334155' : '#1F2937') : t.success, shadowColor: '#000', shadowOpacity: 0.18, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, elevation: 6 }}>
         <Text style={{ fontSize: 14 }}>{off ? '📡' : '☁️'}</Text>
-        <Text style={{ fontFamily: fonts.bodyBold, fontSize: 13, color: '#fff' }}>{off ? 'Offline · seu progresso fica salvo no celular' : 'De volta online!'}</Text>
+        <Text style={{ fontFamily: fonts.bodyBold, fontSize: 13, color: '#fff' }}>{off ? `Offline · seu progresso fica salvo ${Platform.OS === 'web' ? 'neste computador' : 'no celular'}` : 'De volta online!'}</Text>
       </Pressable>
     </Animated.View>
   );

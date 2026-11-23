@@ -1,0 +1,44 @@
+# Gera o app de computador (Windows) nos servidores do GitHub, de graça.
+# GitHub → Actions → "Gerar app de PC (Windows)" → Run workflow.
+# No fim, baixe em "Artifacts": tem o Instalador (.exe) e a versão Portátil (.exe, não instala nada).
+name: Gerar app de PC (Windows)
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependências do app
+        run: npm ci
+
+      - name: Gerar a versão web do app
+        run: npx expo export --platform web --output-dir desktop/app
+        env:
+          CI: 1
+
+      - name: Instalar Electron
+        working-directory: desktop
+        run: npm install --no-audit --no-fund
+
+      - name: Montar o .exe
+        working-directory: desktop
+        run: npx electron-builder --win nsis portable --publish never
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: le-canard-francais-pc
+          path: |
+            desktop/dist/*.exe
+          retention-days: 30

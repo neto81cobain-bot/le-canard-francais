@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 // AI features (pronunciation, voice translation, conversation).
 // Calls go to the Cloudflare Worker proxy (see /worker) which holds the Groq key.
 // For testing, a personal Groq key can be set in Configurações → Avançado.
@@ -40,7 +41,14 @@ async function transcribe(uri, language = 'fr', prompt) {
   const ep = endpoint();
   if (!ep) throw new AiError('O servidor de IA ainda não foi configurado.');
   const fd = new FormData();
-  fd.append('file', { uri, name: 'audio.m4a', type: 'audio/m4a' });
+  if (Platform.OS === 'web') {
+    // No computador a gravação é um blob (webm/ogg) — mandamos o arquivo de verdade.
+    const blob = await (await fetch(uri)).blob();
+    const ext = /ogg/.test(blob.type) ? 'ogg' : /mp4|m4a|aac/.test(blob.type) ? 'm4a' : 'webm';
+    fd.append('file', blob, 'audio.' + ext);
+  } else {
+    fd.append('file', { uri, name: 'audio.m4a', type: 'audio/m4a' });
+  }
   fd.append('model', STT_MODEL);
   if (language) fd.append('language', language);
   if (prompt) fd.append('prompt', prompt);

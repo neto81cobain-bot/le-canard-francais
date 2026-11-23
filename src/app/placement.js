@@ -254,7 +254,7 @@ export default function Placement() {
         {q.options.map((o, k) => {
           const on = sel === o;
           return (
-            <Tap key={o} onPress={() => { setSel(o); fx.select(); }} style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 12, paddingHorizontal: 12, borderRadius: radius.lg, borderWidth: 2, borderBottomWidth: 4, borderColor: on ? t.sky : t.border, backgroundColor: on ? t.skySoft : t.surface }}>
+            <Tap testID="kb-opt" key={o} onPress={() => { setSel(o); fx.select(); }} style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 12, paddingHorizontal: 12, borderRadius: radius.lg, borderWidth: 2, borderBottomWidth: 4, borderColor: on ? t.sky : t.border, backgroundColor: on ? t.skySoft : t.surface }}>
               <View style={{ width: 30, height: 30, borderRadius: 9, backgroundColor: on ? t.sky : t.surface2, alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 14, color: on ? '#fff' : t.text2 }}>{letters[k]}</Text>
               </View>
@@ -262,7 +262,7 @@ export default function Placement() {
             </Tap>
           );
         })}
-        <Button title="Confirmar" disabled={!sel} onPress={() => next(sel === q.a)} />
+        <Button testID="kb-primary" title="Confirmar" disabled={!sel} onPress={() => next(sel === q.a)} />
         <Button title="Não sei" variant="secondary" small onPress={() => next(false)} />
       </View>
     </Screen>

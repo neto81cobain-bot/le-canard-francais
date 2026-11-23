@@ -63,6 +63,10 @@ function exchangeCode(code, verifier, redirect) {
   return exchanges[code];
 }
 
+// App de PC: o próprio Windows abre o navegador e devolve o token do Google.
+export const desktopLogin = () => (typeof window !== 'undefined' && window.canardDesktop?.google ? window.canardDesktop : null);
+export const desktopLoginReady = () => !!(desktopLogin() && CONFIG.googleDesktopClientId);
+
 async function doExchange(code, verifier, redirect) {
   const tokenResp = await fetch('https://oauth2.googleapis.com/token', {
     method: 'POST',
@@ -76,12 +80,15 @@ async function doExchange(code, verifier, redirect) {
   });
   const tokens = await tokenResp.json();
   if (!tokens.id_token) throw new Error('Não foi possível obter o token do Google' + (tokens.error ? ` (${tokens.error})` : ''));
+  return firebaseFromIdToken(tokens.id_token);
+}
 
+async function firebaseFromIdToken(idToken) {
   const fbResp = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithIdp?key=' + CONFIG.firebaseApiKey, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      postBody: 'id_token=' + tokens.id_token + '&providerId=google.com',
+      postBody: 'id_token=' + idToken + '&providerId=google.com',
       requestUri: 'http://localhost',
       returnIdpCredential: true,
       returnSecureToken: true,
@@ -102,6 +109,18 @@ async function doExchange(code, verifier, redirect) {
 }
 
 export async function signInWithGoogle() {
+  const desk = desktopLogin();
+  if (desk) {
+    if (!CONFIG.googleDesktopClientId) throw new Error('O login com Google no PC ainda não foi ativado.');
+    let r;
+    try {
+      r = await desk.google.signIn({ clientId: CONFIG.googleDesktopClientId, clientSecret: CONFIG.googleDesktopClientSecret });
+    } catch (e) {
+      // O Electron prefixa a mensagem ("Error invoking remote method…"): deixa só o motivo.
+      throw new Error(String(e?.message || e).replace(/^.*Error: /, ''));
+    }
+    return firebaseFromIdToken(r.idToken);
+  }
   const bytes = await Crypto.getRandomBytesAsync(32);
   const verifier = base64url(bytes);
   const digest = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, verifier, { encoding: Crypto.CryptoEncoding.BASE64 });

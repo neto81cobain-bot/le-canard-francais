@@ -8,7 +8,7 @@ import { useTheme, fonts, radius, palette } from '../theme';
 import { Screen, T, Card, Button, Row, Sheet, Chip } from '../components/ui';
 import Icon from '../components/Icon';
 import Duck, { DuckAvatar } from '../components/Duck';
-import { signInWithGoogle } from '../services/auth';
+import { signInWithGoogle, desktopLogin, desktopLoginReady } from '../services/auth';
 import { pushProgress, fetchBackup, fetchLegacy } from '../services/cloud';
 import { checkForUpdates, applyOta, openApk, updateInfo } from '../services/updates';
 import { CONFIG } from '../services/config';
@@ -21,6 +21,8 @@ import PhotoSheet from '../components/PhotoSheet';
 import { isNetworkError, markOffline } from '../services/net';
 import { diagnosticsReport, clearErrors } from '../services/diagnostics';
 import * as Clipboard from 'expo-clipboard';
+import { isWeb, isDesktopApp } from '../services/webfile';
+import { DesktopVoiceRow } from '../components/desktop';
 
 function Group({ title, children }) {
   const t = useTheme();
@@ -158,8 +160,14 @@ export default function Settings() {
           </>
         ) : (
           <View style={{ padding: 16, gap: 10 }}>
-            <T v="small">Entre para salvar seu progresso na nuvem, e estudar junto com amigos no Clube.</T>
-            <Button title="Entrar com Google" icon="cloud" onPress={login} loading={busy === 'login'} />
+            {isWeb && !desktopLoginReady() ? (
+              <T v="small">{desktopLogin() ? 'O login com Google no PC ainda não foi ativado nesta versão.' : 'No navegador o login com Google não funciona.'} Para levar seu progresso do celular para cá: no celular, Exportar progresso (mande o texto para você mesmo no WhatsApp); aqui, Importar progresso e cole.</T>
+            ) : (
+              <>
+                <T v="small">Entre para salvar seu progresso na nuvem, e estudar junto com amigos no Clube.{desktopLogin() ? ' O navegador vai abrir para você escolher a conta.' : ''}</T>
+                <Button title="Entrar com Google" icon="cloud" onPress={login} loading={busy === 'login'} />
+              </>
+            )}
           </View>
         )}
       </Group>
@@ -193,13 +201,23 @@ export default function Settings() {
         <Toggle icon="volume" title="Áudio automático" subtitle="Toca a frase em francês sozinho" value={s.autoAudio} onChange={(v) => actions.setSettings({ autoAudio: v })} />
         <Row icon="turtle" title="Velocidade da voz" subtitle="Também dá para trocar no botão 🔊 durante os exercícios" />
         <Choice options={[[0.6, '🐢'], [0.75, '0.75×'], [0.9, '1×'], [1.05, '1.15×'], [1.2, '🐇']]} value={s.speechRate} onChange={(v) => actions.setSettings({ speechRate: v })} />
+        {isDesktopApp ? <DesktopVoiceRow /> : (
+          <>
         <Row icon="volume" title="Voz francesa do celular" subtitle={voice ? (voice.error ? 'Não consegui verificar' : voice.fr ? `${voice.fr} voz(es) em francês${voice.local ? ' · funciona offline ✓' : ' · baixe a voz para usar offline'}` : '⚠️ Nenhuma voz francesa instalada') : 'Toque para verificar'} onPress={checkVoice} />
         {voice && (!voice.fr || !voice.local) ? (
           <View style={{ padding: 16, paddingTop: 0, gap: 8 }}>
-            <T v="small">O áudio do app usa a voz do próprio celular e funciona sem internet. Instale a voz “Francês (França)” em Configurações → Conversão de texto em voz → Mecanismo do Google → Instalar dados de voz.</T>
-            <Button title="Abrir configurações de voz" small variant="secondary" onPress={openTts} />
+            {isWeb ? (
+              <T v="small">No navegador o áudio usa as vozes do sistema. Se o francês sair com sotaque, instale a voz francesa nas configurações de fala do sistema.</T>
+            ) : (
+              <>
+                <T v="small">O áudio do app usa a voz do próprio celular e funciona sem internet. Instale a voz “Francês (França)” em Configurações → Conversão de texto em voz → Mecanismo do Google → Instalar dados de voz.</T>
+                <Button title="Abrir configurações de voz" small variant="secondary" onPress={openTts} />
+              </>
+            )}
           </View>
         ) : null}
+          </>
+        )}
         <Row icon="target" title="Teste de nível" subtitle={state.placement ? `Último: ${state.placement.v === 3 ? (state.placement.level || 'iniciante') : 'unidade ' + state.placement.unit} · refazer` : 'Descubra seu nível por habilidade'} onPress={() => router.push('/placement')} />
         <Toggle icon="heart" title="Modo vidas" subtitle="5 vidas: perde uma a cada erro (desafio extra)" value={s.hearts} onChange={(v) => actions.setSettings({ hearts: v })} last />
       </Group>

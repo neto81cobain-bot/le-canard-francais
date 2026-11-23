@@ -3,6 +3,7 @@ import { Share } from 'react-native';
 import { UNITS } from '../content';
 import { SHOP, wornOf } from '../store/logic';
 import { duckSvgString } from '../components/duckArt';
+import { isWeb, printHtml, downloadText } from './webfile';
 
 let Print = null;
 let Sharing = null;
@@ -33,7 +34,7 @@ export function levelStatus(state) {
 const esc = (s) => String(s || '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 export async function shareCertificate(state, level) {
-  if (!Print?.printToFileAsync || !Sharing?.shareAsync) throw needApk();
+  if (!isWeb && (!Print?.printToFileAsync || !Sharing?.shareAsync)) throw needApk();
   const wear = wornOf(state.inventory);
   const emoji = {};
   ['held', 'ground'].forEach((k) => { const it = wear[k] && SHOP.find((x) => x.id === wear[k]); if (it) emoji[k] = it.emoji; });
@@ -66,6 +67,10 @@ export async function shareCertificate(state, level) {
   <p style="margin-top:14px">${date}</p></div>
   <div class="sign"><div class="s">Monsieur Canard</div>Professor-chefe de francês 🦆</div>
   <div class="duck">${duck}</div></div></body></html>`;
+  if (isWeb) {
+    printHtml(html.replace('</style>', '@page{size:A4 landscape;margin:0}</style>'));
+    return;
+  }
   const { uri } = await Print.printToFileAsync({ html, width: 842, height: 595 });
   await Sharing.shareAsync(uri, { mimeType: 'application/pdf', dialogTitle: `Certificado ${level.level}`, UTI: 'com.adobe.pdf' });
 }
@@ -79,6 +84,10 @@ export async function exportWords(state) {
   if (!rows.length) return 0;
   const clean = (x) => String(x).replace(/[\t\n\r]+/g, ' ');
   const text = '#separator:tab\n#html:false\n' + rows.map(([a, b]) => `${clean(a)}\t${clean(b)}`).join('\n') + '\n';
+  if (isWeb) {
+    downloadText(text, 'le-canard-palavras.txt');
+    return rows.length;
+  }
   if (FS?.File && FS?.Paths && Sharing?.shareAsync) {
     try {
       const f = new FS.File(FS.Paths.cache, 'le-canard-palavras.txt');

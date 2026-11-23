@@ -9,6 +9,10 @@ export const CONFIG = {
   firebaseProjectId: extra.firebaseProjectId || 'app-frances-7b500',
   firebaseDbUrl: extra.firebaseDbUrl || 'https://app-frances-7b500-default-rtdb.firebaseio.com',
   oauthRedirect: (extra.scheme || 'com.raimundo.lecanardfrancais') + ':/oauthredirect',
+  // App de PC: cliente OAuth do tipo "App para computador" (mesmo projeto do Firebase).
+  // A "chave secreta" desse tipo de cliente não é segredo (o Google trata como pública).
+  googleDesktopClientId: extra.googleDesktopClientId || '1091898156126-ip3ereb1cbn3hohdtdmqdem2r7ql32mi.apps.googleusercontent.com',
+  googleDesktopClientSecret: extra.googleDesktopClientSecret || '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',
   // AI proxy (Cloudflare Worker in /worker). The Groq key lives ONLY on the server.
   apiUrl: extra.apiUrl || '',
   // GitHub repository used by "Buscar atualizações" (owner/repo)

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, AppState } from 'react-native';
+import { View, AppState, Share } from 'react-native';
 import { Stack, SplashScreen, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
@@ -19,7 +19,11 @@ import { ThemeProvider, useTheme } from '../theme';
 import Celebration from '../components/Celebration';
 import DialogHost from '../components/DialogHost';
 import * as Updates from 'expo-updates';
-import { Alert } from '../services/dialog';
+import { Alert, toast } from '../services/dialog';
+import { isWeb, installWebShims } from '../services/webfile';
+import { useDesktop, useFocusMode, useKeyboardShortcuts, Sidebar, RightRail } from '../components/desktop';
+
+installWebShims(Share, toast);
 import { RootErrorScreen } from '../components/ErrorBoundary';
 import { installGlobalHandler, logError } from '../services/diagnostics';
 import { setFeedbackPrefs } from '../services/feedback';
@@ -142,12 +146,25 @@ function Shell() {
   const { state } = useStore();
   setA11y({ textScale: state.settings.textScale, reduceMotion: state.settings.reduceMotion });
   const t = useTheme();
+  const { desktop, wide } = useDesktop();
+  const focus = useFocusMode();
+  useKeyboardShortcuts(isWeb);
   useEffect(() => {
     SystemUI.setBackgroundColorAsync(t.bg).catch(() => {});
   }, [t.bg]);
+  // Computador: barra lateral + conteúdo + painel. Lições ficam em modo foco, centralizadas.
+  const column = desktop
+    ? { flex: 1, width: '100%', maxWidth: focus ? 820 : 760, alignSelf: 'center' }
+    : isWeb
+      ? { flex: 1, width: '100%', maxWidth: 560, alignSelf: 'center', borderLeftWidth: 1, borderRightWidth: 1, borderColor: t.border || 'transparent' }
+      : { flex: 1 };
   return (
     <View style={{ flex: 1, backgroundColor: t.bg }}>
       <StatusBar style={t.statusBar} />
+      <View style={{ flex: 1, flexDirection: 'row' }}>
+      {desktop && !focus ? <Sidebar /> : null}
+      <View style={{ flex: 1 }}>
+      <View style={column}>
       <Stack screenOptions={{ headerShown: false, animation: 'slide_from_right', contentStyle: { backgroundColor: t.bg } }}>
         <Stack.Screen name="index" options={{ animation: 'fade' }} />
         <Stack.Screen name="onboarding" options={{ animation: 'fade', gestureEnabled: false }} />
@@ -155,6 +172,10 @@ function Shell() {
         <Stack.Screen name="lesson/[id]" options={{ animation: 'slide_from_bottom', gestureEnabled: false }} />
         <Stack.Screen name="practice/[mode]" options={{ animation: 'slide_from_bottom', gestureEnabled: false }} />
       </Stack>
+      </View>
+      </View>
+      {wide && !focus ? <RightRail /> : null}
+      </View>
       <Effects />
       <Celebration />
       <OfflineBanner />

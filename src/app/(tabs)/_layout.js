@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme, fonts } from '../../theme';
 import Icon from '../../components/Icon';
 import { fx } from '../../services/feedback';
+import { useDesktop } from '../../components/desktop';
 
 const TABS = {
   index: { label: 'Aprender', icon: 'home' },
@@ -17,6 +18,8 @@ const TABS = {
 function TabBar({ state, navigation, emitter, navigateToTab }) {
   const t = useTheme();
   const insets = useSafeAreaInsets();
+  const { desktop } = useDesktop();
+  if (desktop) return null; // no computador a navegação fica na barra lateral
   return (
     <View style={{ flexDirection: 'row', backgroundColor: t.tabBar, borderTopWidth: 1, borderTopColor: t.border, paddingBottom: Math.max(insets.bottom, 8), paddingTop: 8, paddingHorizontal: 6 }}>
       {state.routes.map((route, i) => {

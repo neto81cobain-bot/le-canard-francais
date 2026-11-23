@@ -237,7 +237,7 @@ export default function Practice() {
           </Appear>
         </ScrollView>
         <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: 20, paddingBottom: 20 + insets.bottom, backgroundColor: t.bg }}>
-          <Button title="Começar" color={color} onPress={() => setPhase('practice')} />
+          <Button testID="kb-primary" title="Começar" color={color} onPress={() => setPhase('practice')} />
         </View>
       </View>
     );

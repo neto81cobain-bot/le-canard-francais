@@ -1,0 +1,38 @@
+{
+  "name": "le-canard-francais-desktop",
+  "productName": "Le canard français",
+  "version": "3.9.0",
+  "description": "Le canard français para computador",
+  "main": "main.js",
+  "author": "Raimundo",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis portable --publish never"
+  },
+  "devDependencies": {
+    "electron": "^39.0.0",
+    "electron-builder": "^26.0.0"
+  },
+  "build": {
+    "appId": "com.raimundo.lecanardfrancais.desktop",
+    "productName": "Le canard français",
+    "directories": { "output": "dist", "buildResources": "build" },
+    "files": ["main.js", "preload.js", "voice.js", "google.js", "app/**/*"],
+    "win": {
+      "icon": "build/icon.png",
+      "target": ["nsis", "portable"]
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Le canard français",
+      "artifactName": "LeCanardFrances-Instalador-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "LeCanardFrances-Portatil-${version}.${ext}"
+    }
+  }
+}

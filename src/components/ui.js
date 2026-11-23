@@ -1,6 +1,6 @@
 import { a11y } from '../services/a11y';
 import React, { useRef, useEffect } from 'react';
-import { View, Text, Pressable, Animated, StyleSheet, ScrollView, Modal, ActivityIndicator, Easing } from 'react-native';
+import { View, Text, Pressable, Animated, StyleSheet, ScrollView, Modal, ActivityIndicator, Easing, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import Svg, { Circle } from 'react-native-svg';
@@ -59,7 +59,7 @@ export function Tap({ onPress, style, children, disabled, haptic = true, scaleTo
 }
 
 // ─── 3D BUTTON ────────────────────────────────────────────
-export function Button({ title, onPress, variant = 'primary', icon, disabled, loading, style, small, color }) {
+export function Button({ title, onPress, variant = 'primary', icon, disabled, loading, style, small, color, testID }) {
   const t = useTheme();
   const press = useRef(new Animated.Value(0)).current;
   const variants = {
@@ -79,6 +79,7 @@ export function Button({ title, onPress, variant = 'primary', icon, disabled, lo
   const ty = press.interpolate({ inputRange: [0, 1], outputRange: [0, ledge] });
   return (
     <Pressable
+      testID={testID}
       disabled={disabled || loading}
       onPressIn={() => Animated.timing(press, { toValue: 1, duration: 70, useNativeDriver: true }).start()}
       onPressOut={() => Animated.timing(press, { toValue: 0, duration: 110, useNativeDriver: true }).start()}
@@ -288,9 +289,9 @@ export function Sheet({ visible, onClose, children }) {
   const overlap = useKeyboardOverlap(ref);
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose} statusBarTranslucent>
-      <View ref={ref} style={{ flex: 1, paddingBottom: overlap }}>
-        <Pressable style={{ flex: 1, backgroundColor: t.overlay }} onPress={onClose} />
-        <View style={{ backgroundColor: t.surface, borderTopLeftRadius: 28, borderTopRightRadius: 28, paddingTop: 12, maxHeight: '88%' }}>
+      <View ref={ref} style={{ flex: 1, paddingBottom: overlap, backgroundColor: t.overlay }}>
+        <Pressable style={{ flex: 1 }} onPress={onClose} />
+        <View style={[{ backgroundColor: t.surface, borderTopLeftRadius: 28, borderTopRightRadius: 28, paddingTop: 12, maxHeight: '88%' }, Platform.OS === 'web' ? { width: '100%', maxWidth: 620, alignSelf: 'center' } : null]}>
           <View style={{ width: 44, height: 5, borderRadius: 3, backgroundColor: t.border, alignSelf: 'center', marginBottom: 6 }} />
           <ScrollView contentContainerStyle={{ padding: 20, paddingTop: 10, paddingBottom: 24 + (overlap ? 0 : insets.bottom) }} keyboardShouldPersistTaps="handled" bounces={false}>
             {children}

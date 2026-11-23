@@ -19,7 +19,7 @@ export function OptionCard({ label, sub, emoji, selected, status, onPress, disab
   const border = status === 'ok' ? t.success : status === 'bad' ? t.error : selected ? t.sky : t.border;
   const bg = status === 'ok' ? t.successSoft : status === 'bad' ? t.errorSoft : selected ? t.skySoft : t.surface;
   return (
-    <Tap onPress={onPress} disabled={disabled} style={[{ borderRadius: radius.lg, borderWidth: 2, borderBottomWidth: 4, borderColor: border, backgroundColor: bg, paddingVertical: big ? 18 : 15, paddingHorizontal: 16, alignItems: emoji ? 'center' : 'flex-start', justifyContent: 'center', gap: 6 }, style]}>
+    <Tap testID="kb-opt" onPress={onPress} disabled={disabled} style={[{ borderRadius: radius.lg, borderWidth: 2, borderBottomWidth: 4, borderColor: border, backgroundColor: bg, paddingVertical: big ? 18 : 15, paddingHorizontal: 16, alignItems: emoji ? 'center' : 'flex-start', justifyContent: 'center', gap: 6 }, style]}>
       {emoji ? <Text style={{ fontSize: 44 }}>{emoji}</Text> : null}
       <Text style={{ fontFamily: fonts.bodyBold, fontSize: 17, color: selected && !status ? (t.mode === 'dark' ? '#fff' : palette.navy) : t.text, textAlign: emoji ? 'center' : 'left' }}>{label}</Text>
       {sub ? <Text style={{ fontFamily: fonts.bodySemi, fontSize: 13, color: t.text2 }}>{sub}</Text> : null}

@@ -84,7 +84,7 @@ export default function LessonScreen() {
           ) : null}
         </ScrollView>
         <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: 20, paddingBottom: 20 + insets.bottom, gap: 8, backgroundColor: t.bg }}>
-          <Button title={lesson.story ? 'Ler a história' : 'Começar a aula'} color={color.main} onPress={() => setPhase(lesson.story ? 'story' : 'teach')} />
+          <Button testID="kb-primary" title={lesson.story ? 'Ler a história' : 'Começar a aula'} color={color.main} onPress={() => setPhase(lesson.story ? 'story' : 'teach')} />
           {already ? <Button title="Pular direto para os exercícios" variant="ghost" small onPress={() => setPhase('practice')} /> : null}
         </View>
       </View>
@@ -142,7 +142,7 @@ export default function LessonScreen() {
         </ScrollView>
         <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: 20, paddingBottom: 20 + insets.bottom, flexDirection: 'row', gap: 10, backgroundColor: t.bg, borderTopWidth: 1, borderTopColor: t.border }}>
           {card > 0 ? <Button title="Voltar" variant="secondary" onPress={() => setCard(card - 1)} style={{ flex: 1 }} /> : null}
-          <Button
+          <Button testID="kb-primary"
             title={last ? 'Praticar!' : 'Próximo'}
             color={color.main}
             style={{ flex: 2 }}
@@ -190,7 +190,7 @@ export default function LessonScreen() {
           })}
         </ScrollView>
         <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: 20, paddingBottom: 20 + insets.bottom, backgroundColor: t.bg, borderTopWidth: 1, borderTopColor: t.border }}>
-          <Button title="Responder perguntas" color={color.main} onPress={() => { actions.learnWords(lesson.vocab, lesson.id); setPhase('practice'); }} />
+          <Button testID="kb-primary" title="Responder perguntas" color={color.main} onPress={() => { actions.learnWords(lesson.vocab, lesson.id); setPhase('practice'); }} />
         </View>
       </View>
     );

@@ -12,6 +12,7 @@ import { wornOf, missionProgress, goalXP } from '../store/logic';
 import { mondayKey, addDays, dayKey } from '../store/dates';
 import { UNITS } from '../content';
 import { toast } from '../services/dialog';
+import { isWeb, downloadSvgPng } from '../services/webfile';
 
 let Sharing = null;
 let FS = null;
@@ -200,6 +201,11 @@ export function ShareArt({ data, wear, size, svgRef }) {
 }
 
 async function sharePng(svg, data) {
+  if (isWeb) {
+    const r = await downloadSvgPng(svg, W, H, `le-canard-${Date.now()}.png`);
+    if (r === 'downloaded') toast('Imagem salva na pasta Downloads 📥');
+    return;
+  }
   if (Platform.OS === 'web' || !svg?.toDataURL || !Sharing?.shareAsync || !FS?.File) throw new Error('sem-imagem');
   const b64 = await new Promise((res, rej) => {
     const timer = setTimeout(() => rej(new Error('timeout')), 8000);

@@ -315,7 +315,7 @@ export default function Session({ exercises: initial, title, kind = 'lesson', ti
       {/* BOTTOM: check button or feedback */}
       {!selfGraded && !timed && !result ? (
         <View style={{ position: 'absolute', left: 0, right: 0, bottom: kb, padding: 20, paddingBottom: kb ? 12 : 20 + insets.bottom, backgroundColor: t.bg, borderTopWidth: 1, borderTopColor: t.border }}>
-          <Button title="Verificar" disabled={!hasValue(ex, value)} onPress={check} color={color} />
+          <Button testID="kb-primary" title="Verificar" disabled={!hasValue(ex, value)} onPress={check} color={color} />
         </View>
       ) : null}
 
@@ -361,7 +361,7 @@ export default function Session({ exercises: initial, title, kind = 'lesson', ti
               <Text style={{ fontFamily: fonts.bodyHeavy, fontSize: 13, color: t.primary }}>Revisar a regra: {GRAMMAR_BY_ID[grammarId].title} →</Text>
             </Pressable>
           ) : null}
-          <Button title={result.ok ? 'Continuar' : 'Entendi'} variant={result.ok ? 'success' : 'error'} onPress={advance} style={{ marginTop: 4 }} />
+          <Button testID="kb-primary" title={result.ok ? 'Continuar' : 'Entendi'} variant={result.ok ? 'success' : 'error'} onPress={advance} style={{ marginTop: 4 }} />
         </View>
       ) : null}
 

@@ -36,7 +36,7 @@ export default function Celebration() {
     <Modal visible={visible} transparent animationType="fade" onRequestClose={() => actions.shiftCelebration()} statusBarTranslucent>
       <View style={{ flex: 1, backgroundColor: t.overlay, alignItems: 'center', justifyContent: 'center', padding: 24 }}>
         <Confetti run={visible} />
-        <View style={{ width: '100%', backgroundColor: t.surface, borderRadius: 28, padding: 24, alignItems: 'center', gap: 10 }}>
+        <View style={{ width: '100%', maxWidth: 440, backgroundColor: t.surface, borderRadius: 28, padding: 24, alignItems: 'center', gap: 10 }}>
           <Duck mood="celebrate" size={130} />
           <Text style={{ fontSize: 46 }}>{emoji}</Text>
           <T v="h2" center>{title}</T>
